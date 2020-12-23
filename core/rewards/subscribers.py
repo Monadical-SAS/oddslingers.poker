@@ -165,7 +165,7 @@ class BadgeSubscriber(MutationSubscriber):
 
                 if not self.did_raise_or_bet(winner):
                     # Third item in the tuple goes for 'max_times'
-                    badges.append((winner, 'true_grit', 1))
+                    badges.append((winner, 'true_grit'))
 
             if (winnings['showdown'] > THE_DUCK_BBS * self.table.bb
                     and '2' in winner.cards_str

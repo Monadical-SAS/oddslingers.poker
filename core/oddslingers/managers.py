@@ -25,7 +25,10 @@ class SeasonLogLikeManager(models.Manager):
 
 class SeasonRegularManager(models.Manager):
     def create_for_season(self, season_number: int, user, **kwargs) -> Tuple:
-        return self.get_or_create(season=season_number, user=user, **kwargs)
+        try:
+            self.get_or_create(season=season_number, user=user, **kwargs)
+        except self.model.MultipleObjectsReturned:
+            self.create(season=season_number, user=user, **kwargs)
 
     def create_for_current_season(self, user, **kwargs) -> Tuple:
         return self.create_for_season(settings.CURRENT_SEASON, user, **kwargs)
