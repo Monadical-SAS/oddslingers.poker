@@ -335,10 +335,8 @@ export const TableThumbnail = ({table}) => {
                 &nbsp;&nbsp;
             {table.displayable_variant}
             &nbsp;&nbsp;
-            <a href={`/learn#${table.variant}`} target="_blank">
-                <Icon name="question-circle-o" data-html="true"
+                <Icon onClick={(e) => { e.preventDefault(); window.open(`/learn#${table.variant}`);}} name="question-circle-o" data-html="true"
                       {...tooltip("<div style='min-width:150px'>Game type variant.<br/>Click for more info</div>")}/>
-            </a>
             <br/><br/>
             <div style={{textAlign: 'center', fontWeight: 400, opacity: 0.8}}>
                 Blinds: {chipAmtStr(table.sb)}/{chipAmtStr(table.bb)}
