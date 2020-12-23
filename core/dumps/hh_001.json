@@ -1,0 +1,1326 @@
+{
+    "release": "b74828e896ae32f51d015816123a15c85092bb6c",
+    "accessed": "2017-08-09T00:26:51.465Z",
+    "notes": "abc",
+    "hands": [
+        {
+            "ts": "2017-08-09T00:20:04.012Z",
+            "table": {
+                "bb": 2,
+                "id": "f9f6ee13-13b7-405d-b01a-d2d7606cdd39",
+                "sb": 1,
+                "ante": null,
+                "name": "squash's Table #4",
+                "bb_idx": 0,
+                "sb_idx": 1,
+                "btn_idx": 1,
+                "deck_str": "7d,9s,9d,Kd,Jd,3d,Td,4d,8h,3s,5s,Qs,7h,6c,3c,7c,Ks,Jc,4s,Th,6d,Qc,8d,3h,2c,Ac,2h,5c,5h,Qh,2d,Ad,8c,Kh,Kc,Ah,Js,6h,2s,Jh,Qd,6s,4h,Ts,4c,8s,7s,As,5d,9h,9c,Tc",
+                "board_str": "",
+                "max_buyin": 400,
+                "min_buyin": 100,
+                "num_seats": 6,
+                "precision": 0,
+                "table_type": "NLHE",
+                "hand_number": 0
+            },
+            "players": [
+                {
+                    "id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                    "stack": "200.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 0,
+                    "username": "Nanopoleon",
+                    "auto_rebuy": "100.00",
+                    "sitting_out": false,
+                    "sit_in_at_blinds": false
+                },
+                {
+                    "id": "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a",
+                    "stack": "200.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 1,
+                    "username": "UsainVolts",
+                    "auto_rebuy": "100.00",
+                    "sitting_out": false,
+                    "sit_in_at_blinds": false
+                }
+            ],
+            "actions": [
+                {
+                    "ts": "00:20:07",
+                    "subj": "squash",
+                    "action": "TAKE_SEAT",
+                    "args": {
+                        "stack": 0,
+                        "owes_bb": true,
+                        "owes_sb": false,
+                        "position": 4,
+                        "username": "squash",
+                        "buyin_amt": null,
+                        "auto_rebuy": null,
+                        "sit_in_at_blinds": true
+                    }
+                },
+                {
+                    "ts": "00:20:10",
+                    "subj": "UsainVolts",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": "7"
+                    }
+                },
+                {
+                    "ts": "00:20:11",
+                    "subj": "squash",
+                    "action": "SIT_IN_AT_BLINDS",
+                    "args": {
+                        "set_to": false,
+                        "SEQ_NUM": 1,
+                        "TIMESTAMP": 1502238011334
+                    }
+                },
+                {
+                    "ts": "00:20:12",
+                    "subj": "squash",
+                    "action": "SIT_IN",
+                    "args": {
+                        "SEQ_NUM": 2,
+                        "TIMESTAMP": 1502238012681
+                    }
+                },
+                {
+                    "ts": "00:20:13",
+                    "subj": "Nanopoleon",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": "21"
+                    }
+                },
+                {
+                    "ts": "00:20:17",
+                    "subj": "UsainVolts",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": "63"
+                    }
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "Nanopoleon",
+                    "action": "FOLD",
+                    "args": {}
+                }
+            ],
+            "events": [
+                {
+                    "ts": "00:20:04",
+                    "subj": "Nanopoleon",
+                    "event": "SET_TIMEBANK",
+                    "args": {
+                        "set_to": 5
+                    }
+                },
+                {
+                    "ts": "00:20:04",
+                    "subj": "UsainVolts",
+                    "event": "SET_TIMEBANK",
+                    "args": {
+                        "set_to": 5
+                    }
+                },
+                {
+                    "ts": "00:20:04",
+                    "subj": "Nanopoleon",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:04",
+                    "subj": "UsainVolts",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:04",
+                    "subj": "DEALER",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:04",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "====NEW HAND====",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:20:04",
+                    "subj": "DEALER",
+                    "event": "SET_BLIND_POS",
+                    "args": {
+                        "bb_pos": 0,
+                        "sb_pos": 1,
+                        "btn_pos": 1
+                    }
+                },
+                {
+                    "ts": "00:20:04",
+                    "subj": "side_effect",
+                    "event": "NEW_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:04",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "UsainVolts posted 1 for SB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:20:04",
+                    "subj": "UsainVolts",
+                    "event": "POST",
+                    "args": {
+                        "amt": 1
+                    }
+                },
+                {
+                    "ts": "00:20:04",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Nanopoleon posted 2 for BB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:20:04",
+                    "subj": "Nanopoleon",
+                    "event": "POST",
+                    "args": {
+                        "amt": 2
+                    }
+                },
+                {
+                    "ts": "00:20:04",
+                    "subj": "Nanopoleon",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Kd"
+                    }
+                },
+                {
+                    "ts": "00:20:04",
+                    "subj": "Nanopoleon",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "9d"
+                    }
+                },
+                {
+                    "ts": "00:20:04",
+                    "subj": "UsainVolts",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "9s"
+                    }
+                },
+                {
+                    "ts": "00:20:04",
+                    "subj": "UsainVolts",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "7d"
+                    }
+                },
+                {
+                    "ts": "00:20:04",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Nanopoleon (200.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:20:04",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "UsainVolts (200.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:20:04",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 4
+                    }
+                },
+                {
+                    "ts": "00:20:06",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:07",
+                    "subj": "squash",
+                    "event": "TAKE_SEAT",
+                    "args": {
+                        "position": 4
+                    }
+                },
+                {
+                    "ts": "00:20:07",
+                    "subj": "squash",
+                    "event": "BUY",
+                    "args": {
+                        "amt": "100.00"
+                    }
+                },
+                {
+                    "ts": "00:20:07",
+                    "subj": "squash",
+                    "event": "UPDATE_STACK",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:07",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "squash added 100 chips.",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:20:07",
+                    "subj": "side_effect",
+                    "event": "CREATE_TRANSFER",
+                    "args": {
+                        "amt": "100.00",
+                        "dst": {
+                            "bb": "2.00",
+                            "id": "f9f6ee13-13b7-405d-b01a-d2d7606cdd39",
+                            "sb": "1.00",
+                            "str": "No Limit Hold 'em:squash's Table #4",
+                            "ante": null,
+                            "name": "squash's Table #4",
+                            "path": "/table/f9f6ee13/",
+                            "created": "2017-08-09T00:20:03.953Z",
+                            "players": [
+                                "Nanopoleon",
+                                "UsainVolts"
+                            ],
+                            "variant": "No Limit Hold 'em",
+                            "short_id": "f9f6ee13",
+                            "max_buyin": "400.00",
+                            "min_buyin": "100.00",
+                            "num_seats": 6,
+                            "player_ids": [
+                                {
+                                    "id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd"
+                                },
+                                {
+                                    "id": "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a"
+                                }
+                            ],
+                            "table_type": "NLHE",
+                            "hand_number": 0
+                        },
+                        "src": {
+                            "id": "e8207d68-551c-4ffd-8344-05bb3a41c428",
+                            "str": "squash",
+                            "name": "",
+                            "is_staff": true,
+                            "username": "squash",
+                            "is_active": true,
+                            "last_name": "",
+                            "first_name": "",
+                            "is_authenticated": true
+                        },
+                        "notes": "@squash [BUY] {'amt': Decimal('100.00')}"
+                    }
+                },
+                {
+                    "ts": "00:20:10",
+                    "subj": "UsainVolts",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "7"
+                    }
+                },
+                {
+                    "ts": "00:20:10",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:11",
+                    "subj": "squash",
+                    "event": "SIT_IN_AT_BLINDS",
+                    "args": {
+                        "set_to": false
+                    }
+                },
+                {
+                    "ts": "00:20:12",
+                    "subj": "squash",
+                    "event": "SIT_IN",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:13",
+                    "subj": "Nanopoleon",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "21"
+                    }
+                },
+                {
+                    "ts": "00:20:13",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:17",
+                    "subj": "UsainVolts",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "63"
+                    }
+                },
+                {
+                    "ts": "00:20:17",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "Nanopoleon",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "UsainVolts",
+                    "event": "RETURN_CHIPS",
+                    "args": {
+                        "amt": "42.00"
+                    }
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "UsainVolts",
+                    "event": "WIN",
+                    "args": {
+                        "amt": "42.00",
+                        "pot_id": 0
+                    }
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "DEALER",
+                    "event": "DELAY_COUNTDOWN",
+                    "args": {
+                        "n_seconds": 2
+                    }
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "Nanopoleon",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "UsainVolts",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "UsainVolts won 42.00 chips",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "DEALER",
+                    "event": "END_HAND",
+                    "args": {}
+                }
+            ]
+        },
+        {
+            "ts": "2017-08-09T00:20:18.523Z",
+            "table": {
+                "bb": "2.00",
+                "id": "f9f6ee13-13b7-405d-b01a-d2d7606cdd39",
+                "sb": "1.00",
+                "ante": null,
+                "name": "squash's Table #4",
+                "bb_idx": 1,
+                "sb_idx": 0,
+                "btn_idx": 0,
+                "deck_str": "4h,4c,Qd,Ad,3s,Kh,Qh,Kc,5c,Js,7h,3d,As,8s,6s,Qs,9s,6c,2c,Qc,6h,Ac,7c,Jc,4s,5h,Jd,9c,Ah,9h,5d,3h,2s,8h,2d,6d,Tc,Ks,Td,Jh,Th,8c,4d,7d,Kd,9d,Ts,5s,7s,3c,8d,2h",
+                "board_str": "",
+                "max_buyin": "400.00",
+                "min_buyin": "100.00",
+                "num_seats": 6,
+                "precision": 0,
+                "table_type": "NLHE",
+                "hand_number": 1
+            },
+            "players": [
+                {
+                    "id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                    "stack": "179.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 0,
+                    "username": "Nanopoleon",
+                    "auto_rebuy": "100.00",
+                    "sitting_out": false,
+                    "sit_in_at_blinds": false
+                },
+                {
+                    "id": "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a",
+                    "stack": "221.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 1,
+                    "username": "UsainVolts",
+                    "auto_rebuy": "100.00",
+                    "sitting_out": false,
+                    "sit_in_at_blinds": false
+                },
+                {
+                    "id": "c12c4661-051b-422e-be76-7ebfe4fb9a4a",
+                    "stack": "100.00",
+                    "owes_bb": true,
+                    "owes_sb": false,
+                    "position": 4,
+                    "username": "squash",
+                    "auto_rebuy": null,
+                    "sitting_out": true,
+                    "sit_in_at_blinds": false
+                }
+            ],
+            "actions": [
+                {
+                    "ts": "00:20:23",
+                    "subj": "Nanopoleon",
+                    "action": "CALL",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:26",
+                    "subj": "UsainVolts",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": "8"
+                    }
+                },
+                {
+                    "ts": "00:20:28",
+                    "subj": "Nanopoleon",
+                    "action": "CALL",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:30",
+                    "subj": "UsainVolts",
+                    "action": "BET",
+                    "args": {
+                        "amt": "11"
+                    }
+                },
+                {
+                    "ts": "00:20:32",
+                    "subj": "Nanopoleon",
+                    "action": "CALL",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:34",
+                    "subj": "UsainVolts",
+                    "action": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:36",
+                    "subj": "Nanopoleon",
+                    "action": "BET",
+                    "args": {
+                        "amt": "27"
+                    }
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "UsainVolts",
+                    "action": "FOLD",
+                    "args": {}
+                }
+            ],
+            "events": [
+                {
+                    "ts": "00:20:18",
+                    "subj": "Nanopoleon",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "UsainVolts",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "DEALER",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "====NEW HAND====",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "squash",
+                    "event": "WAIT_TO_SIT_IN",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "DEALER",
+                    "event": "SET_BLIND_POS",
+                    "args": {
+                        "bb_pos": 1,
+                        "sb_pos": 0,
+                        "btn_pos": 0
+                    }
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "side_effect",
+                    "event": "NEW_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Nanopoleon posted 1.00 for SB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "Nanopoleon",
+                    "event": "POST",
+                    "args": {
+                        "amt": "1.00"
+                    }
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "UsainVolts posted 2.00 for BB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "UsainVolts",
+                    "event": "POST",
+                    "args": {
+                        "amt": "2.00"
+                    }
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "UsainVolts",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Ad"
+                    }
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "UsainVolts",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Qd"
+                    }
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "Nanopoleon",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "4c"
+                    }
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "Nanopoleon",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "4h"
+                    }
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "UsainVolts (221.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Nanopoleon (179.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:20:18",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 4
+                    }
+                },
+                {
+                    "ts": "00:20:23",
+                    "subj": "Nanopoleon",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "2.00"
+                    }
+                },
+                {
+                    "ts": "00:20:23",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:26",
+                    "subj": "UsainVolts",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "8"
+                    }
+                },
+                {
+                    "ts": "00:20:26",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:28",
+                    "subj": "Nanopoleon",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "8"
+                    }
+                },
+                {
+                    "ts": "00:20:28",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:28",
+                    "subj": "Nanopoleon",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:28",
+                    "subj": "UsainVolts",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:28",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:28",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "3s"
+                    }
+                },
+                {
+                    "ts": "00:20:28",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Kh"
+                    }
+                },
+                {
+                    "ts": "00:20:28",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Qh"
+                    }
+                },
+                {
+                    "ts": "00:20:28",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 3
+                    }
+                },
+                {
+                    "ts": "00:20:28",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "FLOP: 3\u2660, K\u2665, Q\u2665",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:20:30",
+                    "subj": "UsainVolts",
+                    "event": "BET",
+                    "args": {
+                        "amt": "11"
+                    }
+                },
+                {
+                    "ts": "00:20:30",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:32",
+                    "subj": "Nanopoleon",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "11"
+                    }
+                },
+                {
+                    "ts": "00:20:32",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:32",
+                    "subj": "UsainVolts",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:32",
+                    "subj": "Nanopoleon",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:32",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:32",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Kc"
+                    }
+                },
+                {
+                    "ts": "00:20:32",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 1
+                    }
+                },
+                {
+                    "ts": "00:20:32",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "TURN: 3\u2660, K\u2665, Q\u2665, [K\u2663]",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:20:34",
+                    "subj": "UsainVolts",
+                    "event": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:34",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:36",
+                    "subj": "Nanopoleon",
+                    "event": "BET",
+                    "args": {
+                        "amt": "27"
+                    }
+                },
+                {
+                    "ts": "00:20:36",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "UsainVolts",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "Nanopoleon",
+                    "event": "RETURN_CHIPS",
+                    "args": {
+                        "amt": "27.00"
+                    }
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "Nanopoleon",
+                    "event": "WIN",
+                    "args": {
+                        "amt": "38.00",
+                        "pot_id": 0
+                    }
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "DEALER",
+                    "event": "DELAY_COUNTDOWN",
+                    "args": {
+                        "n_seconds": 2
+                    }
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "Nanopoleon",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "UsainVolts",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "squash",
+                    "event": "SIT_IN",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Nanopoleon won 38.00 chips",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "DEALER",
+                    "event": "END_HAND",
+                    "args": {}
+                }
+            ]
+        },
+        {
+            "ts": "2017-08-09T00:20:37.473Z",
+            "table": {
+                "bb": "2.00",
+                "id": "f9f6ee13-13b7-405d-b01a-d2d7606cdd39",
+                "sb": "1.00",
+                "ante": null,
+                "name": "squash's Table #4",
+                "bb_idx": 4,
+                "sb_idx": 1,
+                "btn_idx": 0,
+                "deck_str": "Kd,2s,Ad,2c,5s,6h,5d,Jh,8d,Jc,Kh,3s,2h,Qd,4d,Ac,8s,Kc,Qc,Ks,9s,7s,4s,Td,3d,7h,5c,Qh,3h,Ah,6s,Th,Tc,3c,Js,7c,4c,9d,As,Jd,6c,7d,9c,5h,Ts,8c,9h,Qs,4h,2d,6d,8h",
+                "board_str": "",
+                "max_buyin": "400.00",
+                "min_buyin": "100.00",
+                "num_seats": 6,
+                "precision": 0,
+                "table_type": "NLHE",
+                "hand_number": 2
+            },
+            "players": [
+                {
+                    "id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                    "stack": "198.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 0,
+                    "username": "Nanopoleon",
+                    "auto_rebuy": "100.00",
+                    "sitting_out": false,
+                    "sit_in_at_blinds": false
+                },
+                {
+                    "id": "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a",
+                    "stack": "202.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 1,
+                    "username": "UsainVolts",
+                    "auto_rebuy": "100.00",
+                    "sitting_out": false,
+                    "sit_in_at_blinds": false
+                },
+                {
+                    "id": "c12c4661-051b-422e-be76-7ebfe4fb9a4a",
+                    "stack": "100.00",
+                    "owes_bb": true,
+                    "owes_sb": false,
+                    "position": 4,
+                    "username": "squash",
+                    "auto_rebuy": null,
+                    "sitting_out": false,
+                    "sit_in_at_blinds": false
+                }
+            ],
+            "actions": [
+                {
+                    "ts": "00:20:42",
+                    "subj": "Nanopoleon",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": "7"
+                    }
+                },
+                {
+                    "ts": "00:20:45",
+                    "subj": "UsainVolts",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": "22"
+                    }
+                },
+                {
+                    "ts": "00:20:50",
+                    "subj": "squash",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": "57",
+                        "SEQ_NUM": 12,
+                        "TIMESTAMP": 1502238050009
+                    }
+                }
+            ],
+            "events": [
+                {
+                    "ts": "00:20:37",
+                    "subj": "Nanopoleon",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "UsainVolts",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "DEALER",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "====NEW HAND====",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "DEALER",
+                    "event": "SET_BLIND_POS",
+                    "args": {
+                        "bb_pos": 4,
+                        "sb_pos": 1,
+                        "btn_pos": 0
+                    }
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "squash",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "side_effect",
+                    "event": "NEW_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "UsainVolts posted 1.00 for SB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "UsainVolts",
+                    "event": "POST",
+                    "args": {
+                        "amt": "1.00"
+                    }
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "squash posted 2.00 for BB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "squash",
+                    "event": "POST",
+                    "args": {
+                        "amt": "2.00"
+                    }
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "squash",
+                    "event": "OWE_BB",
+                    "args": {
+                        "owes": false
+                    }
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "UsainVolts",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "6h"
+                    }
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "UsainVolts",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "5s"
+                    }
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "squash",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "2c"
+                    }
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "squash",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Ad"
+                    }
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "Nanopoleon",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "2s"
+                    }
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "Nanopoleon",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Kd"
+                    }
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "UsainVolts (202.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "squash (100.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Nanopoleon (198.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:20:37",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 6
+                    }
+                },
+                {
+                    "ts": "00:20:42",
+                    "subj": "Nanopoleon",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "7"
+                    }
+                },
+                {
+                    "ts": "00:20:42",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:45",
+                    "subj": "UsainVolts",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "22"
+                    }
+                },
+                {
+                    "ts": "00:20:45",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:20:50",
+                    "subj": "squash",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "57"
+                    }
+                },
+                {
+                    "ts": "00:20:50",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:26:47",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:26:50",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                }
+            ]
+        }
+    ]
+}

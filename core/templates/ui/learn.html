@@ -1,0 +1,300 @@
+{% extends 'ui/base.html' %}
+
+{% load static %}
+{% load cache %}
+
+{% block title %}Learn Poker{% endblock %}
+
+{% cache 500 learnpage user.is_authenticated DEBUG GIT_SHA %}
+
+{% block inner %}
+
+
+    <style>
+        .inner-content {
+            font-size: 1.4em;
+            font-weight: 200;
+        }
+        .learning-page {
+            padding-bottom: 40px;
+            width: 100%;
+            z-index: 20;
+        }
+
+        h1.oddslingers-text-logo {
+            text-align: center;
+            font-size: 66px;
+        }
+        h2.oddslingers-text-logo {
+            font-size: 44px;
+        }
+        h3.oddslingers-text-logo {
+            font-size: 24px;
+        }
+        h2 {
+            text-align: center;
+            font-family: 'Lato Light', 'Helvetica', 'Arial', sans-serif;
+            font-weight: 200;
+            font-size: 44px;
+            font-variant: small-caps;
+        }
+        h2:first-letter, h3:first-letter {
+            color: orange;
+        }
+        iframe {
+            width: 100%;
+            height: 34vw;
+            border: 0px;
+            margin-left: 30px;
+        }
+        .walkthrough {
+            overflow-y: auto;
+            width: 100%;
+            max-width: 250px;
+            height: 34vw;
+            text-align: left;
+            padding-top: 25px;
+            border-radius: 0px 10px 10px 0px;
+        }
+        .walkthrough li {
+            line-height: 1.5;
+        }
+        .walkthrough li i {
+            color: #5cb85c;
+        }
+
+        .hand-ranking-img {
+            width: 100%;
+            max-width: 510px;
+        }
+
+        .paragraph {
+            font-family: 'Lato Light';
+            font-weight: 200
+        }
+
+        .tutorial-txt {
+            text-align: left;
+        }
+
+        .tutorial-img {
+            max-width: 100%;
+        }
+
+        li {
+            margin: 0.5em 0;
+        }
+
+        .faq-link {
+            font-style: italic;
+        }
+
+        @media (max-width: 992px){
+            .walkthrough {
+                width: 100%;
+                height: auto;
+                max-width: initial;
+                margin-top: 10px;
+                text-align: left;
+                padding-top: 25px;
+                border-radius: 0px 10px 10px 0px;
+            }
+            iframe {
+                margin-left: 0px;
+                height: 55vw;
+            }
+        }
+        @media (min-width: 1025px) {
+            .learning-page {
+                margin: 0 30px 30px 30px;
+                border-radius: 20px;
+                width: auto;
+            }
+        }
+    </style>
+    <div class="page learning-page col-md-12">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1" style="text-align: center">
+               <h2 class="oddslingers-text-logo">
+                    Poker Learning Resources
+                </h2>
+                <br/><br/>
+
+                <div class="col-md-6 col-xs-12">
+                    &nbsp; &nbsp; &nbsp; <b>OddSlingers is a free, no-rake, online poker platform currently in public beta.  We offer play-chips games
+                    at the moment (no real money).</b>
+                    <br/><br/>
+                    It's an ideal site for practicing to improve your poker skills against people worldwide, or for playing private matches with friends using our private tables feature.
+                </div>
+
+                <div class="col-md-6 col-xs-12">
+                    OddSlingers was founded out of the desire for a clean, secure, poker experience that just works without 
+                    needing to install any clunky software.
+                    
+                    <br/><br/>
+                    Check out our <a href="{% url 'FAQ' %}" class="faq-link">FAQ page</a> or <a href="{% url 'About' %}" class="faq-link">About page</a> for additional information about the site.
+                </div>
+
+
+                <div class="clearfix"></div>
+                <br/>
+                
+                <div class="row">
+                    <div class="col-lg-6 col-xs-12">
+                        <br/>
+                        <h2 class="oddslingers-text-logo">The Hand Rankings</h2>
+                        <hr/>
+                        <img class="hand-ranking-img" src="{% static 'images/hand-ranking.jpg' %}"/><br/><br/>
+                        <i class="fa fa-info"></i>&nbsp;
+                        <a href="https://en.wikipedia.org/wiki/List_of_poker_hands">List of Poker Hands</a><br/>
+                        <i class="fa fa-info"></i>&nbsp;
+                        <a href="https://en.wikipedia.org/wiki/Glossary_of_poker_terms">Glossary of Poker Terms</a><br/>
+                        <i class="fa fa-info"></i>&nbsp;
+                        <a href="http://www.pokerlistings.com/poker-rules-texas-holdem">Full Rules of Texas Hold'Em</a>
+                    </div>
+                    <div class="col-lg-6 col-xs-12 tutorial-txt paragraph" id="NLHE">
+                        <br/>
+                        <h2 class="oddslingers-text-logo">Texas Hold'em</h2>
+
+                        <hr/>
+
+                        Players are dealt 2 cards and have to combine them with 5 community cards to get the best hand. A single hand of Texas Hold'em can end in either one player outbetting everyone else, forcing them to fold, or a showdown of the hands.<br/>
+
+                        <h3 class="oddslingers-text-logo">The Cards</h3>
+
+                        In Texas Hold’em, you can bet on a maximum of 7 cards:
+                        <ul>
+                            <li>holecards - two cards that you get at the beginning of a game in the pre-flop phase</li>
+                            <li>the flop - three cards dealt on the table after the initial betting phase</li>
+                            <li>the turn - one card dealt on the table after the flop</li>
+                            <li>the river - one final card dealt on the table</li>
+                        </ul>
+
+                        <h3 class="oddslingers-text-logo">The Bets</h3>
+                        Betting takes place after each round of dealing cards. All bets go into the pot at the center of the table, which eventually goes to the winner(s) of the hand.
+
+                        There are four basic actions during a betting round:
+                        <ul>
+                            <li>fold - when facing a bet or raise, pay nothing and throw away the cards in your hand (the hole), forfeiting your chance to win the pot</li>
+                            <li>check - if you aren't facing a bet or raise, opt not bet or raise yourself. Sometimes people use the word "pass"</li>
+                            <li>call - match the current highest bet on the table. If you don't have that many chips, you can go "all-in". If there remain other people in the hand, he difference between your stack and the highest bet will be put into a side-pot that those players will continue to play for (you are still eligible to win the main pot).</li>
+                            <li>bet/raise - increase the size of the pot. Other players who do not match your wager must fold. The big blind is always the lower limit on bets, and the size of the last bet or raise is the lower limit for a raise.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 col-xs-12 tutorial-txt paragraph" id="PLO">
+                        <br/>
+                        <h2 class="oddslingers-text-logo">Pot Limit Omaha</h2>
+
+                        <hr/>
+
+                        Played the same way as Texas Hold'em variant with some differences:
+                        <ul>
+                            <li>You are dealt 4 hole cards instead of 2. That increases the chances of getting a stronger hand.</li>
+                            <li>Maximum bet/raise amount must be equivalent to the current pot value.</li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-6 col-xs-12 tutorial-txt paragraph" id="BNTY">
+                        <br/>
+                        <h2 class="oddslingers-text-logo">No Limit Bounty</h2>
+
+                        <hr/>
+
+                        Same as Texas Hold'em with a special case:
+                        <h3 class="oddslingers-text-logo">Seven Deuce (7-2)</h3>
+                        This is a bluffing artifact that players can use. It's risky and consist of making everyone fold after an aggressive bet from a player that has as hole cards 7 and 2 off suit (the worst possible starting hand).
+                        <br/>
+                        If that happens (everyone folds), the winner receives the pot as usual but the next hand is special.
+                        <ul>
+                            <li>Two hole cards are dealt as normal.</li>
+                            <li>Everybody but the winner must bet an amount equivalent to the winner's stack or go all-in.</li>
+                            <li>The winner has the chance to participate in the special hand going all-in or fold.</li>
+                            <li>After this mandatory round of bets, flop, turn and river are dealt consecutively to finally discover the Bounty Winner 👑 at the showdown.</li>
+                        </ul>
+                    </div>
+                </div>
+                <br/>
+
+                <div id="walkthrough" class="row">
+                    <h3 style="text-align: center" class="oddslingers-text-logo">
+                        Texas Hold'Em Walkthrough Tutorial
+                    </h3>
+                    <div class="col-md-9 col-xs-12">
+                        {% if user.is_authenticated %}
+                            <iframe src="about:blank"></iframe>
+                            <br/>
+                        {% else %}
+                            <br/><br/><br/><br/>
+                            <img src="{% static 'images/logo-black.png' %}" width="200px"/>
+                            <br/><br/>
+                            <a href="{% url 'Login' %}?next=/learn/" class="btn btn-large btn-success">Sign in to start the tutorial</a>
+                        {% endif %}
+                        <br/>
+                    </div>
+                    <div class="col-md-3 col-xs-12">
+                        <div class="walkthrough" style="">
+                            <ol>
+                                <li>Click "Sit in next hand" to begin <i>⬅</i></li>
+                                <li>Place initial bets</li>
+                                <li>The Flop: three cards are dealt, then bets placed</li>
+                                <li>The Turn: a fourth card is dealt, bets are placed</li>
+                                <li>The River: a fifth &amp; final card is dealt, bets are placed</li>
+                                <li>Most powerful hand wins</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    if (window.innerWidth > 768) {
+                        var iframe = document.querySelectorAll('#walkthrough iframe')[0]
+                        iframe.src = "{{table_path}}?nochat=1&nowelcome=1";
+                    } else {
+                        document.getElementById('walkthrough').remove()
+                    }
+                </script>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <br/>
+                        <h2 class="oddslingers-text-logo">Pre-flop example</h2>
+                        <hr/>
+                        <div class="row">
+                            <div class="col-lg-6 col-xs-12">
+                                <img class="tutorial-img" src="{% static 'images/tutorial/preflop1.png' %}"/><br/><br/>
+                            </div>
+                            <div class="col-lg-6 col-xs-12 tutorial-txt paragraph">
+                                1. GNOME_Chomsky is the dealer.<br/><br/>
+                                2. DigitJonesDiary, the first player, posts the required small blind bet.<br/><br/>
+                                3. UsainVolt, the second player, posts the required big blind bet.<br/><br/>
+                                4. ArrayPotter, the third player, calls, betting the current highest bid.<br/><br/>
+                                5. GNOME_Chomsky decides to fold.<br/><br/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-xs-12">
+                                <img class="tutorial-img" src="{% static 'images/tutorial/preflop2.png' %}"/><br/><br/>
+                            </div>
+                            <div class="col-lg-6 col-xs-12 tutorial-txt paragraph">
+                                6. DigitJonesDiary calls, betting an additional chip to match the current highest bid.<br/><br/>
+                                7. UsainVolt checks, not raising the bet.<br/><br/>
+                                8. ArrayPotter checks, not raising the bet.<br/><br/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <hr/>
+                        <h3 class="oddslingers-text-logo">Get started by playing singleplayer!</h3>
+                        <a href="{% url 'Tables' %}" class="btn btn-success">Play for Free</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock inner %}
+
+{% endcache %}

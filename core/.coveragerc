@@ -1,0 +1,43 @@
+[run]
+source = oddslingers,poker,sockets,banker,ui,rewards
+concurrency =
+    multiprocessing
+    thread
+
+[paths]
+oddslingers =
+    core/oddslingers
+    oddslingers
+poker =
+    core/poker
+    poker
+sockets =
+    core/sockets
+    sockets
+banker =
+    core/banker
+    banker
+ui =
+    core/ui
+    ui
+rewards =
+    core/rewards
+    rewards
+
+[report]
+omit =
+    */oddslingers/__init__.py
+    */migrations/*
+    */management/*
+    */settings_*.py
+    */integration_tests.py
+    */tasks.py
+    */wsgi.py
+    */asgi.py
+    */.venv
+    */node_modules
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    raise NotImplementedError
+    if __name__ == .__main__.:

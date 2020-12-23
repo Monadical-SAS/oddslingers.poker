@@ -1,0 +1,48 @@
+{% extends 'admin/change_form.html' %}
+
+{% block field_sets %}
+    <style>
+        .custom-ticket-section pre {
+            width: 46%;
+            display: inline-block;
+            margin: 1%;
+            vertical-align: top;
+            white-space: pre-wrap;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px 10px;
+            box-shadow: 1px 6px 4px 5px rgba(0,0,0,0.01);
+        }
+    </style>
+    <div class="custom-ticket-section">
+        <h3>Notes &amp; Communication Log</h3>
+        <pre>{{notes}}</pre>
+        <pre>{{communications}}</pre>
+        <br/>
+        <pre style="width: 75%; text-align: center; margin: auto; display: block;">
+        {% if artifacts_links %}
+            <a href="{% url 'SupportTicketDownload' ticket_id=ticket_short_id %}" target="_blank">Download Artifacts</a>
+            <br/>
+            ({{artifacts_links}})
+        {% else %}
+            (No artifacts)
+        {% endif %}
+        </pre>
+        <br/><br/>
+    </div>
+    {{ block.super }}
+{% endblock %}
+
+{% block submit_buttons_bottom %}
+    <div class="custom-ticket-section">
+        <center>
+            <br/>
+            <input type="submit" value="Reply via Email to User" name="_email-user" style="background-color: #449D44"> &nbsp;
+            <input type="submit" value="Close Ticket" name="_close-ticket" style="background-color: #3E73A0"> &nbsp;
+            <!--<input type="submit" value="View Artifacts" name="_view-artifacts" style="background-color: #592541">-->
+            <br/><br/>
+        </center>
+    </div>
+    <br/><br/>
+    {{ block.super }}
+{% endblock %}

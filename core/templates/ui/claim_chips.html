@@ -1,0 +1,58 @@
+{% extends 'ui/base.html' %}
+
+{% load static %}
+{% load utils %}
+
+{% block title %}Your gift{% endblock %}
+
+
+{% block outer %}
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .container-fluid {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+        .pirate-img {
+            height: 200px;
+            margin: auto;
+        }
+    </style>
+    <div class="container-fluid">
+        <h1>
+            <a href="{% url 'Home' %}">
+                <picture>
+                    {% if user.is_authenticated and not user.light_theme %}
+                        <source srcSet="/static/images/logo-white.webp" type="image/webp"/>
+                        <img src="{% static 'images/logo-white.png' %}" alt="Logo" style="height: 120px"/>
+                    {% else %}
+                        <source srcSet="/static/images/logo-black.webp" type="image/webp"/>
+                        <img src="{% static 'images/logo-black.png' %}" alt="Logo" style="height: 120px"/>
+                    {% endif %}
+                </picture><br/>
+                <span id="logo-text"><span>Odd</span>Slingers</span>
+            </a>
+        </h1>
+        <br/>
+        <h1>Congratulations!</h1>
+        </br>
+        <h2>
+            ㆔{{amount}} chips were added to <a href="{% url 'UserProfile' %}">your balance</a>.
+        </h2>
+        <h3>
+            A gift from your friend <a href="{% url 'UserProfile' username=sender %}">{{sender}}</a>
+        </h3>
+        <h5>
+            <a href="{% url 'Tables' %}">Looking for a table?</a>
+        </h5>
+        <img class="pirate-img" src="/static/images/pirate.png"/>
+    </div>
+{% endblock outer %}

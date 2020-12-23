@@ -1,0 +1,2840 @@
+{
+    "release": "08dc8073eda4474ae7cd3d6cda408e4b5575b949",
+    "accessed": "2018-01-19T19:11:47.208Z",
+    "notes": "- Did the bug happen in the current hand or a previous one?\n\ncurrent\n- Who was acting when the bug happened?\n\nyamijuan\n- What went wrong?\n\nraise 7, same as call\n- What happened right before the bug?\n yamijuan post, Ansile raise, then other calls and then bug",
+    "hands": [
+        {
+            "ts": "2017-11-30T20:02:33.329Z",
+            "table": {
+                "bb": 2,
+                "id": "bd301cbb-2dcd-46fa-8bf1-bd84a6deb92d",
+                "sb": 1,
+                "ante": null,
+                "name": "yamijuan's Table #2",
+                "bb_idx": 0,
+                "sb_idx": 2,
+                "btn_idx": 1,
+                "deck_str": "6c,Jc,Ah,2c,5s,7s,3c,Ks,4c,6s,2s,3d,Jh,4d,Ts,3h,Td,7h,9c,5c,Ad,Qc,7d,8h,4h,Qh,Js,9s,5d,Qs,Th,8c,2h,Qd,Kc,Tc,9d,6d,7c,8s,3s,Ac,As,5h,8d,Jd,4s,2d,6h,Kd,9h,Kh",
+                "board_str": "",
+                "max_buyin": 400,
+                "min_buyin": 100,
+                "num_seats": 6,
+                "precision": 0,
+                "table_type": "NLHE",
+                "hand_number": 0
+            },
+            "players": [
+                {
+                    "id": "66333696-b6a7-40d6-9d75-f0ca85accdbf",
+                    "stack": "200.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 0,
+                    "username": "AnsibleBuress",
+                    "auto_rebuy": "100.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false
+                },
+                {
+                    "id": "f544d514-ba9c-4c8d-a9dc-67e1298520a9",
+                    "stack": "200.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 1,
+                    "username": "ArrayPotter",
+                    "auto_rebuy": "100.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false
+                },
+                {
+                    "id": "b7f7c601-93e9-43d0-86b2-16f8acf06e09",
+                    "stack": "200.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 2,
+                    "username": "Vim Diesel",
+                    "auto_rebuy": "100.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false
+                }
+            ],
+            "actions": [
+                {
+                    "ts": "20:02:34",
+                    "subj": "yamijuan",
+                    "action": "TAKE_SEAT",
+                    "args": {
+                        "stack": 0,
+                        "owes_bb": true,
+                        "owes_sb": false,
+                        "position": 4,
+                        "username": "yamijuan",
+                        "buyin_amt": null,
+                        "auto_rebuy": null,
+                        "playing_state": "SIT_IN_AT_BLINDS_PENDING"
+                    }
+                },
+                {
+                    "ts": "20:02:37",
+                    "subj": "ArrayPotter",
+                    "action": "CALL",
+                    "args": {}
+                },
+                {
+                    "ts": "20:02:45",
+                    "subj": "Vim Diesel",
+                    "action": "CALL",
+                    "args": {}
+                },
+                {
+                    "ts": "20:02:47",
+                    "subj": "yamijuan",
+                    "action": "LEAVE_SEAT",
+                    "args": {
+                        "SEQ_NUM": 1,
+                        "TIMESTAMP": 1512072167862
+                    }
+                },
+                {
+                    "ts": "20:02:48",
+                    "subj": "AnsibleBuress",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": "10"
+                    }
+                },
+                {
+                    "ts": "18:44:33",
+                    "subj": "yamijuan",
+                    "action": "TAKE_SEAT",
+                    "args": {
+                        "stack": "100.00",
+                        "owes_bb": true,
+                        "owes_sb": false,
+                        "position": 5,
+                        "username": "yamijuan",
+                        "buyin_amt": null,
+                        "auto_rebuy": null,
+                        "playing_state": "SIT_IN_AT_BLINDS_PENDING"
+                    }
+                },
+                {
+                    "ts": "18:44:36",
+                    "subj": "yamijuan",
+                    "action": "SIT_IN",
+                    "args": {
+                        "SEQ_NUM": 2,
+                        "TIMESTAMP": 1516387475947
+                    }
+                },
+                {
+                    "ts": "18:44:36",
+                    "subj": "ArrayPotter",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": "32"
+                    }
+                },
+                {
+                    "ts": "18:44:40",
+                    "subj": "Vim Diesel",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": "98"
+                    }
+                },
+                {
+                    "ts": "18:44:44",
+                    "subj": "AnsibleBuress",
+                    "action": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:47",
+                    "subj": "ArrayPotter",
+                    "action": "CALL",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:50",
+                    "subj": "Vim Diesel",
+                    "action": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:53",
+                    "subj": "ArrayPotter",
+                    "action": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:56",
+                    "subj": "Vim Diesel",
+                    "action": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:59",
+                    "subj": "ArrayPotter",
+                    "action": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:02",
+                    "subj": "Vim Diesel",
+                    "action": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "ArrayPotter",
+                    "action": "CHECK",
+                    "args": {}
+                }
+            ],
+            "events": [
+                {
+                    "ts": "20:02:33",
+                    "subj": "AnsibleBuress",
+                    "event": "SET_TIMEBANK",
+                    "args": {
+                        "set_to": 5
+                    }
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "ArrayPotter",
+                    "event": "SET_TIMEBANK",
+                    "args": {
+                        "set_to": 5
+                    }
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "Vim Diesel",
+                    "event": "SET_TIMEBANK",
+                    "args": {
+                        "set_to": 5
+                    }
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "AnsibleBuress",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "ArrayPotter",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "Vim Diesel",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "DEALER",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "====NEW HAND====",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "DEALER",
+                    "event": "SET_BLIND_POS",
+                    "args": {
+                        "bb_pos": 0,
+                        "sb_pos": 2,
+                        "btn_pos": 1
+                    }
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "side_effect",
+                    "event": "NEW_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Vim Diesel posted 1 for SB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "Vim Diesel",
+                    "event": "POST",
+                    "args": {
+                        "amt": 1
+                    }
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "AnsibleBuress posted 2 for BB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "AnsibleBuress",
+                    "event": "POST",
+                    "args": {
+                        "amt": 2
+                    }
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "Vim Diesel",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "6c"
+                    }
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "AnsibleBuress",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Jc"
+                    }
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "ArrayPotter",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Ah"
+                    }
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "Vim Diesel",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "2c"
+                    }
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "AnsibleBuress",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "5s"
+                    }
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "ArrayPotter",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "7s"
+                    }
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Vim Diesel (200.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "AnsibleBuress (200.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "ArrayPotter (200.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "20:02:33",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 6
+                    }
+                },
+                {
+                    "ts": "20:02:34",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "20:02:34",
+                    "subj": "yamijuan",
+                    "event": "TAKE_SEAT",
+                    "args": {
+                        "position": 4
+                    }
+                },
+                {
+                    "ts": "20:02:34",
+                    "subj": "yamijuan",
+                    "event": "BUY",
+                    "args": {
+                        "amt": "100.00"
+                    }
+                },
+                {
+                    "ts": "20:02:34",
+                    "subj": "yamijuan",
+                    "event": "UPDATE_STACK",
+                    "args": {}
+                },
+                {
+                    "ts": "20:02:34",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "yamijuan added 100 chips.",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "20:02:34",
+                    "subj": "side_effect",
+                    "event": "CREATE_TRANSFER",
+                    "args": {
+                        "amt": "100.00",
+                        "dst": {
+                            "bb": "2.00",
+                            "id": "bd301cbb-2dcd-46fa-8bf1-bd84a6deb92d",
+                            "sb": "1.00",
+                            "str": "No Limit Hold 'em:yamijuan's Table #2",
+                            "ante": null,
+                            "name": "yamijuan's Table #2",
+                            "path": "/table/bd301cbb/",
+                            "created": "2017-11-30T20:02:33.254Z",
+                            "players": [
+                                "AnsibleBuress",
+                                "Vim Diesel",
+                                "ArrayPotter"
+                            ],
+                            "variant": "No Limit Hold 'em",
+                            "short_id": "bd301cbb",
+                            "max_buyin": "400.00",
+                            "min_buyin": "100.00",
+                            "num_seats": 6,
+                            "player_ids": [
+                                {
+                                    "id": "66333696-b6a7-40d6-9d75-f0ca85accdbf"
+                                },
+                                {
+                                    "id": "b7f7c601-93e9-43d0-86b2-16f8acf06e09"
+                                },
+                                {
+                                    "id": "f544d514-ba9c-4c8d-a9dc-67e1298520a9"
+                                }
+                            ],
+                            "table_type": "NLHE",
+                            "hand_number": 0
+                        },
+                        "src": {
+                            "id": "f57e11d1-2eb7-4777-9397-60774fe9bea7",
+                            "str": "yamijuan",
+                            "is_staff": true,
+                            "username": "yamijuan",
+                            "is_active": true,
+                            "last_name": "",
+                            "first_name": "",
+                            "profile_picture": null,
+                            "is_authenticated": true
+                        },
+                        "notes": "@yamijuan [BUY] {'amt': Decimal('100.00')}"
+                    }
+                },
+                {
+                    "ts": "20:02:37",
+                    "subj": "ArrayPotter",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "2.00"
+                    }
+                },
+                {
+                    "ts": "20:02:37",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "20:02:42",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "20:02:45",
+                    "subj": "Vim Diesel",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "2.00"
+                    }
+                },
+                {
+                    "ts": "20:02:45",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "20:02:47",
+                    "subj": "yamijuan",
+                    "event": "LEAVE_SEAT",
+                    "args": {
+                        "immediate": true
+                    }
+                },
+                {
+                    "ts": "20:02:47",
+                    "subj": "side_effect",
+                    "event": "CREATE_TRANSFER",
+                    "args": {
+                        "amt": "100.00",
+                        "dst": {
+                            "id": "f57e11d1-2eb7-4777-9397-60774fe9bea7",
+                            "str": "yamijuan",
+                            "is_staff": true,
+                            "username": "yamijuan",
+                            "is_active": true,
+                            "last_name": "",
+                            "first_name": "",
+                            "profile_picture": null,
+                            "is_authenticated": true
+                        },
+                        "src": {
+                            "bb": "2.00",
+                            "id": "bd301cbb-2dcd-46fa-8bf1-bd84a6deb92d",
+                            "sb": "1.00",
+                            "str": "No Limit Hold 'em:yamijuan's Table #2",
+                            "ante": null,
+                            "name": "yamijuan's Table #2",
+                            "path": "/table/bd301cbb/",
+                            "created": "2017-11-30T20:02:33.254Z",
+                            "players": [
+                                "AnsibleBuress",
+                                "Vim Diesel",
+                                "ArrayPotter",
+                                "yamijuan"
+                            ],
+                            "variant": "No Limit Hold 'em",
+                            "short_id": "bd301cbb",
+                            "max_buyin": "400.00",
+                            "min_buyin": "100.00",
+                            "num_seats": 6,
+                            "player_ids": [
+                                {
+                                    "id": "66333696-b6a7-40d6-9d75-f0ca85accdbf"
+                                },
+                                {
+                                    "id": "b7f7c601-93e9-43d0-86b2-16f8acf06e09"
+                                },
+                                {
+                                    "id": "f544d514-ba9c-4c8d-a9dc-67e1298520a9"
+                                },
+                                {
+                                    "id": "3f4e0efe-2420-406e-9a12-17d7cc474cd0"
+                                }
+                            ],
+                            "table_type": "NLHE",
+                            "hand_number": 0
+                        },
+                        "notes": "@yamijuan [LEAVE_SEAT] {'amt': Decimal('100.00')}"
+                    }
+                },
+                {
+                    "ts": "20:02:48",
+                    "subj": "AnsibleBuress",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "10"
+                    }
+                },
+                {
+                    "ts": "20:02:48",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:33",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:33",
+                    "subj": "yamijuan",
+                    "event": "TAKE_SEAT",
+                    "args": {
+                        "position": 5
+                    }
+                },
+                {
+                    "ts": "18:44:36",
+                    "subj": "yamijuan",
+                    "event": "SIT_IN",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:36",
+                    "subj": "ArrayPotter",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "32"
+                    }
+                },
+                {
+                    "ts": "18:44:36",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:40",
+                    "subj": "Vim Diesel",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "98"
+                    }
+                },
+                {
+                    "ts": "18:44:40",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:44",
+                    "subj": "AnsibleBuress",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:44",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:47",
+                    "subj": "ArrayPotter",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "98"
+                    }
+                },
+                {
+                    "ts": "18:44:47",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:47",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:47",
+                    "subj": "ArrayPotter",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:47",
+                    "subj": "Vim Diesel",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:47",
+                    "subj": "AnsibleBuress",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:47",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "3c"
+                    }
+                },
+                {
+                    "ts": "18:44:47",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Ks"
+                    }
+                },
+                {
+                    "ts": "18:44:47",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "4c"
+                    }
+                },
+                {
+                    "ts": "18:44:47",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 3
+                    }
+                },
+                {
+                    "ts": "18:44:47",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "FLOP: 3\u2663, K\u2660, 4\u2663",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:44:50",
+                    "subj": "Vim Diesel",
+                    "event": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:50",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:53",
+                    "subj": "ArrayPotter",
+                    "event": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:53",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:53",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:53",
+                    "subj": "Vim Diesel",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:53",
+                    "subj": "AnsibleBuress",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:53",
+                    "subj": "ArrayPotter",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:53",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "6s"
+                    }
+                },
+                {
+                    "ts": "18:44:53",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 1
+                    }
+                },
+                {
+                    "ts": "18:44:53",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "TURN: 3\u2663, K\u2660, 4\u2663, [6\u2660]",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:44:56",
+                    "subj": "Vim Diesel",
+                    "event": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:56",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:59",
+                    "subj": "ArrayPotter",
+                    "event": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:59",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:59",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:59",
+                    "subj": "Vim Diesel",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:59",
+                    "subj": "AnsibleBuress",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:59",
+                    "subj": "ArrayPotter",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:44:59",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "2s"
+                    }
+                },
+                {
+                    "ts": "18:44:59",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 1
+                    }
+                },
+                {
+                    "ts": "18:44:59",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "RIVER: 3\u2663, K\u2660, 4\u2663, 6\u2660, [2\u2660]",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:45:02",
+                    "subj": "Vim Diesel",
+                    "event": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:02",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "ArrayPotter",
+                    "event": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "Vim Diesel",
+                    "event": "REVEAL_HAND",
+                    "args": {
+                        "cards": [
+                            "6c",
+                            "2c"
+                        ],
+                        "player_id": "b7f7c601-93e9-43d0-86b2-16f8acf06e09",
+                        "description": "Two Pair, sixes and twos"
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Vim Diesel has 6\u2663, 2\u2663 (Two Pair, sixes and twos)",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "ArrayPotter",
+                    "event": "MUCK",
+                    "args": {
+                        "player_id": "f544d514-ba9c-4c8d-a9dc-67e1298520a9"
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "ArrayPotter mucked",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "Vim Diesel",
+                    "event": "WIN",
+                    "args": {
+                        "amt": "206",
+                        "pot_id": 0,
+                        "showdown": true,
+                        "winning_hand": [
+                            "6c",
+                            "2c",
+                            "Ks",
+                            "6s",
+                            "2s"
+                        ]
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "DEALER",
+                    "event": "DELAY_COUNTDOWN",
+                    "args": {
+                        "n_seconds": 4
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Vim Diesel won the main pot with Two Pair, sixes and twos for 206 chips",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "side_effect",
+                    "event": "SHOWDOWN_COMPLETE",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "Vim Diesel",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "AnsibleBuress",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "ArrayPotter",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "Vim Diesel",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "AnsibleBuress",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "ArrayPotter",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "DEALER",
+                    "event": "END_HAND",
+                    "args": {}
+                }
+            ]
+        },
+        {
+            "ts": "2018-01-19T18:45:06.445Z",
+            "table": {
+                "bb": "2.00",
+                "id": "bd301cbb-2dcd-46fa-8bf1-bd84a6deb92d",
+                "sb": "1.00",
+                "ante": null,
+                "name": "yamijuan's Table #2",
+                "bb_idx": 1,
+                "sb_idx": 0,
+                "btn_idx": 2,
+                "deck_str": "2h,4d,2c,Td,5s,3c,4h,8s,4s,7c,Jh,5d,9d,Qd,Ac,5h,9h,Kd,7s,Ad,Jd,3d,Kc,Kh,5c,Jc,8c,3s,Ts,2d,2s,7h,9s,Qh,Ah,6s,Qc,3h,Tc,6d,Qs,Ks,Js,As,7d,9c,Th,4c,8h,6c,8d,6h",
+                "board_str": "",
+                "max_buyin": "400.00",
+                "min_buyin": "100.00",
+                "num_seats": 6,
+                "precision": 0,
+                "table_type": "NLHE",
+                "hand_number": 1
+            },
+            "players": [
+                {
+                    "id": "66333696-b6a7-40d6-9d75-f0ca85accdbf",
+                    "stack": "190.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 0,
+                    "username": "AnsibleBuress",
+                    "auto_rebuy": "100.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false
+                },
+                {
+                    "id": "f544d514-ba9c-4c8d-a9dc-67e1298520a9",
+                    "stack": "102.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 1,
+                    "username": "ArrayPotter",
+                    "auto_rebuy": "100.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false
+                },
+                {
+                    "id": "b7f7c601-93e9-43d0-86b2-16f8acf06e09",
+                    "stack": "308.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 2,
+                    "username": "Vim Diesel",
+                    "auto_rebuy": "100.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false
+                },
+                {
+                    "id": "3f4e0efe-2420-406e-9a12-17d7cc474cd0",
+                    "stack": "100.00",
+                    "owes_bb": true,
+                    "owes_sb": false,
+                    "position": 5,
+                    "username": "yamijuan",
+                    "auto_rebuy": null,
+                    "playing_state": "SIT_IN_PENDING",
+                    "sit_out_at_blinds": false
+                }
+            ],
+            "actions": [
+                {
+                    "ts": "18:45:13",
+                    "subj": "Vim Diesel",
+                    "action": "CALL",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:16",
+                    "subj": "AnsibleBuress",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": "9"
+                    }
+                },
+                {
+                    "ts": "18:45:19",
+                    "subj": "ArrayPotter",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": "29"
+                    }
+                },
+                {
+                    "ts": "18:45:22",
+                    "subj": "Vim Diesel",
+                    "action": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:25",
+                    "subj": "AnsibleBuress",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": "89"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "ArrayPotter",
+                    "action": "FOLD",
+                    "args": {}
+                }
+            ],
+            "events": [
+                {
+                    "ts": "18:45:06",
+                    "subj": "Vim Diesel",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "AnsibleBuress",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "ArrayPotter",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "DEALER",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "====NEW HAND====",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "side_effect",
+                    "event": "NOTIFICATION",
+                    "args": {
+                        "msg": "Players cannot join the game between the btn and the bb. You will have to wait another hand to play.",
+                        "player": {
+                            "id": "3f4e0efe-2420-406e-9a12-17d7cc474cd0",
+                            "str": "yamijuan",
+                            "user": "yamijuan",
+                            "table": "No Limit Hold 'em:yamijuan's Table #2",
+                            "user_id": "f57e11d1-2eb7-4777-9397-60774fe9bea7",
+                            "short_id": "3f4e0efe",
+                            "table_id": "bd301cbb-2dcd-46fa-8bf1-bd84a6deb92d",
+                            "username": "yamijuan"
+                        },
+                        "notification_type": "wait_to_sit_in"
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "DEALER",
+                    "event": "SET_BLIND_POS",
+                    "args": {
+                        "bb_pos": 1,
+                        "sb_pos": 0,
+                        "btn_pos": 2
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "side_effect",
+                    "event": "NEW_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "AnsibleBuress posted 1.00 for SB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "AnsibleBuress",
+                    "event": "POST",
+                    "args": {
+                        "amt": "1.00"
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "ArrayPotter posted 2.00 for BB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "ArrayPotter",
+                    "event": "POST",
+                    "args": {
+                        "amt": "2.00"
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "AnsibleBuress",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "2h"
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "ArrayPotter",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "4d"
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "Vim Diesel",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "2c"
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "AnsibleBuress",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Td"
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "ArrayPotter",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "5s"
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "Vim Diesel",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "3c"
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "AnsibleBuress (190.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "ArrayPotter (102.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Vim Diesel (308.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:45:06",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 6
+                    }
+                },
+                {
+                    "ts": "18:45:13",
+                    "subj": "Vim Diesel",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "2.00"
+                    }
+                },
+                {
+                    "ts": "18:45:13",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:16",
+                    "subj": "AnsibleBuress",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "9"
+                    }
+                },
+                {
+                    "ts": "18:45:16",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:19",
+                    "subj": "ArrayPotter",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "29"
+                    }
+                },
+                {
+                    "ts": "18:45:19",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:22",
+                    "subj": "Vim Diesel",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:22",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:25",
+                    "subj": "AnsibleBuress",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "89"
+                    }
+                },
+                {
+                    "ts": "18:45:25",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "ArrayPotter",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "AnsibleBuress",
+                    "event": "RETURN_CHIPS",
+                    "args": {
+                        "amt": "60.00"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "AnsibleBuress",
+                    "event": "WIN",
+                    "args": {
+                        "amt": "60.00",
+                        "pot_id": 0,
+                        "showdown": false
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "AnsibleBuress won 60.00 from the main pot",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "DEALER",
+                    "event": "DELAY_COUNTDOWN",
+                    "args": {
+                        "n_seconds": 2
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "side_effect",
+                    "event": "SHOWDOWN_COMPLETE",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "Vim Diesel",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "AnsibleBuress",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "ArrayPotter",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "AnsibleBuress",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "ArrayPotter",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "Vim Diesel",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "DEALER",
+                    "event": "END_HAND",
+                    "args": {}
+                }
+            ]
+        },
+        {
+            "ts": "2018-01-19T18:45:29.119Z",
+            "table": {
+                "bb": "2.00",
+                "id": "bd301cbb-2dcd-46fa-8bf1-bd84a6deb92d",
+                "sb": "1.00",
+                "ante": null,
+                "name": "yamijuan's Table #2",
+                "bb_idx": 2,
+                "sb_idx": 1,
+                "btn_idx": 0,
+                "deck_str": "Ts,Jc,5h,7s,8h,Kh,Ac,9d,Kd,Js,Qh,6h,3s,2h,As,8d,8s,3h,5s,Th,Ah,2c,2s,2d,4c,7c,6c,3d,Kc,Jd,3c,6d,Qd,Jh,5c,Qc,Tc,Td,4d,Ks,7h,Ad,9h,9s,8c,4s,7d,4h,Qs,5d,6s,9c",
+                "board_str": "",
+                "max_buyin": "400.00",
+                "min_buyin": "100.00",
+                "num_seats": 6,
+                "precision": 0,
+                "table_type": "NLHE",
+                "hand_number": 2
+            },
+            "players": [
+                {
+                    "id": "66333696-b6a7-40d6-9d75-f0ca85accdbf",
+                    "stack": "221.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 0,
+                    "username": "AnsibleBuress",
+                    "auto_rebuy": "100.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false
+                },
+                {
+                    "id": "f544d514-ba9c-4c8d-a9dc-67e1298520a9",
+                    "stack": "100.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 1,
+                    "username": "ArrayPotter",
+                    "auto_rebuy": "100.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false
+                },
+                {
+                    "id": "b7f7c601-93e9-43d0-86b2-16f8acf06e09",
+                    "stack": "306.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 2,
+                    "username": "Vim Diesel",
+                    "auto_rebuy": "100.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false
+                },
+                {
+                    "id": "3f4e0efe-2420-406e-9a12-17d7cc474cd0",
+                    "stack": "100.00",
+                    "owes_bb": true,
+                    "owes_sb": false,
+                    "position": 5,
+                    "username": "yamijuan",
+                    "auto_rebuy": null,
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false
+                }
+            ],
+            "actions": [
+                {
+                    "ts": "18:45:48",
+                    "subj": "yamijuan",
+                    "action": "CHECK",
+                    "args": {
+                        "SEQ_NUM": 4,
+                        "TIMESTAMP": 1516387548442
+                    }
+                },
+                {
+                    "ts": "18:45:51",
+                    "subj": "AnsibleBuress",
+                    "action": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:54",
+                    "subj": "ArrayPotter",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": "9"
+                    }
+                },
+                {
+                    "ts": "18:45:57",
+                    "subj": "Vim Diesel",
+                    "action": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:03",
+                    "subj": "yamijuan",
+                    "action": "CALL",
+                    "args": {
+                        "SEQ_NUM": 5,
+                        "TIMESTAMP": 1516387563562
+                    }
+                },
+                {
+                    "ts": "18:46:06",
+                    "subj": "ArrayPotter",
+                    "action": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:08",
+                    "subj": "yamijuan",
+                    "action": "BET",
+                    "args": {
+                        "amt": 2,
+                        "SEQ_NUM": 6,
+                        "TIMESTAMP": 1516387568625
+                    }
+                },
+                {
+                    "ts": "18:46:11",
+                    "subj": "ArrayPotter",
+                    "action": "CALL",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:14",
+                    "subj": "ArrayPotter",
+                    "action": "BET",
+                    "args": {
+                        "amt": "17"
+                    }
+                },
+                {
+                    "ts": "18:46:18",
+                    "subj": "yamijuan",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": 34,
+                        "SEQ_NUM": 7,
+                        "TIMESTAMP": 1516387578312
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "ArrayPotter",
+                    "action": "FOLD",
+                    "args": {}
+                }
+            ],
+            "events": [
+                {
+                    "ts": "18:45:29",
+                    "subj": "ArrayPotter",
+                    "event": "BUY",
+                    "args": {
+                        "amt": "27.00"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "ArrayPotter",
+                    "event": "UPDATE_STACK",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "ArrayPotter added 27 chips.",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "side_effect",
+                    "event": "CREATE_TRANSFER",
+                    "args": {
+                        "amt": "27.00",
+                        "dst": {
+                            "bb": "2.00",
+                            "id": "bd301cbb-2dcd-46fa-8bf1-bd84a6deb92d",
+                            "sb": "1.00",
+                            "str": "No Limit Hold 'em:yamijuan's Table #2",
+                            "ante": null,
+                            "name": "yamijuan's Table #2",
+                            "path": "/table/bd301cbb/",
+                            "created": "2017-11-30T20:02:33.254Z",
+                            "players": [
+                                "AnsibleBuress",
+                                "ArrayPotter",
+                                "Vim Diesel",
+                                "yamijuan"
+                            ],
+                            "variant": "No Limit Hold 'em",
+                            "short_id": "bd301cbb",
+                            "max_buyin": "400.00",
+                            "min_buyin": "100.00",
+                            "num_seats": 6,
+                            "player_ids": [
+                                {
+                                    "id": "66333696-b6a7-40d6-9d75-f0ca85accdbf"
+                                },
+                                {
+                                    "id": "f544d514-ba9c-4c8d-a9dc-67e1298520a9"
+                                },
+                                {
+                                    "id": "b7f7c601-93e9-43d0-86b2-16f8acf06e09"
+                                },
+                                {
+                                    "id": "3f4e0efe-2420-406e-9a12-17d7cc474cd0"
+                                }
+                            ],
+                            "table_type": "NLHE",
+                            "hand_number": 2
+                        },
+                        "src": {
+                            "id": "ab964a18-033f-4cbd-87f8-e87af701ba72",
+                            "str": "ArrayPotter",
+                            "is_staff": false,
+                            "username": "ArrayPotter",
+                            "is_active": true,
+                            "last_name": "",
+                            "first_name": "",
+                            "profile_picture": null,
+                            "is_authenticated": true
+                        },
+                        "notes": "@ArrayPotter [BUY] {'amt': Decimal('27.00')}"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "AnsibleBuress",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "ArrayPotter",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "Vim Diesel",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "DEALER",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "====NEW HAND====",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "yamijuan",
+                    "event": "SIT_IN",
+                    "args": {
+                        "immediate": true
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "yamijuan",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "DEALER",
+                    "event": "SET_BLIND_POS",
+                    "args": {
+                        "bb_pos": 2,
+                        "sb_pos": 1,
+                        "btn_pos": 0
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "side_effect",
+                    "event": "NEW_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "ArrayPotter posted 1.00 for SB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "ArrayPotter",
+                    "event": "POST",
+                    "args": {
+                        "amt": "1.00"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Vim Diesel posted 2.00 for BB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "Vim Diesel",
+                    "event": "POST",
+                    "args": {
+                        "amt": "2.00"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "yamijuan posted 2.00 for BB (out of position)",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "yamijuan",
+                    "event": "POST",
+                    "args": {
+                        "amt": "2.00"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "yamijuan",
+                    "event": "OWE_BB",
+                    "args": {
+                        "owes": false
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "ArrayPotter",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Ts"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "Vim Diesel",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Jc"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "yamijuan",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "5h"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "AnsibleBuress",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "7s"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "ArrayPotter",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "8h"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "Vim Diesel",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Kh"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "yamijuan",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Ac"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "AnsibleBuress",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "9d"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "ArrayPotter (100.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Vim Diesel (306.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "yamijuan (100.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "AnsibleBuress (221.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:45:29",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 8
+                    }
+                },
+                {
+                    "ts": "18:45:48",
+                    "subj": "yamijuan",
+                    "event": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:48",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:51",
+                    "subj": "AnsibleBuress",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:51",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:54",
+                    "subj": "ArrayPotter",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "9"
+                    }
+                },
+                {
+                    "ts": "18:45:54",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:57",
+                    "subj": "Vim Diesel",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "18:45:57",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:03",
+                    "subj": "yamijuan",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "9"
+                    }
+                },
+                {
+                    "ts": "18:46:03",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:03",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:03",
+                    "subj": "yamijuan",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:03",
+                    "subj": "AnsibleBuress",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:03",
+                    "subj": "ArrayPotter",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:03",
+                    "subj": "Vim Diesel",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:03",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Kd"
+                    }
+                },
+                {
+                    "ts": "18:46:03",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Js"
+                    }
+                },
+                {
+                    "ts": "18:46:03",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Qh"
+                    }
+                },
+                {
+                    "ts": "18:46:03",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 3
+                    }
+                },
+                {
+                    "ts": "18:46:03",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "FLOP: K\u2666, J\u2660, Q\u2665",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:46:06",
+                    "subj": "ArrayPotter",
+                    "event": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:06",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:08",
+                    "subj": "yamijuan",
+                    "event": "BET",
+                    "args": {
+                        "amt": "2"
+                    }
+                },
+                {
+                    "ts": "18:46:08",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:11",
+                    "subj": "ArrayPotter",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "2"
+                    }
+                },
+                {
+                    "ts": "18:46:11",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:11",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:11",
+                    "subj": "ArrayPotter",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:11",
+                    "subj": "Vim Diesel",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:11",
+                    "subj": "yamijuan",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:11",
+                    "subj": "AnsibleBuress",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:11",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "6h"
+                    }
+                },
+                {
+                    "ts": "18:46:11",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 1
+                    }
+                },
+                {
+                    "ts": "18:46:11",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "TURN: K\u2666, J\u2660, Q\u2665, [6\u2665]",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:46:14",
+                    "subj": "ArrayPotter",
+                    "event": "BET",
+                    "args": {
+                        "amt": "17"
+                    }
+                },
+                {
+                    "ts": "18:46:14",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:18",
+                    "subj": "yamijuan",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "34"
+                    }
+                },
+                {
+                    "ts": "18:46:18",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "ArrayPotter",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "yamijuan",
+                    "event": "RETURN_CHIPS",
+                    "args": {
+                        "amt": "17.00"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "yamijuan",
+                    "event": "WIN",
+                    "args": {
+                        "amt": "58.00",
+                        "pot_id": 0,
+                        "showdown": false
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "yamijuan won 58.00 from the main pot",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "DEALER",
+                    "event": "DELAY_COUNTDOWN",
+                    "args": {
+                        "n_seconds": 2
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "side_effect",
+                    "event": "SHOWDOWN_COMPLETE",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "ArrayPotter",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "Vim Diesel",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "yamijuan",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "AnsibleBuress",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "ArrayPotter",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "Vim Diesel",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "yamijuan",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "AnsibleBuress",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "DEALER",
+                    "event": "END_HAND",
+                    "args": {}
+                }
+            ]
+        },
+        {
+            "ts": "2018-01-19T18:46:21.650Z",
+            "table": {
+                "bb": "2.00",
+                "id": "bd301cbb-2dcd-46fa-8bf1-bd84a6deb92d",
+                "sb": "1.00",
+                "ante": null,
+                "name": "yamijuan's Table #2",
+                "bb_idx": 5,
+                "sb_idx": 2,
+                "btn_idx": 1,
+                "deck_str": "2c,5h,Jd,9c,8s,Kc,8h,4d,4h,Jh,6d,8c,2s,9s,6h,9d,3s,6s,5c,Ah,Tc,4c,7h,6c,Th,3d,7d,Kh,Td,Qh,Jc,Kd,Qd,Ks,4s,Js,Ts,8d,Qs,3c,2h,Ac,7c,5d,7s,As,2d,3h,9h,Ad,Qc,5s",
+                "board_str": "",
+                "max_buyin": "400.00",
+                "min_buyin": "100.00",
+                "num_seats": 6,
+                "precision": 0,
+                "table_type": "NLHE",
+                "hand_number": 3
+            },
+            "players": [
+                {
+                    "id": "66333696-b6a7-40d6-9d75-f0ca85accdbf",
+                    "stack": "221.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 0,
+                    "username": "AnsibleBuress",
+                    "auto_rebuy": "100.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false
+                },
+                {
+                    "id": "f544d514-ba9c-4c8d-a9dc-67e1298520a9",
+                    "stack": "100.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 1,
+                    "username": "ArrayPotter",
+                    "auto_rebuy": "100.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false
+                },
+                {
+                    "id": "b7f7c601-93e9-43d0-86b2-16f8acf06e09",
+                    "stack": "304.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 2,
+                    "username": "Vim Diesel",
+                    "auto_rebuy": "100.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false
+                },
+                {
+                    "id": "3f4e0efe-2420-406e-9a12-17d7cc474cd0",
+                    "stack": "130.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 5,
+                    "username": "yamijuan",
+                    "auto_rebuy": null,
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false
+                }
+            ],
+            "actions": [
+                {
+                    "ts": "18:46:26",
+                    "subj": "AnsibleBuress",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": "7"
+                    }
+                },
+                {
+                    "ts": "18:46:30",
+                    "subj": "ArrayPotter",
+                    "action": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:33",
+                    "subj": "Vim Diesel",
+                    "action": "CALL",
+                    "args": {}
+                },
+                {
+                    "ts": "19:10:29",
+                    "subj": "yamijuan",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": 7,
+                        "SEQ_NUM": 15,
+                        "TIMESTAMP": 1516389029345
+                    }
+                }
+            ],
+            "events": [
+                {
+                    "ts": "18:46:21",
+                    "subj": "ArrayPotter",
+                    "event": "BUY",
+                    "args": {
+                        "amt": "28.00"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "ArrayPotter",
+                    "event": "UPDATE_STACK",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "ArrayPotter added 28 chips.",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "side_effect",
+                    "event": "CREATE_TRANSFER",
+                    "args": {
+                        "amt": "28.00",
+                        "dst": {
+                            "bb": "2.00",
+                            "id": "bd301cbb-2dcd-46fa-8bf1-bd84a6deb92d",
+                            "sb": "1.00",
+                            "str": "No Limit Hold 'em:yamijuan's Table #2",
+                            "ante": null,
+                            "name": "yamijuan's Table #2",
+                            "path": "/table/bd301cbb/",
+                            "created": "2017-11-30T20:02:33.254Z",
+                            "players": [
+                                "AnsibleBuress",
+                                "ArrayPotter",
+                                "Vim Diesel",
+                                "yamijuan"
+                            ],
+                            "variant": "No Limit Hold 'em",
+                            "short_id": "bd301cbb",
+                            "max_buyin": "400.00",
+                            "min_buyin": "100.00",
+                            "num_seats": 6,
+                            "player_ids": [
+                                {
+                                    "id": "66333696-b6a7-40d6-9d75-f0ca85accdbf"
+                                },
+                                {
+                                    "id": "f544d514-ba9c-4c8d-a9dc-67e1298520a9"
+                                },
+                                {
+                                    "id": "b7f7c601-93e9-43d0-86b2-16f8acf06e09"
+                                },
+                                {
+                                    "id": "3f4e0efe-2420-406e-9a12-17d7cc474cd0"
+                                }
+                            ],
+                            "table_type": "NLHE",
+                            "hand_number": 3
+                        },
+                        "src": {
+                            "id": "ab964a18-033f-4cbd-87f8-e87af701ba72",
+                            "str": "ArrayPotter",
+                            "is_staff": false,
+                            "username": "ArrayPotter",
+                            "is_active": true,
+                            "last_name": "",
+                            "first_name": "",
+                            "profile_picture": null,
+                            "is_authenticated": true
+                        },
+                        "notes": "@ArrayPotter [BUY] {'amt': Decimal('28.00')}"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "ArrayPotter",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "Vim Diesel",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "yamijuan",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "AnsibleBuress",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "DEALER",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "====NEW HAND====",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "DEALER",
+                    "event": "SET_BLIND_POS",
+                    "args": {
+                        "bb_pos": 5,
+                        "sb_pos": 2,
+                        "btn_pos": 1
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "side_effect",
+                    "event": "NEW_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Vim Diesel posted 1.00 for SB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "Vim Diesel",
+                    "event": "POST",
+                    "args": {
+                        "amt": "1.00"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "yamijuan posted 2.00 for BB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "yamijuan",
+                    "event": "POST",
+                    "args": {
+                        "amt": "2.00"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "Vim Diesel",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "2c"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "yamijuan",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "5h"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "AnsibleBuress",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Jd"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "ArrayPotter",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "9c"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "Vim Diesel",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "8s"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "yamijuan",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Kc"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "AnsibleBuress",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "8h"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "ArrayPotter",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "4d"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Vim Diesel (304.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "yamijuan (130.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "AnsibleBuress (221.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "ArrayPotter (100.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "18:46:21",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 8
+                    }
+                },
+                {
+                    "ts": "18:46:26",
+                    "subj": "AnsibleBuress",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "7"
+                    }
+                },
+                {
+                    "ts": "18:46:26",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:30",
+                    "subj": "ArrayPotter",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:30",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "18:46:33",
+                    "subj": "Vim Diesel",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "7"
+                    }
+                },
+                {
+                    "ts": "18:46:33",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "19:10:26",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "19:10:29",
+                    "subj": "yamijuan",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "7"
+                    }
+                },
+                {
+                    "ts": "19:10:29",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "19:10:29",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "19:10:29",
+                    "subj": "AnsibleBuress",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "19:10:29",
+                    "subj": "ArrayPotter",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "19:10:29",
+                    "subj": "Vim Diesel",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "19:10:29",
+                    "subj": "yamijuan",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "19:10:29",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "4h"
+                    }
+                },
+                {
+                    "ts": "19:10:29",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Jh"
+                    }
+                },
+                {
+                    "ts": "19:10:29",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "6d"
+                    }
+                },
+                {
+                    "ts": "19:10:29",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 3
+                    }
+                },
+                {
+                    "ts": "19:10:29",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "FLOP: 4\u2665, J\u2665, 6\u2666",
+                        "speaker": "Dealer"
+                    }
+                }
+            ]
+        }
+    ]
+}

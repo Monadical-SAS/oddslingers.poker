@@ -1,0 +1,58 @@
+{% extends 'ui/react_base.html' %}
+
+{% block header %}
+    {{ block.super }}
+    <style>
+        body > div.inner-content.container-fluid {
+            height: 100%;
+        }
+        #react {
+            height: 100%;
+        }
+        #ticket-not-found {
+			text-align: center;
+			font-size: 100px;
+			position: relative;
+			width: 100%;
+			display: inline-block;
+        }
+	    .debug-panel{
+	        height: 100%;
+	        position: relative;
+	    }
+	    .debug-panel .table-debug-container {
+	        height: 100%;
+	        width: 85%;
+	        position: relative;
+	    }
+	    .debug-panel .debug-actions,
+	    .debug-panel .prev-debug-info,
+	    .debug-panel .curr-debug-info {
+	        position: absolute;
+	        left: 85%;
+	        width: 15%;
+	        background-color: white;
+	        border: 1px solid black;
+	        border-radius: 5px;
+	    }
+	    .debug-panel .debug-actions {
+	        top: 0;
+	        text-align: center;
+	        height: 10%;
+	        color: #333;
+	    }
+	    .debug-panel .prev-debug-info {
+	        color: #333333;
+	        top: 55%;
+	        height: 45%;
+	    }
+	    .debug-panel .curr-debug-info {
+	        color: #333333;
+	        top: 10%;
+	        height: 45%;
+	    }
+</style>
+{% endblock header %}
+
+{% block footer %}
+{% endblock %}

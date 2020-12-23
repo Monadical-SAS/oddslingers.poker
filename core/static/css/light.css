@@ -1,0 +1,371 @@
+/* Dark theme colors */
+/* Additonal light theme colors */
+body {
+  color: #333;
+  background-color: #fafafa; }
+  body > div.inner-content.container-fluid {
+    background-color: #f4f4f2; }
+
+#react {
+  color: #333;
+  background-color: #f4f4f2; }
+  #react.page-userprofile {
+    background-color: #f1f1f1; }
+
+@media (min-width: 768px) {
+  #react:not(.page-home):not(.page-table) {
+    padding-top: 15px;
+    padding-bottom: 15px; } }
+
+.orange {
+  color: #ff851b; }
+
+.highlight {
+  background: #1171d6;
+  color: #000; }
+
+h1 {
+  color: #aaa; }
+
+/* brand */
+#logo-text > span {
+  color: #1171d6 !important; }
+
+.oddslingers-text-logo {
+  color: #777;
+  text-shadow: 2px 2px 0px rgba(185, 185, 185, 0.2); }
+  .oddslingers-text-logo::first-letter {
+    color: #1171d6; }
+
+a.clbl {
+  color: #333; }
+
+/* navbar */
+.navbar-default .navbar-brand {
+  color: #564c4c;
+  transition: color 200ms ease-in-out; }
+  .navbar-default .navbar-brand:hover img {
+    border: 3px solid #1171d6;
+    transition: border 200ms ease-in-out; }
+
+.navbar-default .navbar-nav > li > a {
+  color: #333; }
+  .navbar-default .navbar-nav > li > a:hover {
+    color: #1171d6; }
+
+.navbar-default.neon {
+  color: #fafafa; }
+
+.navbar .navbar-nav > li > a:hover > i.fa {
+  color: #1171d6; }
+
+.navbar .navbar-nav > li > a:active > i.fa {
+  color: #1171d6; }
+
+.navbar a.navbar-brand:hover {
+  color: #ccc;
+  transition: color 200ms ease-in-out; }
+
+#navbar-items .nav .active {
+  background-color: #eee; }
+
+#navbar-items .nav .account-dropdown a.dropdown-toggle {
+  font-weight: 900; }
+
+#navbar-items .nav li.account-dropdown .active {
+  background-color: #eee; }
+
+#navbar-items a.btn-signup {
+  color: #eee; }
+
+#navbar-items li:hover > a.btn-signup {
+  box-shadow: -2px 1px 10px 2px rgba(0, 0, 0, 0.25); }
+
+.nav > li {
+  margin: 0 !important; }
+
+.navbar-toggle {
+  color: #eee; }
+
+/* buttons */
+.btn-default {
+  background-color: #f4f4f2;
+  color: #333; }
+  .btn-default:hover {
+    background-color: rgba(250, 250, 250, 0.9);
+    color: #333; }
+
+.btn-success {
+  background-color: #27b23f; }
+
+/* game */
+.game-header {
+  /* sit down button - overwrites btn-success */
+  /* overwrites table subtitle */ }
+  .game-header .feature-btn {
+    color: rgba(250, 250, 250, 0.878);
+    background-color: #10af2c;
+    box-shadow: 1px 2px 6px 4px rgba(0, 0, 0, 0.06); }
+  .game-header .feature-btn:hover {
+    box-shadow: 1px 2px 8px 6px rgba(0, 0, 0, 0.08);
+    background-color: #17a151; }
+  .game-header .orange {
+    color: #666; }
+  .game-header .toggle-sounds.fa-volume-up {
+    color: #333; }
+  .game-header .toggle-sounds.fa-volume-off {
+    color: #808080; }
+  .game-header h2 {
+    font-weight: 900; }
+
+.game-header-buttons .btn-default {
+  background-color: #333;
+  color: #ddd; }
+  .game-header-buttons .btn-default:hover {
+    color: #fafafa;
+    background-color: #161616; }
+
+.input-group > span {
+  background-color: none; }
+  .input-group > span.input-group-btn {
+    background-color: none; }
+
+.felt {
+  background-image: url(/static/images/feltlight.webp);
+  background-color: #32af3287;
+  border: 6px solid #3b3e41;
+  background-blend-mode: exclusion; }
+
+.no-webp .felt {
+  background-image: url(/static/images/feltlight.png); }
+
+.empty-seatbox .seat {
+  background-color: #3b3e41; }
+  .empty-seatbox .seat:hover {
+    border-color: #1171d6; }
+
+.seat {
+  background: #575a5c;
+  color: #fafafa;
+  border: 3px solid #3b3e41;
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.4); }
+  .seat .player-name {
+    background-color: #2E3b32;
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px groove #eaeaea; }
+  .seat.next-to-act {
+    background: #27b23f;
+    border: 3px solid white;
+    box-shadow: 2px 3px 9px 2px rgba(0, 0, 0, 0.4); }
+  .seat.FOLD {
+    background: rgba(70, 80, 60, 0.95) !important;
+    border-color: black;
+    box-shadow: none;
+    opacity: 0.9 !important; }
+
+.no-cards {
+  opacity: 0.5;
+  background-color: #000; }
+
+.action-label-inner {
+  background-color: #2E3b32; }
+
+.action-label-arrow {
+  border-top-color: #2E3b32; }
+
+.actions {
+  background-color: #eaeaea;
+  /* additional rules */ }
+  .actions .progressbar-text {
+    color: #fafafa; }
+  .actions .progressbar-container {
+    background-color: #3b3e41; }
+
+#slider > .noUi-pips {
+  color: #3b3e41; }
+
+.passive-actions {
+  background-color: #eaeaea; }
+  .passive-actions .actions-title {
+    background-color: #42bf58;
+    color: #fafafa; }
+  .passive-actions .leave-seat-button i.fa-sign-out {
+    color: #808080; }
+
+.signal-badge {
+  color: #fafafa;
+  background-color: #808080; }
+
+.signal-bars .bar {
+  background-color: #333; }
+
+/* footer */
+#footer {
+  color: #333;
+  background-color: #fafafa; }
+  #footer a {
+    color: #000; }
+    #footer a:hover {
+      color: #1171d6; }
+  #footer .col-middle {
+    border-left: 1px solid #333;
+    border-right: 1px solid #333; }
+
+/* tables */
+#react > .table-grid {
+  background-color: #f4f4f2; }
+  #react > .table-grid .table-thumbnail {
+    border: 2px solid #eaeaea !important; }
+
+.table-thumbnail {
+  border: 1px solid #000 !important; }
+
+.leaderboard-thumbnail {
+  border: 1px solid white; }
+
+.footer-stats h2 {
+  color: #777; }
+
+.table-page {
+  background: #f4f4f2;
+  box-shadow: 4px 4px 7px rgba(0, 0, 0, 0.04); }
+
+/* chat */
+.chat-container .ss-scroll {
+  background: rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc; }
+
+.table-page .text-chat, .page-tournamentsummary .text-chat {
+  background-color: rgba(250, 250, 250, 0.95); }
+
+.chat-top-button {
+  background-color: #eee; }
+
+.chat-lines {
+  /* overwrite chat colors */ }
+  .chat-lines .dealer-msg {
+    color: #343434; }
+  .chat-lines .chat-line .chat-timestamp {
+    color: #fafafa; }
+  .chat-lines .chat-line:hover .chat-timestamp {
+    color: #ddd; }
+  .chat-lines .light .orange {
+    color: #1171d6; }
+  .chat-lines .lime {
+    color: #27b23f; }
+  .chat-lines .gray {
+    color: #333; }
+
+.text-chat #chat-input {
+  background-color: #fff;
+  border-radius: 0px;
+  border-top: 1px solid rgba(255, 165, 0, 0.18); }
+
+.text-chat .chat-actions .btn {
+  border-radius: 0px;
+  border-bottom-right-radius: 0px; }
+
+#play-by-play-toggle {
+  background-color: white;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #cccccc;
+  border-image: initial;
+  color: #cccccc; }
+
+#play-by-play-toggle:hover {
+  border-color: #adadad; }
+
+/* Tournament summary */
+.tournament-entrants .entrant {
+  background-color: rgba(250, 250, 250, 0.95);
+  border: 1px solid #ccc; }
+
+.tournament-actions .tournament-action-button {
+  background-color: rgba(250, 250, 250, 0.95);
+  color: #333333; }
+
+.tournament-actions .tournament-action-button:active:hover {
+  background-color: rgba(250, 250, 250, 0.95);
+  color: #333333;
+  border-color: none; }
+
+/* media */
+/* add shadow to navbar */
+@media (min-width: 768px) {
+  .navbar {
+    border-bottom: 1px solid #ccc;
+    box-shadow: 1px 1px 2px rgba(170, 170, 170, 0.16);
+    background-color: #fafafa; } }
+
+@media (max-width: 1200px) {
+  .toggle-chat {
+    background-color: #f4f4f2;
+    color: #333; } }
+
+@media (max-width: 767px) {
+  .game-header .btn {
+    border-left: 1px solid #fafafa;
+    background-color: #222 !important; }
+  .game-header-buttons .feature-btn {
+    border: #fafafa 2px solid; }
+  nav.navbar .navbar-toggle .icon-bar {
+    background-color: #000; }
+  nav.navbar .navbar-collapse {
+    background-color: #fafafa;
+    border-bottom: 3px solid #000; } }
+
+/* page background colors */
+div.support-page {
+  margin: 15px 30px 30px 30px;
+  border: none; }
+
+.support-page {
+  background-color: #f4f4f2; }
+
+.table-grid-speed {
+  border-radius: 20px;
+  width: auto;
+  padding-top: 15px; }
+
+.speedtest-page {
+  color: #333;
+  background-color: #f4f4f2; }
+
+.faq-page {
+  color: #333;
+  background-color: #f4f4f2; }
+
+.input-group-addon > div {
+  color: #333; }
+
+.page.about-page, .page.faq-page {
+  margin: 15px 30px 30px 30px;
+  border: none; }
+
+/* profile */
+.profile-main-panel {
+  background-color: #fafafa;
+  border: 2px solid #eaeaea; }
+
+.profile-badges .alert {
+  border: none; }
+
+.profile-info {
+  color: #222; }
+
+.notification-reward {
+  background: #fafafa !important;
+  border: 1px solid black !important; }
+
+/* learn page */
+.learning-page {
+  background-color: #f4f4f2; }
+
+@media (min-width: 1025px) {
+  .page.learning-page {
+    border: none !important;
+    margin: 15px 30px 30px 30px; } }
+
+.walkthrough {
+  background-color: #eee; }

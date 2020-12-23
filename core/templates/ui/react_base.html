@@ -1,0 +1,188 @@
+{% extends "ui/base.html" %}
+{% load static %}
+{% load utils %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block preloads %}
+    <link rel="preload" as="script" href="{% http2static 'js/errors.js' GIT_SHA %}" crossorigin>
+    {% if component %}
+        <link rel="preload" as="script" href="{% http2static 'js/'|add:component GIT_SHA %}" crossorigin>
+    {% endif %}
+{% endblock %}
+
+{% block inner %}
+    <div id="react" class="page-{{page_id}}">
+        <!-- Contents get replaced by mounted React.Component -->
+
+        <div id="react-loading" class="col-xs-12 col-lg-6 col-lg-offset-3">
+            <br><br>
+
+            <style>
+                h1.oddslingers-text-logo {
+                    text-align: center;
+                    font-size: 50px;
+                    color: #333;
+                    white-space: nowrap;
+                }
+                .pending {
+                    font-weight: 200;
+                }
+                #react-loading {
+                  text-align: center;
+                }
+                #react-loading-icon {
+                    float: none;
+                    margin: auto;
+                    width: 100%;
+                    max-width: 400px;
+                    min-width: 200px;
+                    color: #333;
+                    text-align: center;
+                    opacity: 0;
+                    animation: fadein 10s forwards ease-in-out;
+                    animation-delay: 3s;
+                }
+                svg {
+                    height: 200px;
+                    border-radius: 100px;
+                    background-color: black;
+                    /*border: 5px solid green;*/
+                    /*border-top: 5px solid black;*/
+                    /*border-bottom: 5px solid black;*/
+                    animation: fadeinColor 10s 1 ease-in-out, rotate 10s forwards ease-in-out;
+                    animation-delay: 3s;
+                }
+            </style>
+
+            <!-- Loading Icon -->
+            <div id="react-loading-icon" class="well">
+              <h1 class="oddslingers-text-logo">
+                <a href="/" style="color:#1171d6">Odd</a>Slingers<br/>
+                <small>Loading...</small>
+              </h1>
+              <svg version="1.1" id="L1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+                  <circle fill="none" stroke="orange" stroke-width="6" stroke-miterlimit="15" stroke-dasharray="14.2472,14.2472" cx="50" cy="50" r="47">
+                    <animateTransform
+                       attributeName="transform"
+                       attributeType="XML"
+                       type="rotate"
+                       dur="5s"
+                       from="0 50 50"
+                       to="360 50 50"
+                       repeatCount="indefinite" />
+                </circle>
+                <circle fill="none" stroke="purple" stroke-width="1" stroke-miterlimit="10" stroke-dasharray="10,10" cx="50" cy="50" r="39">
+                    <animateTransform
+                       attributeName="transform"
+                       attributeType="XML"
+                       type="rotate"
+                       dur="5s"
+                       from="0 50 50"
+                       to="-360 50 50"
+                       repeatCount="indefinite" />
+                </circle>
+                <g fill="#fff">
+                <rect x="27.5" y="35" width="5" height="30" stroke="orange">
+                  <animateTransform
+                     attributeName="transform"
+                     dur="1s"
+                     type="translate"
+                     values="0 5 ; 0 -5; 0 5"
+                     repeatCount="indefinite"
+                     begin="0.1"/>
+                </rect>
+                <rect x="37.5" y="35" width="5" height="30" stroke="orange">
+                  <animateTransform
+                     attributeName="transform"
+                     dur="1s"
+                     type="translate"
+                     values="0 5 ; 0 -5; 0 5"
+                     repeatCount="indefinite"
+                     begin="0.2"/>
+                </rect>
+                <rect x="47.5" y="35" width="5" height="30" stroke="orange">
+                  <animateTransform
+                     attributeName="transform"
+                     dur="1s"
+                     type="translate"
+                     values="0 5 ; 0 -5; 0 5"
+                     repeatCount="indefinite"
+                     begin="0.3"/>
+                </rect>
+                <rect x="57.5" y="35" width="5" height="30" stroke="orange">
+                  <animateTransform
+                     attributeName="transform"
+                     dur="1s"
+                     type="translate"
+                     values="0 5 ; 0 -5; 0 5"
+                     repeatCount="indefinite"
+                     begin="0.4"/>
+                </rect>
+                <rect x="67.5" y="35" width="5" height="30" stroke="orange">
+                  <animateTransform
+                     attributeName="transform"
+                     dur="1s"
+                     type="translate"
+                     values="0 5 ; 0 -5; 0 5"
+                     repeatCount="indefinite"
+                     begin="0.5"/>
+                </rect>
+                </g>
+              </svg>
+              <br/>
+              <b class="pending">
+                <br/><br/>
+                Loading...<br/>
+                (slow connection)<br/>
+              </b>
+              <br/><br/>
+              <div class="alert alert-warning failed">
+                <i class="fa fa-angle-double-right"></i> <a href="#" onclick="window.location.reload()">Try refreshing</a><br/>
+                <i class="fa fa-angle-double-right"></i> <a href="{% url 'Speedtest' %}">Test connection speed</a><br/>
+                <i class="fa fa-angle-double-right"></i> <a href="{% url 'Support' %}">Contact Support</a>
+
+                <hr/>
+
+                If you're on slow internet, the page may take a while to load the first time, but later visits should be faster.<br/>
+
+                <!-- {% if False and DEBUG %}
+                    <br/><br/>
+                    Here are the props the page has gotten:<br/>
+                    <pre>{{props|json}}</pre>
+                {% endif %} -->
+              </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block tail %}
+    {{props|json_script:'props'}}
+    <script>
+        'use strict';
+        // show react loading progress
+        setTimeout(function() {
+            $('#react-loading .pending').slideDown()
+            if (navigator.connection && navigator.connection.downlink) {
+                $('#react-loading .pending').append('<br/>~ 0 - ' + navigator.connection.downlink + 'mbps');
+            }
+        }, 10000);
+        setTimeout(function() {
+            $('#react-loading-icon .failed').slideDown();
+            $('#react-loading-icon .fa-spin, #react-loading .pending').css('color', 'orange');
+        }, 20000);
+
+        // load react props
+        window.component = {{component|json}};
+        window.component_url = "{% http2static 'js/'|add:component GIT_SHA %}";
+
+        var props_elem = document.getElementById('props');
+        window.props = JSON.parse(props_elem.textContent || props_elem.innerText);
+        window.react_mount = document.getElementById('react');
+    </script>
+    <script src="{% http2static 'js/errors.js' GIT_SHA %}" type="text/javascript" crossorigin></script>
+    {% if component %}
+        <script async id="react-js" src="{% http2static 'js/'|add:component GIT_SHA %}" crossorigin></script>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+"$ROOT"/bash2fish "$ROOT"/oddslingers-admin.fish "$@"

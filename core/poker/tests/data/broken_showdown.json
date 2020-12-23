@@ -1,0 +1,511 @@
+{
+  "hands": [
+    {
+      "events": [
+        {
+          "ts": "23:41:24",
+          "subj": "side_effect",
+          "args": {
+            "msg": "====NEW HAND===="
+          },
+          "event": "CHAT"
+        },
+        {
+          "ts": "23:41:24",
+          "subj": "pirate",
+          "args": {},
+          "event": "RESET"
+        },
+        {
+          "ts": "23:41:24",
+          "subj": "cuttlefish",
+          "args": {},
+          "event": "RESET"
+        },
+        {
+          "ts": "23:41:24",
+          "subj": "ajfenix",
+          "args": {},
+          "event": "RESET"
+        },
+        {
+          "ts": "23:41:24",
+          "subj": "cowpig",
+          "args": {},
+          "event": "RESET"
+        },
+        {
+          "ts": "23:41:24",
+          "subj": "max",
+          "args": {},
+          "event": "RESET"
+        },
+        {
+          "ts": "23:41:24",
+          "subj": "DEALER",
+          "args": {
+            "btn_pos": 0,
+            "bb_pos": 2,
+            "sb_pos": 1
+          },
+          "event": "SET_BLIND_POS"
+        },
+        {
+          "ts": "23:41:24",
+          "subj": "DEALER",
+          "args": {
+            "btn_pos": 0,
+            "bb_pos": 2,
+            "sb_pos": 1
+          },
+          "event": "SET_BLIND_POS"
+        },
+        {
+          "ts": "23:41:24",
+          "subj": "cuttlefish",
+          "args": {
+            "amt": 1
+          },
+          "event": "POST"
+        },
+        {
+          "ts": "23:41:24",
+          "subj": "ajfenix",
+          "args": {
+            "amt": 2
+          },
+          "event": "POST"
+        },
+        {
+          "ts": "23:41:25",
+          "subj": "cuttlefish",
+          "args": {
+            "card": "Kd"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "23:41:25",
+          "subj": "ajfenix",
+          "args": {
+            "card": "8d"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "23:41:25",
+          "subj": "cowpig",
+          "args": {
+            "card": "8c"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "23:41:25",
+          "subj": "max",
+          "args": {
+            "card": "Qd"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "23:41:25",
+          "subj": "pirate",
+          "args": {
+            "card": "Jd"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "23:41:25",
+          "subj": "cuttlefish",
+          "args": {
+            "card": "7d"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "23:41:25",
+          "subj": "ajfenix",
+          "args": {
+            "card": "Qh"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "23:41:25",
+          "subj": "cowpig",
+          "args": {
+            "card": "4d"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "23:41:25",
+          "subj": "max",
+          "args": {
+            "card": "2d"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "23:41:25",
+          "subj": "pirate",
+          "args": {
+            "card": "3s"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "23:41:25",
+          "subj": "DEALER",
+          "args": {
+            "n_cards": 10
+          },
+          "event": "POP_CARDS"
+        },
+        {
+          "ts": "23:50:08",
+          "subj": "cowpig",
+          "args": {
+            "amt": "7"
+          },
+          "event": "RAISE_TO"
+        },
+        {
+          "ts": "23:50:20",
+          "subj": "max",
+          "args": {
+            "amt": "7.00"
+          },
+          "event": "CALL"
+        },
+        {
+          "ts": "23:50:21",
+          "subj": "pirate",
+          "args": {
+            "amt": "24"
+          },
+          "event": "RAISE_TO"
+        },
+        {
+          "ts": "23:50:21",
+          "subj": "cuttlefish",
+          "args": {},
+          "event": "FOLD"
+        },
+        {
+          "ts": "23:50:21",
+          "subj": "ajfenix",
+          "args": {
+            "amt": "82"
+          },
+          "event": "RAISE_TO"
+        },
+        {
+          "ts": "23:50:21",
+          "subj": "cowpig",
+          "args": {
+            "amt": "82"
+          },
+          "event": "CALL"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "max",
+          "args": {},
+          "event": "FOLD"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "pirate",
+          "args": {
+            "amt": "176"
+          },
+          "event": "RAISE_TO"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "ajfenix",
+          "args": {
+            "amt": "176"
+          },
+          "event": "CALL"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "cowpig",
+          "args": {
+            "amt": "176"
+          },
+          "event": "CALL"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "cowpig",
+          "args": {},
+          "event": "NEW_STREET"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "max",
+          "args": {},
+          "event": "NEW_STREET"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "pirate",
+          "args": {},
+          "event": "NEW_STREET"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "cuttlefish",
+          "args": {},
+          "event": "NEW_STREET"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "ajfenix",
+          "args": {},
+          "event": "NEW_STREET"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "DEALER",
+          "args": {
+            "card": "2h"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "DEALER",
+          "args": {
+            "card": "Th"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "DEALER",
+          "args": {
+            "card": "6c"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "DEALER",
+          "args": {
+            "n_cards": 3
+          },
+          "event": "POP_CARDS"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "side_effect",
+          "args": {
+            "msg": "===FLOP=== DEALT: [<2h>, <Th>, <6c>]"
+          },
+          "event": "CHAT"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "ajfenix",
+          "args": {
+            "amt": "24"
+          },
+          "event": "BET"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "cowpig",
+          "args": {},
+          "event": "FOLD"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "pirate",
+          "args": {
+            "amt": "24"
+          },
+          "event": "CALL"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "cuttlefish",
+          "args": {},
+          "event": "NEW_STREET"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "ajfenix",
+          "args": {},
+          "event": "NEW_STREET"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "cowpig",
+          "args": {},
+          "event": "NEW_STREET"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "max",
+          "args": {},
+          "event": "NEW_STREET"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "pirate",
+          "args": {},
+          "event": "NEW_STREET"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "DEALER",
+          "args": {
+            "card": "5h"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "DEALER",
+          "args": {
+            "n_cards": 1
+          },
+          "event": "POP_CARDS"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "side_effect",
+          "args": {
+            "msg": "===TURN=== DEALT: [<2h>, <Th>, <6c>] [<5h>]"
+          },
+          "event": "CHAT"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "cuttlefish",
+          "args": {},
+          "event": "NEW_STREET"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "ajfenix",
+          "args": {},
+          "event": "NEW_STREET"
+        },
+        {
+          "ts": "23:50:30",
+          "subj": "cowpig",
+          "args": {},
+          "event": "NEW_STREET"
+        },
+        {
+          "ts": "23:50:31",
+          "subj": "max",
+          "args": {},
+          "event": "NEW_STREET"
+        },
+        {
+          "ts": "23:50:31",
+          "subj": "pirate",
+          "args": {},
+          "event": "NEW_STREET"
+        },
+        {
+          "ts": "23:50:31",
+          "subj": "DEALER",
+          "args": {
+            "card": "Qs"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "23:50:31",
+          "subj": "DEALER",
+          "args": {
+            "n_cards": 1
+          },
+          "event": "POP_CARDS"
+        },
+        {
+          "ts": "23:50:31",
+          "subj": "side_effect",
+          "args": {
+            "msg": "===RIVER=== DEALT: [<2h>, <Th>, <6c>, <5h>] [<Qs>]"
+          },
+          "event": "CHAT"
+        }
+      ],
+      "table": {
+        "precision": 0,
+        "bb": 2,
+        "name": "Homepage Table",
+        "sb": 1,
+        "num_seats": 6,
+        "btn_idx": null,
+        "ante": null,
+        "max_buyin": 200,
+        "id": "1791c913-a8c9-437f-86bb-3abceaed2034",
+        "sb_idx": null,
+        "deck_str": "3s,2d,4d,Qh,7d,Jd,Qd,8c,8d,Kd,2h,Th,6c,5h,Qs,3c,Tc,As,Kc,Js,6h,3d,9c,5c,8s,Ah,7c,4s,8h,Ad,2c,6s,4c,Ks,9d,4h,Td,Ac,7s,7h,9h,9s,Jh,Ts,6d,3h,Jc,2s,Qc,5s,5d,Kh",
+        "bb_idx": null,
+        "board_str": "",
+        "min_buyin": 100,
+        "hand_number": 1
+      },
+      "players": [
+        {
+          "position": 0,
+          "id": "f341b020-d837-400d-a354-cddfa721f9d0",
+          "username": "pirate",
+          "owes_bb": false,
+          "stack": "200.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_IN"
+        },
+        {
+          "position": 1,
+          "id": "655e7d39-a61a-4890-886a-c9ad0550db3b",
+          "username": "cuttlefish",
+          "owes_bb": false,
+          "stack": "200.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_IN"
+        },
+        {
+          "position": 2,
+          "id": "af5a6a7a-2151-4505-9e08-cd4db2e2ad4c",
+          "username": "ajfenix",
+          "owes_bb": false,
+          "stack": "200.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_IN"
+        },
+        {
+          "position": 3,
+          "id": "4d03e8dc-0e50-4f55-a81b-1ae2c22921c8",
+          "username": "cowpig",
+          "owes_bb": false,
+          "stack": "200.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_IN"
+        },
+        {
+          "position": 4,
+          "id": "768f377b-efd6-4051-b5da-c2216df76bb8",
+          "username": "max",
+          "owes_bb": false,
+          "stack": "200.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_IN"
+        }
+      ],
+      "timestamp": "2016-08-31T23:41:24.599Z"
+    }
+  ]
+}

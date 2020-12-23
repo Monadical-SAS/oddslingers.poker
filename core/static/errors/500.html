@@ -1,0 +1,126 @@
+<html>
+    <head>
+        <title>Oddslingers</title>
+        <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
+        <style>
+            @font-face {
+              font-family: 'Bungee';
+              font-style: normal;
+              font-weight: 400;
+              src: local('Bungee'), local('Bungee-Regular'), url(/static/fonts/bungee.ttf) format('truetype');
+            }
+            html {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+            body {
+                background-color: rgb(20, 20, 20);
+                width: 100%;
+                height: 100%;
+                padding: 0px;
+                margin: 0px;
+                text-align: center;
+                color: white;
+                font-family: 'Gill Sans', 'Helvetica', sans-serif;
+                font-weight: 200;
+                overflow-y: scroll;
+            }
+            body > img {
+                width: 100%;
+                max-width: 500px;
+            }
+            .oddslingers-logo {
+                margin-top: 6vh;
+                color: white;
+                font-family: 'Bungee', 'Helvetica';
+                font-size: 60px;
+            }
+            .oddslingers-logo::first-letter {
+                color: orange;
+            }
+            .oddslingers-logo a {
+                text-decoration: none;
+            }
+            .oddslingers-logo a:hover {
+                text-decoration: underline;
+            }
+            a {
+                color: orange;
+            }
+            small {
+                opacity: 0.7;
+            }
+            #maintenance {
+                font-size: 1.3rem;
+                padding: 20px;
+            }
+            #start-runserver-btn > a {
+                display: inline-block;
+                text-decoration: none;
+                height: 50px;
+                font-size: 2em;
+                padding-top: 15px;
+                background-color: green;
+                color: white;
+                border-radius: 4px;
+                width: 280px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 class="oddslingers-logo">
+            <a href="/" title="Refresh...">O</a>ddslingers
+        </h1>
+        <br><br>
+
+        <img alt="Waiting for Oddslingers server to be ready..." src="/static/images/loading.gif"/><br/>
+        <div id="maintenance">
+            Loading...
+        </div>
+        <div id="start-runserver-btn"></div>
+
+        <script>
+            window.tries = 1
+            var MAINTENANCE_MSG = "We're doing some quick maintenance right now, the page will load automatically once it's ready...";
+            var APOLOGY_MSG = "<br/><br/>Sorry for the delay, try refreshing or <a href='mailto:support@oddslingers.com'>contacting support</a> if you still aren't able to access Oddslingers in a few minutes."
+
+            function getFuzzyDelay() {
+                return 1000 + 2 * Math.round(Math.random() * 1000);   // slighly mitigate DDoS effect of everyone refreshing together by having a random delay
+            }
+
+            function checkStatus() {
+                if (window.fetch) {
+                    fetch(document.location).then(function(resp) {
+                        if (resp.status >= 200 && resp.status < 400) {
+                            document.getElementById('maintenance').innerHTML = MAINTENANCE_MSG + "<br/><br/><small>"+ resp.status + "</small>";
+                            clearInterval(window.check_status_loop);
+                            window.location.reload();
+                            document.location = document.location.toString();
+                        } else {
+                            document.getElementById('maintenance').innerHTML = MAINTENANCE_MSG + "<br/><br/><small>" + window.tries + " x " + resp.status + "</small>";
+                            window.tries += 1;
+                            console.log(resp.content || 'Empty response from server...');
+                        }
+                        if (window.tries == 10) {
+                            MAINTENANCE_MSG = MAINTENANCE_MSG + APOLOGY_MSG;
+                        }
+                        if (window.tries > 500) {
+                            clearInterval(window.check_status_loop);
+                            document.getElementById('maintenance').innerHTML = "<br/><br/>Are you still there?<iframe src='//nicksweeting.com/areyoustillthere.mp3' style='opacity:0'></iframe>"
+                        }
+                    });
+                    window.check_status_loop = setTimeout(checkStatus, getFuzzyDelay());
+                } else {
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, getFuzzyDelay());
+                }
+            }
+            checkStatus();
+            if (!window.location.origin.includes('oddslingers.com')) {
+                document.getElementById('start-runserver-btn').innerHTML = '<a href="/start_runserver/">Start Runserver ></a>';
+            }
+        </script>
+    </body>
+</html>

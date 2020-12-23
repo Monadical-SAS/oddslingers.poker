@@ -1,0 +1,15 @@
+{
+  "short_name": "OddSlingers",
+  "name": "OddSlingers Poker",
+  "background_color": "#222",
+  "theme_color": "#333",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/"
+}

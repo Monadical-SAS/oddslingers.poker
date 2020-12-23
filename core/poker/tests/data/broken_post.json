@@ -1,0 +1,81 @@
+{
+  "hands": [
+    {
+      "events": [
+        {
+          "event": "CHAT",
+          "subj": "side_effect",
+          "ts": "03:49:38",
+          "args": {
+            "msg": "====NEW HAND===="
+          }
+        }
+      ],
+      "timestamp": "2016-09-18T03:49:38.289Z",
+      "players": [
+        {
+          "position": 0,
+          "id": "b92805b3-f811-4ee2-a8e3-e6d519f632e2",
+          "username": "pirate",
+          "owes_bb": true,
+          "stack": "0.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_OUT"
+        },
+        {
+          "position": 1,
+          "id": "10f65ef1-8569-4d60-9772-2756c59f772c",
+          "username": "cuttlefish",
+          "owes_bb": true,
+          "stack": "0.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_OUT"
+        },
+        {
+          "position": 2,
+          "id": "d92e6db5-88cb-4572-9bc4-42ce15843af8",
+          "username": "ajfenix",
+          "owes_bb": false,
+          "stack": "1.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_IN"
+        },
+        {
+          "position": 3,
+          "id": "3a8fd955-6d6e-46c2-8201-5e498bc73a60",
+          "username": "cowpig",
+          "owes_bb": true,
+          "stack": "0.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_OUT"
+        },
+        {
+          "position": 4,
+          "id": "d0b933ee-630a-4225-8644-cfe8e47c0a21",
+          "username": "alexeimartov",
+          "owes_bb": false,
+          "stack": "1399",
+          "owes_sb": false,
+          "playing_state": "SITTING_IN"
+        }
+      ],
+      "table": {
+        "sb": "1",
+        "bb": "2",
+        "precision": 0,
+        "btn_idx": 2,
+        "num_seats": 6,
+        "bb_idx": 4,
+        "min_buyin": 100,
+        "ante": null,
+        "id": "0b38bae5-cdd8-4e03-aa1e-809c3fd5d87e",
+        "sb_idx": 2,
+        "deck_str": "2c,7c,7s,Kh,3s,Kd,7h,Td,6s,Js,3d,6h,5c,Jd,Ah,8h,Jh,Tc,2d,Qd,8c,4d,4h,5s,4s,Kc,9h,2h,Qh,9d,5h,Ad,3h,5d,Qs,Qc,Ts,8d,Ks,7d,Th,4c,Ac,2s,6c,9c,8s,6d,As,3c,Jc,9s",
+        "board_str": "",
+        "max_buyin": 200,
+        "hand_number": 138,
+        "name": "test_table"
+      }
+    }
+  ]
+}

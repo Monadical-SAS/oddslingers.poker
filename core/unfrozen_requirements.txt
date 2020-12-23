@@ -1,0 +1,41 @@
+# ========================= Base Requirements =================================
+Django>2.0, <2.1
+channels<2.0.0
+asgi-redis
+psycopg2-binary; implementation_name == 'cpython'
+psycopg2cffi; implementation_name == 'pypy'
+django-allauth
+django-anymail
+django-hijack
+django-redis
+django-user-sessions
+django_dramatiq
+dramatiq[redis, watch]
+python-dotenv==0.8.2
+bleach
+geoip2
+ipdb
+ipython
+psutil
+redis
+yacron
+zulip
+raven
+
+# ============================== Dev Tools =====================================
+bpython
+django-debug-toolbar
+django-debug-toolbar-template-timings
+django-extensions
+django-pdb
+
+# ============================== Testing =======================================
+codecov
+coverage
+flake8
+flake8-formatter-junit-xml
+pyflakes<2.0.0
+requests
+grequests
+tblib
+unittest-xml-reporting

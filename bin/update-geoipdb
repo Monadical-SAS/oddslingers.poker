@@ -1,0 +1,14 @@
+#!/bin/bash
+
+REPO="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && cd .. && pwd )"
+DATA_DIR="$REPO/data"
+
+mkdir -p "$DATA_DIR/geoip"
+cd "$DATA_DIR/geoip"
+
+rm -f GeoLite2-City.mmdb.gz
+rm -f GeoLite2-City.mmdb
+
+wget http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz\
+&& gunzip GeoLite2-City.mmdb.gz\
+&& rm -f GeoLite2-City.mmdb.old

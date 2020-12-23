@@ -1,0 +1,276 @@
+{% extends 'ui/base.html' %}
+
+{% load static %}
+{% load cache %}
+{% load utils %}
+
+{% block title %}Speedtest{% endblock %}
+
+{% cache 500 speedtestpage user.is_authenticated DEBUG GIT_SHA %}
+
+{% block head %}
+    <script src="{% static 'js/raphael-2.1.4.min.js' %}"></script>
+    <script src="{% static 'js/justgage.js' %}"></script>
+{% endblock head %}
+
+{% block inner %}
+    <style>
+        .inner-content {
+            font-size: 1.4em;
+        }
+        .speedtest-page {
+            width: 100%;
+            padding-bottom: 40px;
+            z-index: 20;
+            font-family: 'Lato Light', 'Helvetica', 'Arial', sans-serif;
+            font-weight: 400;
+        }
+
+        h1.oddslingers-text-logo {
+            text-align: center;
+            font-size: 66px;
+        }
+        h2.oddslingers-text-logo {
+            font-size: 44px;
+        }
+        h3.oddslingers-text-logo {
+            font-size: 34px;
+        }
+        h2, h3 {
+            text-align: center;
+            font-family: 'Lato Light', 'Helvetica', 'Arial', sans-serif;
+            font-weight: 400;
+            font-size: 44px;
+            font-variant: small-caps;
+        }
+        h2:first-letter, h3:first-letter {
+            color: orange;
+        }
+
+        @media (min-width: 1025px) {
+            .speedtest-page {
+                margin: 0 30px 30px 30px;
+                border-radius: 20px;
+                width: auto;
+            }
+        }
+    </style>
+    <div class="table-grid-speed">
+        <div class="page speedtest-page col-md-12">
+        <div class="col-md-12 col-lg-10 col-lg-offset-1 mission-info" style="text-align: center">
+            <h1 class="oddslingers-text-logo">Oddslingers<small>:</small> Speedtest</h1>
+
+            <div class="row" style="margin-top: 20px; padding-bottom: 20px">
+                <div class="col-md-4">
+                    <h3 class="oddslingers-text-logo">Oddslingers Server Latency</h3>
+                    <br/>
+                    This dial shows the time it takes for the Oddslingers servers to process an action.<br/>
+                    We try to keep it below 1/10th of a second at all times.
+                    <br/><br/>
+                    Our servers accept actions from around the world and queue them for up to 100ms
+                    to prevent double-acting or out-of-order acting.
+                    The actual time it takes our servers to process &amp; commit actions is usually much lower,
+                    around ~30ms.<br/>
+                    <hr/>
+                </div>
+                <div class="col-md-4">
+                    <h3 class="oddslingers-text-logo">Network Latency</h3>
+                    <br/>
+                    This dial shows how long it takes to send an action from your computer to the Oddslingers servers.
+                    <br/><br/>
+                    It's primarily affected by the physical distance between you and the Oddslingers
+                    servers and the quality of your internet connection. The Oddslingers developers
+                    cannot fix your wifi or make light go faster, though we'll certainly try to do everything in our
+                    power to help you have a good time on Oddslingers!
+                    <hr/>
+                </div>
+                <div class="col-md-4">
+                    <h3 class="oddslingers-text-logo">Browser Speed</h3>
+                    <br/>
+                    This dial shows how fast your browser can render game animations.
+                    <br/>
+                    Make sure you're using a modern, up-to-date browser like:
+                    Google Chrome, Firefox, Safari, or Opera.  More powerful computers will get higher results,
+                    but most people should be able to run animations at over 30 frames per second.  <br/>If you get low numbers, try closing
+                    other tabs and programs.
+
+                    <br/><br/>
+                    <hr/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div id="server-gauge" class="200x160px gagues" style="width: 100%; height: 300px; margin: auto; margin-top: -20px; float:none">
+                    </div>
+                    <small>
+                        (lower is better)
+                        <pre id="server-details">Calculating...<br/><br/></pre>
+                    </small>
+                </div>
+                <div class="col-md-4">
+                    <div id="network-gauge" class="200x160px gagues" style="width: 100%; height: 300px; margin: auto; margin-top: -20px; float:none">
+                    </div>
+                    <small>
+                        (lower is better)
+                        <pre id="network-details">Calculating...<br/><br/></pre>
+                    </small>
+                </div>
+                <div class="col-md-4">
+                    <div id="cpu-gauge" class="200x160px gagues" style="width: 100%; height: 300px; margin: auto; margin-top: -20px; float:none">
+                    </div>
+                    <small>
+                        (higher is better)
+                        <pre id="cpu-details">Calculating...<br/><br/></pre>
+                    </small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="oddslingers-text-logo" id="conclusion">Please wait 10s for the speedtest to run...</h2>
+
+                    <hr/>
+                    <br/>
+                    <h3 class="oddslingers-text-logo">Troubleshooting Steps</h3>
+
+                    If you're not located in the Americas, you can generally expect latency to be 200ms-800ms.<br/>
+                    Don't worry if you have a slow connection, the game will still progress normally,
+                    we give up to a second of leniency to account for high latency.
+
+                    <br/><br/>
+                    If the numbers above seem high, first try refreshing, then follow the steps below.<br/><br/>
+
+                    <div style="margin: auto; text-align: left; width: 50%; min-width: 300px">
+                        1. Check your internet connection speed using <a href="https://speedtest.net">Speedtest.net</a><br/>
+                        2. Try rebooting your computer<br/>
+                        3. Try resetting your router or modem<br/>
+                        4. <a href="{% url 'Support' %}">Contact support</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script>
+        window.server_gage = new window.JustGage({
+            id: "server-gauge",
+            value: 0, // Math.random() * 30,
+            min: 0,
+            max: 300,
+            title: 'Server Time (ms)',
+            label: 'milliseconds'
+        });
+
+        window.network_gage = new window.JustGage({
+            id: "network-gauge",
+            value: 0, // Math.random() * 150,
+            min: 0,
+            max: 1000,
+            title: 'Network Time (ms)',
+            label: 'milliseconds'
+        });
+
+        window.cpu_gage = new window.JustGage({
+            id: "cpu-gauge",
+            value: 0, // Math.random() * 150,
+            min: 0,
+            max: 60,
+            title: 'Browser Speed (FPS)',
+            label: 'frames per second'
+        });
+
+        function num(amt) {
+            return Math.round(amt).toLocaleString()
+        }
+
+        var count = 100;
+        var iterations = 1000;
+        var start = Date.now() - 1000;
+        function cpuTestLoop() {
+            var elapsed = Date.now() - start;
+            var fps = count/(elapsed/1000);
+            if (count < iterations) {
+                window.requestAnimationFrame(cpuTestLoop)
+            }
+
+            window.cpu_gage.refresh(fps);
+            document.getElementById('cpu-details').innerHTML = (
+                'Frames:           ' + count + '/' + iterations + '\n' +
+                'Seconds:            ' + (elapsed/1000).toLocaleString() + '\n' +
+                'FPS:               ' + (fps).toLocaleString()
+            )
+            count++;
+        }
+
+        var dispatch_time = 0
+        var min = Infinity
+        var max = -Infinity
+        var tries = 0
+        function latencyTestLoop() {
+            window.socket.onmessage = function(msg) {
+                var end = (new Date).getTime()
+                var start = JSON.parse(msg.data).start_time
+                var rtt = end - start
+                var latency = rtt/2 - 8  // 10ms for backend overhead
+                if (latency < min) {min = latency}
+                if (latency > max) {max = latency}
+
+                window.network_gage.refresh(latency)
+                document.getElementById('network-details').innerHTML = (
+                    'Latency:         ' + num(latency) + 'ms<br>' +
+                    // 'Round-Trip Time: ' + num(rtt) + 'ms<br>' +
+                    'Min Latency:     ' + num(min) + 'ms<br>' +
+                    'Max Latency:     ' + num(max) + 'ms<br>')
+
+                if (tries == 4) {
+                    var server_speed = 'lagging'
+                    if (dispatch_time < 300) server_speed = 'moderately slow'
+                    if (dispatch_time < 200) server_speed = 'normal'
+                    if (dispatch_time < 100) server_speed = 'fast'
+
+                    var network_speed = 'lagging'
+                    if (min < 1000) network_speed = 'moderately slow'
+                    if (min < 500) network_speed = 'normal'
+                    if (min < 300) network_speed = 'fast'
+                    document.getElementById('conclusion').innerHTML = (
+                        'Result: The server is <i>' + server_speed +
+                        '</i> and your network connection is <i>' + network_speed + '</i>.')
+                    cpuTestLoop()
+                }
+                if (tries++ < 21) {
+                    setTimeout(latencyTestLoop, 500 + Math.random() * 100)
+                }
+            }
+            window.socket.send('{"type": "ECHO", "start_time": '+(new Date).getTime()+'}')
+        }
+
+        function beginTests() {
+            window.socket.onmessage = function(message) {
+                var data = JSON.parse(message.data)
+                console.log('SERVER', data)
+                dispatch_time = data.dispatch_time
+                window.server_gage.refresh(data.dispatch_time)
+                document.getElementById('server-details').innerHTML = (
+                    'Processing Time: ' + num(data.dispatch_time) + 'ms<br>' +
+                    'Queued Time:     ' + num(data.queued_time) + 'ms<br>' +
+                    'Total Time:      ' + num(data.total_time) + 'ms')
+                latencyTestLoop()
+            }
+            window.socket.send('{"type": "SERVER_LATENCY_TEST"}')
+        }
+
+        var host = window.location.hostname
+        var port = window.location.port ? ':' + window.location.port : ''
+        var prefix = window.location.protocol == 'https:' ? 'wss:' : 'ws:'
+        var path = window.location.pathname
+        path = path.endsWith('/') ? path.substring(0, path.length-1) : path
+
+        window.socket = new WebSocket(prefix + '//' + host + port + path  + '/')
+        window.socket.onopen = function() {
+            beginTests()
+        }
+    </script>
+
+{% endblock inner %}
+
+{% endcache %}

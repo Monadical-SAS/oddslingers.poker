@@ -1,0 +1,52 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+ 
+[dev-packages]
+bpython = "*"
+ipdb = "*"
+django-pdb = "*"
+codecov = "*"
+coverage = "*"
+flake8 = "*"
+flake8-formatter-junit-xml = "*"
+pyflakes = "*"
+tblib = "*"
+unittest-xml-reporting = "*"
+ 
+[packages]
+channels = "<2.0.0"
+Django = ">2.0,<2.3"
+asgi_redis = "*"
+psycopg2-binary = {version = "*",markers="implementation_name == 'cpython'"}
+psycopg2cffi = {version = "*",markers="implementation_name == 'pypy'"}
+django-allauth = "*"
+django-anymail = "*"
+django-hijack = "*"
+django-redis = "*"
+django-user-sessions = "*"
+django-extensions = "*"
+django-dramatiq = "*"
+dramatiq = {extras = ["redis", "watch"],version = "*"}
+python-dotenv = "==0.8.2"
+bleach = "*"
+geoip2 = "*"
+ipython = "*"
+psutil = "*"
+redis = "*"
+yacron = "*"
+zulip = "*"
+raven = "*"
+requests = "*"
+grequests = "*"
+django-debug-toolbar = "*"
+django-debug-toolbar-template-timings = "*"
+mypy = "*"
+mypy_extensions = "*"
+service-identity = "*"
+zulip-botserver = "*"
+zulip-bots = "*"
+ 
+[requires]
+python_version = "3.7"

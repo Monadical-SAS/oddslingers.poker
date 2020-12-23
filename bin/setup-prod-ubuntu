@@ -1,0 +1,264 @@
+#!/bin/bash
+set -Eeuxo pipefail
+
+trap "echo ERR trap fired!" ERR
+trap "exit" INT
+
+release="$(lsb_release -c | awk '{print $2}')"
+
+function info {
+    echo -e "\\n$(tput bold)$(tput setaf 4)" "$@" "$(tput sgr0)"
+}
+function success {
+    echo -e "\\n$(tput bold)" "$@" "$(tput sgr0)"
+}
+function error {
+    echo -e "\\n$(tput bold)$(tput setaf 1)" "$@" "$(tput sgr0)"
+}
+
+REPO_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
+source "$REPO_DIR/env/prod.env"
+DATA_DIR="$REPO_DIR/data"
+
+echo "ODDSLINGERS_ENV=PROD" >> /etc/environment
+
+ln -sf "$DATA_DIR" /data
+mkdir -p /opt/oddslingers.poker/data/logs
+ln -sf /opt/oddslingers.poker/data/logs /var/log/oddslingers
+
+chown www-data:www-data /opt/oddslingers.poker/data
+chown -R www-data:www-data /opt/oddslingers.poker/data/logs
+
+
+success " 🔵    Setup: Production Machine w/ supervisord (Ubuntu >= 17.04)"
+    if [[ "$(uname)" != 'Linux' ]]; then
+        error "Not on Linux!: $(uname)"
+        exit 1
+    fi
+    ln -fs "$REPO_DIR" /opt/oddslingers.poker
+echo "       Installing from $REPO_DIR..."
+
+
+# Pre-setup server stuff
+info "[0/8] Setting up basic server environment..."
+    add-apt-repository -y ppa:fish-shell/release-3
+    apt update
+    apt upgrade -y
+    apt purge -y snapd open-iscsi lxcfs lxd
+    apt install -y build-essential autoconf python python3.6 fish htop nmap zip unzip git supervisor ifupdown tmux sshfs
+    apt autoremove
+    apt autoclean
+
+    # Add SSH Key
+    mkdir -p ~/.ssh
+    echo 'environment="REMOTEUSER=squash" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCwZK/0iButO+ul26vkiGtpzj6NnYAwYZqbynYH/rgmKlN96jwPo9zXl5+x+DzZe31zX79JWw9ivfTg7fm7nHlOhgd/nSC4lrwIvC2bQqXD3X51Av0r/AS7Iabx5dJpGYsXLJzWa1Z/SZR36wwcgDHceR1bNQpyvnOqeUGlf7kcL9oztyKCat+5E/qliHLaGRBkN9KJHBs5+puVNVM2ggimj5l6dXeAbG8HqA1RdMYDnI+edsZXrY31JizOAeBprMf4sOKyexL1Fyw2TRSwBAnAd74wBgQhabeKXLby45NgSBO4T/NzqxBs+4+6P2D4MVj/G/DEOEFPC+4p8/qIk7Br squash@squash
+    environment="REMOTEUSER=cowpig" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDuHuelozdh6wwvhabWC4RoL9X5uOWPa9KW7pwLrM1szJGOazLI//Dsj22pKGSPcYcuF6gdIsQa4pHgqIs6MKzeQn41MXorlp0MVYr5ll757iZr8537RRo4+eWaUyP5DPZih1JIU6+bbraNI0VWjfLGey+HrNNUj3MzUnv7tE1GItg3EAB/YekO12Pt8R12rpJeIXLV8bf//creg/BRsN3jjJv0kHrJu7cHUAf/1TiBNB3+34b/gyf6wvNrT/bTEr3tvyif+KZX3/WdyE+OcwPkG/tpQxmQlrD8AuzPNWCPe/4OiAbImfEwyJbCJ/ioNItzMF7KExJiUiB6RG35Y1VuH343tjzWqVQRDllKfJmqkaaDzebeGVOEdby0+PSVV4ZcWzN/rcCcwtfGu6irJgMJiqE4nWSkwPt/hD7mwHXnK6qaLH2UKnNvFEesSOjZWxr2HtDFQ0HslIGaixH/525nKTz6msIGw6B1jkxsyJxyWb8BOTblrzoXfaFjq/rW8XOMQ8+tPHKEagGQCrQVueZDDRLNFiMaac67XX2knCmbInxeZRtPngG4eD9p2X95YzmBuKNKJbx//DThnwnOoOM/GA2NGptaRIk83K49EYuottBLccG7WlrwcZeEPIGgd4/L7JA8QW8YtAT2lfmqZJcZQRbYzPCD+M+FTHIhkk/vew==
+    environment="REMOTEUSER=cowpig" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC9YYT/uXzFvplseGzyPmxyXUkUz2iYioMkxzjDObwNesnlt5tzq43ITHOFarNhNIu2kFHBtB8SfO+b/Nwu5HB4bsTXdGL3C9MfnGN4UqjyhVVojwPEYKYyw6z+3g3o66c2ysbwKwWPD6JHV2MOXDCBwwny3WRECIdrlCULDT125Y+qCf1hQOEHXA8EVYwTJM0N4Gl0jx2717Atn/ZvGTcfvfghTqTbxQ7qqRwytzW5BxdGmJqCVzgoGtDfjdddJ9y18wsHMV7BP3lbmlZNXRhcIdDjlDXSSVmYVRy+FjPlrAzTUTzBEHxgKlPMZLAaApUNZRxtojwIWGmvScEgbG9AJ6aHExgHGFkMRyUm0+GGBiDVDuTC34EBzsYJNum1kDyEK9h5JEZMmLpVYFqJ/ieK/lNC+eyIVn+FqP6EzZHVwYeqwS44npIr3MeRmYGWdiiLvSettBxt1m1HRiAr4so4aPRShbxBZWQPfPKy3yvaxqpuvINQnImJtGiJ5xL7Vx0BFd1w+LKOXjdpyav1QdUYjeaBrqH3LXGvhcktEWcBepwJdgLLrNaALzUf6wgoPxsiTwL88740lEpSqF2sF4fbZNSptXMH3Dk9/htKSvJaD/Avq5cLhtqAX2VxzbrtV/ggyQ/X/g+2myBuS9g5kXUqVrv9eIrA/ENZpAvGBho7kw==
+    environment="REMOTEUSER=CircleCI" ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCvlJmgfAfPNte1BaHKzKt9xN9S/bfaqMXEviJsouoLnd2TSuhTGyJzrMQj9JwLIJHW4c4bfu72h0RT5qvICjl6yfuGDzD+0bPi4q0D/36Qffiu/70+Leq1VLQafPZSPl+yB6Ny2dxzS+AejeQFJzXIrbDra7st5vKnejkIBdSSKnz6gP/DiQ4jPOx638ruIaPzgPCaCka0XeEQZfEgGtTNu6VDzhJzLOZecCLDNgUPaFcT+/hD8diPbXhKKI6vg6p0WT9O8H72IWWYxqJrU67L5aInpeVf2tRXBlRmKlSoehzrSASpb4IKhnO7k5IH8GwvL+yxL/PWVLG8hf6z86lX circleci@circleci.com' > ~/.ssh/authorized_keys
+
+    # Change SSH port to 44
+    echo "Port 44" >> /etc/ssh/sshd_config
+    echo "UseDNS no" >> /etc/ssh/sshd_config
+    echo "PrintMotd no" >> /etc/ssh/sshd_config
+    echo "X11Forwarding no" >> /etc/ssh/sshd_config
+    echo "LogLevel VERBOSE" >> /etc/ssh/sshd_config
+    echo "PermitUserEnvironment yes" >> /etc/ssh/sshd_config
+    service sshd restart
+
+    ufw allow 44/tcp
+    ufw allow 80/tcp
+    ufw allow 443/tcp
+    ufw allow 8432/tcp
+    ufw allow 8379/tcp
+    ufw enable
+
+    # Delete root password & change shell to fish
+    passwd -d root
+    chsh -s "$(which fish)"
+
+    if [ ! -f /swapfile ]; then
+        # Enable 4GB Swapfile for emergencies
+        # https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04
+        fallocate -l 4G /swapfile
+        chmod 600 /swapfile
+        mkswap /swapfile
+        swapon /swapfile
+        sysctl vm.swappiness=10
+        sysctl vm.vfs_cache_pressure=50
+        sudo sysctl -w net.core.somaxconn=4096
+        echo "net.core.somaxconn = 4096" >> /etc/sysctl.conf
+        echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
+        echo "vm.swappiness=10" >> /etc/sysctl.conf
+        echo "vm.vfs_cache_pressure=50" >> /etc/sysctl.conf
+    fi
+
+
+    # Setup shell environment
+    mkdir -p /root/.config/fish
+    echo '
+    set -x fish_greeting ""
+    set -x PATH /opt/oddslingers.poker/bin /usr/lib/postgresql/10/bin $PATH
+    set -x ODDSLINGERS_ENV PROD
+
+    if not status --is-login
+      exit 0
+    end
+
+    cd /opt/oddslingers.poker/core
+
+    if status --is-login
+        set PPID (echo (ps --pid %self -o ppid --no-headers) | xargs)
+        if ps --pid $PPID | grep ssh
+            tmux has-session -t remote; and tmux attach-session -t remote; or tmux new-session -s remote; and kill %self
+            echo "tmux failed to start; using plain fish shell"
+        end
+    end
+    ' > ~/.config/fish/config.fish
+    rm -f /etc/update-motd.d/10-help-text
+    rm -f /etc/update-motd.d/50-motd-news
+
+    mv /var/log/auth.log /data/logs/auth.log; ln -s /opt/oddslingers.poker/bin/data/logs/auth.log /var/log/auth.log
+    mv /root/.local/share/fish/fish_history /data/logs/fish.log; ln -s /opt/oddslingers.poker/bin/data/logs/fish.log /root/.local/share/fish/fish_history
+
+    # # Setup ZFS
+    # apt install zfsutils-linux
+    # zpool create -f rpool /dev/vdb   # rpool is just a human-readable name, short for root pool
+    # zpool status rpool
+    # zfs create -o mountpoint=/media/backups rpool/backups
+    # ls /media
+
+    # # https://people.freebsd.org/~seanc/postgresql/scale15x-2017-postgresql_zfs_best_practices.pdf
+    # zfs set atime=off rpool/backups
+    # zfs set compression=lz4 rpool/backups
+    # zfs set recordsize=16K rpool/backups
+    # zfs set primarycache=metadata rpool/backups
+    # zfs get atime,compression,primarycache,recordsize rpool/backups
+success "   √   Base server setup complete."
+
+info "[1/8] Installing system dependencies..."
+    echo "deb [arch=amd64] http://nginx.org/packages/ubuntu/ bionic nginx" >> /etc/apt/sources.list
+    echo "deb-src [arch=amd64] http://nginx.org/packages/ubuntu/ bionic nginx" >> /etc/apt/sources.list
+    set +o pipefail
+    nginx_gpg_key="$(apt-get update 2>&1 | grep "GPG error:" | awk '{print $NF}')"
+    set -o pipefail
+    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys "$nginx_gpg_key"
+
+    echo "deb [arch=amd64] http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" >> /etc/apt/sources.list
+    echo "deb-src [arch=amd64] http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main" >> /etc/apt/sources.list
+
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+    add-apt-repository -y ppa:maxmind/ppa         # for maxmind geoip libs
+    add-apt-repository -y ppa:trevorjay/pyflame   # for flamegraph profiling python
+    apt update
+    apt install -y build-essential autoconf python3.6 python3-pip python3.6-dev \
+                   python-dev virtualenv redis-server git nodejs npm \
+                   supervisor libmaxminddb0 libmaxminddb-dev mmdb-bin fish zip unzip \
+                   postgresql-10 postgresql-server-dev-all nginx gzip expect
+
+    systemctl stop postgresql
+    systemctl stop redis-server
+    systemctl stop nginx
+    systemctl disable postgresql
+    systemctl disable redis-server
+    systemctl disable nginx
+
+echo "   √   Apt dependencies are installed:"
+echo "           Python, postgresql, redis, npm, nginx, (and other utils)"
+
+info "[2/8] Install Oddslingers utility commands..."
+    echo "      Add the following to your \$PATH, then press enter once finished:"
+    echo "           /opt/oddslingers.poker/bin"
+    bash -c "which oddslingers" | grep -q /opt/oddslingers/bin || read
+success "   √   'oddslingers' pointed to $(bash -c "which oddslingers") from your \$PATH"
+
+
+info "[3/8] Seting up pip + virtualenv..."
+    cd "$REPO_DIR/core"
+    python3 --version | grep -q "Python 3.6" || exit 1
+    pip3 install -q --upgrade pip setuptools virtualenv
+    [ -d venv ] || virtualenv -p "$(which python3.6)" venv
+    set +u
+    source venv/bin/activate
+    set -u
+success "   √   Virtualenv is active: $(which python) ($(python --version))"
+
+info "[4/8] Installing python dependencies..."
+    pip install -r requirements.txt
+success "   √   PyPI requirements are installed: requirements.txt"
+
+info "[5/8] Generating certs and linking config files..."
+    sudo bash -c "echo '127.0.0.1     oddslingers.l' >> /etc/hosts"
+    sudo bash -c "echo '127.0.0.1     database redis' >> /etc/hosts"
+    mkdir -p "$DATA_DIR/certs"
+    chown -R root:root "$DATA_DIR/certs"
+    cd "$DATA_DIR/certs"
+    openssl req -x509 -nodes -days 3650 -newkey rsa:4096 -keyout oddslingers.com.key -out oddslingers.com.crt -subj "/C=IM/ST=Douglas/L=Douglas/O=OddSlingers/OU=Development/CN=oddslingers.com"
+
+    # open oddslingers.l.crt
+    rm -f /etc/supervisor/supervisord.conf
+    ln -sf "$REPO_DIR/etc/supervisor/oddslingers-prod.conf" /etc/supervisor/supervisord.conf
+success "   √   Generated SSL certs and set oddslingers.l to 127.0.0.1"
+
+info "[6/8] Initializing PostgreSQL database..."
+    POSTGRES_PASSWORD=$(openssl rand -base64 14)
+
+    mkdir -p "$DATA_DIR/database"
+    chown -R postgres:postgres "$DATA_DIR/database"
+
+    sudo -u postgres /usr/lib/postgresql/10/bin/initdb -D "$DATA_DIR/database"
+    sudo -u postgres /usr/lib/postgresql/10/bin/pg_ctl -D "$DATA_DIR/database" start
+
+    sudo -u postgres /usr/lib/postgresql/10/bin/psql -c "CREATE USER $POSTGRES_USER WITH PASSWORD '$POSTGRES_PASSWORD';" postgres
+    sudo -u postgres /usr/lib/postgresql/10/bin/psql -c "CREATE DATABASE $POSTGRES_DB OWNER $POSTGRES_USER;" postgres
+    sudo -u postgres /usr/lib/postgresql/10/bin/psql -c "GRANT ALL PRIVILEGES ON DATABASE $POSTGRES_DB TO $POSTGRES_USER;" postgres
+
+    echo "POSTGRES_DB=$POSTGRES_DB" > "$REPO_DIR/env/secrets.env"
+    echo "POSTGRES_USER=$POSTGRES_USER" >> "$REPO_DIR/env/secrets.env"
+    echo "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" >> "$REPO_DIR/env/secrets.env"
+success "   √   Database setup complete:"
+awk '{ print "    "$1 }' < "$REPO_DIR/env/secrets.env"
+
+info "[7/8] Run initial migrations and create superuser..."
+    systemctl start redis-server
+    cd "$REPO_DIR/core"
+    set +u
+    source venv/bin/activate
+    set -u
+    sudo -u www-data ./venv/bin/python manage.py migrate
+    sudo -u www-data ./venv/bin/python manage.py createsuperuser
+    systemctl stop redis-server
+    sudo -u postgres /usr/lib/postgresql/10/bin/pg_ctl -D "$DATA_DIR/database" stop
+success "   √   Ran initial migrations and created admin user"
+
+info "[8/8] Downloading geoip database..."
+    "$REPO_DIR/bin/update-geoipdb"
+success "   √   GeoIP database updated: data/geoip"
+
+systemctl restart supervisor
+sleep 5
+supervisorctl status all
+
+success " ✅    Done. See README.md for next steps."
+    echo "       - Dev commands can be run using the 'oddslingers' command:"
+    echo "           e.g. oddslingers start"
+    echo "                oddslingers compjs tables.js"
+    echo "                oddslingers resetdb"
+    echo "       - Config is stored in env/secrets.env and env/dev.env"
+    echo "       - Data is stored in oddslingers.poker/data/"
+    echo ""
+sleep 3
+
+info "Do you want to set up private networking? If not press Ctrl+C"
+    sleep 3
+    echo "What is this server's private networking IP? "
+    read -r LOCAL_IP
+    # Setup Private Networking
+    # https://www.vultr.com/docs/configuring-private-network
+    echo "auto ens7
+    iface ens7 inet static
+        address $LOCAL_IP
+        netmask 255.255.0.0
+        mtu 1450" >> /etc/network/interfaces
+    ifup ens7
+
+exit 0

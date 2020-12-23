@@ -1,0 +1,345 @@
+{
+  "hands": [
+    {
+      "events": [
+        {
+          "ts": "22:50:21",
+          "subj": "side_effect",
+          "args": {
+            "msg": "====NEW HAND===="
+          },
+          "event": "CHAT"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "pirate",
+          "args": {},
+          "event": "RESET"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "cuttlefish",
+          "args": {},
+          "event": "RESET"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "DEALER",
+          "args": {
+            "btn_pos": 0,
+            "bb_pos": 1,
+            "sb_pos": 0
+          },
+          "event": "SET_BLIND_POS"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "pirate",
+          "args": {
+            "amt": "1"
+          },
+          "event": "POST"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "cuttlefish",
+          "args": {
+            "amt": "2"
+          },
+          "event": "POST"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "cuttlefish",
+          "args": {
+            "card": "Qc"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "pirate",
+          "args": {
+            "card": "8c"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "cuttlefish",
+          "args": {
+            "card": "2c"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "pirate",
+          "args": {
+            "card": "As"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "DEALER",
+          "args": {
+            "n_cards": 4
+          },
+          "event": "POP_CARDS"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "pirate",
+          "args": {
+            "amt": "2"
+          },
+          "event": "CALL"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "cuttlefish",
+          "args": {},
+          "event": "CHECK"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "pirate",
+          "args": {},
+          "event": "NEW_STREET"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "cuttlefish",
+          "args": {},
+          "event": "NEW_STREET"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "DEALER",
+          "args": {
+            "card": "Kh"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "DEALER",
+          "args": {
+            "card": "Kc"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "DEALER",
+          "args": {
+            "card": "Ah"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "DEALER",
+          "args": {
+            "n_cards": 3
+          },
+          "event": "POP_CARDS"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "side_effect",
+          "args": {
+            "msg": "===FLOP=== DEALT: [<Kh>, <Kc>, <Ah>]"
+          },
+          "event": "CHAT"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "cuttlefish",
+          "args": {
+            "amt": "3"
+          },
+          "event": "BET"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "pirate",
+          "args": {
+            "amt": "3"
+          },
+          "event": "CALL"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "cuttlefish",
+          "args": {},
+          "event": "NEW_STREET"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "pirate",
+          "args": {},
+          "event": "NEW_STREET"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "DEALER",
+          "args": {
+            "card": "5d"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "DEALER",
+          "args": {
+            "n_cards": 1
+          },
+          "event": "POP_CARDS"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "side_effect",
+          "args": {
+            "msg": "===TURN=== DEALT: [<Kh>, <Kc>, <Ah>] [<5d>]"
+          },
+          "event": "CHAT"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "cuttlefish",
+          "args": {
+            "amt": "7"
+          },
+          "event": "BET"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "pirate",
+          "args": {
+            "amt": "31"
+          },
+          "event": "RAISE_TO"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "cuttlefish",
+          "args": {
+            "amt": "103"
+          },
+          "event": "RAISE_TO"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "pirate",
+          "args": {
+            "amt": "103"
+          },
+          "event": "CALL"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "cuttlefish",
+          "args": {},
+          "event": "NEW_STREET"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "pirate",
+          "args": {},
+          "event": "NEW_STREET"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "DEALER",
+          "args": {
+            "card": "3s"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "22:50:21",
+          "subj": "DEALER",
+          "args": {
+            "n_cards": 1
+          },
+          "event": "POP_CARDS"
+        },
+        {
+          "ts": "22:50:22",
+          "subj": "side_effect",
+          "args": {
+            "msg": "===RIVER=== DEALT: [<Kh>, <Kc>, <Ah>, <5d>] [<3s>]"
+          },
+          "event": "CHAT"
+        }
+      ],
+      "table": {
+        "precision": 0,
+        "bb": "2",
+        "name": "test_table",
+        "sb": "1",
+        "num_seats": 6,
+        "btn_idx": 1,
+        "ante": null,
+        "max_buyin": 200,
+        "id": "28dda001-a31e-4711-ba66-78ed7be6e720",
+        "sb_idx": 1,
+        "deck_str": "As,2c,8c,Qc,Kh,Kc,Ah,5d,3s,6c,9s,4s,8d,Js,7d,Ac,3d,Tc,4h,Jd,9h,6d,8s,Qd,4c,Jh,6h,Ts,2h,5c,5h,9c,2d,Th,7h,8h,Ad,7c,Qh,Td,Qs,9d,3h,5s,Kd,3c,Ks,7s,Jc,2s,6s,4d",
+        "bb_idx": 0,
+        "board_str": "",
+        "min_buyin": 100,
+        "hand_number": 147
+      },
+      "players": [
+        {
+          "position": 0,
+          "id": "22ea4489-154c-4308-972f-fad119676671",
+          "username": "pirate",
+          "owes_bb": false,
+          "stack": "1291.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_IN"
+        },
+        {
+          "position": 1,
+          "id": "ebeb8860-f7ae-433e-b756-fba517a52530",
+          "username": "cuttlefish",
+          "owes_bb": false,
+          "stack": "109.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_IN"
+        },
+        {
+          "position": 2,
+          "id": "581e13f9-090a-4f14-b5a7-5f77e12584d3",
+          "username": "ajfenix",
+          "owes_bb": true,
+          "stack": "0.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_OUT"
+        },
+        {
+          "position": 3,
+          "id": "7c4f6fe3-d0a1-4c48-a810-5a87c857e155",
+          "username": "cowpig",
+          "owes_bb": true,
+          "stack": "0.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_OUT"
+        },
+        {
+          "position": 4,
+          "id": "ad5cf071-ef2b-4c18-be7a-7793b6f4c1ca",
+          "username": "alexeimartov",
+          "owes_bb": true,
+          "stack": "0",
+          "owes_sb": false,
+          "playing_state": "SITTING_OUT"
+        }
+      ],
+      "timestamp": "2016-09-16T22:50:21.399Z"
+    }
+  ]
+}

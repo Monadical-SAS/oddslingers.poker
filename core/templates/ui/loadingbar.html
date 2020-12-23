@@ -1,0 +1,82 @@
+<style>
+    /* Loading Progress Bar */
+    #progress {
+        position: fixed;
+        z-index: 2147483647;
+        bottom: 0;
+        left: -6px;
+        width: 1%;
+        height: 4px;
+        background: orange;
+        -moz-border-radius: 1px;
+        -webkit-border-radius: 1px;
+        border-radius: 1px;
+        -moz-transition: width 500ms ease-out,opacity 400ms linear;
+        -ms-transition: width 500ms ease-out,opacity 400ms linear;
+        -o-transition: width 500ms ease-out,opacity 400ms linear;
+        -webkit-transition: width 500ms ease-out,opacity 400ms linear;
+        transition: width 500ms ease-out,opacity 400ms linear;
+    }
+
+    #progress dd, #progress dt {
+        position: absolute;
+        bottom: 0;
+        height: 2px;
+        -moz-box-shadow: #0088CC 1px 0 6px 1px;
+        -ms-box-shadow: #0088CC 1px 0 6px 1px;
+        -webkit-box-shadow: #0088CC 1px 0 6px 1px;
+        box-shadow: #0088CC 1px 0 6px 1px;
+        -moz-border-radius: 100%;
+        -webkit-border-radius: 100%;
+        border-radius: 100%;
+    }
+
+    #progress dt {
+        opacity: .6;
+        width: 180px;
+        right: -80px;
+        clip: rect(-6px,90px,14px,-6px);
+    }
+
+    #progress dd {
+        opacity: .6;
+        width: 20px;
+        right: 0;
+        clip: rect(-6px,22px,14px,10px);
+    }
+
+    @-moz-keyframes bugfix { from { padding-right: 1px ; } to { padding-right: 0; } }
+</style>
+
+<script>
+    // Page Loading Bar
+    window.loadStart = function(distance) {
+        window.loading.start = Date.now();
+        var distance = distance || 0;
+    	// console.log("Started Loading...");
+    	// only add progrstess bar if not already present
+    	if (jQuery('loading-bar').length == 0) {
+    		jQuery("body").add("<!--Loading Bar--><div id=\"loading-bar\"><dt></dt><dd></dd></div>");
+    	}
+        if (jQuery("#progress").length === 0) {
+            jQuery("body").append(jQuery("<div><dt/><dd/></div>").attr("id", "progress"));
+            jQuery("#progress").width((distance || (30 + (Math.random() * 30))) + "%");
+        }
+    };
+
+    window.loadFinish = function() {
+        // End loading animation
+        jQuery("#progress").width("101%").delay(200).fadeOut(400, function() {
+            jQuery(this).remove();
+        });
+        window.loading.end = Date.now();
+        window.loading.time = window.loading.end - window.loading.head;
+        if (!window.first_load_done) {
+            console.log("%c[+] DOMContentLoaded " + window.loading.time + "ms: " + window.location.toString(), "color:orange");
+            window.first_load_done = true
+        }
+    };
+    window.loadStart();
+    window.addEventListener('beforeunload', function() {window.loadStart(10)});
+    document.addEventListener('DOMContentLoaded', function() {window.loadFinish()});
+</script>

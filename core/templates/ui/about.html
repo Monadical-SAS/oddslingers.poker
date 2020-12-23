@@ -1,0 +1,205 @@
+{% extends 'ui/base.html' %}
+
+{% load static %}
+{% load cache %}
+
+{% block title %}About{% endblock %}
+
+{% cache 500 aboutpage user.is_authenticated DEBUG GIT_SHA %}
+
+{% block inner %}
+    <style>
+        nav {
+            z-index: 100;
+        }
+
+        .inner-content {
+            color: #eee;
+            font-size: 1.4em;
+            font-weight: 200;
+        }
+        .about-page {
+            color: #252827;
+            background-color: #F8F9F7;
+            padding-bottom: 40px;
+            /*background-color: rgba(0,0,0,0.3);*/
+            z-index: 20;
+        }
+        .about-page .body-text {
+            text-align: left;
+            width: 600px;
+            max-width: 100%;
+            margin: auto;
+            float: none;
+            color: rgba(37, 40, 39, 0.86);
+        }
+
+        h1.oddslingers-text-logo {
+            text-align: center;
+            font-size: 66px;
+            color: #333;
+            margin-top: 0;
+            padding-top: 50px;
+        }
+        h2 {
+            text-align: center;
+            font-family: 'Lato Light', 'Helvetica', 'Arial', sans-serif;
+            font-weight: 200;
+            font-size: 44px;
+            font-variant: small-caps;
+        }
+        h2:first-letter, h3:first-letter {
+            color: #1171d6;
+        }
+        .privacy h3 {
+            font-weight: 200;
+            font-size: 1.1em;
+        }
+        .about-page .center {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+        }
+        .about-page .social-btns .btn {
+            display: inline-block;
+            font-size: 15px;
+            width: auto;
+            color: white;
+            margin-top: 0px;
+            margin-left: 10px;
+            margin-right: 10px;
+            box-shadow: 3px 3px 4px rgba(0,0,0,0.07);
+        }
+        .btn-fb {
+            background-color: #404562;
+        }
+        .social-btns .btn:hover {
+            opacity: 0.9;
+        }
+        .signup-btn {
+            font-size: 1.3em;
+        }
+        .signup-btn small {
+            font-size: 0.6em;
+        }
+        .company-info a {
+            color: #1171d6;
+        }
+        .social-btns a {
+            margin-bottom: 10px;
+        }
+
+        @media(min-width: 1025px) {
+            body > div.inner-content.container-fluid {
+                padding-left: 30px;
+                padding-right: 30px;
+            }
+            .about-page {
+                border-radius: 20px;
+                border: 4px solid #1171d6;
+                background-color: #F8F9F7;
+                color: #252827;
+            }
+        }
+        @media(max-width: 767px) {
+            .about-page .social-btns .btn {
+                margin-top: 10px;
+            }
+        }
+    </style>
+    <div class="page about-page col-md-12">
+
+        <div class="col-md-8 col-md-offset-2 mission-info" style="text-align: center">
+            <br/><br/>
+
+            <center>
+                <img src="/static/images/logo-black.png" style="height: 120px;"/> <img src="/static/images/monadical-black-white.png" style="height: 120px;"/>
+            </center>
+
+            <h2 style="font-variant: normal;text-shadow: 3px 3px 4px rgba(0,0,0,0.07);">
+                OddSlingers is a free, open-source project built by <a href="https://monadical.com/">Monadical</a>...
+            </h2>
+
+
+            <br/>
+            <div class="center social-btns well">
+                <div style="text-align: center">
+
+                    {% if email and submitted %}
+                        Thanks for subscribing {{email}}!<br/>
+                    {% else %}
+                        <form class="form-inline" action="?" method="POST">{% csrf_token %}
+                          <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">
+                                    Get occasional new-feature announcements
+                                </div>
+                                <input type="email" name="email" class="form-control" placeholder="{{request.user.email|default:'email@example.com'}}">
+                            </div>
+                            <button type="submit" class="btn btn-success">
+                                <i class="fa fa-envelope"></i> Subscribe
+                            </button>
+                          </div>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+            <br/><br/>
+
+            <div class="body-text">
+                &nbsp; &nbsp; &nbsp; <b>OddSlingers is a free (and ad-free), open-source, no-rake, online poker platform built by 
+                <a href="https://monadical.com/">Monadical</a>, a software development consultancy based in Montrel and Medellin. 
+                We offer play-chips games only (no real money).</b>
+                <br/><br/>
+                OddSlingers was founded out of the desire for a clean, secure, poker experience that just works without 
+                needing to install any clunky software.
+                <br/><br/>
+                Our online <a href="https://oddslingers.com">poker platform</a> works on mobile, tablet, and desktops, and can be used to play against
+                our worldwide userbase without needing to download anything.
+                We support: Texas Hold'Em, Omahah, and 2-7 Bountry (both cash games and tournaments), with more variants on the way!
+                <br/><br/>
+                New users receive <b>{{SIGNUP_BONUS}}</b> free chips, and credit cards are not required, and there are absolutely no ads.
+                <br/><br/>
+                If you have software development needs, <a href="https://monadical.com/contact-us.html">maybe we can help you</a>!
+                <br/><br/>
+            </div>
+
+            {% if not user.is_authenticated %}
+            <br/>
+            <br/>
+            <a href="/accounts/login/" class="btn btn-lg btn-success signup-btn">
+                Sign Up &amp; Start Playing!<br/>
+                <small><img src="/static/images/chips.png" style="height: 20px"> New users get {{SIGNUP_BONUS}} free chips <img src="/static/images/chips.png" style="height: 20px"></small>
+            </a>
+            <br/><br/>
+            <a href="/">OddSlingers.com</a> works on mobile too!
+            {% endif %}
+            <br/><hr/>
+
+            <hr/>
+
+            <div class="company-info">
+                <strong>Monadical is hiring!</strong><br/>
+                Check out our <a href="https://monadical.com/team.html">team page</a> if you're interested in building cool stuff.
+                <br/><br/>
+                <a href="{% url 'Support' %}">Contact support</a> if you encounter a bug,
+                or email us at <br/><a href="mailto:hello@oddslingers.com">hello@oddslingers.com</a>
+                if you just want to say hi!
+                <br/>
+            </div>
+            <br/><br/>
+        </div>
+
+        <div class="col-md-12 company-info" style="text-align: center">
+            <hr/>
+            <a href="https://docs.oddslingers.com/s/privacy-policy">Privacy Policy</a> &nbsp; | &nbsp; 
+            <a href="https://docs.oddslingers.com/s/terms-of-service">Terms of Service</a> &nbsp; | &nbsp; 
+            <a href="https://docs.oddslingers.com/s/gdpr-info">GDPR Info</a> &nbsp; | &nbsp; 
+            <a href="https://oddslingers.com/support">Contact Support</a>
+            <hr/>
+        </div>
+    </div>
+
+{% endblock inner %}
+
+{% endcache %}

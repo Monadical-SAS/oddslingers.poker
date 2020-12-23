@@ -1,0 +1,720 @@
+{
+    "release": "0fa18ea46ba5c8d9c71d645682d11e2ad8b33829",
+    "accessed": "2017-11-10T00:57:21.332Z",
+    "notes": "assert btn != bb AssertionError",
+    "hands": [
+        {
+            "ts": "2017-11-10T00:57:21.246Z",
+            "table": {
+                "id": "c87c1b24-bd4f-4fa5-905d-20ea35290a58",
+                "name": "Replayer-test_table-9f5eeca0-fe8aa66a-515e8201-cca185a9-2851b79e-6c144cbf-76d9011e",
+                "ante": null,
+                "min_buyin": "120.00",
+                "max_buyin": "300.00",
+                "num_seats": 6,
+                "sb": "1.00",
+                "bb": "2.00",
+                "btn_idx": 0,
+                "sb_idx": 1,
+                "bb_idx": 2,
+                "board_str": "",
+                "deck_str": "Jc,Js,Qd,Kh,5s,4h,3h,Qc,2d,As,2h,Jh,3c,7h,Td,9h,9d,Qh,8s,Kd,4d,8c,9c,Qs,4c,7c,6c,9s,7d,4s,Ts,Kc,3d,6s,Th,2c,Ah,5c,3s,Tc,Ks,5d,6d,Jd,5h,8d,2s,8h,6h,Ad,7s,Ac",
+                "precision": 0,
+                "hand_number": 15,
+                "table_type": "NLHE"
+            },
+            "players": [
+                {
+                    "id": "cb7cc4dd-cdc2-439e-8d51-4c57d3a603ff",
+                    "username": "pirate",
+                    "stack": "301.00",
+                    "playing_state": "SITTING_IN",
+                    "position": 0,
+                    "owes_sb": false,
+                    "owes_bb": false,
+                    "sit_out_at_blinds": false,
+                    "auto_rebuy": null
+                },
+                {
+                    "id": "dfa64674-d642-4c9b-99df-664b2a76b0ed",
+                    "username": "cuttlefish",
+                    "stack": "564.00",
+                    "playing_state": "SITTING_OUT",
+                    "position": 1,
+                    "owes_sb": false,
+                    "owes_bb": false,
+                    "sit_out_at_blinds": false,
+                    "auto_rebuy": null
+                },
+                {
+                    "id": "135e9e27-add7-4375-9a70-6cf7155dc959",
+                    "username": "ajfenix",
+                    "stack": "305.00",
+                    "playing_state": "SITTING_IN",
+                    "position": 2,
+                    "owes_sb": false,
+                    "owes_bb": false,
+                    "sit_out_at_blinds": false,
+                    "auto_rebuy": null
+                },
+                {
+                    "id": "1f1561ec-65a7-4341-b9a1-6e6c9e18831d",
+                    "username": "cowpig",
+                    "stack": "0.00",
+                    "playing_state": "SITTING_OUT",
+                    "position": 3,
+                    "owes_sb": false,
+                    "owes_bb": true,
+                    "sit_out_at_blinds": false,
+                    "auto_rebuy": null
+                },
+                {
+                    "id": "36de3426-579f-42c2-9493-45f40796729c",
+                    "username": "alexeimartov",
+                    "stack": "230.00",
+                    "playing_state": "SITTING_IN",
+                    "position": 4,
+                    "owes_sb": false,
+                    "owes_bb": false,
+                    "sit_out_at_blinds": false,
+                    "auto_rebuy": null
+                }
+            ],
+            "actions": [
+                {
+                    "ts": "00:57:21",
+                    "subj": "cuttlefish",
+                    "action": "sit_in",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "alexeimartov",
+                    "action": "fold",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "pirate",
+                    "action": "raise_to",
+                    "args": {
+                        "amt": "6"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "ajfenix",
+                    "action": "call",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "ajfenix",
+                    "action": "bet",
+                    "args": {
+                        "amt": "8"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "pirate",
+                    "action": "fold",
+                    "args": {
+                        "sit_out": true
+                    }
+                }
+            ],
+            "events": [
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "NEW_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "ajfenix posted 2.00 for BB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "ajfenix",
+                    "event": "POST",
+                    "args": {
+                        "amt": "2.00"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "ajfenix",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Jc"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "alexeimartov",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Js"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "pirate",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Qd"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "ajfenix",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Kh"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "alexeimartov",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "5s"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "pirate",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "4h"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "ajfenix (305.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "alexeimartov (230.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "pirate (301.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 6
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "cuttlefish",
+                    "event": "SIT_IN",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "alexeimartov",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "pirate",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "6"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "ajfenix",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "6"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "alexeimartov",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "pirate",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "ajfenix",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "3h"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Qc"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "2d"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 3
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "FLOP: 3\u2665, Q\u2663, 2\u2666"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "ajfenix",
+                    "event": "BET",
+                    "args": {
+                        "amt": "8"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "pirate",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "pirate",
+                    "event": "SIT_OUT",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "ajfenix",
+                    "event": "RETURN_CHIPS",
+                    "args": {
+                        "amt": "8.00"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "ajfenix",
+                    "event": "WIN",
+                    "args": {
+                        "amt": "12.00",
+                        "pot_id": 0,
+                        "showdown": false
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "ajfenix won 12.00 from the main pot"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "DELAY_COUNTDOWN",
+                    "args": {
+                        "n_seconds": 2
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "SHOWDOWN_COMPLETE",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "ajfenix",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "alexeimartov",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "pirate",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "END_HAND",
+                    "args": {}
+                }
+            ]
+        },
+        {
+            "ts": null,
+            "table": {
+                "id": "c87c1b24-bd4f-4fa5-905d-20ea35290a58",
+                "name": "Replayer-test_table-9f5eeca0-fe8aa66a-515e8201-cca185a9-2851b79e-6c144cbf-76d9011e",
+                "ante": null,
+                "min_buyin": "120.00",
+                "max_buyin": "300.00",
+                "num_seats": 6,
+                "sb": "1.00",
+                "bb": "2.00",
+                "btn_idx": 2,
+                "sb_idx": 2,
+                "bb_idx": 4,
+                "board_str": "",
+                "deck_str": "Qs,Ks,4h,2s,5s,Tc,4s,As,7h,3h,Jc,Ts,Jd,9s,Ah,Qd,Ac,8d,Js,Qc,7c,2h,8c,Qh,Kd,6h,Ad,2d,4c,9d,5c,5d,7d,5h,3d,6d,Jh,Kc,8s,6s,Kh,3s,8h,7s,3c,Td,9h,4d,6c,Th,2c,9c",
+                "precision": 0,
+                "hand_number": 16,
+                "table_type": "NLHE"
+            },
+            "players": [
+                {
+                    "id": "cb7cc4dd-cdc2-439e-8d51-4c57d3a603ff",
+                    "username": "pirate",
+                    "stack": "295.00",
+                    "playing_state": "SITTING_OUT",
+                    "position": 0,
+                    "owes_sb": false,
+                    "owes_bb": false,
+                    "sit_out_at_blinds": false,
+                    "auto_rebuy": null
+                },
+                {
+                    "id": "dfa64674-d642-4c9b-99df-664b2a76b0ed",
+                    "username": "cuttlefish",
+                    "stack": "564.00",
+                    "playing_state": "SIT_IN_PENDING",
+                    "position": 1,
+                    "owes_sb": false,
+                    "owes_bb": false,
+                    "sit_out_at_blinds": false,
+                    "auto_rebuy": null
+                },
+                {
+                    "id": "135e9e27-add7-4375-9a70-6cf7155dc959",
+                    "username": "ajfenix",
+                    "stack": "311.00",
+                    "playing_state": "SITTING_IN",
+                    "position": 2,
+                    "owes_sb": false,
+                    "owes_bb": false,
+                    "sit_out_at_blinds": false,
+                    "auto_rebuy": null
+                },
+                {
+                    "id": "1f1561ec-65a7-4341-b9a1-6e6c9e18831d",
+                    "username": "cowpig",
+                    "stack": "0.00",
+                    "playing_state": "SITTING_OUT",
+                    "position": 3,
+                    "owes_sb": false,
+                    "owes_bb": true,
+                    "sit_out_at_blinds": false,
+                    "auto_rebuy": null
+                },
+                {
+                    "id": "36de3426-579f-42c2-9493-45f40796729c",
+                    "username": "alexeimartov",
+                    "stack": "230.00",
+                    "playing_state": "SITTING_IN",
+                    "position": 4,
+                    "owes_sb": false,
+                    "owes_bb": false,
+                    "sit_out_at_blinds": false,
+                    "auto_rebuy": null
+                }
+            ],
+            "actions": [
+                {
+                    "ts": "00:57:21",
+                    "subj": "pirate",
+                    "action": "sit_in",
+                    "args": {}
+                }
+            ],
+            "events": [
+                {
+                    "ts": "00:57:21",
+                    "subj": "pirate",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "pirate",
+                    "event": "SIT_OUT",
+                    "args": {
+                        "immediate": true
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "ajfenix",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "alexeimartov",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "====NEW HAND===="
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "cowpig",
+                    "event": "ADD_ORBIT_SITTING_OUT",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "NOTIFICATION",
+                    "args": {
+                        "player": {
+                            "id": "dfa64674-d642-4c9b-99df-664b2a76b0ed",
+                            "short_id": "dfa64674",
+                            "user_id": null,
+                            "table_id": "c87c1b24-bd4f-4fa5-905d-20ea35290a58",
+                            "username": "cuttlefish",
+                            "name": "cuttlefish",
+                            "str": "cuttlefish",
+                            "user": null,
+                            "table": "No Limit Hold 'em:Replayer-test_table-9f5eeca0-fe8aa66a-515e8201-cca185a9-2851b79e-6c144cbf-76d9011e"
+                        },
+                        "notification_type": "wait_to_sit_in",
+                        "msg": "Players cannot join the game between the btn and the bb. You will have to wait another hand to play."
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "SET_BLIND_POS",
+                    "args": {
+                        "btn_pos": 2,
+                        "sb_pos": 2,
+                        "bb_pos": 4
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "NEW_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "ajfenix posted 1.00 for SB"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "ajfenix",
+                    "event": "POST",
+                    "args": {
+                        "amt": "1.00"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "alexeimartov posted 2.00 for BB"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "alexeimartov",
+                    "event": "POST",
+                    "args": {
+                        "amt": "2.00"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "alexeimartov",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Qs"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "ajfenix",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Ks"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "alexeimartov",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "4h"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "ajfenix",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "2s"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "alexeimartov (230.00) was dealt two cards"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "ajfenix (311.00) was dealt two cards"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 4
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "pirate",
+                    "event": "SIT_IN",
+                    "args": {}
+                }
+            ]
+        }
+    ]
+}

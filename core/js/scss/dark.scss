@@ -1,0 +1,425 @@
+@import 'colors';
+
+body {
+  color: $body-white;
+  background-color: $body-black;
+
+  & > div.inner-content.container-fluid {
+    background-color: $body-black;
+  }
+}
+
+#react {
+  color: $white;
+}
+
+.dropdown-menu {
+  background-color: $profile-gray;
+
+  li > a {
+    color: $body-white;
+  }
+}
+
+input {
+  color: $body-gray;
+}
+
+.logo-colors {
+  color: $body-gray-l1;
+}
+
+.orange {
+  color: $blue-light;
+}
+
+.highlight {
+  background:$blue-light;
+  color: black;
+}
+
+h1 {
+  color: $highlight-gray;
+}
+
+/* brand */
+#logo-text > span {
+  color: $highlight-color !important;
+}
+
+.oddslingers-text-logo{
+  color: $body-white-l1;
+  text-shadow: 3px 2px 10px rgba($black, 0.2);
+
+  &::first-letter {
+    color: $blue-light;
+  }
+}
+
+a.clbl {
+  color: #ddd;
+}
+
+.navbar-default {
+  background-color: $body-black;
+
+  .navbar-brand:hover img {
+    border: 3px solid $blue-light;
+  }
+
+  .navbar-nav > li > a {
+    color: $white;
+    border-bottom: 2px solid transparent;
+
+    &:hover {
+      color: $blue-light;
+      border-bottom: 2px solid $white;
+    }
+
+    &:active {
+      background-color: $black;
+    }
+  }
+
+
+}
+
+.navbar {
+  .navbar-nav > li > a {
+    &:hover > i.fa {
+      color: $blue-light;
+    }
+
+    &:active > i.fa {
+      color: $blue-light;
+    }
+
+    /* make inactive page icons slightly lighter */
+    & > .page-icon {
+      opacity: 0.7;
+      color: $gray;
+    }
+  }
+
+  a.navbar-brand:hover {
+    color: $body-white-l2;
+  }
+}
+
+#navbar-items {
+  .nav {
+    .active {
+      background-color: $body-black-d1;
+      color: $blue-light;
+    }
+
+
+    li.account-dropdown .active {
+      background-color: $body-gray;
+    }
+  }
+
+  li:hover > a.btn-signup {
+    box-shadow: -2px 1px 10px 2px $black;
+  }
+}
+
+.nav > li {
+  margin: 0 !important;
+}
+
+.navbar-toggle {
+  color: $white;
+}
+
+/* buttons */
+.btn-default {
+  background-color: $body-gray;
+  color: $body-white-l1;
+
+  &:hover {
+    background-color: rgba($black, .3);
+    color: $white;
+  }
+}
+
+/* game */
+.game-header {
+  .toggle-sounds.fa-volume-up {
+    color: $white;
+  }
+
+  .toggle-sounds.fa-volume-off {
+    color: $gray;
+  }
+}
+
+.game-header-buttons .btn-default {
+background-color: $body-gray;
+    color: $body-white-l1;
+
+  &:hover {
+    color: $white;
+    background-color: $game-black;
+  }
+}
+
+.input-group > span {
+  background-color: rgba($black, .4);
+
+  &.input-group-btn {
+    background-color: $black;
+  }
+}
+
+.felt {
+  background-image: url(/static/images/felt.webp);
+  background-color: $body-black;
+  border: 6px solid $felt-black;
+}
+
+.no-webp .felt {
+  background-image: url(/static/images/felt.png);
+}
+
+.empty-seatbox .seat {
+  background-color: $black;
+
+  &:hover {
+    border-color: $blue-light;
+  }
+}
+
+.seat {
+  background-color: $seat-bg;
+  color: $white;
+  border: 3px solid $seat-border;
+  box-shadow: 2px 4px 5px rgba($black, .4);
+
+  .player-name {
+    background-color: $seat-name-bg;
+    box-shadow: 0px 4px 12px 0px rgba($black,0.2);
+    border-bottom: 1px groove $white;
+  }
+
+  &.next-to-act {
+    background: rgba($seat-green, 1);
+    border: 3px solid $white;
+    box-shadow: 0px 8px 6px rgba($black,0.4);
+  }
+
+  &.FOLD {
+    background-color: rgba($seat-fold-bg, 0.95);
+    border-color: rgba($black,1);
+    box-shadow: none;
+    opacity: 0.7 !important;
+  }
+}
+
+
+.action-label-inner {
+  background-color: $action-black;
+}
+.action-label-arrow {
+  border-top-color: $action-black;
+}
+
+.actions {
+  background-color: rgba($action-bg,0.5);
+}
+
+.passive-actions {
+  background-color: rgba($action-bg,0.5);
+
+  .actions-title {
+    background-color: rgba($seat-green, 0.5);
+  }
+}
+
+.signal-badge {
+  color: $white;
+  background-color: $gray;
+}
+
+.signal-bars .bar {
+  background-color: $body-gray;
+}
+
+/* footer */
+#footer {
+  color: $footer-gray;
+  background-color: rgba($footer-black, 0.91);
+
+  a {
+    color: $white;
+    &:hover {
+      color: $blue-light;
+    }
+  }
+
+  .col-middle {
+    border-left: 1px solid $body-gray;
+    border-right: 1px solid $body-gray
+  }
+}
+
+/* tables*/
+#react > .table-grid {
+  background-color: $body-gray;
+}
+
+.leaderboard-thumbnail {
+  border: 3px solid $black;
+}
+
+.footer-stats h2 {
+  color: $body-white-l1;
+}
+
+.table-page {
+  background-color: $body-black;
+  background-image: url(/static/images/brick_tile2.webp);
+}
+
+.no-webp .table-page {
+  background-image: url(/static/images/brick_tile2.jpg);
+}
+
+/* chat */
+.chat-container .ss-scroll {
+  background: rgba($white, .1);
+}
+
+.page-tournamentsummary .text-chat {
+  background-color: $tournament-summary-item-dark-bg;
+}
+.text-chat {
+  background-color: rgba($black, .8);
+}
+
+.chat-top-button {
+  background-color: $body-gray;
+}
+.chat-lines {
+  .chat-line {
+    .chat-timestamp {
+      color: $black;
+    }
+
+    &:hover .chat-timestamp {
+      color: $body-white-l1;
+    }
+
+    .chat-message-light {
+      color: $body-gray-l2;
+    }
+  }
+
+  .dealer-msg {
+    color: $dealer-gray;
+  }
+}
+
+#play-by-play-toggle.btn:hover {
+    background-color: rgb(42, 42, 42);
+  }
+
+/* Tournament summary */
+
+.tournament-entrants .entrant {
+  background-color: $tournament-summary-item-dark-bg;
+}
+
+@media(min-width: 768px) {
+  .navbar {
+    background-color: $body-black;
+  }
+}
+
+@media (max-width: 1200px) {
+  .toggle-chat {
+      background-color: $body-black-l1;
+      color: $white;
+  }
+}
+
+@media (max-width: 767px) {
+  .game-header .btn {
+      border-left: 1px solid $white;
+      background-color: $body-black-l1 !important;
+  }
+  .game-header-buttons .feature-btn {
+      border: $white 2px solid;
+  }
+  nav.navbar .navbar-toggle .icon-bar {
+      background-color: $purple;
+  }
+  nav.navbar .navbar-collapse{
+      background-color: $body-black;
+      border-bottom: 3px solid $purple;
+  }
+}
+
+/* page background colors */
+.support-page {
+  background-color: $body-gray;
+}
+
+.speedtest-page {
+  color: $body-white-l1;
+  background-color: $body-gray;
+}
+
+.login-page {
+  background-color: $body-gray;
+}
+
+.faq-page {
+  background-color: $body-gray;
+  color: $body-white-l1;
+}
+
+/* profile */
+.profile-main-panel {
+  background-color: rgba($profile-gray, .99);
+}
+
+.profile-info {
+  color: $body-white-l1;
+}
+
+/* learn page */
+.learning-page {
+  background-color: $body-gray;
+}
+
+.walkthrough {
+  background-color: $body-black-l1;
+
+}
+
+/* modal text */
+.modal-body {
+  color: #333;
+}
+
+/* Leaderboard */
+#leaderboard-tabs li.active a {
+  background-color: $blue-light;
+  color: white;
+  display: inline-block;
+  border-radius: 10px 10px 0px 0px;
+}
+
+#leaderboard-tabs li a {
+  color: white;
+}
+
+#leaderboard-tabs li.active a:hover {
+  color: white;
+}
+
+#leaderboard-tabs li a:hover {
+  color: #333;
+}
+

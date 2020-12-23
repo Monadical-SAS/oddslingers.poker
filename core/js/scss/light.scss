@@ -1,0 +1,521 @@
+@import 'colors';
+
+body {
+  color: $body-gray;
+  background-color: $white;
+
+  & > div.inner-content.container-fluid {
+    background-color: #f4f4f2;
+  }
+}
+
+#react {
+  color: $body-gray;
+  background-color: #f4f4f2;
+
+  &.page-userprofile {
+    background-color: #f1f1f1;
+  }
+}
+
+@media (min-width: 768px) {
+  #react:not(.page-home):not(.page-table) {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+}
+
+.orange {
+  color: $orange-light;
+}
+
+.highlight {
+  background: $highlight-color;
+  color: $black;
+}
+
+h1 {
+  color: $highlight-gray;
+}
+
+/* brand */
+#logo-text > span {
+  color: $highlight-color !important;
+}
+
+.oddslingers-text-logo {
+  color: $body-gray-l1;
+  text-shadow: 2px 2px 0px rgba(185, 185, 185, 0.2);
+
+  &::first-letter {
+    color: $highlight-color;
+  }
+}
+
+a.clbl {
+  color: #333;
+}
+
+/* navbar */
+.navbar-default {
+  .navbar-brand {
+    color: $brand-light;
+    transition: color 200ms ease-in-out;
+
+    &:hover img {
+      border: 3px solid $highlight-color;
+      transition: border 200ms ease-in-out;
+    }
+  }
+
+  .navbar-nav > li > a {
+    color: $body-gray;
+
+    &:hover {
+      color: $highlight-color;
+    }
+  }
+
+  &.neon {
+    color: $white;
+  }
+}
+
+.navbar {
+  .navbar-nav > li > a {
+    &:hover > i.fa {
+      color: $highlight-color;
+    }
+
+    &:active > i.fa {
+      color: $highlight-color;
+    }
+  }
+
+  a.navbar-brand:hover {
+    color: $body-white-l2;
+    transition: color 200ms ease-in-out;
+  }
+}
+
+#navbar-items {
+  .nav {
+    .active {
+      background-color: $body-white;
+    }
+
+    .account-dropdown a.dropdown-toggle {
+      font-weight: 900;
+    }
+
+    li.account-dropdown .active {
+      background-color: $body-white;
+    }
+  }
+
+  a.btn-signup {
+    color: #eee;
+  }
+
+  li:hover > a.btn-signup {
+    box-shadow: -2px 1px 10px 2px rgba(0,0,0,0.25);
+  }
+}
+
+.nav > li {
+  margin: 0 !important;
+}
+
+.navbar-toggle {
+  color: $body-white;
+}
+
+/* buttons */
+.btn-default {
+  background-color: $body-light;
+  color: $body-gray;
+
+  &:hover {
+    background-color: rgba($white, .9);
+    color: $body-gray;
+  }
+}
+
+.btn-success {
+  background-color: $success-green;
+}
+
+/* game */
+.game-header {
+  /* sit down button - overwrites btn-success */
+  .feature-btn {
+    color: rgba(250, 250, 250, 0.878);
+    background-color: $sit-in-green;
+    box-shadow: 1px 2px 6px 4px rgba(0, 0, 0, 0.06);
+  }
+  .feature-btn:hover {
+    box-shadow: 1px 2px 8px 6px rgba(0, 0, 0, 0.08);
+    background-color: rgb(23, 161, 81);
+  }
+
+  /* overwrites table subtitle */
+  .orange {
+    color: $game-header-highlight;
+  }
+
+  .toggle-sounds.fa-volume-up {
+    color: $body-gray;
+  }
+
+  .toggle-sounds.fa-volume-off {
+    color: $gray;
+  }
+
+  h2 {
+    font-weight: 900;
+  }
+}
+
+.game-header-buttons .btn-default {
+  background-color: $body-gray;
+  color: $body-white-l1;
+
+  &:hover {
+    color: $white;
+    background-color: $game-black;
+  }
+}
+
+.input-group > span {
+  background-color: none;
+
+  &.input-group-btn {
+    background-color: none;
+  }
+}
+
+.felt {
+  background-image: url(/static/images/feltlight.webp);
+  background-color: #32af3287;
+  border: 6px solid #3b3e41;
+  background-blend-mode: exclusion;
+}
+
+.no-webp .felt {
+  background-image: url(/static/images/feltlight.png);
+}
+
+.empty-seatbox .seat {
+  background-color: $seat-border-light;
+
+  &:hover {
+    border-color: #1171d6;
+  }
+}
+
+.seat {
+  background: $seat-bg-light;
+  color: $white;
+  border: 3px solid $seat-border-light;
+  box-shadow: 0px 4px 5px $seat-shadow-light;
+
+  .player-name {
+    background-color: $seat-name-bg;
+    box-shadow: 0px 4px 12px 0px rgba($black,0.2);
+    border-bottom: 1px groove $seat-name-border;
+  }
+
+  &.next-to-act {
+    background: $success-green;
+    border: 3px solid white;
+    box-shadow: 2px 3px 9px 2px $seat-shadow-light;
+  }
+
+  &.FOLD {
+    background: rgba($seat-fold-bg, 0.95) !important;
+    border-color: rgba($black,1);
+    box-shadow: none;
+    opacity: 0.9 !important;
+  }
+}
+
+.no-cards {
+  opacity: 0.5;
+  background-color: $black;
+}
+
+.action-label-inner {
+  background-color: $seat-name-bg;
+}
+
+.action-label-arrow {
+  border-top-color: $seat-name-bg;
+}
+
+.actions {
+  background-color: $seat-name-border;
+
+  /* additional rules */
+  .progressbar-text {
+    color: $white;
+  }
+
+  .progressbar-container {
+    background-color: $seat-border-light;
+  }
+}
+
+#slider > .noUi-pips {
+  color: $seat-border-light;
+}
+
+.passive-actions {
+  background-color: $seat-name-border;
+
+  .actions-title {
+    background-color: $actions-green;
+    color: $white;
+  }
+
+  .leave-seat-button i.fa-sign-out {
+    color: $gray;
+  }
+}
+
+.signal-badge {
+  color: $white;
+  background-color: $gray;
+}
+
+.signal-bars .bar {
+  background-color: $body-gray;
+}
+
+/* footer */
+#footer {
+  color: $body-gray;
+  background-color: $white;
+
+  a {
+    color: $black;
+
+    &:hover {
+      color: $highlight-color;
+    }
+  }
+
+  .col-middle {
+    border-left: 1px solid $body-gray;
+    border-right: 1px solid $body-gray
+  }
+}
+
+/* tables */
+#react > .table-grid {
+  background-color: $body-light;
+
+  .table-thumbnail {
+    border: 2px solid $seat-name-border !important;
+  }
+}
+
+.table-thumbnail {
+  border: 1px solid $black !important;
+}
+
+.leaderboard-thumbnail {
+  border: 1px solid white;
+}
+
+.footer-stats h2 {
+  color: $body-gray-l1;
+}
+
+.table-page {
+  background: $body-light;
+  box-shadow: 4px 4px 7px rgba(0,0,0,0.04);
+}
+
+/* chat */
+
+.chat-container .ss-scroll {
+  background: rgba($black, .1);
+  border: 1px solid $body-white-l2;
+}
+
+.table-page .text-chat, .page-tournamentsummary .text-chat {
+  background-color: rgba($white, .95);
+}
+
+.chat-top-button {
+  background-color: $body-white;
+}
+
+.chat-lines {
+  .dealer-msg {
+    color: rgb(52, 52, 52);
+  }
+  .chat-line {
+    .chat-timestamp {
+      color: #fafafa;
+    }
+
+    &:hover .chat-timestamp {
+      color: $body-white-l1;
+    }
+  }
+
+  /* overwrite chat colors */
+  .light .orange {
+    color: $seat-hover;
+  }
+
+  .lime {
+    color: $success-green;
+  }
+
+  .gray {
+    color: $body-gray;
+  }
+}
+.text-chat #chat-input {
+  background-color: #fff;
+  border-radius: 0px;
+  border-top: 1px solid rgba(255, 165, 0, 0.18);
+}
+.text-chat .chat-actions .btn {
+  border-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+#play-by-play-toggle {
+  background-color: white;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgb(204, 204, 204);
+  border-image: initial;
+  color: rgb(204, 204, 204);
+}
+
+#play-by-play-toggle:hover {
+  border-color: rgb(173, 173, 173);
+}
+
+/* Tournament summary */
+
+.tournament-entrants .entrant {
+  background-color: rgba($white, .95);
+  border: 1px solid $body-white-l2;
+}
+.tournament-actions .tournament-action-button {
+    background-color: rgba($white, .95);
+    color: rgb(51, 51, 51);
+}
+.tournament-actions .tournament-action-button:active:hover {
+    background-color: rgba($white, .95);
+    color: rgb(51, 51, 51);
+    border-color: none;
+}
+/* media */
+/* add shadow to navbar */
+@media (min-width: 768px) {
+  .navbar {
+    border-bottom: 1px solid #ccc;
+    box-shadow: 1px 1px 2px rgba(170, 170, 170, 0.16);
+    background-color: $white;
+  }
+}
+
+@media (max-width: 1200px) {
+  .toggle-chat {
+      background-color: $body-light;
+      color: $body-gray;
+  }
+}
+
+@media (max-width: 767px) {
+  .game-header .btn {
+      border-left: 1px solid $white;
+      background-color: $body-black-l1 !important;
+  }
+  .game-header-buttons .feature-btn {
+      border: $white 2px solid;
+  }
+  nav.navbar .navbar-toggle .icon-bar {
+      background-color: $black;
+  }
+  nav.navbar .navbar-collapse{
+      background-color: $white;
+      border-bottom: 3px solid $black;
+  }
+}
+
+/* page background colors */
+div.support-page {
+    margin: 15px 30px 30px 30px;
+    border: none;
+}
+
+.support-page {
+  background-color: $body-light;
+}
+
+.table-grid-speed {
+    border-radius: 20px;
+    width: auto;
+    padding-top: 15px;
+}
+.speedtest-page {
+  color: $body-gray;
+  background-color: $body-light;
+}
+
+.faq-page {
+  color: $body-gray;
+  background-color: $body-light;
+}
+
+.input-group-addon > div {
+  color: $body-gray;
+}
+
+.page.about-page, .page.faq-page {
+    margin: 15px 30px 30px 30px;
+    border: none;
+}
+
+/* profile */
+.profile-main-panel {
+  background-color: $white;
+  border: 2px solid $seat-name-border;
+}
+
+.profile-badges .alert {
+  border: none;
+}
+
+.profile-info {
+  color: $body-black-l1;
+}
+
+.notification-reward {
+  background: $white !important;
+  border: 1px solid black !important;
+}
+
+/* learn page */
+.learning-page {
+  background-color: $body-light;
+}
+
+@media (min-width: 1025px) {
+  .page.learning-page {
+      border: none !important;
+      margin: 15px 30px 30px 30px;
+  }
+}
+
+.walkthrough {
+  background-color: $body-white;
+}
+

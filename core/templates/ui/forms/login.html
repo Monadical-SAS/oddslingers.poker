@@ -1,0 +1,146 @@
+{% load utils %}
+
+<style>
+    #login-form h3 {
+        font-family: Questa;
+        color: #333;
+    }
+
+    #login-form .input-group > span {
+        transition: border 500ms ease-out;
+        -webkit-transition: border 500ms ease-out;
+        -moz-transition: border 500ms ease-out;
+        -o-transition: border 500ms ease-out;
+    }
+    #login-form {
+        text-align: center;
+        background-color: #f4f4f2;
+        padding: 15px;
+        border-radius: 15px;
+        border: 1px solid rgba(0,0,0,0.01);
+        box-shadow: 4px 4px 4px rgba(0,0,0,0.03);
+    }
+    #login-form div.username-input {
+        margin-bottom: 5px;
+        margin-top: 30px;
+    }
+    #login-form button[type=submit] {
+        width: 96%;
+        transition: border 500ms ease-out;
+        -webkit-transition: border 500ms ease-out;
+        -moz-transition: border 500ms ease-out;
+        -o-transition: border 500ms ease-out;
+    }
+    #login-form span.login-errors {
+        color: red;
+    }
+    .field-narrow {
+        width: 64px;
+        text-align: left;
+    }
+    @media (max-width: 767px) {
+        #login-form div.username-input {
+            margin-top: 10px;
+        }
+    }
+
+</style>
+
+<div id="login-form">
+    <br/>
+    <form action="{% url 'Login' %}" method="POST">{% csrf_token %}
+        <h3 style="text-align: center">
+            {# <img class="login-img" src="/static/images/ninja.png"/> #}
+            Log In
+            <br/><br/>
+        </h3>
+        If you've played here before and have an account,<br/>log in using the form below.
+        <div id="username-login-field" class="input-group username-input">
+            <span class="input-group-addon" id="username-label"><div class="field-narrow">Username</div></span>
+            <input type="text" name="username" id="username-field" class="form-control" placeholder="Username or email" aria-describedby="username-label">
+        </div>
+        <div id="password-login-field" class="input-group">
+            <span class="input-group-addon" id="password-label"><div class="field-narrow">Password</div></span>
+            <input type="password" name="password" class="form-control" placeholder="••••••••" aria-describedby="password-label">
+        </div>
+        <br/>
+
+        <input type="hidden" name="next" value="{{next}}">
+
+        {% if login_errors %}
+            <span class="login-errors">
+                {{login_errors|linebreaksbr}}
+            </span>
+            <br/><br/>
+        {% endif %}
+
+        <button class="btn btn-lg btn-default" type="submit">
+            Log In
+            &nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+        </button>
+
+        <br/><br/>
+        <a href="/accounts/password/reset/">Forgot password?</a>
+    </form>
+    <script>
+        function preventIllegalCharacters(event) {
+            if (event.keyCode == 32) {
+                event.preventDefault();
+            }
+        }
+        function isUsernameValid(username) {
+            var pattern = /^[\w-]{2,36}$/;
+            return pattern.test(username);
+        }
+        function isPasswordValid(password) {
+            return password.length >= 8;
+        }
+        function checkLoginUsernameValid() {
+            var username = $('#username-login-field input').val();
+            if (isUsernameValid(username)) {
+                $('#username-login-field span').css('border-color', 'green');
+            } else {
+                $('#username-login-field span').css('border-color', '#aaa');
+            }
+        }
+        function checkLoginPasswordValid() {
+            var pass = $('#password-login-field input').val();
+            if (isPasswordValid(pass)) {
+                $('#password-login-field span').css('border-color', 'green');
+            } else {
+                $('#password-login-field span').css('border-color', '#aaa');
+            }
+        }
+        function checkLoginable() {
+            var user = $('#username-login-field input').val();
+            var pass = $('#password-login-field input').val();
+            if (isUsernameValid(user) && isPasswordValid(pass)) {
+                setTimeout(function() {
+                    $('#login-form button[type=submit]').css('border-color', 'green');
+                }, 300)
+            } else {
+                $('#login-form button[type=submit]').css('border-color', '#aaa');
+            }
+        }
+
+        window.addEventListener('load', function() {
+            $('#username-login-field input').on('keydown', function(e) {
+                preventIllegalCharacters(e);
+            })
+            $('#username-login-field input').on('keyup', function() {
+                checkLoginUsernameValid();
+                checkLoginable();
+            });
+            $('#password-login-field input').on('keyup', function() {
+                checkLoginPasswordValid();
+                checkLoginable();
+            });
+            setTimeout(function() {
+                // turn fields green if browser auto-filled them
+                checkLoginUsernameValid();
+                checkLoginPasswordValid();
+                checkLoginable();
+            }, 200);
+        });
+    </script>
+</div>

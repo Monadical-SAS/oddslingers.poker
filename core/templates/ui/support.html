@@ -1,0 +1,207 @@
+{% extends 'ui/base.html' %}
+
+{% load static %}
+{% load cache %}
+
+{% block title %}Community and Support{% endblock %}
+
+{% cache 500 learnpage user.is_authenticated DEBUG GIT_SHA message %}
+
+{% block inner %}
+    <style>
+        .inner-content {
+            font-size: 1.4em;
+            font-weight: 200;
+        }
+        .support-page {
+            width: 100%;
+            padding-bottom: 40px;
+            z-index: 20;
+        }
+        h1.oddslingers-text-logo {
+            text-align: center;
+            font-size: 66px;
+        }
+        h2 {
+            text-align: center;
+            font-family: 'Lato Light', 'Helvetica', 'Arial', sans-serif;
+            font-weight: 200;
+            font-size: 44px;
+            font-variant: small-caps;
+        }
+        h2:first-letter, h3:first-letter {
+            color: orange;
+        }
+
+        .well {
+            color: #333;
+            font-size: 0.8em;
+        }
+        .input-group {
+            width: 100%;
+            margin-bottom: 5px;
+        }
+        .input-group-addon {
+            color: white;
+            width: 50px;
+        }
+        .input-group textarea {
+            height: 200px;
+            font-size: 16px;
+        }
+        #discordframe {
+            width: 350px;
+            max-width: 100%;
+            height: 500;
+        }
+        @media (min-width: 1025px) {
+            .support-page {
+                margin: 0 30px 30px 30px;
+                border-radius: 20px;
+                width: calc(100% - 60px);
+            }
+        }
+    </style>
+
+    <div class="support-page col-md-12">
+        <div class="col-lg-10 col-lg-offset-1 col-md-12" style="text-align: center">
+            <h1 class="oddslingers-text-logo">Community &amp; Support</h1>
+            <div class="center social-btns">
+                <a href="https://twitter.com/oddslingers" target="_blank" rel="noopener" class="btn btn-info">
+                    <i class="fa fa-twitter"></i>
+                    Twitter
+                </a>
+                <a href="https://facebook.com/oddslingers" target="_blank" rel="noopener" class="btn btn-fb">
+                    <i class="fa fa-facebook"></i>
+                    Facebook
+                </a>
+                <a href="https://reddit.com/r/oddslingers" target="_blank" rel="noopener" class="btn btn-reddit">
+                    <i class="fa fa-reddit"></i>
+                    Reddit
+                </a>
+                <a href="https://discord.gg/USPweBy" target="_blank" rel="noopener" class="btn btn-discord">
+                    <i class="fa fa-gamepad"></i>
+                    Discord
+                </a>
+                <br/>
+            </div>
+            
+            <hr/>
+            <br/>
+
+            <div class="col-md-6 col-sm-12" style="text-align: center">
+                <h3 class="oddslingers-text-logo">Chat with us:</h3>
+                <iframe id="discordframe" src="https://discordapp.com/widget?id=359792659369558026&theme=dark{%if user%}&username={{user.username}}{%endif%}" allowtransparency="true" frameborder="0" height="280px"></iframe>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-sm-12" style="text-align: center">
+                    
+                    {% if submitted %}
+                        <br/><br/>
+                        <h2>Thanks for submitting!</h2>
+                        <small>We've emailed you a copy to: {{email|default:'(no email on file)'}}</small><br/><br/>
+
+                        Ticket ID: <a href="#{{ticket_id}}">#{{ticket_id}}</a><br/><br/>
+
+                        We'll get back to you as soon as possible.<br/>
+                        Join us on Discord if you'd like to chat with us and check in on ticket progress.<br/><br/>
+                        <b style="color: green">If the bug report helps us out, we'll award you the "Bug Hunter" badge!</b>
+                    {% else %}
+                        <h3 class="oddslingers-text-logo">Submit a support request, suggestion, or general feedback:</h3>
+                        <form action="?" method="POST">{% csrf_token %}
+                            <div id="info" class="input-group more-info">
+                                <span class="input-group-addon" id="info-label">
+                                    <div class="field-narrow">Message &nbsp;&nbsp;</div>
+                                </span>
+                                <input name="subject"
+                                       class="form-control form-info"
+                                       placeholder="Subject for your message (optional)"
+                                       type="text"
+                                       value="{{subject}}"
+                                       {% if not request.user.is_authenticated %}disabled{% endif %}/>
+
+                                <textarea name="message"
+                                          id="form-info"
+                                          class="form-control form-info"
+                                          placeholder=" 
+        Describe the steps you took:
+        1. clicked on 'About' page
+        2. saw an error message...
+                    Or
+        Make a suggestion:
+        e.g. The table would be easier to use if ..."
+                                        {% if not request.user.is_authenticated %}disabled{% endif %}>{{message}}{% if not request.user.is_authenticated %}
+                                                
+        You must be signed in to create a support ticket...
+
+
+        If you are unable to sign in or need immediate help,
+        message us on Discord using the chat on the left.
+                                        {% endif %}</textarea>
+                            </div>
+                            {{error}}
+
+                            <br/>
+                            {% if request.user.is_authenticated %}
+                                <button type="submit" class="btn btn-lg btn-success">Submit Request &nbsp;<i class="fa fa-envelope-o"></i></button>
+                            {% else %}
+                                <a href="/accounts/login/?next=/support/" class="btn btn-lg btn-success">Log in</a>
+                            {% endif %}
+                            <br/>
+                            <small style="font-size: 0.7em">
+                                Or email your request to <a href="mailto:support@oddslingers.com" target="_blank" rel="noopener">support@oddslingers.com</a>
+                            </small>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+            {% if request.user.is_authenticated %}
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 col-sm-12">
+                        <h3 class="oddslingers-text-logo">Your Support Requests</h3>
+                        <div class="well">
+                            {% if tickets %}
+                                {% for ticket in tickets %}
+                                    <div class="alert alert-{%if ticket.status == 'open'%}info{%else%}warning{%endif%}" style="text-align: left">
+                                        <small style="float: right; text-align: right">
+                                            ID: <a href="#{{ticket.short_id}}" name="{{ticket.short_id}}">
+                                                #{{ticket.short_id}}
+                                            </a> &nbsp; &nbsp;
+                                            Status: <b title="Last updated: {{ticket.modified}}">{{ticket.status}}</b><br/>
+                                            Submitted: {{ticket.opened}}
+                                        </small>
+                                        Subject: <b>{{ticket.subject}}</b>
+                                        {% if ticket.table_short_id %}
+                                            <br/>
+                                            Table: {{ticket.table_name}} <a href="{{ticket.table_path}}">(#{{ticket.table_short_id}})</a>
+                                        {% endif %}
+                                        <hr/>
+                                        <br/>{{ticket.notes|linebreaksbr|default:'No ticket details.'}}
+                                        <hr style="margin-bottom: 4px; opacity:0.4"/>
+
+                                        <small style="float: right">
+                                            Summary emailed to: {{ticket.reported_by_email|default:'(no email on file)'}}
+                                            <br/>
+                                        </small>
+
+                                        <small>Respond to the summary email to contact us.</small><br/>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <small style="opacity: 0.6">
+                                    You have no past requests, use the form above to submit a new support request.
+                                </small>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <small>We're here to help you {{user.get_full_name|default:user.username}}! Please don't hesistate to contact us with feedback, suggestions, or feature requests.</small>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock inner %}
+
+{% endcache %}

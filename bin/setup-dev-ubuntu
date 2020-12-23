@@ -1,0 +1,140 @@
+#!/bin/bash
+set -euo pipefail
+trap "exit" INT
+
+REPO_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
+SUDO_USER=$(who am i | awk '{print $1}')
+
+source "$REPO_DIR/env/dev.env"
+DATA_DIR="$REPO_DIR/data"
+
+function info {
+    echo -e "\\n$(tput bold)$(tput setaf 4)" "$@" "$(tput sgr0)"
+}
+function success {
+    echo -e "\\n$(tput bold)" "$@" "$(tput sgr0)"
+}
+function error {
+    echo -e "\\n$(tput bold)$(tput setaf 1)" "$@" "$(tput sgr0)"
+}
+
+if ls "$DATA_DIR/database/base" > /dev/null 2>&1; then
+    error "It looks like you have a database already initialized, please backup and move or delete your DATA_DIR:"
+    echo "     $DATA_DIR"
+    exit 1
+fi
+
+success " 🔵    Setup: Development Machine w/ supervisord (Ubuntu >= 17.04)"
+    if [[ "$(uname)" != 'Linux' ]]; then
+        error "Not on Linux!: $(uname)"
+        exit 1
+    fi
+    ln -fs "$REPO_DIR" /opt/oddslingers.poker
+echo "       Installing from $REPO_DIR..."
+
+info "[1/9] Installing system dependencies..."
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+    add-apt-repository -y "deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main"
+    add-apt-repository -y ppa:maxmind/ppa         # for maxmind geoip libs
+    add-apt-repository -y ppa:trevorjay/pyflame   # for flamegraph profiling python
+    add-apt-repository -y ppa:fish-shell/release-3
+    apt update
+    apt install -y build-essential autoconf python3.7 python3-pip python3.7-dev \
+                   python-dev virtualenv pyflame redis-server git nodejs npm \
+                   supervisor libmaxminddb0 libmaxminddb-dev mmdb-bin fish zip unzip \
+                   postgresql-12 postgresql-server-dev-all postgresql-contrib nginx gzip expect jq
+
+    systemctl stop postgresql
+    systemctl stop redis-server
+    systemctl stop nginx
+    systemctl disable postgresql
+    systemctl disable redis-server
+    systemctl disable nginx
+echo "   √   Apt dependencies are installed:"
+echo "           Python, postgresql, redis, npm, nginx, (and other utils)"
+
+info "[2/9] Install Oddslingers utility commands..."
+    echo "      Add the following to your \$PATH, then press enter once finished:"
+    echo "           /opt/oddslingers.poker/bin"
+    bash -c "which oddslingers" | grep -q /opt/oddslingers.poker/bin || read
+    if bash -c "which oddslingers" | grep -q /opt/oddslingers.poker/bin; then
+        true
+    else
+        echo "/opt/bin/oddslingers was not found in your \$PATH, please set it and run this script again"
+        exit 1
+    fi
+success "   √   'oddslingers' command now points to $(bash -c "which oddslingers") from your \$PATH"
+
+
+info "[3/9] Seting up pipenv and yarn..."
+    cd "$REPO_DIR/core"
+    python3 --version | grep -q "Python 3" || exit 1
+    pip3 install -q --upgrade pip setuptools virtualenv pipenv
+    npm install --global npm yarn
+
+info "[4/9] Installing python dependencies..."
+    export PIPENV_VENV_IN_PROJECT="enabled"
+    pipenv install --dev
+    chown -R $SUDO_USER.$SUDO_USER .venv
+    success "   √   Virtualenv is active: $(sudo -u $SUDO_USER pipenv run which python) ($(sudo -u $SUDO_USER pipenv run python --version))"
+success "   √   PyPI requirements are installed: Pipfile"
+
+info "[5/9] Installing js dependencies..."
+    cd "$REPO_DIR/core/js"
+    yarn install
+    chown -R $SUDO_USER.$SUDO_USER node_modules
+success "   √   JS requirements are installed: package.json "
+
+info "[6/9] Linking config files..."
+    sudo bash -c "echo '127.0.0.1     oddslingers.l $DEFAULT_HOST' >> /etc/hosts"
+    rm -f /etc/supervisor/supervisord.conf
+    ln -fs "$REPO_DIR/etc/supervisor/ubuntu-dev.conf" /etc/supervisor/supervisord.conf
+success "   √   Generated SSL certs and set oddslingers.l to 127.0.0.1"
+
+info "[7/9] Initializing PostgreSQL database..."
+    POSTGRES_PASSWORD=$(openssl rand -base64 14)
+    mkdir -p "$DATA_DIR"
+    chown $SUDO_USER:$SUDO_USER "$DATA_DIR"
+    mkdir -p "$DATA_DIR/postgres"
+    chown -R postgres:postgres "$DATA_DIR/postgres"
+
+    sudo -u postgres /usr/lib/postgresql/12/bin/initdb -D "$DATA_DIR/postgres"
+    sudo -u postgres /usr/lib/postgresql/12/bin/pg_ctl -D "$DATA_DIR/postgres" start
+
+    sudo -u postgres /usr/lib/postgresql/12/bin/psql -c "CREATE USER $POSTGRES_USER WITH PASSWORD '$POSTGRES_PASSWORD';" postgres
+    sudo -u postgres /usr/lib/postgresql/12/bin/psql -c "CREATE DATABASE $POSTGRES_DB OWNER $POSTGRES_USER;" postgres
+    sudo -u postgres /usr/lib/postgresql/12/bin/psql -c "GRANT ALL PRIVILEGES ON DATABASE $POSTGRES_DB TO $POSTGRES_USER;" postgres
+    sudo -u postgres /usr/lib/postgresql/12/bin/psql -c "ALTER USER $POSTGRES_USER CREATEDB;" postgres
+
+    echo "POSTGRES_DB=$POSTGRES_DB" > "$REPO_DIR/env/secrets.env"
+    echo "POSTGRES_USER=$POSTGRES_USER" >> "$REPO_DIR/env/secrets.env"
+    echo "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" >> "$REPO_DIR/env/secrets.env"
+success "   √   Database setup complete:"
+awk '{ print "    "$1 }' < "$REPO_DIR/env/secrets.env"
+
+info "[8/9] Run initial migrations and create superuser..."
+    systemctl start redis-server
+    cd "$REPO_DIR/core"
+    sudo -u $SUDO_USER pipenv run ./manage.py migrate
+    sudo -u $SUDO_USER pipenv run ./manage.py createsuperuser
+    systemctl stop redis-server
+    sudo -u postgres /usr/lib/postgresql/12/bin/pg_ctl -D "$DATA_DIR/postgres" stop
+success "   √   Ran initial migrations and created admin user"
+
+info "[9/9] Downloading geoip database..."
+#    "$REPO_DIR/bin/update-geoipdb"
+success "   √   GeoIP database updated: data/geoip"
+
+
+success " ✅    Done. See README.md for next steps."
+    echo "       - Dev commands can be run using the 'oddslingers' command:"
+    echo "           e.g. oddslingers start"
+    echo "                oddslingers compjs tables.js"
+    echo "                oddslingers resetdb"
+    echo "       - Config is stored in env/secrets.env and env/dev.env"
+    echo "       - Data is stored in oddslingers.poker/data/"
+
+supervisorctl reload all
+sleep 5
+supervisorctl status all
+exit 0

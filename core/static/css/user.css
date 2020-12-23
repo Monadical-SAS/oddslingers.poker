@@ -1,0 +1,347 @@
+.missing-email-alert {
+  text-align: center;
+  margin: auto;
+  max-width: 400px;
+  float: none;
+  top: 20vh;
+  position: relative;
+  z-index: 1000; }
+
+.row-locked {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.14; }
+
+.user-page {
+  font-size: 16px; }
+
+@media (min-width: 1025px) {
+  .user-page {
+    margin: auto;
+    float: none;
+    max-width: 1200px;
+    min-height: 80%;
+    /*background-color: black;
+        border-radius: 20px;
+        border: 4px solid rgb(183, 28, 28);*/ }
+  .profile-info {
+    margin-top: 20vh;
+    padding: 20px; } }
+
+.cta-link {
+  display: block;
+  text-align: center;
+  margin-top: 20px; }
+
+hr {
+  margin-top: 12px;
+  margin-bottom: 10px; }
+
+.profile-info h3 {
+  text-align: center; }
+
+.profile-picture {
+  border: 2px solid gray;
+  border-radius: 20px;
+  width: 100%;
+  max-height: 300px; }
+
+.wallet {
+  color: #ddd;
+  background-color: inherit;
+  font-size: 1.2em; }
+
+.profile-main-panel .nav-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+#user-balance {
+  font-family: "Bungee", "Helvetica Nue", "Arial", sans-serif; }
+
+.wallet small {
+  font-family: "Lato", "Helvetica", "Arial", sans-serif;
+  font-weight: 200;
+  font-size: 0.8em; }
+
+.wallet pre {
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  background-color: #333333;
+  margin-top: 10px;
+  font-size: 1.3em; }
+
+.wallet pre i {
+  color: #2a2aff; }
+
+.cashier input {
+  color: black;
+  border: 2px solid #333;
+  border-radius: 4px;
+  vertical-align: bottom;
+  margin-bottom: -1px;
+  margin-left: 3px;
+  font-family: "Lato", "Helvetica", "Arial", sans-serif;
+  font-weight: 200;
+  font-size: 0.9em; }
+
+.cashier input:invalid {
+  border: 2px solid red; }
+
+.cashier input:valid {
+  border: 2px solid green; }
+
+.edit-icon {
+  color: #507FA9;
+  opacity: 0.5;
+  cursor: pointer; }
+
+.edit-icon:hover {
+  opacity: 1; }
+
+.mini-stacks {
+  height: 100px; }
+
+.profile-bio {
+  font-size: 0.9em;
+  margin-top: 25px;
+  opacity: 0.8;
+  text-align: center; }
+
+.col {
+  margin-top: 30px; }
+
+#user-balance {
+  color: green; }
+
+#bio-edit {
+  width: 100%;
+  height: 80px;
+  color: black; }
+
+.profile-badges .alert {
+  width: 100%;
+  font-size: 1.15em;
+  border-radius: 10px;
+  margin-bottom: 15px; }
+
+.profile-badges .alert img {
+  width: 50px;
+  height: auto; }
+
+.table-thumbnail {
+  text-align: center;
+  margin: auto; }
+
+.tables-list {
+  text-align: center; }
+
+.table-thumbnail-container {
+  display: inline-block; }
+
+.profile-main-panel {
+  border-radius: 25px;
+  padding: 15px;
+  /*min-height: 620px;*/
+  margin-bottom: 30px;
+  box-shadow: 1px 2px 9px 1px rgba(0, 0, 0, 0.02); }
+
+@media (min-width: 769px) and (max-width: 1199px) {
+  .profile-main-panel {
+    min-height: 531px; } }
+
+.center-panel {
+  border-radius: 50%;
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  padding-top: 30px;
+  min-height: 385px; }
+
+.center-bonus {
+  text-align: center;
+  position: relative;
+  top: -1vh; }
+
+.center-bonus .btn {
+  font-size: 1.5em; }
+
+.profile-tables .cta-link {
+  width: 100%; }
+
+@media (max-width: 993px) {
+  .profile-info {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px; }
+  .profile-picture {
+    border: 0px; }
+  .profile-tables {
+    margin-top: 10px; }
+  .cashier {
+    margin-top: 0px;
+    width: 100%;
+    border: 0px;
+    font-size: 2.4rem;
+    padding-top: 20px;
+    border-radius: 0px; }
+  .cashier small {
+    font-size: 0.5em; }
+  .cashier .btn {
+    margin: auto;
+    display: inline-block;
+    font-size: 0.8em;
+    margin-bottom: 5px; }
+  .cashier img {
+    display: none; }
+  .profile-main-panel {
+    width: 94%;
+    margin: auto;
+    border: 0px;
+    float: none; } }
+
+.picture-container {
+  display: block;
+  width: 100%;
+  max-width: 200px;
+  margin: auto;
+  position: relative; }
+
+.profile-choice {
+  display: inline-block;
+  position: relative;
+  width: 100px;
+  height: 100px;
+  cursor: pointer; }
+
+.picture-action {
+  display: none;
+  position: absolute;
+  width: 100%;
+  max-width: 200px;
+  text-align: center;
+  margin: auto;
+  margin-top: -35px; }
+
+.picture-container:hover .picture-action {
+  background-color: #171818;
+  display: block;
+  opacity: 0.8; }
+
+/* Rewards Styling */
+.badges-scroll {
+  height: auto;
+  max-height: 600px; }
+
+.margin-left-10 {
+  margin-left: 10px; }
+
+.inline-block {
+  display: inline-block; }
+
+.badge-container {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0; }
+
+.player-count {
+  text-align: center;
+  font-size: 20px;
+  right: -215px;
+  margin-bottom: 2px;
+  opacity: 0.8; }
+
+.cashier-details {
+  opacity: 0.6;
+  font-size: 1.2em; }
+
+.cashier-details .lg {
+  fontSize: 20px; }
+
+.greendeets {
+  font-family: "Bungee", "Helvetica Nue", "Arial", sans-serif;
+  color: #2c8000; }
+
+h4 {
+  text-align: center; }
+
+.one-line label {
+  display: inline-block;
+  width: 150px;
+  margin-right: 2px; }
+
+.one-line input, .one-line select {
+  display: inline-block;
+  width: auto; }
+
+.bot-personality .personality-title {
+  font-weight: 800;
+  margin-bottom: 5px; }
+
+.bot-personality .personality-desc {
+  font-style: italic; }
+
+#badges-tabs li a {
+  color: #ddd;
+  font-size: 16px;
+  border-radius: 10px 10px 0px 0px; }
+
+#badges-tabs li a:hover {
+  color: #333; }
+
+#badges-tabs li.active a {
+  background-color: #1171d6;
+  color: #eee; }
+
+#level-container {
+  min-height: inherit; }
+
+#level-container h4 {
+  margin-top: 0px;
+  margin-bottom: 15px; }
+
+#level-bar {
+  background-color: #52a1e5;
+  color: white;
+  width: 0;
+  height: 51px;
+  border-radius: 6px;
+  padding-top: 10px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 15px;
+  font-size: 20px;
+  text-shadow: none; }
+
+#global-bar-container {
+  width: 70%;
+  margin: auto;
+  border: solid 1px darkgray;
+  border-radius: 6px;
+  margin-bottom: 10px; }
+
+#global-bar {
+  width: 0;
+  height: 30px;
+  border-radius: 6px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.05);
+  font-size: 20px;
+  text-shadow: none;
+  background-image: linear-gradient(to right, red, yellow); }
+
+.tick-mark {
+  position: absolute;
+  height: 30px;
+  width: 5%;
+  padding-top: 4px;
+  border-left: 1px solid darkgray;
+  text-align: center; }
+
+.tick-mark b {
+  font-size: 11px;
+  font-weight: 200;
+  opacity: 0; }
+
+.tick-mark:hover b {
+  opacity: 0.7; }

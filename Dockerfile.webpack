@@ -1,0 +1,17 @@
+FROM node:8-alpine
+
+#RUN apk update && \
+#    apk add --no-cache fish && \
+#    rm -f /tmp/* /etc/apk/cache/*
+
+
+#RUN npm install webpack -g
+#RUN npm install node-sass-chokidar -g
+
+
+WORKDIR /opt/oddslingers.poker/core/js
+COPY ./core/js/yarn.lock ./core/js/package.json /opt/oddslingers.poker/core/js/
+
+RUN yarn install
+
+ENV PATH="/opt/oddslingers.poker/core/js/node_modules/.bin:${PATH}"

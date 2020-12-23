@@ -1,0 +1,55 @@
+<script>
+    // Redux Message Log
+
+    {% if DEBUG %}
+        window.navbarLog = function(text) {
+            var timestamp = (new Date()).toString().split(' ')[4];
+            $('#navbar-history').append('[' + timestamp + '] ' + text + '<br/>');
+        }
+
+        window.navbarMessage = function(text, loading) {
+            $('#navbar-messages').html(text || 'Event Log');
+
+            if (loading)  $('#navbar-spinner').show();
+            else $('#navbar-spinner').hide();
+
+            if (text && text.length) {
+                $('#redux-messages').addClass('notifying');
+                window.navbarLog(text);
+            } else {
+                $('#redux-messages').removeClass('notifying');
+            }
+        }
+
+        window.toggleNavbarHistory = function() {
+            if ($('#redux-messages').hasClass('expanded')) {
+                $('#redux-messages').removeClass('expanded');
+            } else {
+                $('#redux-messages').addClass('expanded');
+                $('#navbar-messages').html('Event Log');
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            $('#navbar-spinner').hide();
+        })
+        if (window.InstantClick) {
+            InstantClick.on('change', function () {
+                $('#navbar-spinner').hide();
+            });
+        }
+    {% else %}
+        // window.navbarMessage = function(msg, loading) {if (msg && msg.length) console.log(msg)};
+        window.navbarMessage = function() {};
+        window.navbrLog = function() {};
+        window.toggleNavbarHistory = function () {};
+    {% endif %}
+</script>
+
+{% if DEBUG %}
+    <div id="redux-messages" onclick="toggleNavbarHistory()">
+        <!-- Navbar Center: Messages -->
+        <i id="navbar-spinner" class="fa fa-spinner fa-spin"></i>
+        <span id="navbar-messages"></span>
+        <pre id="navbar-history" title="See JS console for details."></pre>
+    </div>
+{% endif %}

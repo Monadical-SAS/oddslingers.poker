@@ -1,0 +1,22 @@
+{% load utils %}
+
+<script src="{% http2static 'js/raven.min.js' '14' %}" type="text/javascript"></script>
+<script>
+    Raven.config('{{SENTRY_JS_URL}}', {
+        release: '{{GIT_SHA}}',
+        environment: '{{ENVIRONMENT}}',
+    }).install();
+    if (window.user) {
+        Raven.setUserContext(window.user);
+    }
+    function reportSentryError(err) {
+        Raven.captureException(err);
+        Raven.showReportDialog();
+    };
+    {% if request.sentry.id %}
+        Raven.showReportDialog({
+            eventId: '{{request.sentry.id}}',
+            dsn: '{{SENTRY_JS_URL}}'
+        });
+    {% endif %}
+</script>

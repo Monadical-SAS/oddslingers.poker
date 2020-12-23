@@ -1,0 +1,1598 @@
+{
+    "notes": "abc",
+    "settings": {
+        "DEBUG": true,
+        "GIT_SHA": "b74828e896ae32f51d015816123a15c85092bb6c"
+    },
+    "user": {
+        "id": "e8207d68-551c-4ffd-8344-05bb3a41c428",
+        "email": "",
+        "username": "squash",
+        "name": "",
+        "first_name": "",
+        "last_name": "",
+        "is_active": true,
+        "is_staff": true,
+        "is_authenticated": true,
+        "date_joined": "2017-07-26T04:09:06.193Z"
+    },
+    "http_to_backend": [
+        {
+            "url": "/table/f9f6ee13/",
+            "method": "GET",
+            "params": {
+                "props_json": 1
+            },
+            "username": "squash"
+        }
+    ],
+    "http_to_frontend": [
+        {
+            "class": "JsonResponse",
+            "status_code": 200,
+            "json": {
+                "url_name": "Table",
+                "url": "http://oddslingers.l/table/f9f6ee13/",
+                "domain": "oddslingers.l",
+                "view": "ui.views.pages.Table",
+                "DEBUG": true,
+                "GIT_SHA": "b74828e896ae32f51d015816123a15c85092bb6c",
+                "DATABASE": "local",
+                "TIME_ZONE": "UTC",
+                "user": {
+                    "id": "e8207d68-551c-4ffd-8344-05bb3a41c428",
+                    "email": "",
+                    "username": "squash",
+                    "name": "",
+                    "first_name": "",
+                    "last_name": "",
+                    "is_active": true,
+                    "is_staff": true,
+                    "is_authenticated": true,
+                    "date_joined": "2017-07-26T04:09:06.193Z"
+                },
+                "gamestate": {
+                    "table": {
+                        "id": "f9f6ee13-13b7-405d-b01a-d2d7606cdd39",
+                        "name": "squash's Table #4",
+                        "path": "/table/f9f6ee13/",
+                        "variant": "No Limit Hold 'em",
+                        "sb": "1.00",
+                        "bb": "2.00",
+                        "board": {},
+                        "btn_idx": 0,
+                        "num_seats": 6,
+                        "available_seats": 3,
+                        "hand_number": 2,
+                        "total_pot": "86.00",
+                        "sidepot_summary": {},
+                        "to_act_id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                        "seconds_to_act": 30,
+                        "last_action_timestamp": "2017-08-09T00:20:50.112Z",
+                        "min_buyin": "100.00"
+                    },
+                    "players": {
+                        "9594dc98-2dda-40c6-a13d-ded6f001e3cd": {
+                            "id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                            "short_id": "9594dc98",
+                            "username": "Nanopoleon",
+                            "stack": {
+                                "amt": "191.00"
+                            },
+                            "position": 0,
+                            "sitting_out": false,
+                            "uncollected_bets": {
+                                "amt": "7.00"
+                            },
+                            "is_active": true,
+                            "last_action": "RAISE_TO",
+                            "cards": {
+                                "0": {
+                                    "card": "?"
+                                },
+                                "1": {
+                                    "card": "?"
+                                }
+                            },
+                            "timebank": 5
+                        },
+                        "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a": {
+                            "id": "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a",
+                            "short_id": "12232ce5",
+                            "username": "UsainVolts",
+                            "stack": {
+                                "amt": "180.00"
+                            },
+                            "position": 1,
+                            "sitting_out": false,
+                            "uncollected_bets": {
+                                "amt": "22.00"
+                            },
+                            "is_active": true,
+                            "last_action": "RAISE_TO",
+                            "cards": {
+                                "0": {
+                                    "card": "?"
+                                },
+                                "1": {
+                                    "card": "?"
+                                }
+                            },
+                            "timebank": 5
+                        },
+                        "c12c4661-051b-422e-be76-7ebfe4fb9a4a": {
+                            "id": "c12c4661-051b-422e-be76-7ebfe4fb9a4a",
+                            "short_id": "c12c4661",
+                            "username": "squash",
+                            "stack": {
+                                "amt": "43.00"
+                            },
+                            "position": 4,
+                            "sitting_out": false,
+                            "uncollected_bets": {
+                                "amt": "57.00"
+                            },
+                            "is_active": true,
+                            "last_action": "RAISE_TO",
+                            "cards": {
+                                "0": {
+                                    "card": "2c"
+                                },
+                                "1": {
+                                    "card": "Ad"
+                                }
+                            },
+                            "timebank": 0,
+                            "pending_rebuy": "0.00",
+                            "sit_out_at_blinds": false,
+                            "sit_in_at_blinds": false,
+                            "preset_call": null,
+                            "preset_check": false,
+                            "preset_checkfold": false,
+                            "current": true,
+                            "available_actions": [
+                                "SET_AUTO_REBUY",
+                                "BUY",
+                                "SIT_OUT_AT_BLINDS"
+                            ],
+                            "min_bet": null,
+                            "amt_to_call": null
+                        }
+                    },
+                    "timestamp": 1502238404.414302
+                },
+                "viewers": 1
+            }
+        }
+    ],
+    "ws_to_backend": [
+        {
+            "type": "websocket.connect",
+            "TIMESTAMP": 1502238405222
+        },
+        {
+            "TIMESTAMP": 1502238405249,
+            "SEQ_NUM": 0,
+            "page": "Table | Oddslingers",
+            "url": "https://oddslingers.l/table/f9f6ee13/",
+            "component": "pages/table.js",
+            "type": "HELLO"
+        },
+        {
+            "TIMESTAMP": 1502238405303,
+            "SEQ_NUM": 1,
+            "type": "STEP"
+        },
+        {
+            "TIMESTAMP": 1502238407798,
+            "SEQ_NUM": 2,
+            "type": "PAUSE_ACTION"
+        },
+        {
+            "TIMESTAMP": 1502238409165,
+            "SEQ_NUM": 3,
+            "type": "RESUME_ACTION"
+        }
+    ],
+    "ws_to_frontend": [
+        {
+            "players": {
+                "9594dc98-2dda-40c6-a13d-ded6f001e3cd": {
+                    "id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                    "short_id": "9594dc98",
+                    "username": "Nanopoleon",
+                    "stack": {
+                        "amt": "191.00"
+                    },
+                    "position": 0,
+                    "sitting_out": false,
+                    "uncollected_bets": {
+                        "amt": "7.00"
+                    },
+                    "is_active": true,
+                    "last_action": "RAISE_TO",
+                    "cards": {
+                        "0": {
+                            "card": "?"
+                        },
+                        "1": {
+                            "card": "?"
+                        }
+                    },
+                    "timebank": 5
+                },
+                "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a": {
+                    "id": "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a",
+                    "short_id": "12232ce5",
+                    "username": "UsainVolts",
+                    "stack": {
+                        "amt": "180.00"
+                    },
+                    "position": 1,
+                    "sitting_out": false,
+                    "uncollected_bets": {
+                        "amt": "22.00"
+                    },
+                    "is_active": true,
+                    "last_action": "RAISE_TO",
+                    "cards": {
+                        "0": {
+                            "card": "?"
+                        },
+                        "1": {
+                            "card": "?"
+                        }
+                    },
+                    "timebank": 5
+                },
+                "c12c4661-051b-422e-be76-7ebfe4fb9a4a": {
+                    "id": "c12c4661-051b-422e-be76-7ebfe4fb9a4a",
+                    "short_id": "c12c4661",
+                    "username": "squash",
+                    "stack": {
+                        "amt": "43.00"
+                    },
+                    "position": 4,
+                    "sitting_out": false,
+                    "uncollected_bets": {
+                        "amt": "57.00"
+                    },
+                    "is_active": true,
+                    "last_action": "RAISE_TO",
+                    "cards": {
+                        "0": {
+                            "card": "2c"
+                        },
+                        "1": {
+                            "card": "Ad"
+                        }
+                    },
+                    "timebank": 0,
+                    "pending_rebuy": "0.00",
+                    "sit_out_at_blinds": false,
+                    "sit_in_at_blinds": false,
+                    "preset_call": null,
+                    "preset_check": false,
+                    "preset_checkfold": false,
+                    "current": true,
+                    "available_actions": [
+                        "SET_AUTO_REBUY",
+                        "BUY",
+                        "SIT_OUT_AT_BLINDS"
+                    ],
+                    "min_bet": null,
+                    "amt_to_call": null
+                }
+            },
+            "table": {
+                "id": "f9f6ee13-13b7-405d-b01a-d2d7606cdd39",
+                "name": "squash's Table #4",
+                "path": "/table/f9f6ee13/",
+                "variant": "No Limit Hold 'em",
+                "sb": "1.00",
+                "bb": "2.00",
+                "board": {},
+                "btn_idx": 0,
+                "num_seats": 6,
+                "available_seats": 3,
+                "hand_number": 2,
+                "total_pot": "86.00",
+                "sidepot_summary": {},
+                "to_act_id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                "seconds_to_act": 30,
+                "last_action_timestamp": "2017-08-09T00:20:50.112Z",
+                "min_buyin": "100.00"
+            },
+            "notifications": [],
+            "animations": [],
+            "type": "UPDATE_GAMESTATE",
+            "HASH": "ad1a45f19282c97a448d12c955917655",
+            "TIMESTAMP": "1502238404984.8882",
+            "SEQ_NUM": 0
+        },
+        {
+            "user_id": "e8207d68-551c-4ffd-8344-05bb3a41c428",
+            "session_id": "75da73fc-295a-487c-997b-27b8cec6c287",
+            "path": "/table/f9f6ee13/",
+            "last_ping": "2017-08-09T00:26:45.277Z",
+            "user_ip": "127.0.0.1",
+            "type": "GOT_HELLO",
+            "HASH": "4418de293eeaa5b6142d196329d6fb54",
+            "TIMESTAMP": "1502238405288.162",
+            "SEQ_NUM": 1
+        },
+        {
+            "players": {
+                "9594dc98-2dda-40c6-a13d-ded6f001e3cd": {
+                    "id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                    "short_id": "9594dc98",
+                    "username": "Nanopoleon",
+                    "stack": {
+                        "amt": "191.00"
+                    },
+                    "position": 0,
+                    "sitting_out": false,
+                    "uncollected_bets": {
+                        "amt": "7.00"
+                    },
+                    "is_active": true,
+                    "last_action": "RAISE_TO",
+                    "cards": {
+                        "0": {
+                            "card": "?"
+                        },
+                        "1": {
+                            "card": "?"
+                        }
+                    },
+                    "timebank": 5
+                },
+                "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a": {
+                    "id": "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a",
+                    "short_id": "12232ce5",
+                    "username": "UsainVolts",
+                    "stack": {
+                        "amt": "180.00"
+                    },
+                    "position": 1,
+                    "sitting_out": false,
+                    "uncollected_bets": {
+                        "amt": "22.00"
+                    },
+                    "is_active": true,
+                    "last_action": "RAISE_TO",
+                    "cards": {
+                        "0": {
+                            "card": "?"
+                        },
+                        "1": {
+                            "card": "?"
+                        }
+                    },
+                    "timebank": 5
+                },
+                "c12c4661-051b-422e-be76-7ebfe4fb9a4a": {
+                    "id": "c12c4661-051b-422e-be76-7ebfe4fb9a4a",
+                    "short_id": "c12c4661",
+                    "username": "squash",
+                    "stack": {
+                        "amt": "43.00"
+                    },
+                    "position": 4,
+                    "sitting_out": false,
+                    "uncollected_bets": {
+                        "amt": "57.00"
+                    },
+                    "is_active": true,
+                    "last_action": "RAISE_TO",
+                    "cards": {
+                        "0": {
+                            "card": "2c"
+                        },
+                        "1": {
+                            "card": "Ad"
+                        }
+                    },
+                    "timebank": 0,
+                    "pending_rebuy": "0.00",
+                    "sit_out_at_blinds": false,
+                    "sit_in_at_blinds": false,
+                    "preset_call": null,
+                    "preset_check": false,
+                    "preset_checkfold": false,
+                    "current": true,
+                    "available_actions": [
+                        "SET_AUTO_REBUY",
+                        "BUY",
+                        "SIT_OUT_AT_BLINDS"
+                    ],
+                    "min_bet": null,
+                    "amt_to_call": null
+                }
+            },
+            "table": {
+                "id": "f9f6ee13-13b7-405d-b01a-d2d7606cdd39",
+                "name": "squash's Table #4",
+                "path": "/table/f9f6ee13/",
+                "variant": "No Limit Hold 'em",
+                "sb": "1.00",
+                "bb": "2.00",
+                "board": {},
+                "btn_idx": 0,
+                "num_seats": 6,
+                "available_seats": 3,
+                "hand_number": 2,
+                "total_pot": "86.00",
+                "sidepot_summary": {},
+                "to_act_id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                "seconds_to_act": 30,
+                "last_action_timestamp": "2017-08-09T00:26:47.161Z",
+                "min_buyin": "100.00"
+            },
+            "notifications": [],
+            "chat": [],
+            "animations": [
+                {
+                    "type": "SNAPTO",
+                    "subj": null,
+                    "value": {
+                        "players": {
+                            "9594dc98-2dda-40c6-a13d-ded6f001e3cd": {
+                                "id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                                "short_id": "9594dc98",
+                                "username": "Nanopoleon",
+                                "stack": {
+                                    "amt": "191.00"
+                                },
+                                "position": 0,
+                                "sitting_out": false,
+                                "uncollected_bets": {
+                                    "amt": "7.00"
+                                },
+                                "is_active": true,
+                                "last_action": "RAISE_TO",
+                                "cards": {
+                                    "0": {
+                                        "card": "?"
+                                    },
+                                    "1": {
+                                        "card": "?"
+                                    }
+                                },
+                                "timebank": 5
+                            },
+                            "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a": {
+                                "id": "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a",
+                                "short_id": "12232ce5",
+                                "username": "UsainVolts",
+                                "stack": {
+                                    "amt": "180.00"
+                                },
+                                "position": 1,
+                                "sitting_out": false,
+                                "uncollected_bets": {
+                                    "amt": "22.00"
+                                },
+                                "is_active": true,
+                                "last_action": "RAISE_TO",
+                                "cards": {
+                                    "0": {
+                                        "card": "?"
+                                    },
+                                    "1": {
+                                        "card": "?"
+                                    }
+                                },
+                                "timebank": 5
+                            },
+                            "c12c4661-051b-422e-be76-7ebfe4fb9a4a": {
+                                "id": "c12c4661-051b-422e-be76-7ebfe4fb9a4a",
+                                "short_id": "c12c4661",
+                                "username": "squash",
+                                "stack": {
+                                    "amt": "43.00"
+                                },
+                                "position": 4,
+                                "sitting_out": false,
+                                "uncollected_bets": {
+                                    "amt": "57.00"
+                                },
+                                "is_active": true,
+                                "last_action": "RAISE_TO",
+                                "cards": {
+                                    "0": {
+                                        "card": "2c"
+                                    },
+                                    "1": {
+                                        "card": "Ad"
+                                    }
+                                },
+                                "timebank": 0,
+                                "pending_rebuy": "0.00",
+                                "sit_out_at_blinds": false,
+                                "sit_in_at_blinds": false,
+                                "preset_call": null,
+                                "preset_check": false,
+                                "preset_checkfold": false,
+                                "current": true,
+                                "available_actions": [
+                                    "SET_AUTO_REBUY",
+                                    "BUY",
+                                    "SIT_OUT_AT_BLINDS"
+                                ],
+                                "min_bet": null,
+                                "amt_to_call": null
+                            }
+                        },
+                        "table": {
+                            "id": "f9f6ee13-13b7-405d-b01a-d2d7606cdd39",
+                            "name": "squash's Table #4",
+                            "path": "/table/f9f6ee13/",
+                            "variant": "No Limit Hold 'em",
+                            "sb": "1.00",
+                            "bb": "2.00",
+                            "board": {},
+                            "btn_idx": 0,
+                            "num_seats": 6,
+                            "available_seats": 3,
+                            "hand_number": 2,
+                            "total_pot": "86.00",
+                            "sidepot_summary": {},
+                            "to_act_id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                            "seconds_to_act": 30,
+                            "last_action_timestamp": "2017-08-09T00:20:50.112Z",
+                            "min_buyin": "100.00"
+                        }
+                    },
+                    "patches": []
+                }
+            ],
+            "privado": true,
+            "type": "UPDATE_GAMESTATE",
+            "HASH": "3d51d54ab938bdf2df77d540f53b5997",
+            "TIMESTAMP": "1502238407199.6619",
+            "SEQ_NUM": 2
+        },
+        {
+            "players": {
+                "9594dc98-2dda-40c6-a13d-ded6f001e3cd": {
+                    "id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                    "short_id": "9594dc98",
+                    "username": "Nanopoleon",
+                    "stack": {
+                        "amt": "191.00"
+                    },
+                    "position": 0,
+                    "sitting_out": false,
+                    "uncollected_bets": {
+                        "amt": "7.00"
+                    },
+                    "is_active": true,
+                    "last_action": "RAISE_TO",
+                    "cards": {
+                        "0": {
+                            "card": "?"
+                        },
+                        "1": {
+                            "card": "?"
+                        }
+                    },
+                    "timebank": 5
+                },
+                "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a": {
+                    "id": "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a",
+                    "short_id": "12232ce5",
+                    "username": "UsainVolts",
+                    "stack": {
+                        "amt": "180.00"
+                    },
+                    "position": 1,
+                    "sitting_out": false,
+                    "uncollected_bets": {
+                        "amt": "22.00"
+                    },
+                    "is_active": true,
+                    "last_action": "RAISE_TO",
+                    "cards": {
+                        "0": {
+                            "card": "?"
+                        },
+                        "1": {
+                            "card": "?"
+                        }
+                    },
+                    "timebank": 5
+                },
+                "c12c4661-051b-422e-be76-7ebfe4fb9a4a": {
+                    "id": "c12c4661-051b-422e-be76-7ebfe4fb9a4a",
+                    "short_id": "c12c4661",
+                    "username": "squash",
+                    "stack": {
+                        "amt": "43.00"
+                    },
+                    "position": 4,
+                    "sitting_out": false,
+                    "uncollected_bets": {
+                        "amt": "57.00"
+                    },
+                    "is_active": true,
+                    "last_action": "RAISE_TO",
+                    "cards": {
+                        "0": {
+                            "card": "2c"
+                        },
+                        "1": {
+                            "card": "Ad"
+                        }
+                    },
+                    "timebank": 0,
+                    "pending_rebuy": "0.00",
+                    "sit_out_at_blinds": false,
+                    "sit_in_at_blinds": false,
+                    "preset_call": null,
+                    "preset_check": false,
+                    "preset_checkfold": false,
+                    "current": true,
+                    "available_actions": [
+                        "SET_AUTO_REBUY",
+                        "BUY",
+                        "SIT_OUT_AT_BLINDS"
+                    ],
+                    "min_bet": null,
+                    "amt_to_call": null
+                }
+            },
+            "table": {
+                "id": "f9f6ee13-13b7-405d-b01a-d2d7606cdd39",
+                "name": "squash's Table #4",
+                "path": "/table/f9f6ee13/",
+                "variant": "No Limit Hold 'em",
+                "sb": "1.00",
+                "bb": "2.00",
+                "board": {},
+                "btn_idx": 0,
+                "num_seats": 6,
+                "available_seats": 3,
+                "hand_number": 2,
+                "total_pot": "86.00",
+                "sidepot_summary": {},
+                "to_act_id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                "seconds_to_act": 30,
+                "last_action_timestamp": "2017-08-09T00:26:50.702Z",
+                "min_buyin": "100.00"
+            },
+            "notifications": [],
+            "chat": [],
+            "animations": [
+                {
+                    "type": "SNAPTO",
+                    "subj": null,
+                    "value": {
+                        "players": {
+                            "9594dc98-2dda-40c6-a13d-ded6f001e3cd": {
+                                "id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                                "short_id": "9594dc98",
+                                "username": "Nanopoleon",
+                                "stack": {
+                                    "amt": "191.00"
+                                },
+                                "position": 0,
+                                "sitting_out": false,
+                                "uncollected_bets": {
+                                    "amt": "7.00"
+                                },
+                                "is_active": true,
+                                "last_action": "RAISE_TO",
+                                "cards": {
+                                    "0": {
+                                        "card": "?"
+                                    },
+                                    "1": {
+                                        "card": "?"
+                                    }
+                                },
+                                "timebank": 5
+                            },
+                            "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a": {
+                                "id": "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a",
+                                "short_id": "12232ce5",
+                                "username": "UsainVolts",
+                                "stack": {
+                                    "amt": "180.00"
+                                },
+                                "position": 1,
+                                "sitting_out": false,
+                                "uncollected_bets": {
+                                    "amt": "22.00"
+                                },
+                                "is_active": true,
+                                "last_action": "RAISE_TO",
+                                "cards": {
+                                    "0": {
+                                        "card": "?"
+                                    },
+                                    "1": {
+                                        "card": "?"
+                                    }
+                                },
+                                "timebank": 5
+                            },
+                            "c12c4661-051b-422e-be76-7ebfe4fb9a4a": {
+                                "id": "c12c4661-051b-422e-be76-7ebfe4fb9a4a",
+                                "short_id": "c12c4661",
+                                "username": "squash",
+                                "stack": {
+                                    "amt": "43.00"
+                                },
+                                "position": 4,
+                                "sitting_out": false,
+                                "uncollected_bets": {
+                                    "amt": "57.00"
+                                },
+                                "is_active": true,
+                                "last_action": "RAISE_TO",
+                                "cards": {
+                                    "0": {
+                                        "card": "2c"
+                                    },
+                                    "1": {
+                                        "card": "Ad"
+                                    }
+                                },
+                                "timebank": 0,
+                                "pending_rebuy": "0.00",
+                                "sit_out_at_blinds": false,
+                                "sit_in_at_blinds": false,
+                                "preset_call": null,
+                                "preset_check": false,
+                                "preset_checkfold": false,
+                                "current": true,
+                                "available_actions": [
+                                    "SET_AUTO_REBUY",
+                                    "BUY",
+                                    "SIT_OUT_AT_BLINDS"
+                                ],
+                                "min_bet": null,
+                                "amt_to_call": null
+                            }
+                        },
+                        "table": {
+                            "id": "f9f6ee13-13b7-405d-b01a-d2d7606cdd39",
+                            "name": "squash's Table #4",
+                            "path": "/table/f9f6ee13/",
+                            "variant": "No Limit Hold 'em",
+                            "sb": "1.00",
+                            "bb": "2.00",
+                            "board": {},
+                            "btn_idx": 0,
+                            "num_seats": 6,
+                            "available_seats": 3,
+                            "hand_number": 2,
+                            "total_pot": "86.00",
+                            "sidepot_summary": {},
+                            "to_act_id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                            "seconds_to_act": 30,
+                            "last_action_timestamp": "2017-08-09T00:26:47.161Z",
+                            "min_buyin": "100.00"
+                        }
+                    },
+                    "patches": []
+                }
+            ],
+            "privado": true,
+            "type": "UPDATE_GAMESTATE",
+            "HASH": "554abf930e299d5115802cda8667da9a",
+            "TIMESTAMP": "1502238410746.855",
+            "SEQ_NUM": 3
+        }
+    ],
+    "store": {
+        "animations": {
+            "speed": 1,
+            "former_timestamp": 1502238410000.5,
+            "warped_time": 1502238410016.5,
+            "max_time_travel": 3000,
+            "queue": [
+                {
+                    "type": "BECOME",
+                    "path": "/gamestate/f9f6ee13-13b7-405d-b01a-d2d7606cdd39",
+                    "state": {
+                        "table": {
+                            "id": "f9f6ee13-13b7-405d-b01a-d2d7606cdd39",
+                            "name": "squash's Table #4",
+                            "path": "/table/f9f6ee13/",
+                            "variant": "No Limit Hold 'em",
+                            "sb": "1.00",
+                            "bb": "2.00",
+                            "board": {},
+                            "btn_idx": 0,
+                            "num_seats": 6,
+                            "available_seats": 3,
+                            "hand_number": 2,
+                            "total_pot": "86.00",
+                            "sidepot_summary": {},
+                            "to_act_id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                            "seconds_to_act": 30,
+                            "last_action_timestamp": "2017-08-09T00:20:50.112Z",
+                            "min_buyin": "100.00"
+                        },
+                        "players": {
+                            "9594dc98-2dda-40c6-a13d-ded6f001e3cd": {
+                                "id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                                "short_id": "9594dc98",
+                                "username": "Nanopoleon",
+                                "stack": {
+                                    "amt": "191.00"
+                                },
+                                "position": 0,
+                                "sitting_out": false,
+                                "uncollected_bets": {
+                                    "amt": "7.00"
+                                },
+                                "is_active": true,
+                                "last_action": "RAISE_TO",
+                                "cards": {
+                                    "0": {
+                                        "card": "?"
+                                    },
+                                    "1": {
+                                        "card": "?"
+                                    }
+                                },
+                                "timebank": 5
+                            },
+                            "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a": {
+                                "id": "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a",
+                                "short_id": "12232ce5",
+                                "username": "UsainVolts",
+                                "stack": {
+                                    "amt": "180.00"
+                                },
+                                "position": 1,
+                                "sitting_out": false,
+                                "uncollected_bets": {
+                                    "amt": "22.00"
+                                },
+                                "is_active": true,
+                                "last_action": "RAISE_TO",
+                                "cards": {
+                                    "0": {
+                                        "card": "?"
+                                    },
+                                    "1": {
+                                        "card": "?"
+                                    }
+                                },
+                                "timebank": 5
+                            },
+                            "c12c4661-051b-422e-be76-7ebfe4fb9a4a": {
+                                "id": "c12c4661-051b-422e-be76-7ebfe4fb9a4a",
+                                "short_id": "c12c4661",
+                                "username": "squash",
+                                "stack": {
+                                    "amt": "43.00"
+                                },
+                                "position": 4,
+                                "sitting_out": false,
+                                "uncollected_bets": {
+                                    "amt": "57.00"
+                                },
+                                "is_active": true,
+                                "last_action": "RAISE_TO",
+                                "cards": {
+                                    "0": {
+                                        "card": "2c"
+                                    },
+                                    "1": {
+                                        "card": "Ad"
+                                    }
+                                },
+                                "timebank": 0,
+                                "pending_rebuy": "0.00",
+                                "sit_out_at_blinds": false,
+                                "sit_in_at_blinds": false,
+                                "preset_call": null,
+                                "preset_check": false,
+                                "preset_checkfold": false,
+                                "current": true,
+                                "available_actions": [
+                                    "SET_AUTO_REBUY",
+                                    "BUY",
+                                    "SIT_OUT_AT_BLINDS"
+                                ],
+                                "min_bet": null,
+                                "amt_to_call": null
+                            }
+                        }
+                    },
+                    "start_time": 0,
+                    "end_time": null,
+                    "duration": null,
+                    "source_type": "-1:SNAPTO",
+                    "split_path": [
+                        "gamestate",
+                        "f9f6ee13-13b7-405d-b01a-d2d7606cdd39"
+                    ]
+                },
+                {
+                    "type": "BECOME",
+                    "path": "/gamestate/f9f6ee13-13b7-405d-b01a-d2d7606cdd39",
+                    "state": {
+                        "players": {
+                            "9594dc98-2dda-40c6-a13d-ded6f001e3cd": {
+                                "id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                                "short_id": "9594dc98",
+                                "username": "Nanopoleon",
+                                "stack": {
+                                    "amt": "191.00"
+                                },
+                                "position": 0,
+                                "sitting_out": false,
+                                "uncollected_bets": {
+                                    "amt": "7.00"
+                                },
+                                "is_active": true,
+                                "last_action": "RAISE_TO",
+                                "cards": {
+                                    "0": {
+                                        "card": "?"
+                                    },
+                                    "1": {
+                                        "card": "?"
+                                    }
+                                },
+                                "timebank": 5
+                            },
+                            "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a": {
+                                "id": "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a",
+                                "short_id": "12232ce5",
+                                "username": "UsainVolts",
+                                "stack": {
+                                    "amt": "180.00"
+                                },
+                                "position": 1,
+                                "sitting_out": false,
+                                "uncollected_bets": {
+                                    "amt": "22.00"
+                                },
+                                "is_active": true,
+                                "last_action": "RAISE_TO",
+                                "cards": {
+                                    "0": {
+                                        "card": "?"
+                                    },
+                                    "1": {
+                                        "card": "?"
+                                    }
+                                },
+                                "timebank": 5
+                            },
+                            "c12c4661-051b-422e-be76-7ebfe4fb9a4a": {
+                                "id": "c12c4661-051b-422e-be76-7ebfe4fb9a4a",
+                                "short_id": "c12c4661",
+                                "username": "squash",
+                                "stack": {
+                                    "amt": "43.00"
+                                },
+                                "position": 4,
+                                "sitting_out": false,
+                                "uncollected_bets": {
+                                    "amt": "57.00"
+                                },
+                                "is_active": true,
+                                "last_action": "RAISE_TO",
+                                "cards": {
+                                    "0": {
+                                        "card": "2c"
+                                    },
+                                    "1": {
+                                        "card": "Ad"
+                                    }
+                                },
+                                "timebank": 0,
+                                "pending_rebuy": "0.00",
+                                "sit_out_at_blinds": false,
+                                "sit_in_at_blinds": false,
+                                "preset_call": null,
+                                "preset_check": false,
+                                "preset_checkfold": false,
+                                "current": true,
+                                "available_actions": [
+                                    "SET_AUTO_REBUY",
+                                    "BUY",
+                                    "SIT_OUT_AT_BLINDS"
+                                ],
+                                "min_bet": null,
+                                "amt_to_call": null
+                            }
+                        },
+                        "table": {
+                            "id": "f9f6ee13-13b7-405d-b01a-d2d7606cdd39",
+                            "name": "squash's Table #4",
+                            "path": "/table/f9f6ee13/",
+                            "variant": "No Limit Hold 'em",
+                            "sb": "1.00",
+                            "bb": "2.00",
+                            "board": {},
+                            "btn_idx": 0,
+                            "num_seats": 6,
+                            "available_seats": 3,
+                            "hand_number": 2,
+                            "total_pot": "86.00",
+                            "sidepot_summary": {},
+                            "to_act_id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                            "seconds_to_act": 30,
+                            "last_action_timestamp": "2017-08-09T00:20:50.112Z",
+                            "min_buyin": "100.00"
+                        }
+                    },
+                    "start_time": 1502238407334.5,
+                    "end_time": null,
+                    "duration": null,
+                    "source_type": "2:SNAPTO",
+                    "split_path": [
+                        "gamestate",
+                        "f9f6ee13-13b7-405d-b01a-d2d7606cdd39"
+                    ]
+                },
+                {
+                    "type": "BECOME",
+                    "path": "/gamestate/f9f6ee13-13b7-405d-b01a-d2d7606cdd39",
+                    "state": {
+                        "players": {
+                            "9594dc98-2dda-40c6-a13d-ded6f001e3cd": {
+                                "id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                                "short_id": "9594dc98",
+                                "username": "Nanopoleon",
+                                "stack": {
+                                    "amt": "191.00"
+                                },
+                                "position": 0,
+                                "sitting_out": false,
+                                "uncollected_bets": {
+                                    "amt": "7.00"
+                                },
+                                "is_active": true,
+                                "last_action": "RAISE_TO",
+                                "cards": {
+                                    "0": {
+                                        "card": "?"
+                                    },
+                                    "1": {
+                                        "card": "?"
+                                    }
+                                },
+                                "timebank": 5
+                            },
+                            "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a": {
+                                "id": "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a",
+                                "short_id": "12232ce5",
+                                "username": "UsainVolts",
+                                "stack": {
+                                    "amt": "180.00"
+                                },
+                                "position": 1,
+                                "sitting_out": false,
+                                "uncollected_bets": {
+                                    "amt": "22.00"
+                                },
+                                "is_active": true,
+                                "last_action": "RAISE_TO",
+                                "cards": {
+                                    "0": {
+                                        "card": "?"
+                                    },
+                                    "1": {
+                                        "card": "?"
+                                    }
+                                },
+                                "timebank": 5
+                            },
+                            "c12c4661-051b-422e-be76-7ebfe4fb9a4a": {
+                                "id": "c12c4661-051b-422e-be76-7ebfe4fb9a4a",
+                                "short_id": "c12c4661",
+                                "username": "squash",
+                                "stack": {
+                                    "amt": "43.00"
+                                },
+                                "position": 4,
+                                "sitting_out": false,
+                                "uncollected_bets": {
+                                    "amt": "57.00"
+                                },
+                                "is_active": true,
+                                "last_action": "RAISE_TO",
+                                "cards": {
+                                    "0": {
+                                        "card": "2c"
+                                    },
+                                    "1": {
+                                        "card": "Ad"
+                                    }
+                                },
+                                "timebank": 0,
+                                "pending_rebuy": "0.00",
+                                "sit_out_at_blinds": false,
+                                "sit_in_at_blinds": false,
+                                "preset_call": null,
+                                "preset_check": false,
+                                "preset_checkfold": false,
+                                "current": true,
+                                "available_actions": [
+                                    "SET_AUTO_REBUY",
+                                    "BUY",
+                                    "SIT_OUT_AT_BLINDS"
+                                ],
+                                "min_bet": null,
+                                "amt_to_call": null
+                            }
+                        },
+                        "table": {
+                            "id": "f9f6ee13-13b7-405d-b01a-d2d7606cdd39",
+                            "name": "squash's Table #4",
+                            "path": "/table/f9f6ee13/",
+                            "variant": "No Limit Hold 'em",
+                            "sb": "1.00",
+                            "bb": "2.00",
+                            "board": {},
+                            "btn_idx": 0,
+                            "num_seats": 6,
+                            "available_seats": 3,
+                            "hand_number": 2,
+                            "total_pot": "86.00",
+                            "sidepot_summary": {},
+                            "to_act_id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                            "seconds_to_act": 30,
+                            "last_action_timestamp": "2017-08-09T00:26:47.161Z",
+                            "min_buyin": "100.00"
+                        }
+                    },
+                    "start_time": 1502238410895.5,
+                    "end_time": null,
+                    "duration": null,
+                    "source_type": "3:SNAPTO",
+                    "split_path": [
+                        "gamestate",
+                        "f9f6ee13-13b7-405d-b01a-d2d7606cdd39"
+                    ]
+                }
+            ],
+            "state": {
+                "gamestate": {
+                    "players": {
+                        "9594dc98-2dda-40c6-a13d-ded6f001e3cd": {
+                            "id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                            "short_id": "9594dc98",
+                            "username": "Nanopoleon",
+                            "stack": {
+                                "amt": "191.00"
+                            },
+                            "position": 0,
+                            "sitting_out": false,
+                            "uncollected_bets": {
+                                "amt": "7.00"
+                            },
+                            "is_active": true,
+                            "last_action": "RAISE_TO",
+                            "cards": {
+                                "0": {
+                                    "card": "?"
+                                },
+                                "1": {
+                                    "card": "?"
+                                }
+                            },
+                            "timebank": 5
+                        },
+                        "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a": {
+                            "id": "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a",
+                            "short_id": "12232ce5",
+                            "username": "UsainVolts",
+                            "stack": {
+                                "amt": "180.00"
+                            },
+                            "position": 1,
+                            "sitting_out": false,
+                            "uncollected_bets": {
+                                "amt": "22.00"
+                            },
+                            "is_active": true,
+                            "last_action": "RAISE_TO",
+                            "cards": {
+                                "0": {
+                                    "card": "?"
+                                },
+                                "1": {
+                                    "card": "?"
+                                }
+                            },
+                            "timebank": 5
+                        },
+                        "c12c4661-051b-422e-be76-7ebfe4fb9a4a": {
+                            "id": "c12c4661-051b-422e-be76-7ebfe4fb9a4a",
+                            "short_id": "c12c4661",
+                            "username": "squash",
+                            "stack": {
+                                "amt": "43.00"
+                            },
+                            "position": 4,
+                            "sitting_out": false,
+                            "uncollected_bets": {
+                                "amt": "57.00"
+                            },
+                            "is_active": true,
+                            "last_action": "RAISE_TO",
+                            "cards": {
+                                "0": {
+                                    "card": "2c"
+                                },
+                                "1": {
+                                    "card": "Ad"
+                                }
+                            },
+                            "timebank": 0,
+                            "pending_rebuy": "0.00",
+                            "sit_out_at_blinds": false,
+                            "sit_in_at_blinds": false,
+                            "preset_call": null,
+                            "preset_check": false,
+                            "preset_checkfold": false,
+                            "current": true,
+                            "available_actions": [
+                                "SET_AUTO_REBUY",
+                                "BUY",
+                                "SIT_OUT_AT_BLINDS"
+                            ],
+                            "min_bet": null,
+                            "amt_to_call": null
+                        }
+                    },
+                    "table": {
+                        "id": "f9f6ee13-13b7-405d-b01a-d2d7606cdd39",
+                        "name": "squash's Table #4",
+                        "path": "/table/f9f6ee13/",
+                        "variant": "No Limit Hold 'em",
+                        "sb": "1.00",
+                        "bb": "2.00",
+                        "board": {},
+                        "btn_idx": 0,
+                        "num_seats": 6,
+                        "available_seats": 3,
+                        "hand_number": 2,
+                        "total_pot": "86.00",
+                        "sidepot_summary": {},
+                        "to_act_id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                        "seconds_to_act": 30,
+                        "last_action_timestamp": "2017-08-09T00:20:50.112Z",
+                        "min_buyin": "100.00"
+                    }
+                }
+            }
+        },
+        "gamestate": {
+            "css": {
+                "btn_coord": {
+                    "left": 48.13473286151602,
+                    "top": 36.4193182205325
+                },
+                "wager_coords": [
+                    {
+                        "left": 40,
+                        "top": 36.25
+                    },
+                    {
+                        "left": 24.411542731880104,
+                        "top": 30.625000000000004
+                    },
+                    {
+                        "left": 24.411542731880097,
+                        "top": 19.375000000000004
+                    },
+                    {
+                        "left": 40,
+                        "top": 13.75
+                    },
+                    {
+                        "left": 55.58845726811989,
+                        "top": 19.374999999999993
+                    },
+                    {
+                        "left": 55.5884572681199,
+                        "top": 30.624999999999993
+                    }
+                ],
+                "player_coords": [
+                    {
+                        "left": 40,
+                        "top": 44.75
+                    },
+                    {
+                        "left": 12.633597240411742,
+                        "top": 34.87500000000001
+                    },
+                    {
+                        "left": 12.633597240411728,
+                        "top": 15.125000000000005
+                    },
+                    {
+                        "left": 39.99999999999999,
+                        "top": 5.25
+                    },
+                    {
+                        "left": 67.36640275958825,
+                        "top": 15.124999999999991
+                    },
+                    {
+                        "left": 67.36640275958828,
+                        "top": 34.874999999999986
+                    }
+                ],
+                "felt": {
+                    "width": 80,
+                    "height": 50
+                },
+                "seatbox_height": 9.4995,
+                "seatbox_width": 15,
+                "table": {
+                    "style": {
+                        "top": 0,
+                        "left": 0,
+                        "width": 80,
+                        "height": 50
+                    },
+                    "btn": {
+                        "style": {
+                            "top": 36.4193182205325,
+                            "left": 48.13473286151602
+                        }
+                    },
+                    "board": {
+                        "style": {
+                            "width": 40,
+                            "height": 20,
+                            "top": 18,
+                            "left": 10
+                        }
+                    }
+                },
+                "players": {
+                    "9594dc98-2dda-40c6-a13d-ded6f001e3cd": {
+                        "style": {
+                            "left": 40,
+                            "top": 44.75,
+                            "width": 9.4995,
+                            "height": 15
+                        },
+                        "uncollected_bets": {
+                            "style": {
+                                "left": 40,
+                                "top": 36.25,
+                                "height": 2,
+                                "width": 2
+                            }
+                        },
+                        "cards": {
+                            "style": {
+                                "left": 35.08,
+                                "top": 46.05,
+                                "width": 9.7,
+                                "height": 6.8
+                            }
+                        }
+                    },
+                    "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a": {
+                        "style": {
+                            "left": 12.633597240411742,
+                            "top": 34.87500000000001,
+                            "width": 9.4995,
+                            "height": 15
+                        },
+                        "uncollected_bets": {
+                            "style": {
+                                "left": 24.411542731880104,
+                                "top": 30.625000000000004,
+                                "height": 2,
+                                "width": 2
+                            }
+                        },
+                        "cards": {
+                            "style": {
+                                "left": 7.713597240411742,
+                                "top": 36.175000000000004,
+                                "width": 9.7,
+                                "height": 6.8
+                            }
+                        }
+                    },
+                    "c12c4661-051b-422e-be76-7ebfe4fb9a4a": {
+                        "style": {
+                            "left": 67.36640275958825,
+                            "top": 15.124999999999991,
+                            "width": 9.4995,
+                            "height": 15
+                        },
+                        "uncollected_bets": {
+                            "style": {
+                                "left": 55.58845726811989,
+                                "top": 19.374999999999993,
+                                "height": 2,
+                                "width": 2
+                            }
+                        },
+                        "cards": {
+                            "style": {
+                                "left": 62.44640275958825,
+                                "top": 16.42499999999999,
+                                "width": 9.7,
+                                "height": 6.8
+                            }
+                        }
+                    }
+                }
+            },
+            "version": {
+                "f9f6ee13-13b7-405d-b01a-d2d7606cdd39": 3
+            },
+            "next_animation_set": [
+                {
+                    "type": "SNAPTO",
+                    "subj": null,
+                    "value": {
+                        "players": {
+                            "9594dc98-2dda-40c6-a13d-ded6f001e3cd": {
+                                "id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                                "short_id": "9594dc98",
+                                "username": "Nanopoleon",
+                                "stack": {
+                                    "amt": "191.00"
+                                },
+                                "position": 0,
+                                "sitting_out": false,
+                                "uncollected_bets": {
+                                    "amt": "7.00"
+                                },
+                                "is_active": true,
+                                "last_action": "RAISE_TO",
+                                "cards": {
+                                    "0": {
+                                        "card": "?"
+                                    },
+                                    "1": {
+                                        "card": "?"
+                                    }
+                                },
+                                "timebank": 5
+                            },
+                            "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a": {
+                                "id": "12232ce5-546d-4cc2-9fa8-a9bb821cfd7a",
+                                "short_id": "12232ce5",
+                                "username": "UsainVolts",
+                                "stack": {
+                                    "amt": "180.00"
+                                },
+                                "position": 1,
+                                "sitting_out": false,
+                                "uncollected_bets": {
+                                    "amt": "22.00"
+                                },
+                                "is_active": true,
+                                "last_action": "RAISE_TO",
+                                "cards": {
+                                    "0": {
+                                        "card": "?"
+                                    },
+                                    "1": {
+                                        "card": "?"
+                                    }
+                                },
+                                "timebank": 5
+                            },
+                            "c12c4661-051b-422e-be76-7ebfe4fb9a4a": {
+                                "id": "c12c4661-051b-422e-be76-7ebfe4fb9a4a",
+                                "short_id": "c12c4661",
+                                "username": "squash",
+                                "stack": {
+                                    "amt": "43.00"
+                                },
+                                "position": 4,
+                                "sitting_out": false,
+                                "uncollected_bets": {
+                                    "amt": "57.00"
+                                },
+                                "is_active": true,
+                                "last_action": "RAISE_TO",
+                                "cards": {
+                                    "0": {
+                                        "card": "2c"
+                                    },
+                                    "1": {
+                                        "card": "Ad"
+                                    }
+                                },
+                                "timebank": 0,
+                                "pending_rebuy": "0.00",
+                                "sit_out_at_blinds": false,
+                                "sit_in_at_blinds": false,
+                                "preset_call": null,
+                                "preset_check": false,
+                                "preset_checkfold": false,
+                                "current": true,
+                                "available_actions": [
+                                    "SET_AUTO_REBUY",
+                                    "BUY",
+                                    "SIT_OUT_AT_BLINDS"
+                                ],
+                                "min_bet": null,
+                                "amt_to_call": null
+                            }
+                        },
+                        "table": {
+                            "id": "f9f6ee13-13b7-405d-b01a-d2d7606cdd39",
+                            "name": "squash's Table #4",
+                            "path": "/table/f9f6ee13/",
+                            "variant": "No Limit Hold 'em",
+                            "sb": "1.00",
+                            "bb": "2.00",
+                            "board": {},
+                            "btn_idx": 0,
+                            "num_seats": 6,
+                            "available_seats": 3,
+                            "hand_number": 2,
+                            "total_pot": "86.00",
+                            "sidepot_summary": {},
+                            "to_act_id": "9594dc98-2dda-40c6-a13d-ded6f001e3cd",
+                            "seconds_to_act": 30,
+                            "last_action_timestamp": "2017-08-09T00:26:47.161Z",
+                            "min_buyin": "100.00"
+                        }
+                    },
+                    "patches": []
+                }
+            ],
+            "current_player": {
+                "id": "c12c4661-051b-422e-be76-7ebfe4fb9a4a",
+                "short_id": "c12c4661",
+                "username": "squash",
+                "stack": {
+                    "amt": "43.00"
+                },
+                "position": 4,
+                "sitting_out": false,
+                "uncollected_bets": {
+                    "amt": "57.00"
+                },
+                "is_active": true,
+                "last_action": "RAISE_TO",
+                "cards": {
+                    "0": {
+                        "card": "2c"
+                    },
+                    "1": {
+                        "card": "Ad"
+                    }
+                },
+                "timebank": 0,
+                "pending_rebuy": "0.00",
+                "sit_out_at_blinds": false,
+                "sit_in_at_blinds": false,
+                "preset_call": null,
+                "preset_check": false,
+                "preset_checkfold": false,
+                "current": true,
+                "available_actions": [
+                    "SET_AUTO_REBUY",
+                    "BUY",
+                    "SIT_OUT_AT_BLINDS"
+                ],
+                "min_bet": null,
+                "amt_to_call": null
+            }
+        }
+    },
+    "time": {
+        "system_time": 1502238411311,
+        "server_time": 1502238411401.5,
+        "warped_time": 1502238410030.5,
+        "server_offset": 90.5
+    }
+}

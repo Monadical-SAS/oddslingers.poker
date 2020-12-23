@@ -1,0 +1,237 @@
+{% load utils %}
+
+<style>
+    form > div {
+        width: 100%;
+    }
+    #signup-form {
+        text-align: center;
+        max-width: 600px;
+        margin: auto;
+        float: none;
+        background-color: #f4f4f2;
+        padding: 15px;
+        border-radius: 15px;
+        border: 1px solid rgba(0,0,0,0.01);
+        box-shadow: 4px 4px 4px rgba(0,0,0,0.03);
+    }
+    #signup-form h3 {
+        font-weight: 200;
+        font-family: Questa;
+        color: #333;        
+    }
+    .input-group-addon {
+        color: #eee;
+    }
+    #signup-form .input-group {
+        width: 100%;
+    }
+    #signup-form .input-group-addon {
+        border: 1px solid #aaa;
+        border-right: 0px;
+    }
+    #password2-field {
+        margin-top: 2px;
+    }
+    #signup-form .input-group > span {
+        transition: border 500ms ease-out;
+        -webkit-transition: border 500ms ease-out;
+        -moz-transition: border 500ms ease-out;
+        -o-transition: border 500ms ease-out;
+    }
+    .pass-len-warning {
+        opacity: 0;
+    }
+    .signup-img {
+        height: 100px;
+        margin-top: -50px;
+        display: block;
+        margin: auto;
+        margin-bottom: 27px;
+    }
+    #username-label, #email-label {
+        width: 90px;
+    }
+    #password-label, #password-label2 {
+        width: 90px;
+    }
+    .field-narrow {
+        width: 64px;
+        text-align: left;
+    }
+    .field-wide {
+        width: 100px;
+        text-align: left;
+    }
+</style>
+
+<div id="signup-form">
+    <form action="{% url 'Signup' %}" method="POST">{% csrf_token %}
+        <div style="line-height: 1.2">
+
+            <h3>
+                {# <img class="signup-img" src="/static/images/pirate.png"/> #}
+                
+                Signing Up is Easy!
+                <br/>
+            </h3>
+            <br/>
+            If you've never played here before,<br/>create a free account to track your winnings.<br/>
+            <br/>
+            <center style="opacity: 0.4">
+                <span style="color:red">♥</span>
+                &nbsp;&nbsp;&nbsp;
+                <span style="color:black">♠</span>
+                &nbsp;&nbsp;&nbsp;
+                <span style="color:red">♦</span>
+                &nbsp;&nbsp;&nbsp;
+                <span style="color:black">♣</span>
+                &nbsp;&nbsp;&nbsp;
+                <span style="color:red">♥</span>
+                &nbsp;&nbsp;&nbsp;
+                <span style="color:black">♠</span>
+                &nbsp;&nbsp;&nbsp;
+                <span style="color:red">♦</span>
+                &nbsp;&nbsp;&nbsp;
+                <span style="color:black">♣</span>
+                &nbsp;&nbsp;&nbsp;
+                <span style="color:red">♥</span>
+                &nbsp;&nbsp;&nbsp;
+                <span style="color:black">♠</span>
+                &nbsp;&nbsp;&nbsp;
+                <span style="color:red">♦</span>
+                &nbsp;&nbsp;&nbsp;
+                <span style="color:black">♣</span>
+                &nbsp;&nbsp;&nbsp;
+                <span style="color:red">♥</span>
+            </center>
+            <br/>
+            <i style="opacity:0.8">Chips are free. You get ㆔{{SIGNUP_BONUS}} chips to start,<br/>no credit card needed!</i>
+            <br/><br/><br/>
+
+
+            <div id="username-field" class="input-group" style="margin-bottom: 5px">
+                <span class="input-group-addon" id="username-label"><div class="field-narrow">Username</div></span>
+                <input type="text" name="username" class="form-control" placeholder="A public display name" value="{{username}}" aria-describedby="username-label">
+            </div>
+            <!--<small>Your public handle.</small><br/>-->
+
+            <div id="email-field" class="input-group">
+                <span class="input-group-addon" id="email-label"><div class="field-narrow">Email</div></span>
+                <input type="email" name="email" class="form-control" placeholder="email@example.com" value="{{email}}" aria-describedby="email-label">
+            </div>
+            {# <small style="margin-top: 5px;">Your email will not be shared, .</small> #}
+            <br/><br/>
+
+
+            <div id="password1-field" class="input-group">
+                <span class="input-group-addon" id="password-label"><div class="field-wide">Password</div></span>
+                <input type="password" name="password" class="form-control" placeholder="••••••••••••" aria-describedby="password-label">
+            </div>
+
+
+            <div id="password2-field" class="input-group">
+                <span class="input-group-addon" id="password-label2"><div class="field-wide">Password Again</div></span>
+                <input type="password" name="password2" class="form-control" placeholder="••••••••••••" aria-describedby="password-label">
+            </div>
+            <small class="pass-len-warning"><br/>At least 8 characters.</small>
+            <input type="hidden" name="next" value="{{next}}">
+
+
+            {% if signup_errors %}
+                <br/>
+                <span style="color: red; font-size: 1.2em; line-height: 1.2">
+                    {{signup_errors|linebreaksbr}}
+                </span><br/><br/>
+                <br/>
+            {% else %}
+            {% endif %}
+
+            <br/><br/>
+            <button class="btn btn-lg btn-success" style="width:100%; font-size: 1.5em" type="submit">
+                Sign Up &amp; Start Playing!
+                &nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
+            </button>
+            <br/><br/>
+            <small>
+                <a class="support-link" target="_blank" href="{% url 'FAQ' %}">FAQ</a> &nbsp; | &nbsp;
+                <a class="support-link" target="_blank" href="https://docs.oddslingers.com/s/privacy-policy">Privacy Policy</a> &nbsp; | &nbsp;
+                <a class="support-link" target="_blank" href="{% url 'Support' %}?subject=Signup+Help+Request">Help</a>
+            </small>
+        </div>
+
+        <script>
+            function preventIllegalCharacters(event) {
+                if (event.keyCode == 32) {
+                    event.preventDefault();
+                }
+            }
+            function isUsernameValid(username) {
+                var pattern = /^[\w-]{2,36}$/;
+                return pattern.test(username);
+            }
+            function checkUsernameValid() {
+                var user = $('#username-field input').val();
+                if (isUsernameValid(user)) {
+                    $('#username-field span').css('border-color', 'green');
+                } else {
+                    $('#username-field span').css('border-color', '#aaa');
+                }
+            }
+            function checkPasswordValid() {
+                var pass = $('#password1-field input').val();
+                if (pass.length >= 3 && pass.length < 8) {
+                    $('.pass-len-warning').css('opacity', '1');
+                } else if (pass.length >= 8) {
+                    $('#password1-field span').css('border-color', 'green');
+                    $('.pass-len-warning').css('opacity', '0');
+                } else {
+                    $('#password1-field span').css('border-color', '#aaa');
+                }
+            }
+
+            function checkPasswordsEqual() {
+                var pass1 = $('#password1-field input').val();
+                var pass2 = $('#password2-field input').val();
+                if (pass1.length < 8) {
+                    $('#password1-field span').css('border-color', '#aaa');
+                }
+                if (pass2.length >= 8 && pass1 == pass2) {
+                    $('#password2-field span').css('border-color', 'green');
+                } else {
+                    $('#password2-field span').css('border-color', '#aaa');
+                }
+            }
+            function checkEmailField() {
+                if ($('#email-field input').val().length < 7) {
+                    $('#email-field span').css('border-color', '#aaa');
+                    return;
+                }
+                if ($('#email-field input')[0].validationMessage.length) {
+                    $('#email-field span').css('border-color', '#aaa');
+                } else {
+                    $('#email-field span').css('border-color', 'green');
+                }
+            }
+
+            window.addEventListener('load', function() {
+                $('#username-field input').on('keydown', function(e) {
+                    preventIllegalCharacters(e);
+                })
+                $('#username-field input').on('keyup', function() {
+                    checkUsernameValid();
+                });
+                $('#password1-field input').on('keyup', function() {
+                    checkPasswordValid();
+                    checkPasswordsEqual();
+                });
+                $('#password2-field input').on('keyup', function() {
+                    checkPasswordsEqual();
+                });
+                $('#email-field input').on('keyup', function () {
+                    checkEmailField();
+                });
+            });
+        </script>
+    </form>
+</div>

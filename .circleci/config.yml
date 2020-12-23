@@ -1,0 +1,284 @@
+version: 2
+jobs:
+  checkout_code:
+    machine: true
+
+    working_directory: ~/oddslingers
+
+    steps:
+      - restore_cache:
+          keys:
+            - oddslingers-repo
+      - checkout
+      - save_cache:
+          key: oddslingers-repo
+          paths:
+            - ~/oddslingers
+      - save_cache:
+          key: oddslingers-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/oddslingers
+
+  setupjs:
+    docker:
+      - image: circleci/python:3.7-node
+
+    working_directory: ~/oddslingers
+
+    steps:
+      - restore_cache:
+          keys:
+            - oddslingers-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - oddslingers-core-node_modules-v2@{{ checksum "core/js/package.json" }}
+
+      
+      - run: sudo apt install -yq fish; ./bin/oddslingers-ci setupjs | tee /tmp/setupjs.txt
+      
+      - save_cache:
+
+          key: oddslingers-core-node_modules-v2@{{ checksum "core/js/package.json" }}
+
+          paths:
+            - core/js/node_modules
+
+      - store_artifacts:
+          path: /tmp/setupjs.txt
+
+  lintjs:
+    docker:
+      - image: circleci/python:3.7-node
+
+    working_directory: ~/oddslingers
+
+    steps:
+      - restore_cache:
+          keys:
+            - oddslingers-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+
+            - oddslingers-core-node_modules-v2@{{ checksum "core/js/package.json" }}
+
+      
+      - run: sudo apt install -yq fish; ./bin/oddslingers-ci lintjs | tee /tmp/lintjs.txt
+
+      - store_artifacts:
+          path: /tmp/lintjs.txt
+      
+      - store_test_results:
+          path: /tmp/reports
+
+  testjs:
+    docker:
+      - image: circleci/python:3.7-node
+
+    working_directory: ~/oddslingers
+
+    steps:
+      - restore_cache:
+          keys:
+            - oddslingers-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - oddslingers-core-node_modules-v2@{{ checksum "core/js/package.json" }}
+
+      
+      - run: sudo apt install -yq fish; ./bin/oddslingers-ci testjs | tee /tmp/testjs.txt
+
+      - store_artifacts:
+          path: /tmp/testjs.txt
+
+  compjs:
+    docker:
+      - image: circleci/python:3.7-node
+
+    working_directory: ~/oddslingers
+
+    steps:
+      - restore_cache:
+          keys:
+            - oddslingers-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - oddslingers-core-node_modules-v2@{{ checksum "core/js/package.json" }}
+      
+      - run: sudo apt install -yq fish; ./bin/oddslingers-ci compjsall | tee /tmp/compjs.txt
+
+      - save_cache:
+          key: oddslingers-staticfiles@{{ .Revision }}
+          paths:
+            - core/static/js/pages
+
+      - store_artifacts:
+          path: /tmp/compjs.txt
+
+  setuppy:
+    docker:
+      - image: circleci/python:3.7
+
+    working_directory: ~/oddslingers
+
+    steps:
+      - restore_cache:
+          keys:
+            - oddslingers-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+
+            - oddslingers-core-venv-v1@{{ checksum "core/Pipfile" }}
+      
+      - run: sudo apt install -yq fish; ./bin/oddslingers-ci setuppy | tee /tmp/setuppy.txt
+      
+      - save_cache:
+          key: oddslingers-core-venv-v1@{{ checksum "core/Pipfile" }}
+          paths:
+            - core/.venv
+
+      - store_artifacts:
+          path: /tmp/setuppy.txt
+
+  lintpy:
+    docker:
+      - image: circleci/python:3.7
+
+    working_directory: ~/oddslingers
+
+    steps:
+      - restore_cache:
+          keys:
+            - oddslingers-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - oddslingers-core-venv-v1@{{ checksum "core/Pipfile" }}
+
+      
+      - run: sudo apt install -yq fish; ./bin/oddslingers-ci lintpy | tee /tmp/lintpy.txt
+
+      - store_artifacts:
+          path: /tmp/lintpy.txt
+      
+      - store_test_results:
+          path: /tmp/reports
+
+  testpy:
+    docker:
+      - image: circleci/python:3.7
+      - image: circleci/postgres:12.1
+        environment:
+          POSTGRES_USER: oddslingers
+          POSTGRES_DB: oddslingers
+      - image: redis:4.0.6
+
+    working_directory: ~/oddslingers
+
+    steps:
+      - restore_cache:
+          keys:
+            - oddslingers-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - oddslingers-core-venv-v1@{{ checksum "core/Pipfile" }}
+      
+      - run: sudo apt install -yq fish; ./bin/oddslingers-ci testpy | tee /tmp/testpy.txt
+
+      - store_artifacts:
+          #path: ~/oddslingers/data/debug_dumps
+          path: /tmp/testpy.txt
+
+      - store_test_results:
+          path: /tmp/reports
+
+  integration_tests:
+    docker:
+      - image: circleci/python:3.7
+      - image: circleci/postgres:12.1
+        environment:
+          POSTGRES_USER: oddslingers
+          POSTGRES_DB: oddslingers
+      - image: redis:4.0.6
+
+    working_directory: ~/oddslingers
+
+    steps:
+      - restore_cache:
+          keys:
+            - oddslingers-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - oddslingers-core-venv-v1@{{ checksum "core/Pipfile" }}
+      
+      - run: sudo apt install -yq fish; ./bin/oddslingers-ci integration_tests | tee /tmp/integration_tests.txt
+
+      - store_artifacts:
+          path: /tmp/integration_tests.txt
+
+  screenshots:
+    docker:
+      - image: circleci/python:3.7-browsers
+      - image: circleci/postgres:12.1
+        environment:
+          POSTGRES_USER: oddslingers
+          POSTGRES_DB: oddslingers
+      - image: redis:4.0.6
+
+    working_directory: ~/oddslingers
+
+    steps:
+      - restore_cache:
+          keys:
+            - oddslingers-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+
+            - oddslingers-core-venv-v1@{{ checksum "core/Pipfile" }}
+
+      - restore_cache:
+          keys:
+            - oddslingers-staticfiles@{{ .Revision }}
+      
+      - run: sudo apt install -yq fish; ./bin/oddslingers-ci screenshots | tee /tmp/screenshots.txt
+
+      - store_artifacts:
+          path: /tmp/screenshots
+      
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - checkout_code
+      - setupjs:
+          requires:
+            - checkout_code
+      - lintjs:
+          requires:
+            - setupjs
+      - testjs:
+          requires:
+            - setupjs
+      - compjs:
+          requires:
+            - lintjs
+            - testjs
+
+      - setuppy:
+          requires:
+            - checkout_code
+      - lintpy:
+          requires:
+            - setuppy
+      - testpy:
+          requires:
+            - setuppy
+
+      - integration_tests:
+          requires:
+            - lintpy
+            - testpy
+
+      - screenshots:
+          requires:
+            - lintpy
+            - compjs
+

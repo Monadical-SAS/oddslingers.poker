@@ -1,0 +1,41 @@
+defaults:
+    shell: /bin/bash
+    environment:
+      - key: ODDSLINGERS_ENV
+        value: BETA
+      - key: TERM
+        value: ansi
+
+    onFailure:
+        report:
+          sentry:
+            dsn:
+              value: https://ece51ac6d1a64017931be8260c3024f6:938233c511d34c7ca1b5efc254921ee1@sentry.io/108387
+            fingerprint:
+              - yacron
+              - "{{ environment.HOSTNAME }}"
+              - "{{ environment.ODDSLINGERS_ENV }}"
+              - "{{ name }}"
+            extra:
+              cmd: "{{ command }}"
+              exit_code: "{{ exit_code }}"
+              stdout: "{{ stdout }}"
+              stderr: "{{ stderr }}"
+            level: error
+
+jobs:
+  - name: check-server-load
+    command: fish -c 'source /opt/oddslingers/bin/oddslingers-server.fish; manage check_server_load >> /data/logs/server_load.log'
+    schedule: "*/5 * * * *"
+
+  - name: daily-backup
+    command: fish -c 'source /opt/oddslingers/bin/oddslingers-server.fish; manage offsite_backup lime >> /data/logs/backup.log'
+    schedule: "0 8 * * 0"
+    
+  - name: weekly-rewards
+    command: fish -c 'source /opt/oddslingers/bin/oddslingers-server.fish; manage weekly_rewards >> /data/logs/weekly_rewards.log'
+    schedule: "0 0 * * SUN"
+
+  - name: leaderboard-cache
+    command: fish -c 'source /opt/oddslingers/bin/oddslingers-server.fish; manage save_leaderboard_cache >> /data/logs/leaderboard-cache.log'
+    schedule: "0 0 * * *"

@@ -1,0 +1,68 @@
+#!/bin/bash
+# Shortcut to call fish functions from bash
+# Usage: bash2fish <functions_file.fish> <function> <arg1> <arg2> <arg3> ...
+
+ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
+FUNCTIONS_FILE="$1"
+FUNCTION="$2"
+ARG1="$3"
+ARG2="$4"
+ARG3="$5"
+ARG4="$6"
+ARG5="$7"
+ARG6="$8"
+ARG7="$9"
+CMD="$(ps -o command= -p "$PPID" | awk '{print $2}')"
+PYTHONPATH=$(which python)
+
+which fish > /dev/null || echo -e "Fish must be installed to run commands:\napt-get install fish\nor brew install fish" || return 1
+
+### Fish Function Parsing
+function print_functions {
+    # get lines before Helper Functions section
+    sed '/Helper Functions/q' < "$FUNCTIONS_FILE" | \
+    # find only lines with function definitions
+    grep '^function ' | \
+    # extract function name and description
+    perl -pe 's/^function ([^\s]+) --description .(.*).$/$1=$2/g' | \
+    # print name left-justified by 30 spaces, then description
+    awk -F'[/=]' '{printf "   %-20s%s\n", $1,$2}'
+}
+
+function print_help {
+    echo "Usage:"
+    echo "   -h | --help         See a list of all functions"
+    echo "   function [args]     Run a function (funcs are defined in $FUNCTIONS_FILE)"
+    echo -e "\nFunctions:"
+    print_functions "$FUNCTIONS_FILE"
+}
+
+function is_valid_function {
+    if sed '/Helper Functions/q' < "$FUNCTIONS_FILE" | \
+       grep '^function ' | \
+       perl -pe 's/^function (\w+) --description.*$/$1/g' | \
+       grep "^$FUNCTION$" > /dev/null; then
+        echo "> $CMD $FUNCTION $ARG1 $ARG2 $ARG3"
+    else
+        echo "Not a valid function: $FUNCTION"
+        echo
+        print_help
+        exit 1
+    fi
+}
+
+### Main
+# print help text and exit if $1 is empty, -h, --help, or help
+if test "$FUNCTION" = "" || test "$FUNCTION" = '-h' || test "$FUNCTION" = '--help' || test "$FUNCTION" = 'help'; then
+    print_help
+    exit
+fi
+
+is_valid_function "$FUNCTION"
+
+fish -i -c "
+set -x PATH \$PATH;
+set -x PYTHONPATH \$PYTHONPATH;
+set -x VIRTUAL_ENV \$VIRTUAL_ENV;
+source $FUNCTIONS_FILE;
+$FUNCTION $ARG1 $ARG2 $ARG3 $ARG4 $ARG5 $ARG6 $ARG7"

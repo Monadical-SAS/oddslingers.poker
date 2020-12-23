@@ -1,0 +1,263 @@
+{% extends 'ui/base.html' %}
+
+{% load static %}
+{% load cache %}
+
+{% block title %}FAQ{% endblock %}
+
+{% cache 500 faq user.is_authenticated DEBUG GIT_SHA %}
+
+{% block inner %}
+    <style>
+        nav {
+            z-index: 100;
+        }
+
+        .inner-content {
+            color: #eee;
+            font-size: 1.4em;
+            font-weight: 200;
+        }
+        .faq-page {
+            width: auto;
+            padding-bottom: 40px;
+            /*background-color: rgba(0,0,0,0.3);*/
+            z-index: 20;
+        }
+        .faq-page .body-text {
+            text-align: left;
+            width: 700px;
+            max-width: 100%;
+            float: none;
+        }
+        .bold-header {
+            font-family: 'Questa';
+        }
+        .bold-header:first-letter {
+            color: #1171d6;
+        }
+
+        h1.bold-header {
+            text-align: center;
+            font-size: 66px;
+            margin-top: 0;
+            padding-top: 50px;
+        }
+        h3.bold-header {
+            font-size: 24px;
+            text-align: left;
+            width: 700px;
+            max-width: 100%;
+        }
+        .company-info a {
+            color: orange;
+        }
+
+        @media(min-width: 1025px) {
+            .faq-page {
+                margin: 0 30px 30px 30px;
+                border-radius: 20px;
+            }
+            .company-info, .mission-info, hr {
+                margin-right: 110px
+            }
+        }
+    </style>
+    <div class="page faq-page">
+        <div class="row">
+            <div class="container" style="text-align: center">
+                <h1 class="bold-header">
+                    Frequently Asked Questions
+                </h1>
+                <hr/>
+                <br/>
+
+                <h2 class="bold-header">General</h2>
+                <br/>
+
+                <div class="col-md-6">
+                    <h3 class="bold-header">
+                        Do I need to download anything to use OddSlingers?
+                    </h3>
+                    <div class="body-text">
+                        No, Oddslingers is a no download poker platform, we don't use flash or require any downloads, simply visit
+                        Oddslingers.com on desktop or mobile.
+                    </div>
+                    <br/>
+                    
+                    <h3 class="bold-header">
+                        What information do I need to sign up?
+                    </h3>
+                    <div class="body-text">
+                        Signing up is easy and free. You only need a username, an email and a password. You'll get an email from us with a link
+                        to confirm your email address and you're ready to play! If you don't receive the confirmation email check your spam
+                        folder, check for typos or <a href="https://oddslingers.com/support/" target="_blank">contact us</a>.
+                    </div>
+                    <br/>
+
+                    <h3 class="bold-header">
+                        How can I learn the rules of poker easily?
+                    </h3>
+                    <div class="body-text">
+                        We have a free learning section with a Texas Hold'Em Walkthrough Tutorial, basic game rules and information. With this
+                        information you could <a href="https://oddslingers.com/accounts/login/?next=/learn/" target="_blank">sign up</a>, join a table and learn poker
+                        while playing.
+                    </div>
+                    <br/>
+
+                    <h3 class="bold-header">
+                        Where are the other users on the site from?
+                    </h3>
+                    <div class="body-text">
+                        The site is worldwide for free play-chips poker and we plan on adding translations soon.
+                    </div>
+                    <br/>
+
+                    <h3 class="bold-header">
+                        Am I playing a computer or real people or both?
+                    </h3>
+                    <div class="body-text">
+                        We have a mix of AI players and real players on the site. Depending on what
+                        timezone you're in, there may be more or fewer humans online. You can recognize the AI players 
+                        as all their names are puns about computers, and if you click on their name on the seat you 
+                        will see a picture of Bender from Futurama on their profile, and a note in their bio indicating 
+                        they're an AI trainer, along with some hints about their playstyle ;)
+                    </div>
+                    <br/>
+                </div>
+
+
+                <div class="col-md-6">
+                    <h3 class="bold-header">
+                        Do I need a credit card to start playing at OddSlingers?
+                    </h3>
+                    <div class="body-text">
+                        No credit card or deposit is required for playing poker at OddSlingers. It’s play-chips only, and as they are currently
+                        free of charge, no money is needed to buy play-chips for now. You only need to 
+                        <a href="https://oddslingers.com/accounts/login/?next=/learn/" target="_blank">sign up</a> and have fun!
+                    </div>
+                    <br/>
+
+                    <h3 class="bold-header">
+                        Is this strictly a "for fun" site with no charge for chips at anytime?
+                    </h3>
+                    <div class="body-text">
+                        It's play-chips only, which are currently free of charge and not redeemable for any real money value. The project is free,
+                        ad-free, and open source!
+                    </div>
+                    <br/>
+                    
+                    <h3 class="bold-header">
+                        When are real-money games available?
+                    </h3>
+                    <div class="body-text">
+                        OddSlingers is not pursuing a license to host real-money games.
+                    </div>
+                    <br/>
+
+                    <h3 class="bold-header">
+                        Can I play a game with a friend by sending them a link?
+                    </h3>
+                    <div class="body-text">
+                        You could invite a friend to an existing table or create a table. In both cases, on the left side of the table you can
+                        find the options menu, where you can find the share table link feature. There you get the option of sharing a link with
+                        your friend or you could invite them via email.
+                    </div>
+                    <br/>
+                </div>
+
+                <div class="clearfix"></div>
+                <h2 class="bold-header">Troubleshooting</h2>
+                <br/>
+
+                <div class="col-md-6">
+                    <h3 class="bold-header">
+                        What should you do if you encounter an error message when signing in?
+                    </h3>
+                    <div class="body-text">
+                        Click on the <a href="https://oddslingers.com/accounts/password/reset/" target="_blank">Forgot password?</a> link at the bottom of the login page
+                        and we'll send you an email with your username and a link to reset your password.
+                    </div>
+                    <br/>
+
+                    <h3 class="bold-header">
+                        I'm experiencing lag or delay when playing, how can I fix that?
+                    </h3>
+                    <div class="body-text">
+                        Refresh, check the <a href="/speedtest/">speedtest</a> page or contact <a href="https://oddslingers.com/support/" target="_blank">support</a>.
+                    </div>
+                    <br/>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="bold-header">
+                        How can I report any bugs or make a suggestion?
+                    </h3>
+                    <div class="body-text">
+                        Through our <a href="https://oddslingers.com/support/" target="_blank">support page</a> or send us an email to support@oddslingers.com
+                    </div>
+                    <br/>
+
+                    <h3 class="bold-header">
+                        How can I access my data or delete my account?
+                    </h3>
+                    <div class="body-text">
+                        You have the option on your profile page to download your data and to delete your account.
+                    </div>
+                    <br/>
+                </div>
+
+                <div class="clearfix"></div>
+                <h2 class="bold-header">More Info</h2>
+                <br/>
+
+                <div class="col-md-6">
+                    <h3 class="bold-header">
+                        Where can I find more information about the Oddslingers Company?
+                    </h3>
+                    <div class="body-text">
+                        OddSlingers is an open source project developed by <a href="https://monadical.com/index.html"> Monadical Inc</a>, a
+                        software consulting company. 
+                    </div>
+                    <br/>
+
+                    <h3 class="bold-header">
+                        Where can I find the Privacy Policy and TOS?
+                    </h3>
+                    <div class="body-text">
+                        Go to our <a href="/about">About</a> page and scroll down to the very bottom.
+                        <ul>
+                            <li><a href="https://docs.oddslingers.com/s/privacy-policy">Privacy Policy</a></li>
+                            <li><a href="https://docs.oddslingers.com/s/terms-of-service">Terms of Service</a></li>
+                            <li><a href="https://docs.oddslingers.com/s/gdpr-info">GDPR Info</a></li>
+                        </ul>
+                    </div>
+                    <br/>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="bold-header">
+                        Where does the OddSlingers community hang out?
+                    </h3>
+                    <div class="body-text">
+                        Follow us on <a href="https://twitter.com/OddSlingers" target="_blank">Twitter</a>
+                        and chat with the developers and community on <a href="https://discordapp.com/invite/USPweBy" target="_blank">Discord</a>!
+                    </div>
+                    <br/>
+
+                    <h3 class="bold-header">
+                        I can't find an answer to my question here. What now?
+                    </h3>
+                    <div class="body-text">
+                        You can always contact us by using the <a href="/support">Support Page</a>,
+                        by chatting with us on <a href="https://discordapp.com/invite/USPweBy" target="_blank">Discord</a>,
+                        or by sending us an email at support@oddslingers.com.
+                    </div>
+                    <br/>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock inner %}
+
+{% endcache %}

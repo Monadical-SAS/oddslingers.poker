@@ -1,0 +1,258 @@
+@import 'colors';
+
+
+h1.oddslingers-text-logo {
+    text-align: center;
+    font-size: 66px;
+}
+h2 {
+    font-weight: 100;
+    color: #555;
+    font-variant: small-caps;
+}
+hr {
+    margin-top: 12px;
+    margin-bottom: 10px;
+}
+
+.page-leaderboard {
+  background-color: #f4f4f2;
+  background-image: url(/static/images/poker-bg-tile.jpg);
+  background-size: 290px;
+  background-blend-mode: color-burn;
+  animation: fadein 200ms ease-in-out;
+}
+
+#react.page-leaderboard  > .table-grid {
+  background-color: rgba(0,0,0,0);
+}
+
+@keyframes fadein {
+    from { opacity: 0.2; }
+    to   { opacity: 1; }
+}
+
+
+.tables-alert {
+    margin: auto;
+    width: 450px;
+    text-align: center;
+}
+.leaderboard-actions .fa-spin {
+    font-size: 20px;
+    vertical-align: super;
+    margin-right: 12px;
+    margin-left: -30px;
+    color: orange;
+    opacity: 0;
+    transition: opacity 500ms;
+}
+#leaderboard-tabs .nav-tabs {
+    min-width: 250px;
+    width: auto;
+    margin: auto;
+    float: none;
+    text-align: center;
+    margin-top: 20px;
+    border-bottom: 0px;
+    font-size: 18px;
+    display: inline-block;
+}
+#leaderboard-tabs .nav-tabs li {
+    border: 0px solid #ddd;
+    display: inline-block;
+    text-align:center;
+}
+/* Leaderboard */
+#leaderboard-tabs li.active a {
+  background-color: #1171d6;
+  color: white;
+  display: inline-block;
+  border-radius: 10px 10px 0px 0px;
+}
+
+
+#leaderboard-tabs hr.tabs-divider {
+    margin-top: -7px;
+    border-width: 4px;
+    border-color: #eee;
+    width: 53%;
+}
+
+#leaderboard-tabs li.active a:hover {
+    color: white;
+}
+
+#leaderboard-tabs li a:hover {
+    color: #333;
+}
+
+
+.leaderboard-grid {
+    text-align: center;
+    /*border: 4px solid #3F51B5 !important;*/
+}
+
+.leaderboard-grid .leaderboard-thumbnail hr {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.leaderboard-grid .fa-pencil {
+    color: red;
+    opacity: 0.2;
+}
+.leaderboard-grid .fa-pencil:hover {
+    opacity: 1;
+}
+.leaderboard-grid .leaderboard-top .leaderboard-thumbnail {
+    vertical-align: bottom;
+}
+.leaderboard-grid .leaderboard-thumbnail {
+    display: inline-block;
+    width: 260px;
+    float: none;
+    vertical-align: top;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+    box-shadow: 0px 3px 16px 5px rgba(0,0,0,0.1);
+    vertical-align: top;
+}
+.leaderboard-grid .leaderboard-thumbnail:hover {
+    box-shadow: 0px 5px 16px 5px rgba(0,0,0,0.2);
+    transition: box-shadow 200ms;
+}
+.leaderboard-grid .leaderboard-thumbnail h2 {
+    white-space: nowrap;
+    font-family: Questa;
+}
+.profile-pic-wrapper {
+    height: 164px;
+    margin-right: 30px;
+    margin-right: 2px;
+}
+.mini-tables {
+    text-align: center;
+    height: 100px;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+.mini-tables a {
+    display: block;
+    margin-bottom: 0px;
+}
+.offline-msg {
+    opacity: 0.4;
+    text-align: center;
+    font-size: 20px;
+}
+
+.leaderboard-grid > a {
+    display: inline-block;
+}
+.username {
+    white-space: nowrap;
+}
+
+.footer-stats h2 {
+    text-align: center;
+    font-size: 2em;
+    font-weight: 100;
+    font-family: "Bungee", "Helvetica Nue", "Arial", sans-serif;
+}
+
+.orange-separator {
+    border-top: solid 1px $blue;
+}
+
+.fa-twitter-square {
+    color: #1da1f2;
+}
+
+#search-field {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    height: 35px;
+}
+
+.leaderboard-top .golden-leader > div {
+     height: 520px;
+     width: 300px;
+     border-color: gold;
+     border-width: 10px
+}
+.leaderboard-top .silver-leader > div {
+     height: 450px;
+     width: 290px;
+     border-color: silver;
+     border-width: 5px
+}
+.leaderboard-top .bronze-leader > div {
+     height: 420px;
+     width: 290px;
+     border-color: orange;
+     border-width: 5px
+}
+
+@media (max-width: 767px) {
+    h1.oddslingers-text-logo {
+        text-align: center;
+        font-size: 66px;
+    }
+    h1 small {
+        font-size: 0.4em;
+        display: block;
+    }
+    .footer-stats h2 {
+        font-size: 1.1em;
+    }
+    .tables-actions {
+        float: none;
+        margin-top: 0px;
+    }
+    .tables-actions .search-field {
+        width: 90%;
+    }
+    .leaderboard-grid > .row > a {
+        margin-bottom: 10px;
+        display: block;
+    }
+    .leaderboard-grid .leaderboard-thumbnail {
+        margin: auto;
+        min-height: 470px;
+        width: 88%;
+    }
+    .leaderboard-top > a {position: relative;}
+    .leaderboard-top > a:nth-child(1).silver-leader {
+        top: 520px;
+    }
+    .leaderboard-top > a:nth-child(2).golden-leader {
+        top: -470px;
+    }
+    .tables-alert {
+        width: auto;
+        margin: 17px;
+        margin-top: 4px;
+        margin-bottom: 8px;
+    }
+    #react > .table-grid {
+        padding: 0px;
+    }
+}
+@media (max-width: 336px) {
+    h1.oddslingers-text-logo {
+        font-size: 12.2vw;
+        margin-top: 3px;
+    }
+    .tables-actions .search-field .input-group {
+        width: 94%;
+        margin: auto;
+    }
+    .footer-stats h2 {
+        font-size: 1em;
+    }
+    .table-thumbnail {
+        width: 94%;
+    }
+}

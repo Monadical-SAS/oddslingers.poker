@@ -1,0 +1,1132 @@
+{
+    "release": "7298a57e9bbdaee838c465abbcb6b0fdca8a0b58",
+    "accessed": "2019-01-04T00:20:34.788Z",
+    "notes": null,
+    "hands": [
+        {
+            "ts": "2019-01-03T16:53:49.417Z",
+            "table": {
+                "bb": "4.00",
+                "id": "0e7c6c13-daba-4275-8071-9e7b46f6bbf9",
+                "sb": "2.00",
+                "ante": null,
+                "name": "2/4 NLHE Hall 2",
+                "bb_idx": 4,
+                "sb_idx": 3,
+                "btn_idx": 2,
+                "deck_str": "5s,7h,4s,3d,5d,7d,Kc,4d,7c,5h,3c,2s,2h,5c,Ac,6d,Jh,4h,6h,6c,Qd,Ah,Jc,Qh,9c,6s,Kd,Ks,8h,9d,Tc,Ts,Td,2d,2c,8s,Kh,As,3s,Qc,Jd,Th,7s,8c,Js,9h,Qs,4c,3h,Ad,9s,8d",
+                "board_str": "",
+                "max_buyin": "800.00",
+                "min_buyin": "200.00",
+                "num_seats": 6,
+                "precision": 0,
+                "table_type": "NLHE",
+                "hand_number": 34
+            },
+            "players": [
+                {
+                    "id": "56c4e0c6-69b9-49bf-8193-0deab0e1ed0e",
+                    "stack": "286.00",
+                    "owes_bb": true,
+                    "owes_sb": false,
+                    "position": 0,
+                    "username": "Davesmx354",
+                    "auto_rebuy": null,
+                    "playing_state": "SITTING_OUT",
+                    "sit_out_at_blinds": false,
+                    "orbits_sitting_out": 3
+                },
+                {
+                    "id": "a319a43a-ad43-4901-bdfd-681aa2d5ce3e",
+                    "stack": "200.00",
+                    "owes_bb": true,
+                    "owes_sb": false,
+                    "position": 1,
+                    "username": "rainblow",
+                    "auto_rebuy": "200.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false,
+                    "orbits_sitting_out": 0
+                },
+                {
+                    "id": "ea5d66a0-2847-418f-9462-921ae9d6d0f5",
+                    "stack": "546.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 2,
+                    "username": "seannyboy",
+                    "auto_rebuy": null,
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false,
+                    "orbits_sitting_out": 0
+                },
+                {
+                    "id": "68bb6798-d480-4316-886e-eb4bc686c308",
+                    "stack": "1040.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 3,
+                    "username": "DLL_Cool_J",
+                    "auto_rebuy": "800.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false,
+                    "orbits_sitting_out": 0
+                },
+                {
+                    "id": "3692c557-beec-401f-8c24-6a67fa1f49f3",
+                    "stack": "938.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 4,
+                    "username": "ROM_Jeremy",
+                    "auto_rebuy": "800.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false,
+                    "orbits_sitting_out": 0
+                }
+            ],
+            "actions": [
+                {
+                    "ts": "2019-01-03T16:53:58.874Z",
+                    "subj": "rainblow",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": 8,
+                        "SEQ_NUM": 3,
+                        "USER_ID": "9fdc5723-da6e-4a1f-a4fc-d3cd7bc1d7b8",
+                        "USERNAME": "rainblow",
+                        "TIMESTAMP": 1546534438096
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:07.299Z",
+                    "subj": "seannyboy",
+                    "action": "CALL",
+                    "args": {
+                        "SEQ_NUM": 51,
+                        "USER_ID": "5a54821f-1944-4bee-af4e-246df78b71f9",
+                        "USERNAME": "seannyboy",
+                        "TIMESTAMP": 1546534447120
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:14.276Z",
+                    "subj": "DLL_Cool_J",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": "34.00"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:20.019Z",
+                    "subj": "ROM_Jeremy",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": "114.00"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:21.998Z",
+                    "subj": "seannyboy",
+                    "action": "LEAVE_SEAT",
+                    "args": {
+                        "SEQ_NUM": 52,
+                        "USER_ID": "5a54821f-1944-4bee-af4e-246df78b71f9",
+                        "USERNAME": "seannyboy",
+                        "TIMESTAMP": 1546534461814
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:23.355Z",
+                    "subj": "rainblow",
+                    "action": "CALL",
+                    "args": {
+                        "SEQ_NUM": 4,
+                        "USER_ID": "9fdc5723-da6e-4a1f-a4fc-d3cd7bc1d7b8",
+                        "USERNAME": "rainblow",
+                        "TIMESTAMP": 1546534462584
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:23.356Z",
+                    "subj": "seannyboy",
+                    "action": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:29.131Z",
+                    "subj": "seannyboy",
+                    "action": "TAKE_SEAT",
+                    "args": {
+                        "SEQ_NUM": 53,
+                        "USER_ID": "5a54821f-1944-4bee-af4e-246df78b71f9",
+                        "USERNAME": "seannyboy",
+                        "position": 2,
+                        "TIMESTAMP": 1546534468922
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:29.728Z",
+                    "subj": "DLL_Cool_J",
+                    "action": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:34.726Z",
+                    "subj": "seannyboy",
+                    "action": "LEAVE_SEAT",
+                    "args": {
+                        "SEQ_NUM": 54,
+                        "USER_ID": "5a54821f-1944-4bee-af4e-246df78b71f9",
+                        "USERNAME": "seannyboy",
+                        "TIMESTAMP": 1546534473073
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:41.524Z",
+                    "subj": "seannyboy",
+                    "action": "TAKE_SEAT",
+                    "args": {
+                        "SEQ_NUM": 55,
+                        "USER_ID": "5a54821f-1944-4bee-af4e-246df78b71f9",
+                        "USERNAME": "seannyboy",
+                        "position": 2,
+                        "TIMESTAMP": 1546534481272
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:42.048Z",
+                    "subj": "ROM_Jeremy",
+                    "action": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:44.833Z",
+                    "subj": "rainblow",
+                    "action": "CHECK",
+                    "args": {
+                        "SEQ_NUM": 5,
+                        "USER_ID": "9fdc5723-da6e-4a1f-a4fc-d3cd7bc1d7b8",
+                        "USERNAME": "rainblow",
+                        "TIMESTAMP": 1546534484038
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:45.920Z",
+                    "subj": "seannyboy",
+                    "action": "SIT_OUT_AT_BLINDS",
+                    "args": {
+                        "set_to": true,
+                        "SEQ_NUM": 56,
+                        "USER_ID": "5a54821f-1944-4bee-af4e-246df78b71f9",
+                        "USERNAME": "seannyboy",
+                        "TIMESTAMP": 1546534485738
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:46.743Z",
+                    "subj": "seannyboy",
+                    "action": "SIT_OUT_AT_BLINDS",
+                    "args": {
+                        "set_to": false,
+                        "SEQ_NUM": 57,
+                        "USER_ID": "5a54821f-1944-4bee-af4e-246df78b71f9",
+                        "USERNAME": "seannyboy",
+                        "TIMESTAMP": 1546534486566
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:48.418Z",
+                    "subj": "seannyboy",
+                    "action": "SIT_OUT",
+                    "args": {
+                        "SEQ_NUM": 58,
+                        "USER_ID": "5a54821f-1944-4bee-af4e-246df78b71f9",
+                        "USERNAME": "seannyboy",
+                        "TIMESTAMP": 1546534488241
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:55.726Z",
+                    "subj": "ROM_Jeremy",
+                    "action": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:57.767Z",
+                    "subj": "seannyboy",
+                    "action": "LEAVE_SEAT",
+                    "args": {
+                        "SEQ_NUM": 59,
+                        "USER_ID": "5a54821f-1944-4bee-af4e-246df78b71f9",
+                        "USERNAME": "seannyboy",
+                        "TIMESTAMP": 1546534497586
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:58.483Z",
+                    "subj": "rainblow",
+                    "action": "CHECK",
+                    "args": {
+                        "SEQ_NUM": 6,
+                        "USER_ID": "9fdc5723-da6e-4a1f-a4fc-d3cd7bc1d7b8",
+                        "USERNAME": "rainblow",
+                        "TIMESTAMP": 1546534497696
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:55:04.495Z",
+                    "subj": "ROM_Jeremy",
+                    "action": "BET",
+                    "args": {
+                        "amt": "188.00"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:55:09.199Z",
+                    "subj": "rainblow",
+                    "action": "FOLD",
+                    "args": {
+                        "SEQ_NUM": 7,
+                        "USER_ID": "9fdc5723-da6e-4a1f-a4fc-d3cd7bc1d7b8",
+                        "USERNAME": "rainblow",
+                        "TIMESTAMP": 1546534508302
+                    }
+                }
+            ],
+            "events": [
+                {
+                    "ts": "2019-01-03T16:53:49.418Z",
+                    "subj": "seannyboy",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.419Z",
+                    "subj": "DLL_Cool_J",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.419Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.420Z",
+                    "subj": "DEALER",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.420Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "====NEW HAND====",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.421Z",
+                    "subj": "rainblow",
+                    "event": "SIT_IN",
+                    "args": {
+                        "immediate": true
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.421Z",
+                    "subj": "rainblow",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.421Z",
+                    "subj": "DEALER",
+                    "event": "SET_BLIND_POS",
+                    "args": {
+                        "bb_pos": 4,
+                        "sb_pos": 3,
+                        "btn_pos": 2
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.422Z",
+                    "subj": "DEALER",
+                    "event": "SHUFFLE",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.422Z",
+                    "subj": "side_effect",
+                    "event": "NEW_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.423Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "DLL_Cool_J posted 2.00 for SB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.423Z",
+                    "subj": "DLL_Cool_J",
+                    "event": "POST",
+                    "args": {
+                        "amt": "2.00"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.424Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "ROM_Jeremy posted 4.00 for BB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.424Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "POST",
+                    "args": {
+                        "amt": "4.00"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.425Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "rainblow posted 4.00 for BB (out of position)",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.425Z",
+                    "subj": "rainblow",
+                    "event": "POST",
+                    "args": {
+                        "amt": "4.00"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.426Z",
+                    "subj": "rainblow",
+                    "event": "OWE_BB",
+                    "args": {
+                        "owes": false
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.426Z",
+                    "subj": "DLL_Cool_J",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "5s"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.427Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "7h"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.427Z",
+                    "subj": "rainblow",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "4s"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.428Z",
+                    "subj": "seannyboy",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "3d"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.428Z",
+                    "subj": "DLL_Cool_J",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "5d"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.429Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "7d"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.429Z",
+                    "subj": "rainblow",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Kc"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.430Z",
+                    "subj": "seannyboy",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "4d"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.430Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "DLL_Cool_J (1040.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.430Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "ROM_Jeremy (938.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.431Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "rainblow (200.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.431Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "seannyboy (546.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:49.432Z",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 8
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:58.874Z",
+                    "subj": "rainblow",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "8",
+                        "all_in": false
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:53:58.875Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": false
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:07.300Z",
+                    "subj": "seannyboy",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "8",
+                        "all_in": false
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:07.300Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": false
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:14.277Z",
+                    "subj": "DLL_Cool_J",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "34",
+                        "all_in": false
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:14.278Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": true
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:20.020Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "114",
+                        "all_in": false
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:20.020Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": true
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:21.998Z",
+                    "subj": "seannyboy",
+                    "event": "LEAVE_SEAT",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:21.999Z",
+                    "subj": "side_effect",
+                    "event": "NOTIFICATION",
+                    "args": {
+                        "msg": "You will leave the seat at end of hand",
+                        "player": {
+                            "id": "ea5d66a0-2847-418f-9462-921ae9d6d0f5",
+                            "str": "seannyboy",
+                            "user": "seannyboy",
+                            "table": "No Limit Hold 'em:2/4 NLHE Hall 2",
+                            "user_id": "5a54821f-1944-4bee-af4e-246df78b71f9",
+                            "short_id": "ea5d66a0",
+                            "table_id": "0e7c6c13-daba-4275-8071-9e7b46f6bbf9",
+                            "username": "seannyboy"
+                        },
+                        "notification_type": "leave_seat"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:23.355Z",
+                    "subj": "rainblow",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "114",
+                        "all_in": false
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:23.356Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": false
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:23.357Z",
+                    "subj": "seannyboy",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:23.357Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": false
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:29.132Z",
+                    "subj": "seannyboy",
+                    "event": "TAKE_SEAT",
+                    "args": {
+                        "position": 2
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:29.729Z",
+                    "subj": "DLL_Cool_J",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:29.729Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": true
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:29.730Z",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:29.730Z",
+                    "subj": "rainblow",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:29.731Z",
+                    "subj": "seannyboy",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:29.731Z",
+                    "subj": "DLL_Cool_J",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:29.731Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:29.732Z",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "7c"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:29.732Z",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "5h"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:29.733Z",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "3c"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:29.733Z",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 3
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:29.733Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "FLOP: 7\u2663, 5\u2665, 3\u2663",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:34.727Z",
+                    "subj": "seannyboy",
+                    "event": "LEAVE_SEAT",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:34.727Z",
+                    "subj": "side_effect",
+                    "event": "NOTIFICATION",
+                    "args": {
+                        "msg": "You will leave the seat at end of hand",
+                        "player": {
+                            "id": "ea5d66a0-2847-418f-9462-921ae9d6d0f5",
+                            "str": "seannyboy",
+                            "user": "seannyboy",
+                            "table": "No Limit Hold 'em:2/4 NLHE Hall 2",
+                            "user_id": "5a54821f-1944-4bee-af4e-246df78b71f9",
+                            "short_id": "ea5d66a0",
+                            "table_id": "0e7c6c13-daba-4275-8071-9e7b46f6bbf9",
+                            "username": "seannyboy"
+                        },
+                        "notification_type": "leave_seat"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:41.525Z",
+                    "subj": "seannyboy",
+                    "event": "TAKE_SEAT",
+                    "args": {
+                        "position": 2
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:42.049Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:42.049Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": true
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:44.834Z",
+                    "subj": "rainblow",
+                    "event": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:44.835Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": false
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:44.835Z",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:44.836Z",
+                    "subj": "DLL_Cool_J",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:44.836Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:44.837Z",
+                    "subj": "rainblow",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:44.837Z",
+                    "subj": "seannyboy",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:44.838Z",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "2s"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:44.838Z",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 1
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:44.839Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "TURN: 7\u2663, 5\u2665, 3\u2663, [2\u2660]",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:45.921Z",
+                    "subj": "seannyboy",
+                    "event": "SIT_OUT_AT_BLINDS",
+                    "args": {
+                        "set_to": true
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:46.744Z",
+                    "subj": "seannyboy",
+                    "event": "SIT_OUT_AT_BLINDS",
+                    "args": {
+                        "set_to": false
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:48.418Z",
+                    "subj": "seannyboy",
+                    "event": "SIT_OUT",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:55.727Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:55.727Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": true
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:57.768Z",
+                    "subj": "seannyboy",
+                    "event": "LEAVE_SEAT",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:57.768Z",
+                    "subj": "side_effect",
+                    "event": "NOTIFICATION",
+                    "args": {
+                        "msg": "You will leave the seat at end of hand",
+                        "player": {
+                            "id": "ea5d66a0-2847-418f-9462-921ae9d6d0f5",
+                            "str": "seannyboy",
+                            "user": "seannyboy",
+                            "table": "No Limit Hold 'em:2/4 NLHE Hall 2",
+                            "user_id": "5a54821f-1944-4bee-af4e-246df78b71f9",
+                            "short_id": "ea5d66a0",
+                            "table_id": "0e7c6c13-daba-4275-8071-9e7b46f6bbf9",
+                            "username": "seannyboy"
+                        },
+                        "notification_type": "leave_seat"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:58.483Z",
+                    "subj": "rainblow",
+                    "event": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:58.484Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": false
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:58.484Z",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:58.485Z",
+                    "subj": "DLL_Cool_J",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:58.485Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:58.486Z",
+                    "subj": "rainblow",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:58.486Z",
+                    "subj": "seannyboy",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:54:58.486Z",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "2h"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:58.487Z",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 1
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:54:58.487Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "RIVER: 7\u2663, 5\u2665, 3\u2663, 2\u2660, [2\u2665]",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:55:04.496Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "BET",
+                    "args": {
+                        "amt": "188",
+                        "all_in": false
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:55:04.497Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": true
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:55:09.200Z",
+                    "subj": "rainblow",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:55:09.200Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": false
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:55:09.201Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "RETURN_CHIPS",
+                    "args": {
+                        "amt": "188.00"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:55:09.201Z",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:55:09.202Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "WIN",
+                    "args": {
+                        "amt": "270.00",
+                        "pot_id": 0,
+                        "showdown": false
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:55:09.203Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "ROM_Jeremy won 270.00 from the main pot",
+                        "speaker": "winner_info"
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:55:09.203Z",
+                    "subj": "DEALER",
+                    "event": "DELAY_COUNTDOWN",
+                    "args": {
+                        "n_seconds": 2
+                    }
+                },
+                {
+                    "ts": "2019-01-03T16:55:09.204Z",
+                    "subj": "side_effect",
+                    "event": "SHOWDOWN_COMPLETE",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:55:09.204Z",
+                    "subj": "DLL_Cool_J",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:55:09.205Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:55:09.205Z",
+                    "subj": "rainblow",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:55:09.206Z",
+                    "subj": "seannyboy",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:55:09.206Z",
+                    "subj": "DLL_Cool_J",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:55:09.206Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:55:09.207Z",
+                    "subj": "rainblow",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:55:09.207Z",
+                    "subj": "seannyboy",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-03T16:55:09.208Z",
+                    "subj": "DEALER",
+                    "event": "END_HAND",
+                    "args": {}
+                }
+            ]
+        }
+    ]
+}

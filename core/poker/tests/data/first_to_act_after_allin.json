@@ -1,0 +1,189 @@
+{
+  "hands": [
+    {
+      "events": [
+        {
+          "ts": "00:20:42",
+          "subj": "side_effect",
+          "args": {
+            "msg": "====NEW HAND===="
+          },
+          "event": "CHAT"
+        },
+        {
+          "ts": "00:20:42",
+          "subj": "cowpig",
+          "args": {},
+          "event": "RESET"
+        },
+        {
+          "ts": "00:20:42",
+          "subj": "max",
+          "args": {},
+          "event": "RESET"
+        },
+        {
+          "ts": "00:20:42",
+          "subj": "cuttlefish",
+          "args": {},
+          "event": "RESET"
+        },
+        {
+          "ts": "00:20:42",
+          "subj": "ajfenix",
+          "args": {},
+          "event": "RESET"
+        },
+        {
+          "ts": "00:20:42",
+          "subj": "DEALER",
+          "args": {
+            "btn_pos": 2,
+            "bb_pos": 4,
+            "sb_pos": 3
+          },
+          "event": "SET_BLIND_POS"
+        },
+        {
+          "ts": "00:20:42",
+          "subj": "DEALER",
+          "args": {
+            "btn_pos": 2,
+            "bb_pos": 4,
+            "sb_pos": 3
+          },
+          "event": "SET_BLIND_POS"
+        },
+        {
+          "ts": "00:20:42",
+          "subj": "max",
+          "args": {
+            "amt": "2.00"
+          },
+          "event": "POST"
+        },
+        {
+          "ts": "00:20:42",
+          "subj": "cuttlefish",
+          "args": {
+            "card": "6s"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "00:20:42",
+          "subj": "ajfenix",
+          "args": {
+            "card": "6h"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "00:20:42",
+          "subj": "max",
+          "args": {
+            "card": "3s"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "00:20:42",
+          "subj": "cuttlefish",
+          "args": {
+            "card": "Ad"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "00:20:42",
+          "subj": "ajfenix",
+          "args": {
+            "card": "7h"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "00:20:42",
+          "subj": "max",
+          "args": {
+            "card": "9c"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "00:20:42",
+          "subj": "DEALER",
+          "args": {
+            "n_cards": 6
+          },
+          "event": "POP_CARDS"
+        }
+      ],
+      "table": {
+        "precision": 0,
+        "bb": "2.00",
+        "name": "Homepage Table",
+        "sb": "1.00",
+        "num_seats": 6,
+        "btn_idx": 1,
+        "ante": null,
+        "max_buyin": 200,
+        "id": "1791c913-a8c9-437f-86bb-3abceaed2034",
+        "sb_idx": 2,
+        "deck_str": "9c,7h,Ad,3s,6h,6s,3c,Qc,Jd,Td,8c,7c,Jh,6c,9h,Kc,8s,Ac,Tc,7s,2h,9s,Kd,3h,Qh,7d,2c,Js,6d,3d,Ah,5h,Qd,Ts,5s,4s,Th,5d,Kh,5c,2s,Jc,4h,9d,2d,8d,4c,Ks,4d,Qs,8h,As",
+        "bb_idx": 3,
+        "board_str": "",
+        "min_buyin": 100,
+        "hand_number": 3
+      },
+      "players": [
+        {
+          "position": 0,
+          "id": "f341b020-d837-400d-a354-cddfa721f9d0",
+          "username": "pirate",
+          "owes_bb": false,
+          "stack": "0.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_OUT"
+        },
+        {
+          "position": 1,
+          "id": "655e7d39-a61a-4890-886a-c9ad0550db3b",
+          "username": "cuttlefish",
+          "owes_bb": false,
+          "stack": "422.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_IN"
+        },
+        {
+          "position": 2,
+          "id": "af5a6a7a-2151-4505-9e08-cd4db2e2ad4c",
+          "username": "ajfenix",
+          "owes_bb": false,
+          "stack": "385.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_IN"
+        },
+        {
+          "position": 3,
+          "id": "4d03e8dc-0e50-4f55-a81b-1ae2c22921c8",
+          "username": "cowpig",
+          "owes_bb": false,
+          "stack": "0.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_OUT"
+        },
+        {
+          "position": 4,
+          "id": "768f377b-efd6-4051-b5da-c2216df76bb8",
+          "username": "max",
+          "owes_bb": false,
+          "stack": "193.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_IN"
+        }
+      ],
+      "timestamp": "2016-09-01T00:20:42.057Z"
+    }
+  ]
+}

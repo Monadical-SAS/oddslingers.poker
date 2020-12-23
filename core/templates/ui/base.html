@@ -1,0 +1,159 @@
+{% load static %}
+{% load utils %}
+{% load cache %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <style>
+            {% theme_option light_option='#dadeda' dark_option='#1A1B1B' as option %}
+            html, body, #react {background-color: {{option}}; }
+            .navbar-brand img {animation: rotate 600ms 1 ease-in-out;}
+        </style>
+
+        <meta charset="utf-8">
+        <meta name="language" content="en">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>{% block title %}Home{% endblock %} | Oddslingers: Fast, Secure, Online Poker</title>
+
+        <meta name="description" content="Come play fast, secure, online poker for free on Oddslingers.com! Laptop, phone, or tablet; no ads, no downloads, no plugins. Play poker against friends, pros, or singleplayer!">
+        <meta name="keywords" content="poker,ethereum,bitcoin,eth,btc,fair,blockchain,fast,secure,online,web,mobile,game,chips">
+
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#222">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimal-ui">
+        <meta name="apple-mobile-web-app-title" content="OddSlingers">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        {% block metatags %}{% endblock %}
+
+
+        <link rel="preload" as="style" href="{% http2static 'css/bootstrap.min.css' '3' %}" crossorigin>
+        <link rel="preload" as="style" href="{% http2static 'css/font-awesome.min.css' '4.7.0' %}" crossorigin>
+        <link rel="preload" as="style" href="{% http2static 'css/base.css' GIT_SHA %}" crossorigin>
+
+        {% theme_option light_option='light' dark_option='dark' as option_pre %}
+        <link rel="preload" as="style" href="{% http2static 'css/'|add:option_pre|add:'.css' GIT_SHA %}" crossorigin>
+        <link rel="preload" as="style" href="{% http2static 'css/base.mobile.css' GIT_SHA %}" crossorigin>
+        <link rel="preload" as="font" type="font/woff2" href="{% http2static 'fonts/bungee.woff2' %}" crossorigin="anonymous">
+        <link rel="preload" as="font" type="font/woff2" href="{% http2static 'fonts/lato-light.woff2'%}" crossorigin="anonymous">
+        <link rel="preload" as="font" type="font/woff2" href="{% http2static 'fonts/lato-regular.woff2'%}" crossorigin="anonymous">
+        <link rel="preload" as="font" type="font/woff2" href="{% http2static 'fonts/fontawesome-webfont.woff2' '4.7.0' %}" crossorigin="anonymous">
+        {% if custom_stylesheet %}
+            <link rel="preload" as="style" href="{% http2static 'css/'|add:custom_stylesheet GIT_SHA %}" crossorigin>
+        {% endif %}
+        {% block preloads %}{% endblock %}
+
+        <link rel="stylesheet" href="{% http2static 'css/bootstrap.min.css' '3' %}" type="text/css" crossorigin>
+        <link rel="stylesheet" href="{% http2static 'css/font-awesome.min.css' '4.7.0' %}" type="text/css" crossorigin>
+        <link rel="stylesheet" href="{% http2static 'css/base.css' GIT_SHA %}" type="text/css" crossorigin>
+        <link rel="stylesheet" href="{% http2static 'css/base.mobile.css' GIT_SHA %}" type="text/css" crossorigin>
+        {% theme_option light_option='light' dark_option='dark' as option_css %}
+        <link rel="stylesheet" href="{% http2static 'css/'|add:option_css|add:'.css' GIT_SHA %}" type="text/css" crossorigin>
+        {% if custom_stylesheet %}
+            <link rel="stylesheet" href="{% http2static 'css/'|add:custom_stylesheet GIT_SHA %}" type="text/css" crossorigin>
+        {% endif %}
+
+        <script>
+            window.loading = {head: Date.now()};
+            window.title = {{title|json}};
+            window.user = {{user|json}};
+            window.DEBUG = {{DEBUG|json}};
+            window.ENVIRONMENT = '{{ENVIRONMENT}}';
+            window.GIT_SHA = '{{GIT_SHA}}';
+        </script>
+
+        {% block searchtags %}
+            <!-- Google Structured Search Results, test here: https://search.google.com/structured-data/testing-tool -->
+            <script type="application/ld+json">
+                {
+                  "@context": "http://schema.org",
+                  "@type": "Organization",
+                  "url": "https://oddslingers.com",
+                  "logo": "https://oddslingers.com/images/oddslingers-b.png"
+                }
+            </script>
+            <script type="application/ld+json">
+                {
+                  "@context": "http://schema.org",
+                  "@type": "WebSite",
+                  "url": "https://oddslingers.com",
+                  "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "https://oddslingers.com/tables/?search={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                  }
+                }
+            </script>
+            <script type="application/ld+json">
+                {
+                  "@context": "http://schema.org",
+                  "@type": "BreadcrumbList",
+                  "itemListElement": [{
+                    "@type": "ListItem",
+                    "position": 1,
+                    "item": {
+                      "@id": "https://oddslingers.com",
+                      "name": "Oddslingers"
+                    }
+                  },{
+                    "@type": "ListItem",
+                    "position": 2,
+                    "item": {
+                      "@id": "https://oddslingers.com{{request.path}}",
+                      "name": "{{title}}"
+                    }
+                  }]
+                }
+            </script>
+        {% endblock searchtags %}
+
+        {% block head %}{% endblock %}
+    </head>
+    {% theme_option light_option='light' dark_option='dark' as body_theme %}
+    <body class="{{body_classes}} body-{{page_id}} {{body_theme}}-theme">
+
+        {% block outer %}
+            {% block header %}
+                {% include 'ui/navigation.html' %}
+            {% endblock %}
+
+            <div class="container-fluid inner-content">
+                {% block inner %}
+                {% endblock %}
+            </div>
+
+            {% block footer %}
+                {% include 'ui/footer.html' %}
+            {% endblock %}
+        {% endblock %}
+
+        {% if ENABLE_SENTRY %}
+            {% include 'ui/sentry.html' %}
+        {% endif %}
+
+        <script src="{% http2static 'js/overrides.js' GIT_SHA %}" type="text/javascript" crossorigin></script>
+        <script src="{% http2static 'js/jquery-3.2.1.min.js' GIT_SHA %}" type="text/javascript" crossorigin></script>
+
+        {% include 'ui/loadingbar.html' %}
+
+        <link rel="stylesheet" href="{% static 'css/nouislider.min.css' '1' %}" type="text/css" crossorigin>
+        <link rel="stylesheet" href="{% static 'css/simple-scrollbar.css' '1' %}" type="text/css" crossorigin>
+
+        <script src="{% static 'js/bootstrap.min.js' '3' %}" type="text/javascript" crossorigin></script>
+        <script src="{% static 'js/modernizr.min.js' '1' %}" type="text/javascript" crossorigin></script>
+        <script src="{% static 'js/simple-scrollbar.min.js' '1' %}" type="text/javascript" crossorigin></script>
+
+        {% block tail %}{% endblock %}
+
+        {% if ENABLE_HOTLOADING %}
+            {% include 'ui/hotloading.html' %}
+        {% endif %}
+        {% if ENABLE_PIWIK %}
+            {% include 'ui/piwik.html' %}
+        {% endif %}
+    </body>
+</html>

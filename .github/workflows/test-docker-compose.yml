@@ -1,0 +1,22 @@
+name: Test docker-compose
+on: [push]
+jobs:
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run django migrate
+        run: |
+          docker-compose run django ./manage.py migrate
+      - name: Start docker-compose stack
+        run: |
+          docker-compose up -d
+      - name: Add oddslingers.l to hosts
+        run: |
+          sudo bash -c 'echo "127.0.0.1  oddslingers.l" >> /etc/hosts'
+      - name: Curl open platform
+        run: |
+          sleep 60
+          curl -I http://oddslingers.l/

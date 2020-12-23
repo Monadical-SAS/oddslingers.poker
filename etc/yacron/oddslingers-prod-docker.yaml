@@ -1,0 +1,45 @@
+defaults:
+    shell: /bin/bash
+    environment:
+      - key: ODDSLINGERS_ENV
+        value: PROD
+      - key: TERM
+        value: ansi
+
+    onFailure:
+        report:
+          sentry:
+            dsn:
+              value: https://ece51ac6d1a64017931be8260c3024f6:938233c511d34c7ca1b5efc254921ee1@sentry.io/108387
+            fingerprint:
+              - yacron
+              - "{{ environment.HOSTNAME }}"
+              - "{{ environment.ODDSLINGERS_ENV }}"
+              - "{{ name }}"
+            extra:
+              cmd: "{{ command }}"
+              exit_code: "{{ exit_code }}"
+              stdout: "{{ stdout }}"
+              stderr: "{{ stderr }}"
+            level: error
+
+jobs:
+  - name: check-server-load
+    command: fish -c 'source /opt/oddslingers.poker/bin/oddslingers-server.fish; manage check_server_load >> /opt/oddslingers.poker/data/logs/server_load.log'
+    schedule: "*/5 * * * *"
+    
+  - name: daily-report
+    command: fish -c 'source /opt/oddslingers.poker/bin/oddslingers-server.fish; manage daily_report >> /opt/oddslingers.poker/data/logs/daily_report.log'
+    schedule: "0 8 * * *"
+
+  - name: weekly-rewards
+    command: fish -c 'source /opt/oddslingers.poker/bin/oddslingers-server.fish; manage weekly_rewards >> /opt/oddslingers.poker/data/logs/weekly_rewards.log'
+    schedule: "0 0 * * SUN"
+
+  - name: leaderboard-cache
+    command: fish -c 'source /opt/oddslingers.poker/bin/oddslingers-server.fish; manage save_leaderboard_cache >> /opt/oddslingers.poker/data/logs/leaderboard-cache.log'
+    schedule: "0 0 * * *"
+
+  - name: cancel-old-tournaments
+    command: fish -c 'source /opt/oddslingers.poker/bin/oddslingers-server.fish; manage cancel_tournaments --old >> /opt/oddslingers.poker/data/logs/cancel_tournaments.log'
+    schedule: "0 0 * * *"

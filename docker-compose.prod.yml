@@ -1,0 +1,194 @@
+# Steps to set up a new docker-compose machine:
+#
+# docker-compose run django ./manage.py migrate
+# docker-compose run django ./manage.py createsuperuser
+# docker-compose up
+
+
+version: '3'
+
+volumes:
+  node_modules:
+
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - 80:80
+      - 443:443
+    links: 
+      - "django"
+    volumes:
+      - ./etc/nginx/oddslingers-docker-compose.prod.conf:/etc/nginx/nginx.conf
+      - ./data/certs:/opt/oddslingers.poker/data/certs
+      - ./core:/opt/oddslingers.poker/core
+      - ./data/static:/opt/oddslingers.poker/data/static
+
+  postgres:
+    image: postgres:13
+    env_file:
+      - ./env/prod-docker.env
+      - ./.secrets-prod.env
+    #ports:
+    #  - 5432:5432
+    expose:
+      - 5432
+    command: postgres -c shared_buffers=1GB
+    volumes:
+      - ./database/postgres:/var/lib/postgresql/data
+
+  redis:
+    image: redis:5-alpine
+    entrypoint: redis-server --appendonly yes
+    expose:
+      - 6379
+    volumes:
+      - ./data/redis:/data
+
+  django:
+    build: .
+    image: oddslingers:django_base
+    hostname: oddslingers-prod
+    working_dir: /opt/oddslingers.poker/core/
+    command: daphne -b 0.0.0.0 -p 8000 oddslingers.asgi:channel_layer
+    stdin_open: true
+    tty: true
+    depends_on: 
+      - postgres
+      - redis
+    environment:
+      ODDSLINGERS_ENV: PROD
+      POSTGRES_HOST: postgres
+      REDIS_HOST: redis
+      DJANGO_SETTINGS_MODULE: "oddslingers.settings"
+      IS_DOCKER: 1
+    env_file:
+      - ./env/prod-docker.env
+      - ./.secrets-prod.env
+    expose: 
+      - 8000
+    volumes:
+      - ./data:/opt/oddslingers.poker/data
+      - ./core:/opt/oddslingers.poker/core
+      - ./bin:/opt/oddslingers.poker/bin
+      - ./env:/opt/oddslingers.poker/env
+
+  worker:
+    image: oddslingers:django_base
+    working_dir: /opt/oddslingers.poker/core/
+    entrypoint: /opt/oddslingers.poker/bin/worker-docker-entrypoint.sh
+    user: root
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      ODDSLINGERS_ENV: PROD
+      POSTGRES_HOST: postgres
+      REDIS_HOST: redis
+      DJANGO_SETTINGS_MODULE: "oddslingers.settings"
+      IS_DOCKER: 1
+    env_file:
+      - ./env/prod-docker.env
+      - ./.secrets-prod.env
+    volumes:
+      - ./data:/opt/oddslingers.poker/data
+      - ./data/logs:/var/log/supervisor
+      - ./core:/opt/oddslingers.poker/core
+      - ./bin:/opt/oddslingers.poker/bin
+      - ./env:/opt/oddslingers.poker/env
+      - ./etc/supervisor/oddslingers-docker-prod-worker.conf:/etc/supervisor/conf.d/supervisord.conf
+
+  botbeat:
+    image: oddslingers:django_base
+    working_dir: /opt/oddslingers.poker/core/
+    command: ./manage.py bot_heartbeat
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      ODDSLINGERS_ENV: PROD
+      POSTGRES_HOST: postgres
+      REDIS_HOST: redis
+      DJANGO_SETTINGS_MODULE: "oddslingers.settings"
+      IS_DOCKER: 1
+    restart: on-failure
+    env_file:
+      - ./env/prod-docker.env
+      - ./.secrets-prod.env
+    volumes:
+      - ./data:/opt/oddslingers.poker/data
+      - ./core:/opt/oddslingers.poker/core
+      - ./bin:/opt/oddslingers.poker/bin
+      - ./env:/opt/oddslingers.poker/env
+
+  webpack:
+    build:
+      context: . 
+      dockerfile: ./Dockerfile.webpack
+    image: oddslingers:webpack
+    command: sh -c "(webpack --mode development --watch --info-verbosity verbose & node-sass-chokidar --watch scss/ -o ../static/css 2>&1  &)| cat"
+    stdin_open: true
+    tty: true
+    environment:
+      ODDSLINGERS_ENV: DEV
+    volumes:
+      - ./core/js:/opt/oddslingers.poker/core/js
+      - ./core/static:/opt/oddslingers.poker/core/static
+      # Hide local node_modules
+      - ./core/js/node_modules:/src/node_modules
+      # Add dumps for UI tests
+      - ./core/dumps:/opt/oddslingers.poker/core/dumps
+
+
+  dramatiq:
+    image: oddslingers:django_base
+    working_dir: /opt/oddslingers.poker/core/
+    command: nice -15 ./manage.py rundramatiq --processes 1 --threads 1
+    environment:
+      ODDSLINGERS_ENV: PROD
+      POSTGRES_HOST: postgres
+      REDIS_HOST: redis
+    cap_add:
+      - SYS_NICE
+    depends_on: 
+      - redis
+      - postgres
+    env_file:
+      - ./env/prod-docker.env
+      - ./.secrets-prod.env
+    volumes:
+      - ./data:/opt/oddslingers.poker/data
+      - ./core:/opt/oddslingers.poker/core
+      - ./bin:/opt/oddslingers.poker/bin
+      - ./etc:/opt/oddslingers.poker/etc
+ 
+  cloudflare:
+    image: cloudflare/cloudflared
+    network_mode: 'service:nginx'
+    command: tunnel --no-autoupdate --hostname oddslingers.zervice.io http://nginx
+    depends_on:
+      - django
+    volumes:
+      - ./data/certs/oddslingers.zervice.io.pem:/etc/cloudflared/cert.pem:ro
+
+  yacron:
+    image: oddslingers:django_base
+    hostname: oddslingers-prod
+    command: yacron -c /opt/oddslingers.poker/etc/yacron/oddslingers-prod-docker.yaml
+    environment:
+      ODDSLINGERS_ENV: PROD
+      POSTGRES_HOST: postgres
+      REDIS_HOST: redis
+      IS_DOCKER: 1
+    depends_on: 
+      - redis
+      - postgres
+    env_file:
+      - ./env/prod-docker.env
+      - ./.secrets-prod.env
+    volumes:
+      - ./etc:/opt/oddslingers.poker/etc
+      - ./data:/opt/oddslingers.poker/data
+      - ./core:/opt/oddslingers.poker/core
+      - ./etc/yacron:/opt/oddslingers.poker/etc/yacron
+      - ./bin:/opt/oddslingers.poker/bin

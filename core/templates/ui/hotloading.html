@@ -1,0 +1,129 @@
+<script>
+    function leavingPage() {
+        var leaving = true;
+        if (window.onbeforeunload !== null){
+            leaving = confirm("Are you sure you want leave?");
+        }
+        return leaving;
+    }
+
+    // Handle fetching javascript for pages when links with data-hotload are clicked,
+    // without needing to reload the whole page.
+    function dynamicLoadComponent(target_url) {
+        if (!leavingPage()){
+            window.hotloading = false;
+            return false;
+        }
+        window.onbeforeunload = null
+        if (!target_url || !target_url.length || !document.getElementById('react-js'))
+            return true;
+        var page_name = target_url.split('/')[1];
+        if (!page_name)
+            return true;
+        window.loadStart();
+
+        $('#navbar-items ul.nav a.active').removeClass('active')
+        $('#navbar-items ul.nav a').map(function() {
+            if (this.pathname == '/' + page_name)
+                this.classList.add('active');
+        });
+
+        if (window.location.pathname == '/' + page_name) {
+            return true;
+        }
+        $.get(target_url + '?props_json=1').done(function(response) {
+            window.props = response;
+            var script = document.createElement('script');
+            script.src = '/static/js/pages/' + (page_name.length ? page_name : 'home') + '.js?v=' + window.GIT_SHA;
+            script.onload = function () {
+                window.history.pushState({}, '', target_url);
+                window.current_url = window.location.toString()
+
+                // properly load previous page if they press back button (popstate)
+                window.onpopstate = function(event) {
+                    // only load if something other than the hash changed
+                    if (window.current_url.split('#')[0] != event.target.window.location.toString().split('#')[0]) {
+                        dynamicLoadComponent(event.target.location.pathname);
+                    }
+                };
+                console.log('%c Dynamic Loading Complete. ' + window.location.toString(), 'font-size:0.8em');
+                window.loadFinish();
+                window.setupHotLinks();
+                window.highlightActiveNavitem();
+                window.hotloading = false;
+                if (window.socket && window.socket.socket) {
+                    var host = window.location.hostname;
+                    var port = window.location.port ? ':' + window.location.port : '';
+                    var prefix = window.location.protocol == 'https:' ? 'wss:' : 'ws:';
+                    var path = target_url;
+                    path = path.endsWith('/') ? path.substring(0, path.length-1) : path;
+                    window.socket.socket_url = prefix + '//' + host + port + path + '/';
+                    window.socket.socket.close();
+                }
+            };
+            script.onerror = function() {
+                console.log('Failed to dynamically load the script:' + script.src);
+                window.location = target_url;
+                window.hotloading = false;
+            }
+            if (window.socket) {
+                window.socket.close(false);
+                delete window.socket;
+            }
+            if (document.getElementById('react-js'))
+                document.getElementById('react-js').remove();
+            script.id = 'react-js';
+            document.querySelectorAll('body > div.inner-content')[0].appendChild(script);
+        }).fail(function() {
+            console.log('Failed to dynamically load the props for:' + target_url + '?props_json=1');
+            window.location = target_url;
+        })
+        return false;
+    }
+
+    function setupHotLinks() {
+        $('#navbar-items').collapse('hide');
+        $('a[data-hotload]').attr('data-no-instant', true);
+        $('a[data-hotload]').on('click', function(event) {
+            if (window.hotloading)
+                return false;
+            window.hotloading = true;
+            var target_url = $(event.target).attr('href');
+            if (dynamicLoadComponent(target_url))
+                return true;
+            $(event.target).blur();
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+        });
+    }
+    window.setupHotLinks = setupHotLinks;
+    $(window).on('load', function() {
+        setupHotLinks();
+    });
+    window.hotloading = false;
+</script>
+
+
+{% comment %}
+<!-- DISABLED PENDING FURTHER TESTING -->
+
+<!-- For pages that don't explicitly have the data-hotload attribute
+which uses the dynamic loading above, we automatically fetch them
+in the background using the InstantClick.js onhover loader -->
+<script src="/static/js/instantclick.min.js" data-no-instant></script>
+<script data-no-instant>
+    if (window.loadFinish)
+        window.loadFinish();
+    window.setupHotLinks();
+    window.InstantClick.init();
+    window.applyOverrides();
+    window.InstantClick.on('change', function () {
+        window.applyOverrides();
+        if (window.setupHotLinks)
+            window.setupHotLinks();
+        if (window.loadFinish)
+            window.loadFinish();
+    });
+</script>
+{% endcomment %}

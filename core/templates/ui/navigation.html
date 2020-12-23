@@ -1,0 +1,249 @@
+{% load static %}
+{% load utils %}
+{% load hijack_tags %}
+
+{% hijack_notification %}
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <!-- Navbar Right: Mobile-Only Sandwich Button -->
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-items" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+
+                <!-- Sandwich Menu Bars -->
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <!-- Navbar Left: Logo -->
+            <a class="navbar-brand oddslingers-text-logo" href="{% url 'Home' %}">
+                <picture>
+                    {% theme_option light_option='black' dark_option='white' as option_img %}
+                    <source srcSet="/static/images/logo-{{option_img}}.webp" type="image/webp"/>
+                    <img src="{% static 'images/logo-'|add:option_img|add:'.png' %}" alt="Logo"/>
+                </picture>
+                <span id="logo-text"><span>Odd</span>Slingers</span>
+            </a>
+        </div>
+
+        {% if DEBUG %}
+            <style>
+                /*.navbar-brand.oddslingers-text-logo:first-letter {*/
+                    /*color: green !important;*/
+                /*}*/
+            </style>
+        {% endif %}
+
+        <div class="collapse navbar-collapse" id="navbar-items">
+            {% block navbar %}
+                <!-- Navbar Left: Main Menu -->
+                <ul class="nav navbar-nav main-nav">
+                    <li><a title="Watch the featured game stream" href="{% url 'Home' %}" class="nav-home">Watch</a></li>
+
+                    <li><a title="See the list of cash tables & tournaments" href="{% url 'Tables' %}" data-hotload class="nav-tables">Games</a></li>
+
+                    {% if user and user.is_staff %}
+                        <li><a title="Sidebet" href="{% url 'Sidebet' %}" data-hotload>
+                        Sidebet</a></li>
+                    {% endif %}
+
+                    <li><a title="See the list of top players" href="{% url 'Leaderboard' %}" data-hotload class="nav-leaderboard">Leaderboard</a></li>
+
+                    <li><a title="Learn the rules of poker" href="{% url 'Learn' %}" class="nav-learn">Learn</a></li>
+                </ul>
+
+                <!-- Navbar Right: Account Menu -->
+                <ul class="nav navbar-nav navbar-right">
+                    {% theme_option light_option='moon-o' dark_option='sun-o' as option_i %}
+                    <li><a class="nav-tog" title="Toggle theme" href="#" onclick="changeTheme();"><i style='display:block;font-size:1.5em;' class="fa fa-{{option_i}} " aria-hidden="true"></i></a></li>
+                    <li><a class="nav-blog" title="Blog Articles" href="https://monadical.com/blog.html">Blog</a></li>
+                    <li><a class="nav-about" title="About" href="/about">About</a></li>
+                    <!--<li><a title="About" href="{% url 'About' %}">About</a></li>-->
+
+                    {% if user and user.is_authenticated %}
+                        <li class="dropdown account-dropdown">
+                            <a href="{% url 'UserProfile' username=user.username %}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-user"></i>&nbsp; {{user.username}}
+                                {% if user.is_staff %}
+                                    <small>(staff)</small>
+                                {% endif %}
+                                {% if request|is_hijacked %}
+                                    <small>(hijacked)</small>
+                                {% endif %}
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="{% url 'UserProfile' username=user.username %}">
+                                    <i class="fa fa-address-book-o"></i>&nbsp; Profile</a></li>
+                                <li><a href="{% url 'UserProfile' username=user.username %}">
+                                    <i class="fa fa-arrow-up"></i>&nbsp; Level: <span id="user-level"><i class="fa fa-spinner fa-spin"></i></span></a></li>
+                                <li><a href="{% url 'UserProfile' username=user.username %}">
+                                    <picture>
+                                      <source srcset="{% static 'images/chips.webp' %}" type="image/webp">
+                                      <img class="tiny-icon" src="{% static 'images/chips.png' %}" alt="Chips"/>
+                                    </picture>
+                                    &nbsp; Wallet &nbsp; <small id="user-chip-bal"><i class="fa fa-spinner fa-spin"></i></small>㆔</a></li>
+                                {% if active_tables %}
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        <a href="#">
+                                            <small style="color: gray">Active games</small><br/>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% for table in active_tables %}
+                                    <li>
+                                        <a href="{{table.path}}" class="active-table-link {{table.class}} {{table.inactive_class}}">
+                                            {{table.name}}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                                <li role="separator" class="divider"></li>
+
+                                <li><a title="Monadical" href="https://monadical.com/" target="_blank" rel="noopener">
+                                    <i class="fa fa-users"></i>&nbsp; Monadical</a></li>
+
+                                <li><a title="FAQ" href="{% url 'FAQ' %}" target="_blank" rel="noopener">
+                                    &nbsp;<i class="fa fa-question"></i>&nbsp;&nbsp; FAQ</a></li>
+
+                                <li><a title="Live Chat Support" href="{% url 'Support' %}" target="_blank" rel="noopener">
+                                    <i class="fa fa-comments-o"></i>&nbsp; Support</a></li>
+
+                                <li><a title="Speedtest" href="{% url 'Speedtest' %}" target="_blank" rel="noopener">
+                                    &nbsp;<i class="fa fa-bolt"></i>&nbsp;&nbsp; Speedtest</a></li>
+
+                                {% if user.is_staff or DEBUG %}
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        <a href="#">
+                                            <small style="color: gray">Staff</small><br/>
+                                        </a>
+                                    </li>
+                                    <li><a href="https://zulip.monadical.com">
+                                        <i class="fa fa-users"></i>&nbsp;&nbsp; Zulip</a></li>
+                                    <li><a href="https://mail.protonmail.com/inbox">
+                                        <i class="fa fa-inbox"></i>&nbsp;&nbsp;&nbsp; Protonmail</a></li>
+                                    <li><a href="https://cloud.monadical.com">
+                                        <i class="fa fa-cloud"></i>&nbsp;&nbsp; Monadical Cloud</a></li>
+
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        <a href="#">
+                                            <small style="color: gray">Development</small><br/>
+                                        </a>
+                                    </li>
+                                    <li><a href="https://circleci.com/gh/monadical-sas/oddslingers.poker">
+                                        <i class="fa fa-circle-o"></i>&nbsp;&nbsp; CircleCI</a></li>
+                                    <li><a href="https://github.com/monadical-sas/oddslingers.poker">
+                                        <i class="fa fa-github"></i>&nbsp;&nbsp; Oddslingers</a></li>
+                                    <li><a href="https://github.com/monadical-sas">
+                                        <i class="fa fa-github"></i>&nbsp;&nbsp; Monadical SAS</a></li>
+
+
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        <a href="#">
+                                            <small style="color: gray">Ops</small><br/>
+                                        </a>
+                                    </li>
+                                    <li><a href="/admin/">
+                                        <i class="fa fa-database"></i>&nbsp;&nbsp; Django Admin: {{ENVIRONMENT}}</a></li>
+                                    <li><a href="http://oddslingers.com:9001">
+                                        <i class="fa fa-table"></i>&nbsp;&nbsp; Supervisord</a></li>
+                                    <li><a href="https://sentry.io/oddslingers/oddslingers/">
+                                        <i class="fa fa-bug"></i>&nbsp;&nbsp; Sentry
+                                        {% if ENABLE_SENTRY %}
+                                            (<b style="color: green">on</b>)
+                                        {% else %}
+                                            (<b style="color: red">off</b>)
+                                        {% endif %}
+                                        </a></li>
+                                    <li><a href="https://analytics.zalad.io/piwik/index.php?module=CoreHome&action=index&date=last7&period=range&idSite=11">
+                                        <i class="fa fa-line-chart"></i>&nbsp; Piwik
+                                        {% if ENABLE_PIWIK %}
+                                            (<b style="color: green">on</b>)
+                                        {% else %}
+                                            (<b style="color: red">off</b>)
+                                        {% endif %}
+                                        </a></li>
+
+                                {% endif %}
+
+
+                                <li role="separator" class="divider"></li>
+
+                                <li><a href="{% url 'Logout' %}?next=" append-current-path data-no-instant><i class="fa fa-sign-out"></i> Log Out {{user.username}}</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="navbar-login"><a title="Log In" href="{% url 'Login' %}?next=" append-current-path>
+                            <i class="fa fa-sign-in"></i>&nbsp; Log In</a></li>
+                        <li class="navbar-signup"><a href="{% url 'Login' %}?next=" append-current-path class="btn btn-success btn-signup">
+                            &nbsp; Start Playing <i class="fa fa-caret-right"></i></a></li>
+                    {% endif %}
+                </ul>
+            {% endblock %}
+        </div>
+    </div>
+    <script>
+        function changeTheme() {
+            {% if user.is_authenticated %}
+                $.ajax({
+                    url: `/api/user/?id=${encodeURIComponent(window.user.id)}`,
+                    type: 'PATCH',
+                    data: JSON.stringify({ light_theme: !window.user.light_theme }),
+                    success: () => { document.location.reload() }
+                })
+            {% else %}
+                $.ajax({
+                    url: `/accounts/change-theme`,
+                    type: 'POST',
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+                    success: () => { document.location.reload() }
+                })
+            {% endif %}
+        }
+        // higlight the currently active navbar item, and add in next_urls
+        function highlightActiveNavitem() {
+            const nav_items = [].slice.call(document.querySelectorAll('#navbar-items ul.nav a'))
+            if (nav_items) {
+                nav_items.forEach(function(elem) {
+                    if (elem.pathname == document.location.pathname && elem.origin == document.location.origin && elem.getAttribute('href') != '#') {
+                        elem.classList.add('active');
+                    }
+                    if (elem.attributes['append-current-path']) {
+                        elem.href = elem.href + document.location.pathname;  // use JS instead of request.get_full_path so we can cache the whole navbar without depending on request path
+                    }
+                });
+            } else {
+                window.requestAnimationFrame(highlightActiveNavitem)
+            }
+        }
+        highlightActiveNavitem()
+
+        // get up-to-date chip balance in the user dropdown
+        var account_dropdown = document.querySelectorAll('.account-dropdown')[0]
+        if (account_dropdown && window.user) {
+            account_dropdown.addEventListener('click', function() {
+                $.get('/api/user/balance/', {}, function(resp) {
+                    if (resp.balance !== undefined) {
+                        $('#user-chip-bal').html(Number(resp.balance).toLocaleString());
+                        window.user.balance = Number(resp.balance);
+                    } else {
+                        $('#user-chip-bal .fa-spin').hide();
+                    }
+                    if (resp.level !== undefined) {
+                        const msg = Number(resp.level)/2 + '/' + resp.level + ' bb'
+                        $('#user-level').html(msg);
+                        window.user.cashtables_level = Number(resp.level);
+                    } else {
+                        $('#user-level .fa-spin').hide();
+                    }
+                })
+            });
+        }
+    </script>
+</nav>
+

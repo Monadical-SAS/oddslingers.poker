@@ -1,0 +1,813 @@
+{
+    "release": "fb76775ff277433c2effc61ac9d81596a75ca3fb",
+    "accessed": "2018-08-05T10:05:09.308Z",
+    "notes": "{\"state\": \"test_table\\t1.00/2.00 BNTY\\thand 64\\nboard: [Ah, As, 5c]\\n   pos #:    name   \\t cards/state \\t stack  - wagers  - last_action (uncollected)\\n    bb 1:   cowpig  \\t[   9d,5s   ]\\t349.00  -  17.00  -     BET     (10)\\nbtn/sb 4:   pirate  \\t[   6c,7s   ]\\t1027.00 -  7.00   -     none    (0)\", \"err\": \"Traceback (most recent call last):\\n  File \\\"/home/circleci/blitzka/grater-django/poker/tests/test_simulation.py\\\", line 313, in test_holdem_ai_moves\\n    self.simulate_hand_and_test_assumptions(ctrl)\\n  File \\\"/home/circleci/blitzka/grater-django/poker/tests/test_simulation.py\\\", line 122, in simulate_hand_and_test_assumptions\\n    self.assert_logging_replaying_works(controller)\\n  File \\\"/home/circleci/blitzka/grater-django/poker/tests/test_simulation.py\\\", line 263, in assert_logging_replaying_works\\n    rep.step_forward(multi_hand=True)\\n  File \\\"/home/circleci/blitzka/grater-django/poker/replayer.py\\\", line 588, in step_forward\\n    self.dispatch_action(self.current_action(), multi_hand)\\n  File \\\"/home/circleci/blitzka/grater-django/poker/replayer.py\\\", line 544, in dispatch_action\\n    **action['args'])\\n  File \\\"/home/circleci/blitzka/grater-django/poker/controllers.py\\\", line 171, in player_dispatch\\n    raise RejectedAction(msg)\\npoker.controllers.RejectedAction: Tried to dispatch @cowpig: [sit_in]: {'player_id': UUID('d4c64027-de4c-4bbc-9074-bb04d7ecfc0f')} but it is not one of the available actions: [LEAVE_SEAT, SET_AUTO_REBUY, SIT_OUT_AT_BLINDS, SIT_OUT, SET_PRESET_CHECKFOLD, SET_PRESET_CHECK]\\n\"}",
+    "hands": [
+        {
+            "ts": "2018-08-05T10:05:03.558Z",
+            "table": {
+                "bb": "2.00",
+                "id": "d90138be-713d-4d95-a356-c3ceef8cc952",
+                "sb": "1.00",
+                "ante": null,
+                "name": "test_table",
+                "bb_idx": 4,
+                "sb_idx": 1,
+                "btn_idx": 1,
+                "deck_str": "3d,Ad,Qd,9h,Kd,2h,6c,Jd,5h,2d,Kh,6d,7s,2s,Js,Ts,Jh,Th,4c,Td,5s,4d,Qs,7h,7c,Kc,2c,5c,6h,4s,Ah,Tc,Qh,8d,8h,Ks,3c,9s,7d,5d,8c,8s,6s,3s,3h,As,Ac,Jc,Qc,9c,4h,9d",
+                "board_str": "",
+                "max_buyin": "300.00",
+                "min_buyin": "120.00",
+                "num_seats": 6,
+                "precision": 0,
+                "table_type": "BNTY",
+                "hand_number": 63
+            },
+            "players": [
+                {
+                    "id": "7f9a7d1c-cfc7-47c3-9081-2d68b687138f",
+                    "stack": "368.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 1,
+                    "username": "cowpig",
+                    "auto_rebuy": "0.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false
+                },
+                {
+                    "id": "feb1cd11-faab-43e7-b9a3-ed893951fefd",
+                    "stack": "1032.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 4,
+                    "username": "pirate",
+                    "auto_rebuy": null,
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false
+                }
+            ],
+            "actions": [
+                {
+                    "ts": "10:05:03",
+                    "subj": "cowpig",
+                    "action": "CALL",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "pirate",
+                    "action": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "pirate",
+                    "action": "BET",
+                    "args": {
+                        "amt": "3"
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "cowpig",
+                    "action": "FOLD",
+                    "args": {
+                        "sit_out": true
+                    }
+                }
+            ],
+            "events": [
+                {
+                    "ts": "10:05:03",
+                    "subj": "cowpig",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "pirate",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "DEALER",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "====NEW HAND====",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "DEALER",
+                    "event": "SET_BLIND_POS",
+                    "args": {
+                        "bb_pos": 4,
+                        "sb_pos": 1,
+                        "btn_pos": 1
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "side_effect",
+                    "event": "NEW_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "cowpig posted 1.00 for SB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "cowpig",
+                    "event": "POST",
+                    "args": {
+                        "amt": "1.00"
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "pirate posted 2.00 for BB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "pirate",
+                    "event": "POST",
+                    "args": {
+                        "amt": "2.00"
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "pirate",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "3d"
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "cowpig",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Ad"
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "pirate",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Qd"
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "cowpig",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "9h"
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "pirate (1032.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "cowpig (368.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 4
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "cowpig",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "2.00",
+                        "all_in": false
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "pirate",
+                    "event": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "cowpig",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "pirate",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Kd"
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "2h"
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "6c"
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 3
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "FLOP: K\u2666, 2\u2665, 6\u2663",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "pirate",
+                    "event": "BET",
+                    "args": {
+                        "amt": "3",
+                        "all_in": false
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "cowpig ran out of time and folded.",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "cowpig",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "cowpig",
+                    "event": "SIT_OUT",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "pirate",
+                    "event": "RETURN_CHIPS",
+                    "args": {
+                        "amt": "3.00"
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "pirate",
+                    "event": "WIN",
+                    "args": {
+                        "amt": "4.00",
+                        "pot_id": 0,
+                        "showdown": false
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "pirate won 4.00 from the main pot",
+                        "speaker": "winner_info"
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "DEALER",
+                    "event": "DELAY_COUNTDOWN",
+                    "args": {
+                        "n_seconds": 2
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "side_effect",
+                    "event": "SHOWDOWN_COMPLETE",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "pirate",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "cowpig",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "pirate",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "cowpig",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "DEALER",
+                    "event": "END_HAND",
+                    "args": {}
+                }
+            ]
+        },
+        {
+            "ts": "2018-08-05T10:05:04.023Z",
+            "table": {
+                "bb": "2.00",
+                "id": "d90138be-713d-4d95-a356-c3ceef8cc952",
+                "sb": "1.00",
+                "ante": null,
+                "name": "test_table",
+                "bb_idx": 1,
+                "sb_idx": 4,
+                "btn_idx": 4,
+                "deck_str": "9d,6c,5s,7s,Ah,As,5c,Td,3c,Ac,2s,Qd,6s,Kh,Js,Qs,8c,9c,9s,6h,4c,3h,7h,8h,Ks,4d,2c,6d,Qc,5h,7d,Jc,Tc,Qh,Th,8s,Jd,Ad,Kd,Kc,2h,4h,Ts,4s,9h,3s,7c,5d,2d,Jh,3d,8d",
+                "board_str": "",
+                "max_buyin": "300.00",
+                "min_buyin": "120.00",
+                "num_seats": 6,
+                "precision": 0,
+                "table_type": "BNTY",
+                "hand_number": 64
+            },
+            "players": [
+                {
+                    "id": "7f9a7d1c-cfc7-47c3-9081-2d68b687138f",
+                    "stack": "366.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 1,
+                    "username": "cowpig",
+                    "auto_rebuy": "0.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false
+                },
+                {
+                    "id": "feb1cd11-faab-43e7-b9a3-ed893951fefd",
+                    "stack": "1034.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 4,
+                    "username": "pirate",
+                    "auto_rebuy": null,
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false
+                }
+            ],
+            "actions": [
+                {
+                    "ts": "10:05:04",
+                    "subj": "cowpig",
+                    "action": "sit_in",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "pirate",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": "7"
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "cowpig",
+                    "action": "CALL",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "cowpig",
+                    "action": "BET",
+                    "args": {
+                        "amt": "10"
+                    }
+                }
+            ],
+            "events": [
+                {
+                    "ts": "10:05:03",
+                    "subj": "cowpig",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "cowpig",
+                    "event": "SIT_OUT",
+                    "args": {
+                        "immediate": true
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "DEALER",
+                    "event": "SET_BLIND_POS",
+                    "args": {
+                        "bb_pos": null,
+                        "sb_pos": null,
+                        "btn_pos": 4
+                    }
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "pirate",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "DEALER",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:03",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Not enough players to start a new hand.",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "cowpig",
+                    "event": "SIT_IN",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "pirate",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "DEALER",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "====NEW HAND====",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "cowpig",
+                    "event": "SIT_IN",
+                    "args": {
+                        "immediate": true
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "cowpig",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "cowpig",
+                    "event": "SIT_IN",
+                    "args": {
+                        "immediate": true
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "cowpig",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "DEALER",
+                    "event": "SET_BLIND_POS",
+                    "args": {
+                        "bb_pos": 1,
+                        "sb_pos": 4,
+                        "btn_pos": 4
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "side_effect",
+                    "event": "NEW_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "pirate posted 1.00 for SB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "pirate",
+                    "event": "POST",
+                    "args": {
+                        "amt": "1.00"
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "cowpig posted 2.00 for BB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "cowpig",
+                    "event": "POST",
+                    "args": {
+                        "amt": "2.00"
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "cowpig",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "9d"
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "pirate",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "6c"
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "cowpig",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "5s"
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "pirate",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "7s"
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "cowpig (366.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "pirate (1034.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 4
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "pirate",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "7",
+                        "all_in": false
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "cowpig",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "7",
+                        "all_in": false
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "pirate",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "cowpig",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Ah"
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "As"
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "5c"
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 3
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "FLOP: A\u2665, A\u2660, 5\u2663",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "cowpig",
+                    "event": "BET",
+                    "args": {
+                        "amt": "10",
+                        "all_in": false
+                    }
+                },
+                {
+                    "ts": "10:05:04",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                }
+            ]
+        }
+    ]
+}

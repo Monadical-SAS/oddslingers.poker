@@ -1,0 +1,1467 @@
+{
+    "release": "0fa18ea46ba5c8d9c71d645682d11e2ad8b33829",
+    "accessed": "2017-11-10T00:57:21.809Z",
+    "notes": null,
+    "hands": [
+        {
+            "ts": "2017-11-10T00:57:21.612Z",
+            "table": {
+                "id": "93e6d766-937c-4384-8d3f-7d1e611566b4",
+                "name": "Replayer-Homepage Table-4604ef97",
+                "ante": null,
+                "min_buyin": "100.00",
+                "max_buyin": "400.00",
+                "num_seats": 6,
+                "sb": "1.00",
+                "bb": "2.00",
+                "btn_idx": 2,
+                "sb_idx": 3,
+                "bb_idx": 0,
+                "board_str": "",
+                "deck_str": "Qs,9c,8s,Ad,4h,Ac,2s,3s,5d,2d,7d,Jh,8d,7h,6c,5c,2c,Kc,2h,5h,5s,4s,Ts,7s,4d,9d,Jc,Qd,Th,3h,Qc,6d,9h,Js,3d,Ah,8c,Jd,6s,4c,Td,9s,8h,Ks,Kh,Tc,7c,6h,3c,Qh,As,Kd",
+                "precision": 0,
+                "hand_number": 19,
+                "table_type": "NLHE"
+            },
+            "players": [
+                {
+                    "id": "3738acc6-748a-49ba-9e37-99c8bd1cff0d",
+                    "username": "DigitJonesDiary",
+                    "stack": "160.00",
+                    "playing_state": "SITTING_IN",
+                    "position": 0,
+                    "owes_sb": false,
+                    "owes_bb": false,
+                    "sit_out_at_blinds": false,
+                    "auto_rebuy": "100.00"
+                },
+                {
+                    "id": "f515bdbc-74ac-471d-8545-5eaaf5f863dd",
+                    "username": "CyberDurden",
+                    "stack": "100.00",
+                    "playing_state": "SITTING_IN",
+                    "position": 1,
+                    "owes_sb": false,
+                    "owes_bb": false,
+                    "sit_out_at_blinds": false,
+                    "auto_rebuy": "100.00"
+                },
+                {
+                    "id": "c912a3db-bf25-46b9-bc5d-c8051e2fc8ef",
+                    "username": "Vim Diesel",
+                    "stack": "1377.00",
+                    "playing_state": "SITTING_IN",
+                    "position": 2,
+                    "owes_sb": false,
+                    "owes_bb": false,
+                    "sit_out_at_blinds": false,
+                    "auto_rebuy": "100.00"
+                },
+                {
+                    "id": "19a5a9e7-0212-4a20-ade5-a16cfc16263a",
+                    "username": "MCMC_Escher",
+                    "stack": "100.00",
+                    "playing_state": "SITTING_IN",
+                    "position": 3,
+                    "owes_sb": false,
+                    "owes_bb": false,
+                    "sit_out_at_blinds": false,
+                    "auto_rebuy": "100.00"
+                },
+                {
+                    "id": "9f5f5872-f981-4474-beda-efdd4bbc84e8",
+                    "username": "max",
+                    "stack": "335.00",
+                    "playing_state": "SITTING_OUT",
+                    "position": 4,
+                    "owes_sb": false,
+                    "owes_bb": true,
+                    "sit_out_at_blinds": false,
+                    "auto_rebuy": "100.00"
+                }
+            ],
+            "actions": [
+                {
+                    "ts": "00:57:21",
+                    "subj": "CyberDurden",
+                    "action": "call",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "action": "call",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "MCMC_Escher",
+                    "action": "fold",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "action": "raise_to",
+                    "args": {
+                        "amt": "11"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "CyberDurden",
+                    "action": "call",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "action": "raise_to",
+                    "args": {
+                        "amt": "36"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "action": "call",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "CyberDurden",
+                    "action": "call",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "action": "bet",
+                    "args": {
+                        "amt": "76"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "max",
+                    "action": "sit_in",
+                    "args": {
+                        "TIMESTAMP": 1498774498430
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "CyberDurden",
+                    "action": "call",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "action": "call",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "action": "bet",
+                    "args": {
+                        "amt": "48"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "action": "call",
+                    "args": {}
+                }
+            ],
+            "events": [
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "NEW_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "MCMC_Escher posted 1.00 for SB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "MCMC_Escher",
+                    "event": "POST",
+                    "args": {
+                        "amt": "1.00"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "DigitJonesDiary posted 2.00 for BB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "event": "POST",
+                    "args": {
+                        "amt": "2.00"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "MCMC_Escher",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Qs"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "9c"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "CyberDurden",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "8s"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Ad"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "MCMC_Escher",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "4h"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Ac"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "CyberDurden",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "2s"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "3s"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "MCMC_Escher (100.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "DigitJonesDiary (160.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "CyberDurden (100.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Vim Diesel (1377.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 8
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "CyberDurden",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "2.00"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "2.00"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "MCMC_Escher",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "11"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "CyberDurden",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "11"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "36"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "36"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "CyberDurden",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "36"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "CyberDurden",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "MCMC_Escher",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "5d"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "2d"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "7d"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 3
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "FLOP: 5\u2666, 2\u2666, 7\u2666"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "event": "BET",
+                    "args": {
+                        "amt": "76"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "max",
+                    "event": "SIT_IN",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "CyberDurden",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "64.00"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "76"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "MCMC_Escher",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "CyberDurden",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Jh"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 1
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "TURN: 5\u2666, 2\u2666, 7\u2666, [J\u2665]"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "event": "BET",
+                    "args": {
+                        "amt": "48"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "48"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "MCMC_Escher",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "8d"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 1
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "RIVER: 5\u2666, 2\u2666, 7\u2666, J\u2665, [8\u2666]"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "event": "REVEAL_HAND",
+                    "args": {
+                        "player_id": "3738acc6-748a-49ba-9e37-99c8bd1cff0d",
+                        "cards": [
+                            "9c",
+                            "Ac"
+                        ],
+                        "description": "High Card ace, jack kicker"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "DigitJonesDiary has 9\u2663, A\u2663 (High Card ace, jack kicker)"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "CyberDurden",
+                    "event": "REVEAL_HAND",
+                    "args": {
+                        "player_id": "f515bdbc-74ac-471d-8545-5eaaf5f863dd",
+                        "cards": [
+                            "8s",
+                            "2s"
+                        ],
+                        "description": "Two Pair, eights and twos"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "CyberDurden has 8\u2660, 2\u2660 (Two Pair, eights and twos)"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "event": "REVEAL_HAND",
+                    "args": {
+                        "player_id": "c912a3db-bf25-46b9-bc5d-c8051e2fc8ef",
+                        "cards": [
+                            "Ad",
+                            "3s"
+                        ],
+                        "description": "Flush, ace high"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "Vim Diesel has A\u2666, 3\u2660 (Flush, ace high)"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "event": "WIN",
+                    "args": {
+                        "amt": "301",
+                        "pot_id": 0,
+                        "showdown": true,
+                        "winning_hand": [
+                            "Ad",
+                            "5d",
+                            "2d",
+                            "7d",
+                            "8d"
+                        ]
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "event": "WIN",
+                    "args": {
+                        "amt": "120",
+                        "pot_id": 1,
+                        "showdown": true,
+                        "winning_hand": [
+                            "Ad",
+                            "5d",
+                            "2d",
+                            "7d",
+                            "8d"
+                        ]
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "DELAY_COUNTDOWN",
+                    "args": {
+                        "n_seconds": 10
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "Vim Diesel won the main pot with Flush, ace high for 301 chips"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "Vim Diesel won sidepot 1 with Flush, ace high for 120 chips"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "SHOWDOWN_COMPLETE",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "MCMC_Escher",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "CyberDurden",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "END_HAND",
+                    "args": {}
+                }
+            ]
+        },
+        {
+            "ts": null,
+            "table": {
+                "id": "93e6d766-937c-4384-8d3f-7d1e611566b4",
+                "name": "Replayer-Homepage Table-4604ef97",
+                "ante": null,
+                "min_buyin": "100.00",
+                "max_buyin": "400.00",
+                "num_seats": 6,
+                "sb": "1.00",
+                "bb": "2.00",
+                "btn_idx": 3,
+                "sb_idx": 0,
+                "bb_idx": 1,
+                "board_str": "",
+                "deck_str": "Qd,Qs,Tc,Ts,5h,Qh,6d,4s,8h,2c,Kd,7h,Kh,5s,3c,5d,2h,6c,3d,9c,7d,3s,Ac,4c,2d,Jc,Jd,9s,2s,Th,8s,6h,Kc,7c,Ad,6s,9d,Ah,As,4h,Jh,3h,Qc,7s,9h,5c,Td,Ks,Js,4d,8c,8d",
+                "precision": 0,
+                "hand_number": 20,
+                "table_type": "NLHE"
+            },
+            "players": [
+                {
+                    "id": "3738acc6-748a-49ba-9e37-99c8bd1cff0d",
+                    "username": "DigitJonesDiary",
+                    "stack": "100.00",
+                    "playing_state": "SITTING_IN",
+                    "position": 0,
+                    "owes_sb": false,
+                    "owes_bb": false,
+                    "sit_out_at_blinds": false,
+                    "auto_rebuy": "100.00"
+                },
+                {
+                    "id": "f515bdbc-74ac-471d-8545-5eaaf5f863dd",
+                    "username": "CyberDurden",
+                    "stack": "100.00",
+                    "playing_state": "SITTING_IN",
+                    "position": 1,
+                    "owes_sb": false,
+                    "owes_bb": false,
+                    "sit_out_at_blinds": false,
+                    "auto_rebuy": "100.00"
+                },
+                {
+                    "id": "c912a3db-bf25-46b9-bc5d-c8051e2fc8ef",
+                    "username": "Vim Diesel",
+                    "stack": "1638.00",
+                    "playing_state": "SITTING_IN",
+                    "position": 2,
+                    "owes_sb": false,
+                    "owes_bb": false,
+                    "sit_out_at_blinds": false,
+                    "auto_rebuy": "100.00"
+                },
+                {
+                    "id": "19a5a9e7-0212-4a20-ade5-a16cfc16263a",
+                    "username": "MCMC_Escher",
+                    "stack": "100.00",
+                    "playing_state": "SITTING_IN",
+                    "position": 3,
+                    "owes_sb": false,
+                    "owes_bb": false,
+                    "sit_out_at_blinds": false,
+                    "auto_rebuy": "100.00"
+                },
+                {
+                    "id": "9f5f5872-f981-4474-beda-efdd4bbc84e8",
+                    "username": "max",
+                    "stack": "335.00",
+                    "playing_state": "SIT_IN_PENDING",
+                    "position": 4,
+                    "owes_sb": false,
+                    "owes_bb": true,
+                    "sit_out_at_blinds": false,
+                    "auto_rebuy": "100.00"
+                }
+            ],
+            "actions": [
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "action": "fold",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "MCMC_Escher",
+                    "action": "fold",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "action": "fold",
+                    "args": {}
+                }
+            ],
+            "events": [
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "event": "BUY",
+                    "args": {
+                        "amt": "100.00"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "CyberDurden",
+                    "event": "BUY",
+                    "args": {
+                        "amt": "100.00"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "MCMC_Escher",
+                    "event": "BUY",
+                    "args": {
+                        "amt": "1.00"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "event": "UPDATE_STACK",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "DigitJonesDiary added 100 chips."
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CREATE_TRANSFER",
+                    "args": {
+                        "src": null,
+                        "dst": {
+                            "id": "93e6d766-937c-4384-8d3f-7d1e611566b4",
+                            "short_id": "93e6d766",
+                            "name": "Replayer-Homepage Table-4604ef97",
+                            "path": "/table/93e6d766/",
+                            "table_type": "NLHE",
+                            "variant": "No Limit Hold 'em",
+                            "ante": null,
+                            "min_buyin": "100.00",
+                            "max_buyin": "400.00",
+                            "num_seats": 6,
+                            "sb": "1.00",
+                            "bb": "2.00",
+                            "hand_number": 20,
+                            "created": "2017-11-10T00:57:21.542Z",
+                            "str": "No Limit Hold 'em:Replayer-Homepage Table-4604ef97",
+                            "player_ids": [
+                                {
+                                    "id": "19a5a9e7-0212-4a20-ade5-a16cfc16263a"
+                                },
+                                {
+                                    "id": "c912a3db-bf25-46b9-bc5d-c8051e2fc8ef"
+                                },
+                                {
+                                    "id": "f515bdbc-74ac-471d-8545-5eaaf5f863dd"
+                                },
+                                {
+                                    "id": "3738acc6-748a-49ba-9e37-99c8bd1cff0d"
+                                },
+                                {
+                                    "id": "9f5f5872-f981-4474-beda-efdd4bbc84e8"
+                                }
+                            ],
+                            "players": [
+                                "MCMC_Escher",
+                                "Vim Diesel",
+                                "CyberDurden",
+                                "DigitJonesDiary",
+                                "max"
+                            ]
+                        },
+                        "amt": "100.00",
+                        "notes": "@DigitJonesDiary [BUY] {'amt': Decimal('100.00')}"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "CyberDurden",
+                    "event": "UPDATE_STACK",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "CyberDurden added 100 chips."
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CREATE_TRANSFER",
+                    "args": {
+                        "src": null,
+                        "dst": {
+                            "id": "93e6d766-937c-4384-8d3f-7d1e611566b4",
+                            "short_id": "93e6d766",
+                            "name": "Replayer-Homepage Table-4604ef97",
+                            "path": "/table/93e6d766/",
+                            "table_type": "NLHE",
+                            "variant": "No Limit Hold 'em",
+                            "ante": null,
+                            "min_buyin": "100.00",
+                            "max_buyin": "400.00",
+                            "num_seats": 6,
+                            "sb": "1.00",
+                            "bb": "2.00",
+                            "hand_number": 20,
+                            "created": "2017-11-10T00:57:21.542Z",
+                            "str": "No Limit Hold 'em:Replayer-Homepage Table-4604ef97",
+                            "player_ids": [
+                                {
+                                    "id": "19a5a9e7-0212-4a20-ade5-a16cfc16263a"
+                                },
+                                {
+                                    "id": "c912a3db-bf25-46b9-bc5d-c8051e2fc8ef"
+                                },
+                                {
+                                    "id": "f515bdbc-74ac-471d-8545-5eaaf5f863dd"
+                                },
+                                {
+                                    "id": "3738acc6-748a-49ba-9e37-99c8bd1cff0d"
+                                },
+                                {
+                                    "id": "9f5f5872-f981-4474-beda-efdd4bbc84e8"
+                                }
+                            ],
+                            "players": [
+                                "MCMC_Escher",
+                                "Vim Diesel",
+                                "CyberDurden",
+                                "DigitJonesDiary",
+                                "max"
+                            ]
+                        },
+                        "amt": "100.00",
+                        "notes": "@CyberDurden [BUY] {'amt': Decimal('100.00')}"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "MCMC_Escher",
+                    "event": "UPDATE_STACK",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "MCMC_Escher added 1 chips."
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CREATE_TRANSFER",
+                    "args": {
+                        "src": null,
+                        "dst": {
+                            "id": "93e6d766-937c-4384-8d3f-7d1e611566b4",
+                            "short_id": "93e6d766",
+                            "name": "Replayer-Homepage Table-4604ef97",
+                            "path": "/table/93e6d766/",
+                            "table_type": "NLHE",
+                            "variant": "No Limit Hold 'em",
+                            "ante": null,
+                            "min_buyin": "100.00",
+                            "max_buyin": "400.00",
+                            "num_seats": 6,
+                            "sb": "1.00",
+                            "bb": "2.00",
+                            "hand_number": 20,
+                            "created": "2017-11-10T00:57:21.542Z",
+                            "str": "No Limit Hold 'em:Replayer-Homepage Table-4604ef97",
+                            "player_ids": [
+                                {
+                                    "id": "19a5a9e7-0212-4a20-ade5-a16cfc16263a"
+                                },
+                                {
+                                    "id": "c912a3db-bf25-46b9-bc5d-c8051e2fc8ef"
+                                },
+                                {
+                                    "id": "f515bdbc-74ac-471d-8545-5eaaf5f863dd"
+                                },
+                                {
+                                    "id": "3738acc6-748a-49ba-9e37-99c8bd1cff0d"
+                                },
+                                {
+                                    "id": "9f5f5872-f981-4474-beda-efdd4bbc84e8"
+                                }
+                            ],
+                            "players": [
+                                "MCMC_Escher",
+                                "Vim Diesel",
+                                "CyberDurden",
+                                "DigitJonesDiary",
+                                "max"
+                            ]
+                        },
+                        "amt": "1.00",
+                        "notes": "@MCMC_Escher [BUY] {'amt': Decimal('1.00')}"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "MCMC_Escher",
+                    "event": "SET_TIMEBANK",
+                    "args": {
+                        "set_to": 5
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "event": "SET_TIMEBANK",
+                    "args": {
+                        "set_to": 5
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "CyberDurden",
+                    "event": "SET_TIMEBANK",
+                    "args": {
+                        "set_to": 5
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "event": "SET_TIMEBANK",
+                    "args": {
+                        "set_to": 5
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "MCMC_Escher",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "CyberDurden",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "====NEW HAND===="
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "NOTIFICATION",
+                    "args": {
+                        "player": {
+                            "id": "9f5f5872-f981-4474-beda-efdd4bbc84e8",
+                            "short_id": "9f5f5872",
+                            "user_id": null,
+                            "table_id": "93e6d766-937c-4384-8d3f-7d1e611566b4",
+                            "username": "max",
+                            "name": "max",
+                            "str": "max",
+                            "user": null,
+                            "table": "No Limit Hold 'em:Replayer-Homepage Table-4604ef97"
+                        },
+                        "notification_type": "wait_to_sit_in",
+                        "msg": "Players cannot join the game between the btn and the bb. You will have to wait another hand to play."
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "SET_BLIND_POS",
+                    "args": {
+                        "btn_pos": 3,
+                        "sb_pos": 0,
+                        "bb_pos": 1
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "NEW_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "DigitJonesDiary posted 1.00 for SB"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "event": "POST",
+                    "args": {
+                        "amt": "1.00"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "CyberDurden posted 2.00 for BB"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "CyberDurden",
+                    "event": "POST",
+                    "args": {
+                        "amt": "2.00"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Qd"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "CyberDurden",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Qs"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Tc"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "MCMC_Escher",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Ts"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "5h"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "CyberDurden",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Qh"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "6d"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "MCMC_Escher",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "4s"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "DigitJonesDiary (100.00) was dealt two cards"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "CyberDurden (100.00) was dealt two cards"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "Vim Diesel (1638.00) was dealt two cards"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "speaker": "Dealer",
+                        "msg": "MCMC_Escher (100.00) was dealt two cards"
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 8
+                    }
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "Vim Diesel",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "MCMC_Escher",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DigitJonesDiary",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "00:57:21",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                }
+            ]
+        }
+    ]
+}

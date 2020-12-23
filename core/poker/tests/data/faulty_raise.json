@@ -1,0 +1,217 @@
+{
+  "hands": [
+    {
+      "events": [
+        {
+          "ts": "18:04:45",
+          "subj": "side_effect",
+          "args": {
+            "msg": "====NEW HAND===="
+          },
+          "event": "CHAT"
+        },
+        {
+          "ts": "18:04:45",
+          "subj": "alexeimartov",
+          "args": {},
+          "event": "RESET"
+        },
+        {
+          "ts": "18:04:45",
+          "subj": "pirate",
+          "args": {},
+          "event": "RESET"
+        },
+        {
+          "ts": "18:04:45",
+          "subj": "ajfenix",
+          "args": {},
+          "event": "RESET"
+        },
+        {
+          "ts": "18:04:45",
+          "subj": "cowpig",
+          "args": {},
+          "event": "RESET"
+        },
+        {
+          "ts": "18:04:45",
+          "subj": "DEALER",
+          "args": {
+            "btn_pos": 4,
+            "bb_pos": 2,
+            "sb_pos": 0
+          },
+          "event": "SET_BLIND_POS"
+        },
+        {
+          "ts": "18:04:45",
+          "subj": "pirate",
+          "args": {
+            "amt": "1"
+          },
+          "event": "POST"
+        },
+        {
+          "ts": "18:04:45",
+          "subj": "ajfenix",
+          "args": {
+            "amt": "2"
+          },
+          "event": "POST"
+        },
+        {
+          "ts": "18:04:45",
+          "subj": "pirate",
+          "args": {
+            "card": "7d"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "18:04:45",
+          "subj": "ajfenix",
+          "args": {
+            "card": "4c"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "18:04:45",
+          "subj": "cowpig",
+          "args": {
+            "card": "6s"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "18:04:45",
+          "subj": "alexeimartov",
+          "args": {
+            "card": "7s"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "18:04:45",
+          "subj": "pirate",
+          "args": {
+            "card": "6h"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "18:04:45",
+          "subj": "ajfenix",
+          "args": {
+            "card": "Jh"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "18:04:45",
+          "subj": "cowpig",
+          "args": {
+            "card": "5s"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "18:04:45",
+          "subj": "alexeimartov",
+          "args": {
+            "card": "Jc"
+          },
+          "event": "DEAL"
+        },
+        {
+          "ts": "18:04:45",
+          "subj": "DEALER",
+          "args": {
+            "n_cards": 8
+          },
+          "event": "POP_CARDS"
+        },
+        {
+          "ts": "18:04:45",
+          "subj": "cowpig",
+          "args": {},
+          "event": "FOLD"
+        },
+        {
+          "ts": "18:04:45",
+          "subj": "alexeimartov",
+          "args": {
+            "amt": "2"
+          },
+          "event": "CALL"
+        }
+      ],
+      "table": {
+        "precision": 0,
+        "bb": "2",
+        "name": "test_table",
+        "sb": "1",
+        "num_seats": 6,
+        "btn_idx": 3,
+        "ante": null,
+        "max_buyin": 200,
+        "id": "efcdeaea-9013-42fc-8fa5-e1b19c822a76",
+        "sb_idx": 4,
+        "deck_str": "Jc,5s,Jh,6h,7s,6s,4c,7d,Ks,5d,7c,Jd,4d,8s,5c,3s,2d,9h,Ac,Ah,7h,Js,9s,5h,9c,2s,3h,Ad,3d,8c,Qc,Qs,4s,8d,6c,Qh,Tc,As,6d,2h,2c,Kc,4h,Qd,8h,Kh,3c,Ts,Th,9d,Td,Kd",
+        "bb_idx": 0,
+        "board_str": "",
+        "min_buyin": 100,
+        "hand_number": 8
+      },
+      "players": [
+        {
+          "position": 0,
+          "id": "4660e915-cde6-4227-bf3e-fdc811c519d4",
+          "username": "pirate",
+          "owes_bb": false,
+          "stack": "4.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_IN"
+        },
+        {
+          "position": 1,
+          "id": "e3c1d2e1-6ea2-4947-a487-6fd8705e7f7d",
+          "username": "cuttlefish",
+          "owes_bb": true,
+          "stack": "0.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_OUT"
+        },
+        {
+          "position": 2,
+          "id": "ec832e52-4634-47fb-9095-98bc51d6d0a0",
+          "username": "ajfenix",
+          "owes_bb": false,
+          "stack": "566.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_IN"
+        },
+        {
+          "position": 3,
+          "id": "2ccbac29-d5fd-4306-9941-994036057b6b",
+          "username": "cowpig",
+          "owes_bb": false,
+          "stack": "66.00",
+          "owes_sb": false,
+          "playing_state": "SITTING_IN"
+        },
+        {
+          "position": 4,
+          "id": "bb09f189-0fa9-4c30-9f26-255ad3f90bc7",
+          "username": "alexeimartov",
+          "owes_bb": false,
+          "stack": "764",
+          "owes_sb": false,
+          "playing_state": "SITTING_IN"
+        }
+      ],
+      "timestamp": "2016-09-11T18:04:45.355Z"
+    }
+  ]
+}

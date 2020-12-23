@@ -1,0 +1,227 @@
+- 
+  name: Install oddslingers
+  hosts: localhost
+  vars:
+          download_code_condition: "{{ download_code | default(false) }}"
+          init_db_condition: "{{ init_db | default(true) }}"
+          oddslingers_git_repo: https://github.com/monadical-sas/oddslingers.poker.git
+  tasks:
+         - name: Add key postgres repo
+           apt_key:
+            url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+            state: present
+           become: true
+
+         - name: Add repos
+           apt_repository:
+            repo: "{{ item }}"
+            state: present
+           loop:
+             - deb http://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main
+             - ppa:maxmind/ppa
+             - ppa:trevorjay/pyflame
+             - ppa:fish-shell/release-3
+           become: true
+
+         - name: Install required packages
+           apt:
+            name: "{{ item }}"
+            update_cache: yes
+           loop:
+             - build-essential
+             - autoconf
+             - python3.7 
+             - python3-pip
+             - python3.7-dev
+             - python-dev
+             - virtualenv
+             - pyflame
+             - redis-server
+             - git
+             - nodejs
+             - npm
+             - supervisor
+             - libmaxminddb0
+             - libmaxminddb-dev
+             - mmdb-bin
+             - fish
+             - zip
+             - unzip
+             - postgresql-12
+             - postgresql-server-dev-all
+             - postgresql-contrib
+             - nginx
+             - gzip
+             - expect
+             - jq
+           become: true
+
+         - name: Install node.js packages globally
+           npm:
+            name: "{{ item }}"
+            global: yes
+           loop:
+            - npm
+            - yarn
+
+         - name: Disable services
+           service:
+             name: "{{ item }}"
+             enabled: no
+             state: stopped
+           loop:
+             - postgresql
+             - redis-server
+             - nginx
+           become: true
+
+         - name: Download code
+           git:
+            repo: "{{ oddslingers_git_repo }}"
+            dest: "{{ oddslingers_root }}"
+           become: true
+           when: download_code_condition|bool
+
+         - name: Install setuptools and supervisor pip packages
+           pip:
+             name: "{{ item }}"
+             state: latest
+           become: true
+           loop:
+            - pip
+            - pipenv
+            - setuptools
+            - supervisor
+
+         - name: Run pipenv install
+           environment:
+            PIPENV_VENV_IN_PROJECT: "enabled"
+           command: "pipenv install --dev"
+           args:
+            chdir: "{{ oddslingers_root }}/core"
+           become: true
+
+         - name: Run yarn install
+           yarn:
+            path: "{{ oddslingers_root }}/core/js"
+           become: true
+
+         - name: Change owner .venv
+           file:
+            path: "{{ oddslingers_root }}/core/.venv"
+            state: directory
+            recurse: yes
+            owner: "{{ sudo_user }}"
+            group: "{{ sudo_user }}"
+           become: true
+
+         - name: Change owner node_modules
+           file:
+            path: "{{ oddslingers_root }}/core/js/node_modules"
+            state: directory
+            recurse: yes
+            owner: "{{ sudo_user }}"
+            group: "{{ sudo_user }}"
+           become: true
+
+         - name: Set host file
+           lineinfile:
+            path: /etc/hosts
+            line: 127.0.0.1     oddslingers.l 
+           become: true
+
+         - name: Create data directory
+           file:
+             path: "{{ oddslingers_root }}/data"
+             state: directory
+             owner: "{{ sudo_user }}"
+             group: "{{ sudo_user }}"
+           become: true
+
+         - name: Delete default supervisord config
+           file:
+            path: /etc/supervisor/supervisord.conf
+            state: absent
+           become: true
+
+         - name: Create a symbolic link
+           file:
+            src: "{{ oddslingers_root }}/etc/supervisor/ubuntu-dev.conf"
+            dest: /etc/supervisor/supervisord.conf
+            state: link
+           become: true
+
+         - name: Create database directory
+           file:
+             path: "{{ oddslingers_root }}/data/postgres"
+             state: directory
+             recurse: yes
+             owner: postgres
+             group: postgres
+           become: true
+         
+         - name: Init DB
+           become: yes
+           become_user: postgres
+           command: "/usr/lib/postgresql/12/bin/initdb -D \"{{ oddslingers_root }}/data/postgres\""
+           when: init_db_condition|bool
+
+         - name: Start Postgres
+           become: yes
+           become_user: postgres
+           command: "/usr/lib/postgresql/12/bin/pg_ctl -D \"{{ oddslingers_root }}/data/postgres\" start"
+           when: init_db_condition|bool
+
+         - name: Create Postgres User
+           become: yes
+           become_user: postgres
+           command: /usr/lib/postgresql/12/bin/psql -c "CREATE USER {{ db_user }} WITH PASSWORD '{{ db_password }}';" postgres
+           when: init_db_condition|bool
+
+         - name: Create Postgres DB
+           become: yes
+           become_user: postgres
+           command: /usr/lib/postgresql/12/bin/psql -c "CREATE DATABASE {{ db_name }} OWNER {{ db_user }};" postgres
+           when: init_db_condition|bool
+
+         - name: Grants Posgres DB
+           become: yes
+           become_user: postgres
+           command: /usr/lib/postgresql/12/bin/psql -c "GRANT ALL PRIVILEGES ON DATABASE {{ db_name }} TO {{ db_user }};" postgres
+           when: init_db_condition|bool
+
+         - name: Grants Posgres DB
+           become: yes
+           become_user: postgres
+           command: /usr/lib/postgresql/12/bin/psql -c "ALTER USER {{ db_user }} CREATEDB;;" postgres
+           when: init_db_condition|bool
+
+         - name: Write db config in a env file
+           lineinfile:
+            path: "{{ oddslingers_root }}/env/secrets.env"
+            line: "{{ item }}"
+            create: yes
+           loop:
+           - "POSTGRES_DB={{ db_name }}"
+           - "POSTGRES_USER={{ db_user }}"
+           - "POSTGRES_PASSWORD={{ db_password }}"
+           become: true
+           become_user: "{{ sudo_user }}"
+
+         - name: Create logs folder
+           file:
+             path: "{{ oddslingers_root }}/data/logs"
+             state: directory
+             owner: "{{ sudo_user }}"
+             group: "{{ sudo_user }}"
+           become: true
+
+         - name: Delete Postgres process lock
+           file:
+            path: "{{ oddslingers_root }}/data/postgres/postmaster.pid"
+            state: absent
+           become: true
+
+         - name: Reload Supervisor
+           command: supervisorctl reload
+           become: true

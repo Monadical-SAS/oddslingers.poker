@@ -1,0 +1,1693 @@
+{
+    "release": "7298a57e9bbdaee838c465abbcb6b0fdca8a0b58",
+    "accessed": "2019-01-04T00:20:52.943Z",
+    "notes": null,
+    "hands": [
+        {
+            "ts": "2019-01-02T21:10:37.333Z",
+            "table": {
+                "bb": 4,
+                "id": "7a269d08-8ca7-4416-959e-b62e942c1b9d",
+                "sb": 2.0,
+                "ante": null,
+                "name": "2/4 NLHE Battle",
+                "bb_idx": 0,
+                "sb_idx": 4,
+                "btn_idx": 4,
+                "deck_str": "3s,As,4s,8d,8c,3c,Ts,Qc,Qh,9h,7s,5d,Tc,5h,9s,Qd,Jc,Jd,Jh,6s,Js,7d,6d,6c,2s,9c,9d,Ac,Th,4h,3h,Kc,Qs,8s,Ah,2d,2c,3d,7c,4c,5s,4d,5c,2h,Td,Ks,Kd,7h,Ad,Kh,8h,6h",
+                "board_str": "",
+                "max_buyin": 800,
+                "min_buyin": 200,
+                "num_seats": 6,
+                "precision": 0,
+                "table_type": "NLHE",
+                "hand_number": 0
+            },
+            "players": [
+                {
+                    "id": "4375116b-8f35-4df2-9bf9-52687e1f105a",
+                    "stack": "500.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 0,
+                    "username": "Vim_Diesel",
+                    "auto_rebuy": "500.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false,
+                    "orbits_sitting_out": 0
+                },
+                {
+                    "id": "1fb0c5f3-864d-4af5-88fb-8297842bd32e",
+                    "stack": "284.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 4,
+                    "username": "ROM_Jeremy",
+                    "auto_rebuy": "500.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false,
+                    "orbits_sitting_out": 0
+                }
+            ],
+            "actions": [
+                {
+                    "ts": "2019-01-02T21:53:06.503Z",
+                    "subj": "ROM_Jeremy",
+                    "action": "RAISE_TO",
+                    "args": {
+                        "amt": "14.00"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:07.806Z",
+                    "subj": "DonaldDuck",
+                    "action": "TAKE_SEAT",
+                    "args": {
+                        "stack": 0,
+                        "owes_bb": true,
+                        "owes_sb": false,
+                        "position": 2,
+                        "username": "DonaldDuck",
+                        "buyin_amt": "800.00",
+                        "auto_rebuy": "800.00",
+                        "playing_state": "SIT_IN_PENDING",
+                        "orbits_sitting_out": 0
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.585Z",
+                    "subj": "Vim_Diesel",
+                    "action": "FOLD",
+                    "args": {}
+                }
+            ],
+            "events": [
+                {
+                    "ts": "2019-01-02T21:10:37.334Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "BUY",
+                    "args": {
+                        "amt": "216.00"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.334Z",
+                    "subj": "Vim_Diesel",
+                    "event": "BUY",
+                    "args": {
+                        "amt": "248.00"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.335Z",
+                    "subj": "side_effect",
+                    "event": "NOTIFICATION",
+                    "args": {
+                        "msg": "Buyin for 216.00 failed; insufficient funds.",
+                        "player": {
+                            "id": "1fb0c5f3-864d-4af5-88fb-8297842bd32e",
+                            "str": "ROM_Jeremy",
+                            "user": "ROM_Jeremy",
+                            "table": "No Limit Hold 'em:2/4 NLHE Battle",
+                            "user_id": "e8ce2642-7cc4-41d2-a028-e56d7d654ec1",
+                            "short_id": "1fb0c5f3",
+                            "table_id": "7a269d08-8ca7-4416-959e-b62e942c1b9d",
+                            "username": "ROM_Jeremy"
+                        },
+                        "notification_type": "failed_rebuy"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.335Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "BUY",
+                    "args": {
+                        "amt": "-216.00"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.336Z",
+                    "subj": "Vim_Diesel",
+                    "event": "UPDATE_STACK",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.336Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Vim_Diesel added 248 chips.",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.337Z",
+                    "subj": "side_effect",
+                    "event": "CREATE_TRANSFER",
+                    "args": {
+                        "amt": "248.00",
+                        "dst": {
+                            "bb": 4,
+                            "id": "7a269d08-8ca7-4416-959e-b62e942c1b9d",
+                            "sb": 2.0,
+                            "str": "No Limit Hold 'em:2/4 NLHE Battle",
+                            "ante": null,
+                            "name": "2/4 NLHE Battle",
+                            "path": "/table/7a269d08/",
+                            "created": "2019-01-02T21:10:37.247Z",
+                            "players": [
+                                "ROM_Jeremy",
+                                "Vim_Diesel"
+                            ],
+                            "variant": "No Limit Hold 'em",
+                            "short_id": "7a269d08",
+                            "max_buyin": 800,
+                            "min_buyin": 200,
+                            "num_seats": 6,
+                            "player_ids": [
+                                {
+                                    "id": "1fb0c5f3-864d-4af5-88fb-8297842bd32e"
+                                },
+                                {
+                                    "id": "4375116b-8f35-4df2-9bf9-52687e1f105a"
+                                }
+                            ],
+                            "table_type": "NLHE",
+                            "hand_number": 0,
+                            "hotness_level": 5,
+                            "tournament_id": null,
+                            "sidebets_enabled": false
+                        },
+                        "src": {
+                            "id": "f1ef648d-0687-4756-bf5c-b806d31e0135",
+                            "str": "Vim_Diesel",
+                            "email": "",
+                            "is_staff": false,
+                            "username": "Vim_Diesel",
+                            "is_active": true,
+                            "last_name": "",
+                            "first_name": "",
+                            "date_joined": "2019-01-02T20:49:33.660Z",
+                            "light_theme": true,
+                            "is_superuser": false,
+                            "muted_sounds": false,
+                            "show_win_msgs": true,
+                            "sit_behaviour": "SITTING_OUT",
+                            "show_chat_msgs": true,
+                            "four_color_deck": true,
+                            "profile_picture": null,
+                            "show_playbyplay": true,
+                            "cashtables_level": 4,
+                            "is_authenticated": true,
+                            "show_dealer_msgs": true,
+                            "auto_rebuy_in_bbs": 0,
+                            "show_chat_bubbles": true,
+                            "tournaments_level": 1000,
+                            "keyboard_shortcuts": false,
+                            "show_spectator_msgs": true
+                        },
+                        "notes": "@Vim_Diesel       [    BUY     ] {'amt': Decimal('248.00')}"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.337Z",
+                    "subj": "Vim_Diesel",
+                    "event": "SET_TIMEBANK",
+                    "args": {
+                        "set_to": 5
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.338Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "SET_TIMEBANK",
+                    "args": {
+                        "set_to": 5
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.338Z",
+                    "subj": "Vim_Diesel",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.338Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.339Z",
+                    "subj": "DEALER",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.339Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "====NEW HAND====",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.340Z",
+                    "subj": "DEALER",
+                    "event": "SET_BLIND_POS",
+                    "args": {
+                        "bb_pos": 0,
+                        "sb_pos": 4,
+                        "btn_pos": 4
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.340Z",
+                    "subj": "DEALER",
+                    "event": "SHUFFLE",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.340Z",
+                    "subj": "side_effect",
+                    "event": "NEW_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.341Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "ROM_Jeremy posted 2.0 for SB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.341Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "POST",
+                    "args": {
+                        "amt": 2.0
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.341Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Vim_Diesel posted 4 for BB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.342Z",
+                    "subj": "Vim_Diesel",
+                    "event": "POST",
+                    "args": {
+                        "amt": 4
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.342Z",
+                    "subj": "Vim_Diesel",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "3s"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.343Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "As"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.343Z",
+                    "subj": "Vim_Diesel",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "4s"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.343Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "8d"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.344Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Vim_Diesel (500.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.344Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "ROM_Jeremy (284.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:10:37.344Z",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 4
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:52:59.475Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:53:06.504Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "RAISE_TO",
+                    "args": {
+                        "amt": "14",
+                        "all_in": false
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:53:06.505Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": true
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:05.874Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:07.803Z",
+                    "subj": "DonaldDuck",
+                    "event": "TAKE_SEAT",
+                    "args": {
+                        "position": 2
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:07.804Z",
+                    "subj": "DonaldDuck",
+                    "event": "SIT_IN",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:07.805Z",
+                    "subj": "side_effect",
+                    "event": "NOTIFICATION",
+                    "args": {
+                        "msg": "Auto-rebuy has been set to 800.00.",
+                        "player": {
+                            "id": "f786c716-337e-4743-84cd-0682c0151abb",
+                            "str": "DonaldDuck",
+                            "user": "DonaldDuck",
+                            "table": "No Limit Hold 'em:2/4 NLHE Battle",
+                            "user_id": "3e52fd0a-9c24-4c94-b55d-927328533cc9",
+                            "short_id": "f786c716",
+                            "table_id": "7a269d08-8ca7-4416-959e-b62e942c1b9d",
+                            "username": "DonaldDuck"
+                        },
+                        "notification_type": "rebuy_notification"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:07.805Z",
+                    "subj": "DonaldDuck",
+                    "event": "SET_AUTO_REBUY",
+                    "args": {
+                        "amt": "800.00"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:07.806Z",
+                    "subj": "DonaldDuck",
+                    "event": "BUY",
+                    "args": {
+                        "amt": "800.00"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:07.807Z",
+                    "subj": "DonaldDuck",
+                    "event": "UPDATE_STACK",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:07.807Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "DonaldDuck added 800 chips.",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:07.808Z",
+                    "subj": "side_effect",
+                    "event": "CREATE_TRANSFER",
+                    "args": {
+                        "amt": "800.00",
+                        "dst": {
+                            "bb": "4.00",
+                            "id": "7a269d08-8ca7-4416-959e-b62e942c1b9d",
+                            "sb": "2.00",
+                            "str": "No Limit Hold 'em:2/4 NLHE Battle",
+                            "ante": null,
+                            "name": "2/4 NLHE Battle",
+                            "path": "/table/7a269d08/",
+                            "created": "2019-01-02T21:10:37.247Z",
+                            "players": [
+                                "ROM_Jeremy",
+                                "Vim_Diesel"
+                            ],
+                            "variant": "No Limit Hold 'em",
+                            "short_id": "7a269d08",
+                            "max_buyin": "800.00",
+                            "min_buyin": "200.00",
+                            "num_seats": 6,
+                            "player_ids": [
+                                {
+                                    "id": "1fb0c5f3-864d-4af5-88fb-8297842bd32e"
+                                },
+                                {
+                                    "id": "4375116b-8f35-4df2-9bf9-52687e1f105a"
+                                }
+                            ],
+                            "table_type": "NLHE",
+                            "hand_number": 0,
+                            "hotness_level": 5,
+                            "tournament_id": null,
+                            "sidebets_enabled": false
+                        },
+                        "src": {
+                            "id": "3e52fd0a-9c24-4c94-b55d-927328533cc9",
+                            "str": "DonaldDuck",
+                            "email": "max@monadical.com",
+                            "is_staff": false,
+                            "username": "DonaldDuck",
+                            "is_active": true,
+                            "last_name": "",
+                            "first_name": "",
+                            "date_joined": "2018-01-13T03:48:59.215Z",
+                            "light_theme": true,
+                            "is_superuser": false,
+                            "muted_sounds": false,
+                            "show_win_msgs": true,
+                            "sit_behaviour": "SIT_IN_PENDING",
+                            "show_chat_msgs": true,
+                            "four_color_deck": true,
+                            "profile_picture": "images/profile_pictures/animal 6.jpeg",
+                            "show_playbyplay": true,
+                            "cashtables_level": 4,
+                            "is_authenticated": true,
+                            "show_dealer_msgs": true,
+                            "auto_rebuy_in_bbs": 200,
+                            "show_chat_bubbles": true,
+                            "tournaments_level": 1000,
+                            "keyboard_shortcuts": true,
+                            "show_spectator_msgs": true
+                        },
+                        "notes": "@DonaldDuck       [    BUY     ] {'amt': Decimal('800.00')}"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.585Z",
+                    "subj": "Vim_Diesel",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.586Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": true
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.586Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "RETURN_CHIPS",
+                    "args": {
+                        "amt": "10.00"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.587Z",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.587Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "WIN",
+                    "args": {
+                        "amt": "8.00",
+                        "pot_id": 0,
+                        "showdown": false
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.588Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "ROM_Jeremy won 8.00 from the main pot",
+                        "speaker": "winner_info"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.588Z",
+                    "subj": "DEALER",
+                    "event": "DELAY_COUNTDOWN",
+                    "args": {
+                        "n_seconds": 2
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.588Z",
+                    "subj": "side_effect",
+                    "event": "SHOWDOWN_COMPLETE",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.589Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.589Z",
+                    "subj": "Vim_Diesel",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.589Z",
+                    "subj": "Vim_Diesel",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.590Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.590Z",
+                    "subj": "DEALER",
+                    "event": "END_HAND",
+                    "args": {}
+                }
+            ]
+        },
+        {
+            "ts": "2019-01-02T21:54:14.591Z",
+            "table": {
+                "bb": "4.00",
+                "id": "7a269d08-8ca7-4416-959e-b62e942c1b9d",
+                "sb": "2.00",
+                "ante": null,
+                "name": "2/4 NLHE Battle",
+                "bb_idx": 2,
+                "sb_idx": 0,
+                "btn_idx": 4,
+                "deck_str": "4h,Td,9d,6s,9c,Jc,6c,9s,Jd,7d,7s,7h,Tc,Kd,Ks,Ad,3c,6d,As,2d,2h,Ah,Jh,5d,5h,Kh,Kc,Qd,8s,2c,4c,8d,Th,7c,Js,4s,5c,8h,5s,8c,Qc,6h,Qh,3d,9h,Ts,4d,2s,Qs,3h,Ac,3s",
+                "board_str": "",
+                "max_buyin": "800.00",
+                "min_buyin": "200.00",
+                "num_seats": 6,
+                "precision": 0,
+                "table_type": "NLHE",
+                "hand_number": 1
+            },
+            "players": [
+                {
+                    "id": "4375116b-8f35-4df2-9bf9-52687e1f105a",
+                    "stack": "500.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 0,
+                    "username": "Vim_Diesel",
+                    "auto_rebuy": "500.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false,
+                    "orbits_sitting_out": 0
+                },
+                {
+                    "id": "f786c716-337e-4743-84cd-0682c0151abb",
+                    "stack": "800.00",
+                    "owes_bb": true,
+                    "owes_sb": false,
+                    "position": 2,
+                    "username": "DonaldDuck",
+                    "auto_rebuy": "800.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false,
+                    "orbits_sitting_out": 0
+                },
+                {
+                    "id": "1fb0c5f3-864d-4af5-88fb-8297842bd32e",
+                    "stack": "288.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 4,
+                    "username": "ROM_Jeremy",
+                    "auto_rebuy": "500.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false,
+                    "orbits_sitting_out": 0
+                }
+            ],
+            "actions": [
+                {
+                    "ts": "2019-01-02T21:54:20.734Z",
+                    "subj": "ROM_Jeremy",
+                    "action": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:28.111Z",
+                    "subj": "Vim_Diesel",
+                    "action": "CALL",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:59.773Z",
+                    "subj": "DonaldDuck",
+                    "action": "CHECK",
+                    "args": {
+                        "SEQ_NUM": 3,
+                        "USER_ID": "3e52fd0a-9c24-4c94-b55d-927328533cc9",
+                        "USERNAME": "DonaldDuck",
+                        "TIMESTAMP": 1546466099685
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:06.561Z",
+                    "subj": "Vim_Diesel",
+                    "action": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:08.589Z",
+                    "subj": "DonaldDuck",
+                    "action": "BET",
+                    "args": {
+                        "amt": 8,
+                        "SEQ_NUM": 4,
+                        "USER_ID": "3e52fd0a-9c24-4c94-b55d-927328533cc9",
+                        "USERNAME": "DonaldDuck",
+                        "TIMESTAMP": 1546466108516
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:14.303Z",
+                    "subj": "Vim_Diesel",
+                    "action": "CALL",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:21.111Z",
+                    "subj": "Vim_Diesel",
+                    "action": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:24.143Z",
+                    "subj": "DonaldDuck",
+                    "action": "BET",
+                    "args": {
+                        "amt": 16,
+                        "SEQ_NUM": 5,
+                        "USER_ID": "3e52fd0a-9c24-4c94-b55d-927328533cc9",
+                        "USERNAME": "DonaldDuck",
+                        "TIMESTAMP": 1546466124068
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:28.189Z",
+                    "subj": "juan",
+                    "action": "TAKE_SEAT",
+                    "args": {
+                        "stack": 0,
+                        "owes_bb": true,
+                        "owes_sb": false,
+                        "position": 3,
+                        "username": "juan",
+                        "buyin_amt": "200.00",
+                        "auto_rebuy": null,
+                        "playing_state": "SIT_IN_PENDING",
+                        "orbits_sitting_out": 0
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:34.716Z",
+                    "subj": "Vim_Diesel",
+                    "action": "CALL",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:41.838Z",
+                    "subj": "Vim_Diesel",
+                    "action": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:43.615Z",
+                    "subj": "DonaldDuck",
+                    "action": "CHECK",
+                    "args": {
+                        "SEQ_NUM": 6,
+                        "USER_ID": "3e52fd0a-9c24-4c94-b55d-927328533cc9",
+                        "USERNAME": "DonaldDuck",
+                        "TIMESTAMP": 1546466143428
+                    }
+                }
+            ],
+            "events": [
+                {
+                    "ts": "2019-01-02T21:54:14.591Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "BUY",
+                    "args": {
+                        "amt": "212.00"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.592Z",
+                    "subj": "Vim_Diesel",
+                    "event": "BUY",
+                    "args": {
+                        "amt": "4.00"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.592Z",
+                    "subj": "side_effect",
+                    "event": "NOTIFICATION",
+                    "args": {
+                        "msg": "Buyin for 212.00 failed; insufficient funds.",
+                        "player": {
+                            "id": "1fb0c5f3-864d-4af5-88fb-8297842bd32e",
+                            "str": "ROM_Jeremy",
+                            "user": "ROM_Jeremy",
+                            "table": "No Limit Hold 'em:2/4 NLHE Battle",
+                            "user_id": "e8ce2642-7cc4-41d2-a028-e56d7d654ec1",
+                            "short_id": "1fb0c5f3",
+                            "table_id": "7a269d08-8ca7-4416-959e-b62e942c1b9d",
+                            "username": "ROM_Jeremy"
+                        },
+                        "notification_type": "failed_rebuy"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.593Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "BUY",
+                    "args": {
+                        "amt": "-212.00"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.593Z",
+                    "subj": "Vim_Diesel",
+                    "event": "UPDATE_STACK",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.594Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Vim_Diesel added 4 chips.",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.594Z",
+                    "subj": "side_effect",
+                    "event": "CREATE_TRANSFER",
+                    "args": {
+                        "amt": "4.00",
+                        "dst": {
+                            "bb": "4.00",
+                            "id": "7a269d08-8ca7-4416-959e-b62e942c1b9d",
+                            "sb": "2.00",
+                            "str": "No Limit Hold 'em:2/4 NLHE Battle",
+                            "ante": null,
+                            "name": "2/4 NLHE Battle",
+                            "path": "/table/7a269d08/",
+                            "created": "2019-01-02T21:10:37.247Z",
+                            "players": [
+                                "ROM_Jeremy",
+                                "Vim_Diesel",
+                                "DonaldDuck"
+                            ],
+                            "variant": "No Limit Hold 'em",
+                            "short_id": "7a269d08",
+                            "max_buyin": "800.00",
+                            "min_buyin": "200.00",
+                            "num_seats": 6,
+                            "player_ids": [
+                                {
+                                    "id": "1fb0c5f3-864d-4af5-88fb-8297842bd32e"
+                                },
+                                {
+                                    "id": "4375116b-8f35-4df2-9bf9-52687e1f105a"
+                                },
+                                {
+                                    "id": "f786c716-337e-4743-84cd-0682c0151abb"
+                                }
+                            ],
+                            "table_type": "NLHE",
+                            "hand_number": 1,
+                            "hotness_level": 5,
+                            "tournament_id": null,
+                            "sidebets_enabled": false
+                        },
+                        "src": {
+                            "id": "f1ef648d-0687-4756-bf5c-b806d31e0135",
+                            "str": "Vim_Diesel",
+                            "email": "",
+                            "is_staff": false,
+                            "username": "Vim_Diesel",
+                            "is_active": true,
+                            "last_name": "",
+                            "first_name": "",
+                            "date_joined": "2019-01-02T20:49:33.660Z",
+                            "light_theme": true,
+                            "is_superuser": false,
+                            "muted_sounds": false,
+                            "show_win_msgs": true,
+                            "sit_behaviour": "SITTING_OUT",
+                            "show_chat_msgs": true,
+                            "four_color_deck": true,
+                            "profile_picture": null,
+                            "show_playbyplay": true,
+                            "cashtables_level": 4,
+                            "is_authenticated": true,
+                            "show_dealer_msgs": true,
+                            "auto_rebuy_in_bbs": 0,
+                            "show_chat_bubbles": true,
+                            "tournaments_level": 1000,
+                            "keyboard_shortcuts": false,
+                            "show_spectator_msgs": true
+                        },
+                        "notes": "@Vim_Diesel       [    BUY     ] {'amt': Decimal('4.00')}"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.595Z",
+                    "subj": "Vim_Diesel",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.595Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.596Z",
+                    "subj": "DEALER",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.596Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "====NEW HAND====",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.597Z",
+                    "subj": "DonaldDuck",
+                    "event": "SIT_IN",
+                    "args": {
+                        "immediate": true
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.597Z",
+                    "subj": "DonaldDuck",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.598Z",
+                    "subj": "DEALER",
+                    "event": "SET_BLIND_POS",
+                    "args": {
+                        "bb_pos": 2,
+                        "sb_pos": 0,
+                        "btn_pos": 4
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.599Z",
+                    "subj": "DEALER",
+                    "event": "SHUFFLE",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.599Z",
+                    "subj": "side_effect",
+                    "event": "NEW_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.599Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Vim_Diesel posted 2.00 for SB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.600Z",
+                    "subj": "Vim_Diesel",
+                    "event": "POST",
+                    "args": {
+                        "amt": "2.00"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.601Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "DonaldDuck posted 4.00 for BB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.601Z",
+                    "subj": "DonaldDuck",
+                    "event": "POST",
+                    "args": {
+                        "amt": "4.00"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.601Z",
+                    "subj": "DonaldDuck",
+                    "event": "OWE_BB",
+                    "args": {
+                        "owes": false
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.602Z",
+                    "subj": "Vim_Diesel",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "4h"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.602Z",
+                    "subj": "DonaldDuck",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Td"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.603Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "9d"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.603Z",
+                    "subj": "Vim_Diesel",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "6s"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.603Z",
+                    "subj": "DonaldDuck",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "9c"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.604Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Jc"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.604Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Vim_Diesel (500.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.605Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "DonaldDuck (800.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.605Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "ROM_Jeremy (288.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:14.605Z",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 6
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:20.735Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:20.736Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": true
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:28.112Z",
+                    "subj": "Vim_Diesel",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "4.00",
+                        "all_in": false
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:28.112Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": true
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:59.773Z",
+                    "subj": "DonaldDuck",
+                    "event": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:59.774Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": false
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:59.774Z",
+                    "subj": "DonaldDuck",
+                    "event": "SET_TIMEBANK",
+                    "args": {
+                        "set_to": 5
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:59.775Z",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:59.775Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:59.776Z",
+                    "subj": "Vim_Diesel",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:59.776Z",
+                    "subj": "DonaldDuck",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:54:59.776Z",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "6c"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:59.777Z",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "9s"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:59.777Z",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Jd"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:59.778Z",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 3
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:54:59.778Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "FLOP: 6\u2663, 9\u2660, J\u2666",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:06.561Z",
+                    "subj": "Vim_Diesel",
+                    "event": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:06.562Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": true
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:08.590Z",
+                    "subj": "DonaldDuck",
+                    "event": "BET",
+                    "args": {
+                        "amt": "8",
+                        "all_in": false
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:08.590Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": false
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:14.303Z",
+                    "subj": "Vim_Diesel",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "8",
+                        "all_in": false
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:14.304Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": true
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:14.304Z",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:14.305Z",
+                    "subj": "Vim_Diesel",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:14.305Z",
+                    "subj": "DonaldDuck",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:14.306Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:14.306Z",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "7d"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:14.306Z",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 1
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:14.307Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "TURN: 6\u2663, 9\u2660, J\u2666, [7\u2666]",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:21.112Z",
+                    "subj": "Vim_Diesel",
+                    "event": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:21.112Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": true
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:24.144Z",
+                    "subj": "DonaldDuck",
+                    "event": "BET",
+                    "args": {
+                        "amt": "16",
+                        "all_in": false
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:24.144Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": false
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:28.188Z",
+                    "subj": "juan",
+                    "event": "TAKE_SEAT",
+                    "args": {
+                        "position": 3
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:28.188Z",
+                    "subj": "juan",
+                    "event": "SIT_IN",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:28.189Z",
+                    "subj": "juan",
+                    "event": "BUY",
+                    "args": {
+                        "amt": "200.00"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:28.190Z",
+                    "subj": "juan",
+                    "event": "UPDATE_STACK",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:28.190Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "juan added 200 chips.",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:28.191Z",
+                    "subj": "side_effect",
+                    "event": "CREATE_TRANSFER",
+                    "args": {
+                        "amt": "200.00",
+                        "dst": {
+                            "bb": "4.00",
+                            "id": "7a269d08-8ca7-4416-959e-b62e942c1b9d",
+                            "sb": "2.00",
+                            "str": "No Limit Hold 'em:2/4 NLHE Battle",
+                            "ante": null,
+                            "name": "2/4 NLHE Battle",
+                            "path": "/table/7a269d08/",
+                            "created": "2019-01-02T21:10:37.247Z",
+                            "players": [
+                                "ROM_Jeremy",
+                                "Vim_Diesel",
+                                "DonaldDuck"
+                            ],
+                            "variant": "No Limit Hold 'em",
+                            "short_id": "7a269d08",
+                            "max_buyin": "800.00",
+                            "min_buyin": "200.00",
+                            "num_seats": 6,
+                            "player_ids": [
+                                {
+                                    "id": "1fb0c5f3-864d-4af5-88fb-8297842bd32e"
+                                },
+                                {
+                                    "id": "4375116b-8f35-4df2-9bf9-52687e1f105a"
+                                },
+                                {
+                                    "id": "f786c716-337e-4743-84cd-0682c0151abb"
+                                }
+                            ],
+                            "table_type": "NLHE",
+                            "hand_number": 1,
+                            "hotness_level": 5,
+                            "tournament_id": null,
+                            "sidebets_enabled": false
+                        },
+                        "src": {
+                            "id": "d58e7afc-5eae-41c0-9a7c-6a964010da9e",
+                            "str": "juan",
+                            "email": "juandgoc@gmail.com",
+                            "is_staff": false,
+                            "username": "juan",
+                            "is_active": true,
+                            "last_name": "",
+                            "first_name": "",
+                            "date_joined": "2017-10-30T18:26:41.751Z",
+                            "light_theme": true,
+                            "is_superuser": false,
+                            "muted_sounds": true,
+                            "show_win_msgs": true,
+                            "sit_behaviour": "SIT_IN_PENDING",
+                            "show_chat_msgs": true,
+                            "four_color_deck": true,
+                            "profile_picture": "images/ninja.png",
+                            "show_playbyplay": true,
+                            "cashtables_level": 4,
+                            "is_authenticated": true,
+                            "show_dealer_msgs": false,
+                            "auto_rebuy_in_bbs": 0,
+                            "show_chat_bubbles": true,
+                            "tournaments_level": 1000,
+                            "keyboard_shortcuts": true,
+                            "show_spectator_msgs": true
+                        },
+                        "notes": "@juan             [    BUY     ] {'amt': Decimal('200.00')}"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:34.716Z",
+                    "subj": "Vim_Diesel",
+                    "event": "CALL",
+                    "args": {
+                        "amt": "16",
+                        "all_in": false
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:34.717Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": true
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:34.717Z",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:34.718Z",
+                    "subj": "Vim_Diesel",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:34.718Z",
+                    "subj": "DonaldDuck",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:34.719Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:34.719Z",
+                    "subj": "DEALER",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "7s"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:34.719Z",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 1
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:34.720Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "RIVER: 6\u2663, 9\u2660, J\u2666, 7\u2666, [7\u2660]",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:41.839Z",
+                    "subj": "Vim_Diesel",
+                    "event": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:41.840Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": true
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:43.615Z",
+                    "subj": "DonaldDuck",
+                    "event": "CHECK",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:43.616Z",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {
+                        "is_robot": false
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:43.616Z",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:43.617Z",
+                    "subj": "Vim_Diesel",
+                    "event": "REVEAL_HAND",
+                    "args": {
+                        "cards": [
+                            "4h",
+                            "6s"
+                        ],
+                        "player_id": "4375116b-8f35-4df2-9bf9-52687e1f105a",
+                        "description": "Two Pair, sevens and sixes"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:43.617Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Vim_Diesel has 4\u2665, 6\u2660 (Two Pair, sevens and sixes)",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:43.618Z",
+                    "subj": "DonaldDuck",
+                    "event": "REVEAL_HAND",
+                    "args": {
+                        "cards": [
+                            "Td",
+                            "9c"
+                        ],
+                        "player_id": "f786c716-337e-4743-84cd-0682c0151abb",
+                        "description": "Two Pair, nines and sevens"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:43.618Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "DonaldDuck has T\u2666, 9\u2663 (Two Pair, nines and sevens)",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:43.619Z",
+                    "subj": "DonaldDuck",
+                    "event": "WIN",
+                    "args": {
+                        "amt": "56",
+                        "pot_id": 0,
+                        "showdown": true,
+                        "winning_hand": [
+                            "9c",
+                            "9s",
+                            "Jd",
+                            "7d",
+                            "7s"
+                        ]
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:43.619Z",
+                    "subj": "DEALER",
+                    "event": "DELAY_COUNTDOWN",
+                    "args": {
+                        "n_seconds": 6
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:43.620Z",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "DonaldDuck won the main pot with Two Pair, nines and sevens for 56 chips",
+                        "speaker": "winner_info"
+                    }
+                },
+                {
+                    "ts": "2019-01-02T21:55:43.620Z",
+                    "subj": "side_effect",
+                    "event": "SHOWDOWN_COMPLETE",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:43.621Z",
+                    "subj": "Vim_Diesel",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:43.621Z",
+                    "subj": "DonaldDuck",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:43.622Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:43.622Z",
+                    "subj": "Vim_Diesel",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:43.623Z",
+                    "subj": "DonaldDuck",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:43.623Z",
+                    "subj": "ROM_Jeremy",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "2019-01-02T21:55:43.623Z",
+                    "subj": "DEALER",
+                    "event": "END_HAND",
+                    "args": {}
+                }
+            ]
+        }
+    ]
+}

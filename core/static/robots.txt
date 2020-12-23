@@ -1,0 +1,6 @@
+User-agent:*
+Disallow: /admin/
+Disallow: /embed/
+Disallow: /debugger/
+Disallow: /api/
+Disallow: /_test/

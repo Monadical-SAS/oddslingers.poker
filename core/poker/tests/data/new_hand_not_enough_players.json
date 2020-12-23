@@ -1,0 +1,427 @@
+{
+    "release": "40fc17e1ea70c3e84baa2028bc65c6e3345ed62b",
+    "accessed": "2018-07-24T20:46:49.187Z",
+    "notes": {
+        "error_msg": "AssertionError: move_blinds is probably broken.",
+        "replayer_state": "class: ActionReplayer\nsession_id: f7e5a8f6\n# hands: 16\nhand_idx: -1\n# actions: 0\naction_idx: 0\nnotes: {'error_msg': 'this is a test', 'callstack': ['  File \"./manage.py\", line 19, in <module>\\n    execute_from_command_line(sys.argv)\\n', '  File \"/home/max/gits/blitzka_copy/grater-django/venv/lib/python3.6/site-packages/django/core/management/__init__.py\", line 364, in execute_from_command_line\\n    utility.execute()\\n', '  File \"/home/max/gits/blitzka_copy/grater-django/venv/lib/python3.6/site-packages/django/core/management/__init__.py\", line 356, in execute\\n    self.fetch_command(subcommand).run_from_argv(self.argv)\\n', '  File \"/home/max/gits/blitzka_copy/grater-django/venv/lib/python3.6/site-packages/django/core/management/commands/test.py\", line 29, in run_from_argv\\n    super(Command, self).run_from_argv(argv)\\n', '  File \"/home/max/gits/blitzka_copy/grater-django/venv/lib/python3.6/site-packages/django/core/management/base.py\", line 283, in run_from_argv\\n    self.execute(*args, **cmd_options)\\n', '  File \"/home/max/gits/blitzka_copy/grater-django/venv/lib/python3.6/site-packages/django/core/management/base.py\", line 330, in execute\\n    output = self.handle(*args, **options)\\n', '  File \"/home/max/gits/blitzka_copy/grater-django/venv/lib/python3.6/site-packages/django_pdb/management/commands/test.py\", line 62, in handle\\n    failures = test_runner.run_tests(test_labels)\\n', '  File \"/home/max/gits/blitzka_copy/grater-django/venv/lib/python3.6/site-packages/django/test/runner.py\", line 603, in run_tests\\n    result = self.run_suite(suite)\\n', '  File \"/home/max/gits/blitzka_copy/grater-django/venv/lib/python3.6/site-packages/django_pdb/testrunners.py\", line 112, in run_suite\\n    failfast=self.failfast).run(suite)\\n', '  File \"/home/max/anaconda3/lib/python3.6/unittest/runner.py\", line 176, in run\\n    test(result)\\n', '  File \"/home/max/anaconda3/lib/python3.6/unittest/suite.py\", line 84, in __call__\\n    return self.run(*args, **kwds)\\n', '  File \"/home/max/anaconda3/lib/python3.6/unittest/suite.py\", line 122, in run\\n    test(result)\\n', '  File \"/home/max/gits/blitzka_copy/grater-django/venv/lib/python3.6/site-packages/django/test/testcases.py\", line 213, in __call__\\n    super(SimpleTestCase, self).__call__(result)\\n', '  File \"/home/max/anaconda3/lib/python3.6/unittest/case.py\", line 653, in __call__\\n    return self.run(*args, **kwds)\\n', '  File \"/home/max/anaconda3/lib/python3.6/unittest/case.py\", line 605, in run\\n    testMethod()\\n', '  File \"/home/max/gits/blitzka_copy/grater-django/poker/tests/test_simulation.py\", line 315, in test_holdem_ai_moves\\n    self.simulate_hand_and_test_assumptions(ctrl)\\n', '  File \"/home/max/gits/blitzka_copy/grater-django/poker/tests/test_simulation.py\", line 122, in simulate_hand_and_test_assumptions\\n    self.assert_logging_replaying_works(controller)\\n', '  File \"/home/max/gits/blitzka_copy/grater-django/poker/tests/test_simulation.py\", line 254, in assert_logging_replaying_works\\n    controller.debug_filedump(\\'this is a test\\', self.dump_filename)\\n', '  File \"/home/max/gits/blitzka_copy/grater-django/poker/controllers.py\", line 1686, in debug_filedump\\n    \\'callstack\\': list(traceback.format_stack()),\\n'], 'table': {}, 'players': [{}, {}, {}, {}, {}]}\nCURRENT STATE:\nReplayer-test_table-f7e5a8f6\t1.00/2.00 BNTY\thand 15\nboard: []\n   pos #:    name   \t cards/state \t stack  - wagers  - last_action (uncollected)\n       2:   pirate  \t[    out    ]\t585.00  -  0.00   -     none    (0.00)\n       3: alexeimart\t[    out    ]\t 0.00   -  0.00   -     none    (0.00)\n   btn 5: cuttlefish\t[    in     ]\t774.00  -  0.00   -     none    (0.00)"
+    },
+    "hands": [
+        {
+            "ts": "2018-07-24T20:46:48.427Z",
+            "table": {
+                "bb": "2.00",
+                "id": "58667600-04b3-41b3-bd45-576cb0220170",
+                "sb": "1.00",
+                "ante": null,
+                "name": "test_table",
+                "bb_idx": 5,
+                "sb_idx": 2,
+                "btn_idx": 2,
+                "deck_str": "5s,4d,Ah,Qs,7c,As,8c,5d,2h,Jc,Td,3d,5c,8d,3h,Js,Jd,9s,3c,6d,Kc,Qc,7d,2d,5h,9c,Kd,8s,4c,6s,9h,3s,7s,Qd,2c,4h,Ks,7h,Ts,Qh,8h,6c,6h,9d,4s,Kh,Ac,Ad,2s,Tc,Jh,Th",
+                "board_str": "",
+                "max_buyin": "300.00",
+                "min_buyin": "120.00",
+                "num_seats": 6,
+                "precision": 0,
+                "table_type": "BNTY",
+                "hand_number": 14
+            },
+            "players": [
+                {
+                    "id": "a0fba3a4-a5fd-4c05-b675-63dae24891fb",
+                    "stack": "586.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 2,
+                    "username": "pirate",
+                    "auto_rebuy": null,
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false
+                },
+                {
+                    "id": "d697809f-ff34-4ad3-9b8f-e25b86e1dfe3",
+                    "stack": "0.00",
+                    "owes_bb": true,
+                    "owes_sb": false,
+                    "position": 3,
+                    "username": "alexeimartov",
+                    "auto_rebuy": null,
+                    "playing_state": "SITTING_OUT",
+                    "sit_out_at_blinds": false
+                },
+                {
+                    "id": "b86a22c3-6a85-44c4-816f-182df8c22095",
+                    "stack": "773.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 5,
+                    "username": "cuttlefish",
+                    "auto_rebuy": "0.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false
+                }
+            ],
+            "actions": [
+                {
+                    "ts": "20:46:48",
+                    "subj": "pirate",
+                    "action": "FOLD",
+                    "args": {
+                        "sit_out": true
+                    }
+                }
+            ],
+            "events": [
+                {
+                    "ts": "20:46:48",
+                    "subj": "pirate",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "cuttlefish",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "DEALER",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "====NEW HAND====",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "alexeimartov",
+                    "event": "ADD_ORBIT_SITTING_OUT",
+                    "args": {}
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "DEALER",
+                    "event": "SET_BLIND_POS",
+                    "args": {
+                        "bb_pos": 5,
+                        "sb_pos": 2,
+                        "btn_pos": 2
+                    }
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "side_effect",
+                    "event": "NEW_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "pirate posted 1.00 for SB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "pirate",
+                    "event": "POST",
+                    "args": {
+                        "amt": "1.00"
+                    }
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "cuttlefish posted 2.00 for BB",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "cuttlefish",
+                    "event": "POST",
+                    "args": {
+                        "amt": "2.00"
+                    }
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "cuttlefish",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "5s"
+                    }
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "pirate",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "4d"
+                    }
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "cuttlefish",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Ah"
+                    }
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "pirate",
+                    "event": "DEAL",
+                    "args": {
+                        "card": "Qs"
+                    }
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "cuttlefish (773.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "pirate (586.00) was dealt two cards",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "DEALER",
+                    "event": "POP_CARDS",
+                    "args": {
+                        "n_cards": 4
+                    }
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "pirate ran out of time and folded.",
+                        "speaker": "Dealer"
+                    }
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "pirate",
+                    "event": "FOLD",
+                    "args": {}
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "pirate",
+                    "event": "SIT_OUT",
+                    "args": {}
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "DEALER",
+                    "event": "RECORD_ACTION",
+                    "args": {}
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "cuttlefish",
+                    "event": "RETURN_CHIPS",
+                    "args": {
+                        "amt": "1.00"
+                    }
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "side_effect",
+                    "event": "NEW_STREET",
+                    "args": {}
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "cuttlefish",
+                    "event": "WIN",
+                    "args": {
+                        "amt": "2.00",
+                        "pot_id": 0,
+                        "showdown": false
+                    }
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "cuttlefish won 2.00 from the main pot",
+                        "speaker": "winner_info"
+                    }
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "DEALER",
+                    "event": "DELAY_COUNTDOWN",
+                    "args": {
+                        "n_seconds": 2
+                    }
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "side_effect",
+                    "event": "SHOWDOWN_COMPLETE",
+                    "args": {}
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "pirate",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "cuttlefish",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "cuttlefish",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "pirate",
+                    "event": "END_HAND",
+                    "args": {}
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "DEALER",
+                    "event": "END_HAND",
+                    "args": {}
+                }
+            ]
+        },
+        {
+            "ts": "2018-07-24T20:46:48.624Z",
+            "table": {
+                "bb": "2.00",
+                "id": "58667600-04b3-41b3-bd45-576cb0220170",
+                "sb": "1.00",
+                "ante": null,
+                "name": "test_table",
+                "bb_idx": null,
+                "sb_idx": null,
+                "btn_idx": 5,
+                "deck_str": "9d,9c,8h,4h,Ac,3d,Qs,Ts,Kc,Td,6c,2c,6s,Ad,Js,4c,5c,Ks,Jc,As,3s,8d,7c,6h,2h,9s,9h,4s,8c,7d,3h,7h,4d,Ah,2d,Jd,Kh,Qh,Kd,5d,2s,3c,Th,8s,Qd,Tc,Jh,Qc,5s,6d,5h,7s",
+                "board_str": "",
+                "max_buyin": "300.00",
+                "min_buyin": "120.00",
+                "num_seats": 6,
+                "precision": 0,
+                "table_type": "BNTY",
+                "hand_number": 15
+            },
+            "players": [
+                {
+                    "id": "a0fba3a4-a5fd-4c05-b675-63dae24891fb",
+                    "stack": "585.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 2,
+                    "username": "pirate",
+                    "auto_rebuy": null,
+                    "playing_state": "SITTING_OUT",
+                    "sit_out_at_blinds": false
+                },
+                {
+                    "id": "d697809f-ff34-4ad3-9b8f-e25b86e1dfe3",
+                    "stack": "0.00",
+                    "owes_bb": true,
+                    "owes_sb": false,
+                    "position": 3,
+                    "username": "alexeimartov",
+                    "auto_rebuy": null,
+                    "playing_state": "SITTING_OUT",
+                    "sit_out_at_blinds": false
+                },
+                {
+                    "id": "b86a22c3-6a85-44c4-816f-182df8c22095",
+                    "stack": "774.00",
+                    "owes_bb": false,
+                    "owes_sb": false,
+                    "position": 5,
+                    "username": "cuttlefish",
+                    "auto_rebuy": "0.00",
+                    "playing_state": "SITTING_IN",
+                    "sit_out_at_blinds": false
+                }
+            ],
+            "actions": [],
+            "events": [
+                {
+                    "ts": "20:46:48",
+                    "subj": "pirate",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "pirate",
+                    "event": "SIT_OUT",
+                    "args": {
+                        "immediate": true
+                    }
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "DEALER",
+                    "event": "SET_BLIND_POS",
+                    "args": {
+                        "bb_pos": null,
+                        "sb_pos": null,
+                        "btn_pos": 5
+                    }
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "cuttlefish",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "DEALER",
+                    "event": "RESET",
+                    "args": {}
+                },
+                {
+                    "ts": "20:46:48",
+                    "subj": "side_effect",
+                    "event": "CHAT",
+                    "args": {
+                        "msg": "Not enough players to start a new hand.",
+                        "speaker": "Dealer"
+                    }
+                }
+            ]
+        }
+    ]
+}
