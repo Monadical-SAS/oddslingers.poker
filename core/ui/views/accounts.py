@@ -115,6 +115,17 @@ def validate_username(username: str):
             "Username must contain at least one character "
             "that isn't a symbol."
         )
+
+    if ('nigg' in username.lower()) \
+            or ('n1gg' in username.lower())\
+            or ('lynch' in username.lower()):
+        raise ValidationError(
+            "Please think again about your choice of username, as "
+            "\nother people will see it."
+            "\nHere is a list of options to consider instead:"
+            "\nF_Douglass\nIdaBWells\nMLK_jr\nMuhammadAli\nMilesDavis\nH_Tubman"
+        )
+
     return True
 
 username_validators = [validate_username]
