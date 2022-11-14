@@ -1,0 +1,4 @@
+FROM nginx
+ENV ODDSLINGERS_ROOT "/opt/oddslingers.poker"
+COPY . "${ODDSLINGERS_ROOT}"
+RUN cp "${ODDSLINGERS_ROOT}"/etc/nginx/oddslingers-docker-compose.prod.conf /etc/nginx/nginx.conf

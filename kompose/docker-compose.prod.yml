@@ -18,24 +18,17 @@ services:
       - 443:443
     links: 
       - "django"
-    volumes:
-      - ./etc/nginx/oddslingers-docker-compose.prod.conf:/etc/nginx/nginx.conf
-      - ./data/certs:/opt/oddslingers.poker/data/certs
-      - ./core:/opt/oddslingers.poker/core
-      - ./data/static:/opt/oddslingers.poker/data/static
 
   postgres:
     image: postgres:13
     env_file:
       - ./env/prod-docker.env
       - ./.secrets-prod.env
-    #ports:
-    #  - 5432:5432
+    ports:
+      - 5432:5432
     expose:
       - 5432
     command: postgres -c shared_buffers=1GB
-    volumes:
-      - ./database/postgres:/var/lib/postgresql/data
 
   redis:
     image: redis:5-alpine
@@ -60,6 +53,8 @@ services:
       REDIS_HOST: redis
       DJANGO_SETTINGS_MODULE: "oddslingers.settings"
       IS_DOCKER: 1
+    ports:
+      - 8000:8000
     env_file:
       - ./env/prod-docker.env
       - ./.secrets-prod.env
@@ -69,7 +64,7 @@ services:
   worker:
     image: oddslingers:django_base
     working_dir: /opt/oddslingers.poker/core/
-    entrypoint: supervisor -c /opt/oddslingers.poker/etc/supervisor/oddslingers-docker-prod-worker.conf
+    entrypoint: /opt/oddslingers.poker/bin/worker-docker-entrypoint.sh
     user: root
     depends_on:
       - postgres
@@ -118,9 +113,3 @@ services:
     env_file:
       - ./env/prod-docker.env
       - ./.secrets-prod.env
-    volumes:
-      - ./data:/opt/oddslingers.poker/data
-      - ./core:/opt/oddslingers.poker/core
-      - ./bin:/opt/oddslingers.poker/bin
-      - ./etc:/opt/oddslingers.poker/etc
- 

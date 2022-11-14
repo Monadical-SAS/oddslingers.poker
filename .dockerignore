@@ -1,4 +1,4 @@
-data/
+data
 core/venv
 core/.venv
 core/js/node_modules

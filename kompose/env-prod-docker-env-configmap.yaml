@@ -1,0 +1,29 @@
+apiVersion: v1
+data:
+  ALLOWED_HOSTS: "*"
+  ASYNC_TABLEBEAT_START: "False"
+  AUTOSTART_BOTBEAT: "True"
+  AUTOSTART_TABLEBEAT: "True"
+  CSRF_COOKIE_SECURE: "False"
+  DEBUG: "False"
+  DEFAULT_HOST: oddslingers.com
+  ENABLE_DEBUG_TOOLBAR: "False"
+  ENABLE_DRAMATIQ: "True"
+  ENABLE_PIWIK: "True"
+  ENABLE_SENTRY: "True"
+  ENABLE_SUPPORT_BOT: "False"
+  POSTGRES_DB: postgres
+  POSTGRES_HOST: postgres
+  POSTGRES_PORT: "5432"
+  POSTGRES_USER: oddslingers
+  SEND_ZULIP_ALERTS: "True"
+  SERVE_STATIC: "False"
+  SESSION_COOKIE_SECURE: "True"
+  STDOUT_IO_SUMMARY: "False"
+  REDIS_PORT: "6379"
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  labels:
+    io.kompose.service: django-env-prod-docker-env
+  name: env-prod-docker-env

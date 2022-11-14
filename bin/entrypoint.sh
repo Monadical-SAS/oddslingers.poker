@@ -24,4 +24,5 @@ else
     chown -R root:root "$DATA_DIR/redis"
     chown -R "$DJANGO_USER":"$DJANGO_USER" "$ODDSLINGERS_ROOT/core"
 fi
+DJANGO_USER=www-data
 gosu "$DJANGO_USER" bash -c "$COMMAND"

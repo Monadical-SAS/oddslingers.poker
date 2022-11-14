@@ -1,0 +1,200 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f docker-compose.prod.yml
+    kompose.version: 1.26.1 (a9d05d509)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: dramatiq
+  name: dramatiq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: dramatiq
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f docker-compose.prod.yml
+        kompose.version: 1.26.1 (a9d05d509)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: dramatiq
+    spec:
+      containers:
+        - args:
+            - nice
+            - "-15"
+            - ./manage.py
+            - rundramatiq
+            - --processes
+            - "1"
+            - --threads
+            - "1"
+          env:
+            - name: ALLOWED_HOSTS
+              valueFrom:
+                configMapKeyRef:
+                  key: ALLOWED_HOSTS
+                  name: env-prod-docker-env
+            - name: ASYNC_TABLEBEAT_START
+              valueFrom:
+                configMapKeyRef:
+                  key: ASYNC_TABLEBEAT_START
+                  name: env-prod-docker-env
+            - name: AUTOSTART_BOTBEAT
+              valueFrom:
+                configMapKeyRef:
+                  key: AUTOSTART_BOTBEAT
+                  name: env-prod-docker-env
+            - name: AUTOSTART_TABLEBEAT
+              valueFrom:
+                configMapKeyRef:
+                  key: AUTOSTART_TABLEBEAT
+                  name: env-prod-docker-env
+            - name: CLOUDFLARE_EMAIL
+              valueFrom:
+                configMapKeyRef:
+                  key: CLOUDFLARE_EMAIL
+                  name: secrets-prod-env
+            - name: CLOUDFLARE_KEY
+              valueFrom:
+                configMapKeyRef:
+                  key: CLOUDFLARE_KEY
+                  name: secrets-prod-env
+            - name: CLOUDFLARE_ZONE_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: CLOUDFLARE_ZONE_ID
+                  name: secrets-prod-env
+            - name: CSRF_COOKIE_SECURE
+              valueFrom:
+                configMapKeyRef:
+                  key: CSRF_COOKIE_SECURE
+                  name: env-prod-docker-env
+            - name: DEBUG
+              valueFrom:
+                configMapKeyRef:
+                  key: DEBUG
+                  name: env-prod-docker-env
+            - name: DEFAULT_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: DEFAULT_HOST
+                  name: env-prod-docker-env
+            - name: ENABLE_DEBUG_TOOLBAR
+              valueFrom:
+                configMapKeyRef:
+                  key: ENABLE_DEBUG_TOOLBAR
+                  name: env-prod-docker-env
+            - name: ENABLE_DRAMATIQ
+              valueFrom:
+                configMapKeyRef:
+                  key: ENABLE_DRAMATIQ
+                  name: env-prod-docker-env
+            - name: ENABLE_PIWIK
+              valueFrom:
+                configMapKeyRef:
+                  key: ENABLE_PIWIK
+                  name: env-prod-docker-env
+            - name: ENABLE_SENTRY
+              valueFrom:
+                configMapKeyRef:
+                  key: ENABLE_SENTRY
+                  name: env-prod-docker-env
+            - name: ENABLE_SUPPORT_BOT
+              valueFrom:
+                configMapKeyRef:
+                  key: ENABLE_SUPPORT_BOT
+                  name: env-prod-docker-env
+            - name: MAILGUN_API_KEY
+              valueFrom:
+                configMapKeyRef:
+                  key: MAILGUN_API_KEY
+                  name: secrets-prod-env
+            - name: ODDSLINGERS_ENV
+              value: PROD
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_DB
+                  name: env-prod-docker-env
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_HOST
+                  name: env-prod-docker-env
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_PASSWORD
+                  name: secrets-prod-env
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_PORT
+                  name: env-prod-docker-env
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_USER
+                  name: env-prod-docker-env
+            - name: REDIS_HOST
+              value: redis
+            - name: SECRET_KEY
+              valueFrom:
+                configMapKeyRef:
+                  key: SECRET_KEY
+                  name: secrets-prod-env
+            - name: SEND_ZULIP_ALERTS
+              valueFrom:
+                configMapKeyRef:
+                  key: SEND_ZULIP_ALERTS
+                  name: env-prod-docker-env
+            - name: SENTRY_DSN_KEY
+              valueFrom:
+                configMapKeyRef:
+                  key: SENTRY_DSN_KEY
+                  name: secrets-prod-env
+            - name: SENTRY_DSN_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  key: SENTRY_DSN_SECRET
+                  name: secrets-prod-env
+            - name: SENTRY_PROJECT_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: SENTRY_PROJECT_ID
+                  name: secrets-prod-env
+            - name: SERVE_STATIC
+              valueFrom:
+                configMapKeyRef:
+                  key: SERVE_STATIC
+                  name: env-prod-docker-env
+            - name: SESSION_COOKIE_SECURE
+              valueFrom:
+                configMapKeyRef:
+                  key: SESSION_COOKIE_SECURE
+                  name: env-prod-docker-env
+            - name: STDOUT_IO_SUMMARY
+              valueFrom:
+                configMapKeyRef:
+                  key: STDOUT_IO_SUMMARY
+                  name: env-prod-docker-env
+            - name: ZULIP_API_KEY
+              valueFrom:
+                configMapKeyRef:
+                  key: ZULIP_API_KEY
+                  name: secrets-prod-env
+          image: oddslingers:django_base
+          name: dramatiq
+          resources: {}
+          securityContext:
+            capabilities:
+              add:
+                - SYS_NICE
+          workingDir: /opt/oddslingers.poker/core/
+      restartPolicy: Always
+status: {}
