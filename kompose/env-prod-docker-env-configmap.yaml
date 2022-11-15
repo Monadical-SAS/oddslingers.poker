@@ -18,7 +18,7 @@ data:
   POSTGRES_USER: oddslingers
   SEND_ZULIP_ALERTS: "True"
   SERVE_STATIC: "False"
-  SESSION_COOKIE_SECURE: "True"
+  SESSION_COOKIE_SECURE: "False"
   STDOUT_IO_SUMMARY: "False"
   REDIS_PORT: "6379"
 kind: ConfigMap

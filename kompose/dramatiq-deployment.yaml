@@ -143,6 +143,11 @@ spec:
                   name: env-prod-docker-env
             - name: REDIS_HOST
               value: redis
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: REDIS_PORT
+                  name: env-prod-docker-env
             - name: SECRET_KEY
               valueFrom:
                 configMapKeyRef:
