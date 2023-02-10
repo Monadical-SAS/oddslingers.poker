@@ -1,9 +1,10 @@
 {% load utils %}
 
 <style>
-    form > div {
+    form>div {
         width: 100%;
     }
+
     #signup-form {
         text-align: center;
         max-width: 600px;
@@ -12,36 +13,44 @@
         background-color: #f4f4f2;
         padding: 15px;
         border-radius: 15px;
-        border: 1px solid rgba(0,0,0,0.01);
-        box-shadow: 4px 4px 4px rgba(0,0,0,0.03);
+        border: 1px solid rgba(0, 0, 0, 0.01);
+        box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.03);
     }
+
     #signup-form h3 {
         font-weight: 200;
         font-family: Questa;
-        color: #333;        
+        color: #333;
     }
+
     .input-group-addon {
         color: #eee;
     }
+
     #signup-form .input-group {
         width: 100%;
     }
+
     #signup-form .input-group-addon {
         border: 1px solid #aaa;
         border-right: 0px;
     }
+
     #password2-field {
         margin-top: 2px;
     }
-    #signup-form .input-group > span {
+
+    #signup-form .input-group>span {
         transition: border 500ms ease-out;
         -webkit-transition: border 500ms ease-out;
         -moz-transition: border 500ms ease-out;
         -o-transition: border 500ms ease-out;
     }
+
     .pass-len-warning {
         opacity: 0;
     }
+
     .signup-img {
         height: 100px;
         margin-top: -50px;
@@ -49,16 +58,22 @@
         margin: auto;
         margin-bottom: 27px;
     }
-    #username-label, #email-label {
+
+    #username-label,
+    #email-label {
         width: 90px;
     }
-    #password-label, #password-label2 {
+
+    #password-label,
+    #password-label2 {
         width: 90px;
     }
+
     .field-narrow {
         width: 64px;
         text-align: left;
     }
+
     .field-wide {
         width: 100px;
         text-align: left;
@@ -66,18 +81,18 @@
 </style>
 
 <div id="signup-form">
-    <form action="{% url 'Signup' %}" method="POST">{% csrf_token %}
+    <form action="{% url 'Signup' %}" method="POST" id="refferal-signup">{% csrf_token %}
         <div style="line-height: 1.2">
 
             <h3>
-                {# <img class="signup-img" src="/static/images/pirate.png"/> #}
-                
+                {# <img class="signup-img" src="/static/images/pirate.png" /> #}
+
                 Signing Up is Easy!
-                <br/>
+                <br />
             </h3>
-            <br/>
-            If you've never played here before,<br/>create a free account to track your winnings.<br/>
-            <br/>
+            <br />
+            If you've never played here before,<br />create a free account to track your winnings.<br />
+            <br />
             <center style="opacity: 0.4">
                 <span style="color:red">♥</span>
                 &nbsp;&nbsp;&nbsp;
@@ -105,62 +120,94 @@
                 &nbsp;&nbsp;&nbsp;
                 <span style="color:red">♥</span>
             </center>
-            <br/>
-            <i style="opacity:0.8">Chips are free. You get ㆔{{SIGNUP_BONUS}} chips to start,<br/>no credit card needed!</i>
-            <br/><br/><br/>
+            <br />
+            <i style="opacity:0.8">Chips are free. You get ㆔{{SIGNUP_BONUS}} chips to start,<br />no credit card
+                needed!</i>
+            <br /><br /><br />
 
 
             <div id="username-field" class="input-group" style="margin-bottom: 5px">
-                <span class="input-group-addon" id="username-label"><div class="field-narrow">Username</div></span>
-                <input type="text" name="username" class="form-control" placeholder="A public display name" value="{{username}}" aria-describedby="username-label">
+                <span class="input-group-addon" id="username-label">
+                    <div class="field-narrow">Username</div>
+                </span>
+                <input type="text" name="username" class="form-control" placeholder="A public display name"
+                    value="{{username}}" aria-describedby="username-label">
             </div>
             <!--<small>Your public handle.</small><br/>-->
 
             <div id="email-field" class="input-group">
-                <span class="input-group-addon" id="email-label"><div class="field-narrow">Email</div></span>
-                <input type="email" name="email" class="form-control" placeholder="email@example.com" value="{{email}}" aria-describedby="email-label">
+                <span class="input-group-addon" id="email-label">
+                    <div class="field-narrow">Email</div>
+                </span>
+                <input type="email" name="email" class="form-control" placeholder="email@example.com" value="{{email}}"
+                    aria-describedby="email-label">
             </div>
             {# <small style="margin-top: 5px;">Your email will not be shared, .</small> #}
-            <br/><br/>
+            <br /><br />
+
 
 
             <div id="password1-field" class="input-group">
-                <span class="input-group-addon" id="password-label"><div class="field-wide">Password</div></span>
-                <input type="password" name="password" class="form-control" placeholder="••••••••••••" aria-describedby="password-label">
+                <span class="input-group-addon" id="password-label">
+                    <div class="field-wide">Password</div>
+                </span>
+                <input type="password" name="password" class="form-control" placeholder="••••••••••••"
+                    aria-describedby="password-label">
             </div>
 
 
             <div id="password2-field" class="input-group">
-                <span class="input-group-addon" id="password-label2"><div class="field-wide">Password Again</div></span>
-                <input type="password" name="password2" class="form-control" placeholder="••••••••••••" aria-describedby="password-label">
+                <span class="input-group-addon" id="password-label2">
+                    <div class="field-wide">Password Again</div>
+                </span>
+                <input type="password" name="password2" class="form-control" placeholder="••••••••••••"
+                    aria-describedby="password-label">
             </div>
-            <small class="pass-len-warning"><br/>At least 8 characters.</small>
+            <small class="pass-len-warning"><br />At least 8 characters.</small>
             <input type="hidden" name="next" value="{{next}}">
 
+            <div class="input-group" id="refer" style="display: none;">
+                <span class="input-group-addon" id="email-label">
+                    <div class="field-narrow">referal_code</div>
+                </span>
+                <input type="text" name="referal_code" class="form-control" placeholder="referal_code"
+                    aria-describedby="" id="referal_code">
+            </div>
 
             {% if signup_errors %}
-                <br/>
-                <span style="color: red; font-size: 1.2em; line-height: 1.2">
-                    {{signup_errors|linebreaksbr}}
-                </span><br/><br/>
-                <br/>
+            <br />
+            <span style="color: red; font-size: 1.2em; line-height: 1.2">
+                {{signup_errors|linebreaksbr}}
+            </span><br /><br />
+            <br />
             {% else %}
             {% endif %}
 
-            <br/><br/>
+            <br /><br />
             <button class="btn btn-lg btn-success" style="width:100%; font-size: 1.5em" type="submit">
                 Sign Up &amp; Start Playing!
                 &nbsp;&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i>
             </button>
-            <br/><br/>
+            <br /><br />
             <small>
                 <a class="support-link" target="_blank" href="{% url 'FAQ' %}">FAQ</a> &nbsp; | &nbsp;
-                <a class="support-link" target="_blank" href="https://docs.oddslingers.com/s/privacy-policy">Privacy Policy</a> &nbsp; | &nbsp;
+                <a class="support-link" target="_blank" href="https://docs.oddslingers.com/s/privacy-policy">Privacy
+                    Policy</a> &nbsp; | &nbsp;
                 <a class="support-link" target="_blank" href="{% url 'Support' %}?subject=Signup+Help+Request">Help</a>
             </small>
         </div>
 
         <script>
+
+            var hiturl = document.URL;
+            var newur = hiturl.split("?");
+            var ref_code = newur[1]
+
+            document.getElementById("referal_code").value = ref_code;
+
+            if (ref_code) {
+                document.getElementById("refferal-signup").setAttribute("action", `{% url 'Signup' %}` + '?' + ref_code);
+            }
             function preventIllegalCharacters(event) {
                 if (event.keyCode == 32) {
                     event.preventDefault();
@@ -214,18 +261,18 @@
                 }
             }
 
-            window.addEventListener('load', function() {
-                $('#username-field input').on('keydown', function(e) {
+            window.addEventListener('load', function () {
+                $('#username-field input').on('keydown', function (e) {
                     preventIllegalCharacters(e);
                 })
-                $('#username-field input').on('keyup', function() {
+                $('#username-field input').on('keyup', function () {
                     checkUsernameValid();
                 });
-                $('#password1-field input').on('keyup', function() {
+                $('#password1-field input').on('keyup', function () {
                     checkPasswordValid();
                     checkPasswordsEqual();
                 });
-                $('#password2-field input').on('keyup', function() {
+                $('#password2-field input').on('keyup', function () {
                     checkPasswordsEqual();
                 });
                 $('#email-field input').on('keyup', function () {

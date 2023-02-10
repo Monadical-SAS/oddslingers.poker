@@ -122,3 +122,4 @@ zope.interface==4.5.0
 zulip==0.5.5
 zulip-bots==0.5.6
 zulip-botserver==0.5.5
+sendgrid

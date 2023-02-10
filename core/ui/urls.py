@@ -15,7 +15,7 @@ from .views.leaderboard import Leaderboard
 from .views.tables import Tables
 
 from .views.accounts import (
-    UserProfile, Login, Signup, Logout, EmailChips, ChangeTheme, ConfirmEmail
+    UserProfile, Login, Signup, Logout, EmailChips, ChangeTheme, ConfirmEmail,Generate_referal
 )
 from .views.api import (
     User, UserBalance, UserSessions, TableInvite, URLShortener,
@@ -100,6 +100,8 @@ urlpatterns = [
 
     # special shortened redirect urls
     path('s/<key>/', short_url_redirect),
+    path('accounts/generate_referal/', Generate_referal.as_view(), name='generate_referal'),
+    
 
     # Tools
     # path('debugger/', TableDebuggerList.as_view(), name='TableDebuggerList'),

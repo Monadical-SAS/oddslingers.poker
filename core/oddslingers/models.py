@@ -86,6 +86,7 @@ class User(AbstractUser, BaseModel):
     light_theme = models.BooleanField(default=True)
     keyboard_shortcuts = models.BooleanField(default=False)
     muck_after_winning = models.BooleanField(default=True)
+    referal_count = models.IntegerField(default=0)
 
     def __str__(self):
         return self.username or self.short_id
@@ -494,3 +495,9 @@ def user_logged_out_handler(sender, request, user, **kwargs):
 
 user_logged_in.connect(user_logged_in_handler)
 user_logged_out.connect(user_logged_out_handler)
+
+
+class referal(BaseModel):
+    referal_user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='referal_user')
+    refer_user=models.ForeignKey(User, on_delete=models.CASCADE,related_name='refer_user')
+    

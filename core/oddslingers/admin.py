@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .models import User, UserSession, UserBalance, UserStats
+from .models import User, UserSession, UserBalance, UserStats, referal
 
 
 class UserSessionAdmin(admin.ModelAdmin):
@@ -10,7 +10,7 @@ class UserSessionAdmin(admin.ModelAdmin):
 
 
 class CustomUserAdmin(UserAdmin):
-    list_display = ('short_id', 'username', 'email', 'games_level_number', 'chips_in_play', 'badge_count', 'hands_played', 'is_robot', 'is_staff', 'is_active', 'created', 'last_url', 'last_activity')
+    list_display = ('short_id', 'username', 'email', 'games_level_number', 'chips_in_play', 'badge_count', 'hands_played', 'is_robot', 'is_staff', 'is_active', 'created', 'last_url', 'last_activity','referal_count')
     search_fields = ('id', 'username', 'email')
     sort_fields = ('username', 'email', 'created', 'games_level_number', 'is_robot', 'is_staff', 'is_active', 'last_url', 'last_activity')
 
@@ -19,3 +19,5 @@ admin.site.register(User, CustomUserAdmin)
 admin.site.register(UserSession, UserSessionAdmin)
 admin.site.register(UserBalance)
 admin.site.register(UserStats)
+admin.site.register(referal)
+

@@ -1,0 +1,77 @@
+{% extends 'ui/base.html' %}
+
+{% load static %}
+{% load utils %}
+
+{% block inner %}
+<div id="referal_div">
+  <div class="referal-wrp">
+    <button class="back-btn" onclick="location.href='/user'"><i class="fa fa-long-arrow-left"
+        aria-hidden="true"></i></button>
+    <div class="container">
+      <div class="referal-info">
+        <h1>Refer and Earn</h1>
+        <img src="http://192.168.1.33/static/images/logo-black.webp">
+        <h4>Refer and Earn free</h4>
+        <p>In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual
+          form
+          of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder
+          before
+          final copy is available.</p>
+      </div>
+      <form action="/accounts/generate_referal/" method="post">
+        {% csrf_token %}
+
+        <div class="adress-wrp">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="address-link">
+                <label for="lname">Enter Email</label>
+                <input type="text" id="email" name="email" value="">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="address-link">
+                <label for="fname">Your Referal Link</label>
+                <input type="text" id="referal_id" name="referal_id" value="{{next}}">
+                <button class="copy-link-btn" onclick="copyToClipboard()"><i class="fa fa-clone"
+                    aria-hidden="true"></i></button>
+                <button type="submit" class="share-link-btn"><i class="fa fa-share-alt" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <ul class="social-icon">
+        <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-whatsapp" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li>
+        <li><a href="#"><i class="fa fa-music" aria-hidden="true"></i></a></li>
+      </ul>
+      <div class="sucess-msg">
+        {{msg}}
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function copyToClipboard() {
+    var x = document.getElementById("referal_id").value;
+    let val = 'http://192.168.1.33/accounts/signup/?' + x;
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = val;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    alert("Link Copy")
+  }
+</script>
+{% endblock inner %}

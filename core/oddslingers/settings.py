@@ -653,3 +653,14 @@ STATUS_LINE = log_django_status_line()
 #     traceback.print_stack(file=self.stdout)
 
 # sys.stdout = TracePrints()
+
+# Email
+
+
+DEFAULT_FROM_EMAIL = 'mailto:playacepokr@gmail.com'
+
+SENDGRID_API_KEY='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'
+
+REFER_LINK="http://192.168.1.33/accounts/signup/?"
+
+

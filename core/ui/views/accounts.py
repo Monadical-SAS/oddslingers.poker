@@ -1,9 +1,11 @@
 import os
 import logging
 import json
-
+import uuid
 from datetime import timedelta
-
+from django.conf import settings
+from django.core.mail import send_mail
+from django.db.models import Sum, Q, QuerySet, F
 from django.views import View
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
@@ -20,7 +22,8 @@ from allauth.account.utils import complete_signup
 from allauth.account.models import EmailAddress
 from allauth.account.views import ConfirmEmailView
 
-from oddslingers.models import User
+from oddslingers.models import User, referal, UserBalance
+
 from oddslingers.tasks import send_signup_email, send_chips_email, track_analytics_event
 from oddslingers.utils import (sanitize_html, require_login,
                           camelcase_to_capwords)
@@ -31,7 +34,7 @@ from banker.utils import (
     table_transfer_history, freezeout_transfer_history
 )
 from banker.mutations import buy_chips, transfer_chips
-from banker.models import BalanceTransfer
+from banker.models import BalanceTransfer , Cashier
 from banker.deprecated import sell_chips
 
 from poker.level_utils import update_levels, earned_chips
@@ -50,6 +53,9 @@ from rewards.models import Badge
 from ui.views.leaderboard import load_leaderboard_cache
 
 from .base_views import PublicReactView
+import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 logger = logging.getLogger('root')
 
@@ -223,7 +229,11 @@ class Signup(View):
         password = request.POST.get('password')
         password2 = request.POST.get('password2')
         email = request.POST.get('email')
+        referal_code = request.POST.get('referal_code')
+      
         next_url = safe_next_url(request.POST.get('next'))
+        
+        
 
         # they're already logged in
         if request.user.is_authenticated:
@@ -253,6 +263,37 @@ class Signup(View):
         )
         user.backend = settings.AUTHENTICATION_BACKENDS[0]
         user.save()
+        
+        # user_obj = User.objects.get(email=email)
+        # usr_bal_obj=UserBalance.objects.get(user=user)
+        # usr_bal_obj.balance +=2000
+        
+       
+        
+        try:
+            if referal_code == 'undefine':
+                pass
+            else:
+                
+                # user_obj = User.objects.get(email=email)
+                # curr_obj = user_obj.userbalance()
+                # curr_obj.balance = F('balance') + 2000
+                
+                # user_obj.userbalance =  int(current_balance) + 2000
+                
+                ref=User.objects.get(id=referal_code)
+                ref.referal_count += 1
+                # ref_obj=ref.userbalance()
+                # ref_obj.balance = F('balance') + 2000
+                ref.save()
+                
+                refer=referal.objects.create(
+                    referal_user=ref,
+                    refer_user=user_obj
+                )
+                refer.save() 
+        except:
+            pass
 
         # give them some free chips to start out with
         execute_mutations(
@@ -979,3 +1020,38 @@ def new_achievements(last_info: dict,
         new_stuff['badges'] = new_badges
 
     return new_stuff if new_stuff else None
+
+
+class Generate_referal(View):
+    template = 'ui/referal.html'
+    
+
+    def get(self, request):
+        current_user = request.user
+        
+        return render(request, self.template, {
+            'next': current_user.id,
+            'SIGNUP_BONUS': settings.SIGNUP_BONUS,
+    })
+
+        
+    def post(self,request):
+        referal_id = request.POST.get('referal_id')
+        email = request.POST.get('email')
+        refer_link=settings.REFER_LINK+referal_id
+        from_email=settings.DEFAULT_FROM_EMAIL
+        message = Mail(
+            from_email=from_email,
+            to_emails=email,
+            subject='referral email',
+            html_content=f'<strong>Your refer Link {refer_link}</strong>')
+        
+        # SENDGRID_API_KEY = settings.SENDGRID_API_KEY
+        sg = SendGridAPIClient("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")
+        response = sg.send(message)
+           
+        print(response)
+        
+        return render(request, self.template, {
+            'msg': "Email sent ..!!",
+        })
