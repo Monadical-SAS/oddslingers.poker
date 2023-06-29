@@ -44,8 +44,6 @@ services:
   django:
     build: .
     image: oddslingers:django_base
-    env_file:
-      - .env
     working_dir: /opt/oddslingers.poker/core/
     command: ./manage.py runserver --http_timeout 120 0.0.0.0:8000 
     stdin_open: true
