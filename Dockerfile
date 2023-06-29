@@ -45,6 +45,10 @@ RUN apt-get update && apt-get install -y \
     # cleanup apt caches to keep image small
     rm -rf /var/lib/apt/lists/*
 
+SHELL ["/bin/bash", "-c"]
+RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash - && apt-get install -y nodejs
+SHELL ["/bin/sh", "-c"]
+
 # Setup Python virtualenv separately from code dir in /opt/oddslingers/.venv-docker.
 #   It needs to be outside of the code dir because the code is mounted as a volume
 #   and would overwite the docker-specific venv with the incompatible host venv.
@@ -63,7 +67,7 @@ COPY ./core/Pipfile.lock "$ODDSLINGERS_ROOT/Pipfile.lock"
 RUN jq -r '.default,.develop | to_entries[] | .key + .value.version' "$ODDSLINGERS_ROOT/Pipfile.lock" | \
     pip install --no-cache-dir -r /dev/stdin && \
     rm "$ODDSLINGERS_ROOT/Pipfile.lock"
-RUN npm install --global npm yarn
+RUN npm install --global npm && npm install --global yarn
 RUN userdel "$DJANGO_USER" && addgroup --system "$DJANGO_USER" && \
     adduser --system --ingroup "$DJANGO_USER" --shell /bin/false "$DJANGO_USER"
 
