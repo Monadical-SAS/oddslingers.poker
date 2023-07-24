@@ -182,12 +182,16 @@ def daily_report(send_zulip=True):
     user_summary = '\n - '.join(user_desc(u) for u in sorted(new_signups, key=lambda u: -u.hands_played))
     player_summary = '\n - '.join(player_desc(username, hands) for username, hands in sorted(top_players.items(), key=lambda p: -p[1]))
 
+    hands_by_user = 0
+    if total_users != 0:
+        hands_by_user = round((total_hands / 1000)/total_users, 1)
+
     report_msg = f"""
 **All-time:**
 
  - Hands Played: {round(total_hands / 1000000, 1)}mm
  - Tables: {total_tables}
- - Users: {total_users} users (avg {round((total_hands / 1000)/total_users, 1)}k hands/user)
+ - Users: {total_users} users (avg {hands_by_user}k hands/user)
 
 **{new_signups.count()} New signups since yesterday:**
 
