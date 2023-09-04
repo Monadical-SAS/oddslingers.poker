@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:18
 
 #RUN apk update && \
 #    apk add --no-cache fish && \
@@ -10,8 +10,7 @@ FROM node:14
 
 
 WORKDIR /opt/oddslingers.poker/core/js
-COPY ./core/js/yarn.lock ./core/js/package.json /opt/oddslingers.poker/core/js/
-
+COPY ./core/js/package.json /opt/oddslingers.poker/core/js/
 RUN yarn install
 
 ENV PATH="/opt/oddslingers.poker/core/js/node_modules/.bin:${PATH}"

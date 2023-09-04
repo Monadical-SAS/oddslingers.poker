@@ -78,7 +78,7 @@ services:
     environment:
       ODDSLINGERS_ENV: DEV
     volumes:
-      - ./core/js:/opt/oddslingers.poker/core/js
+      #- ./core/js:/opt/oddslingers.poker/core/js
       - ./core/static:/opt/oddslingers.poker/core/static
       # Hide local node_modules
       - ./core/js/node_modules:/src/node_modules
