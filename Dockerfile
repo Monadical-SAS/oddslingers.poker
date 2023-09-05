@@ -18,7 +18,7 @@ ENV DATA_DIR "$ODDSLINGERS_ROOT/data"
 ENV HTTP_PORT "8000"
 ENV DJANGO_USER "www-data"
 ENV VENV_NAME ".venv-docker"
-ENV NODE_MAJOR "14"
+ENV NODE_MAJOR "18"
 
 # Setup system environment variables neded for python to run smoothly
 ENV LC_ALL C.UTF-8
