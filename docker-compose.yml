@@ -72,7 +72,7 @@ services:
       context: . 
       dockerfile: ./Dockerfile.webpack
     image: oddslingers:webpack
-    command: sh -c "(npm rebuild node-sass && webpack --mode development --watch --info-verbosity verbose & node-sass-chokidar --watch scss/ -o ../static/css 2>&1  &)| cat"
+    command: sh -c "(webpack --mode development --watch --info-verbosity verbose & saas --watch scss/ -o ../static/css 2>&1  &)| cat"
     stdin_open: true
     tty: true
     environment:

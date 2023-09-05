@@ -18,6 +18,7 @@ ENV DATA_DIR "$ODDSLINGERS_ROOT/data"
 ENV HTTP_PORT "8000"
 ENV DJANGO_USER "www-data"
 ENV VENV_NAME ".venv-docker"
+ENV NODE_MAJOR "18"
 
 # Setup system environment variables neded for python to run smoothly
 ENV LC_ALL C.UTF-8
@@ -45,9 +46,10 @@ RUN apt-get update && apt-get install -y \
     # cleanup apt caches to keep image small
     rm -rf /var/lib/apt/lists/*
 
-SHELL ["/bin/bash", "-c"]
-RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash - && apt-get install -y nodejs
-SHELL ["/bin/sh", "-c"]
+RUN mkdir -p /etc/apt/keyrings
+RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
+RUN apt-get update && apt-get install -y nodejs
 
 # Setup Python virtualenv separately from code dir in /opt/oddslingers/.venv-docker.
 #   It needs to be outside of the code dir because the code is mounted as a volume
