@@ -4,6 +4,7 @@ from oddslingers.utils import autocast, rotated
 
 from poker.cards import Card
 
+
 class RotatedTest(TestCase):
     def setUp(self):
         pass
@@ -23,10 +24,11 @@ class RotatedTest(TestCase):
         rotated_list = list(rotated(test_list, 34))
 
         self.assertEqual(test_list[34], rotated_list[0])
-        self.assertEqual(test_list[0], rotated_list[100-34])
+        self.assertEqual(test_list[0], rotated_list[100 - 34])
 
     def tearDown(self):
         pass
+
 
 def AutocastTest(TestCase):
     def setUp(self):
@@ -37,19 +39,20 @@ def AutocastTest(TestCase):
         self.testfunc = testfunc
 
     def test_autocast(self):
-        expected = (1, 2, 3, '4', 5.1)
+        expected = (1, 2, 3, "4", 5.1)
 
-        output = self.testfunc(1, 2, '3', 4, '5.1')
+        output = self.testfunc(1, 2, "3", 4, "5.1")
         self.assertEqual(output, expected)
 
-        output = self.testfunc(1, 2, '3')
+        output = self.testfunc(1, 2, "3")
         self.assertEqual(output, expected)
 
-        bad_input = ('a', 'b', 'c')
+        bad_input = ("a", "b", "c")
         self.assertRaises(Exception, bad_input, self.testfunc)
 
     def tearDown(self):
         pass
+
 
 def AutocastCardTest(TestCase):
     def setUp(self):
@@ -60,9 +63,9 @@ def AutocastCardTest(TestCase):
         self.testfunc = testfunc
 
     def test_autocast(self):
-        expected = Card('7h')
+        expected = Card("7h")
 
-        output = self.testfunc(Card('7h'))
+        output = self.testfunc(Card("7h"))
         self.assertEqual(output, expected)
 
     def tearDown(self):

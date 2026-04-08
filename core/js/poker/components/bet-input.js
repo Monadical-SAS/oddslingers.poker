@@ -2,18 +2,12 @@ import React from 'react'
 import {reduxify} from '@/util/reduxify'
 import classNames from 'classnames'
 
-import DropdownButton from 'react-bootstrap/lib/DropdownButton'
-import MenuItem from 'react-bootstrap/lib/MenuItem'
-import Button from 'react-bootstrap/lib/Button'
-import InputGroup from 'react-bootstrap/lib/InputGroup'
-import FormGroup from 'react-bootstrap/lib/FormGroup'
-import FormControl from 'react-bootstrap/lib/FormControl'
+import { DropdownButton, Dropdown, Button, InputGroup, Form } from 'react-bootstrap'
 
 import {is_mobile} from '@/util/browser'
 import {getGamestate, getLoggedInPlayer} from '@/poker/selectors'
 
 
-const InputGroupButton = InputGroup.Button
 const use_kb = global.user && global.user.keyboard_shortcuts
 
 const roundValue = (val, table_sb, min_bet, max_bet) => {
@@ -52,18 +46,12 @@ class FoldButton extends React.Component {
                                onMouseDown={() => this.onToggle()}
                                open={this.state.show}
                                onMouseUp={() => this.onFold()}>
-                <MenuItem key='show' onMouseUp={() => this.onFoldAndShow()}>
+                <Dropdown.Item key='show' onMouseUp={() => this.onFoldAndShow()}>
                     Fold & show
-                </MenuItem>
+                </Dropdown.Item>
         </DropdownButton>
     }
 }
-//<Button className={classNames('fold-btn', {'all-in-btn': all_in})}
-//        bsStyle={can_check ? 'default' : 'warning'}
-//        onClick={() => onSubmitAction('FOLD')}
-//        disabled={disabled}>
-//        Fold
-//</Button>
 
 const CheckButton = ({onSubmitAction, disabled=false}) =>
     <Button className="check-btn"
@@ -134,7 +122,6 @@ export const BetInput = reduxify({
     render: ({can_fold, can_check, can_call, can_bet, can_raise, current_bet, submitted, table_sb,
               is_tournament, min_bet, player_allin, amt_to_call, all_in, onChangeBet, onSubmitAction}) => {
 
-        // auto-focus into bet field
         const is_chat_focused = $('#chat-input').is(':focus')
         if (!is_mobile() && (can_bet || can_raise) && !is_chat_focused) {
             setTimeout(() => {$('input.bet-input').click().focus()}, 50)
@@ -159,28 +146,26 @@ export const BetInput = reduxify({
                     onSubmitAction={onSubmitAction} />}
 
             {(can_bet || can_raise) ?
-                <FormGroup className="bet-group">
+                <Form.Group className="bet-group">
                     <InputGroup>
-                        <InputGroupButton>
-                            {can_bet ?
-                                <BetButton
-                                    table_sb={table_sb}
-                                    min_bet={min_bet}
-                                    player_allin={player_allin}
-                                    current_bet={current_bet}
-                                    onSubmitAction={onSubmitAction}
-                                    onChangeBet={(val) => is_tournament ? {} : onChangeBet(val)}
-                                    disabled={submitted} />
-                              : <RaiseButton
-                                    table_sb={table_sb}
-                                    min_bet={min_bet}
-                                    player_allin={player_allin}
-                                    current_bet={current_bet}
-                                    onChangeBet={(val) =>  is_tournament ? {} : onChangeBet(val)}
-                                    onSubmitAction={onSubmitAction}
-                                    disabled={submitted} />}
-                        </InputGroupButton>
-                        <FormControl
+                        {can_bet ?
+                            <BetButton
+                                table_sb={table_sb}
+                                min_bet={min_bet}
+                                player_allin={player_allin}
+                                current_bet={current_bet}
+                                onSubmitAction={onSubmitAction}
+                                onChangeBet={(val) => is_tournament ? {} : onChangeBet(val)}
+                                disabled={submitted} />
+                          : <RaiseButton
+                                table_sb={table_sb}
+                                min_bet={min_bet}
+                                player_allin={player_allin}
+                                current_bet={current_bet}
+                                onChangeBet={(val) =>  is_tournament ? {} : onChangeBet(val)}
+                                onSubmitAction={onSubmitAction}
+                                disabled={submitted} />}
+                        <Form.Control
                             type="number"
                             id='bet-input'
                             className="bet-input"
@@ -201,7 +186,7 @@ export const BetInput = reduxify({
                                     }
                                 }}}/>
                     </InputGroup>
-                </FormGroup>
+                </Form.Group>
               : null}
         </div>
 

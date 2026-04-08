@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import {reduxify} from '@/util/reduxify'
 
 import {createStore, combineReducers} from 'redux'
@@ -15,9 +15,7 @@ import {SocketRouter} from '@/websocket/main'
 import {Icon} from '@/components/icons'
 import {tooltip} from '@/util/dom'
 
-import Button from 'react-bootstrap/lib/Button'
-import Row from 'react-bootstrap/lib/Row'
-import Col from 'react-bootstrap/lib/Col'
+import { Button, Row, Col } from 'react-bootstrap'
 
 
 const style = `
@@ -358,14 +356,12 @@ export const Sidebet = {
         socket.send_action('UPDATE_SIDEBET')
     },
     setupStore(reducers, initial_state) {
-        // create the redux store for the page
         return createStore(combineReducers(
             reducers,
             initial_state,
         ))
     },
     setupSocket(store, time) {
-        // create the websocket connection to the backend
         if (!global.WebSocket) return {name: 'MockSocket', close: () => {}}
 
         return new SocketRouter(
@@ -397,15 +393,11 @@ export const Sidebet = {
     },
     mount(props, mount_point) {
         global.page = this.init(props)
-        ReactDOM.render(
-            this.render(global.page),
-            mount_point,
-        )
+        createRoot(mount_point).render(this.render(global.page))
     }
 }
 
 
 if (global.react_mount) {
-    // we're in a browser, so mount the page
     Sidebet.mount(global.props, global.react_mount)
 }

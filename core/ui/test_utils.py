@@ -1,6 +1,7 @@
 """UI testing helpers and utilites"""
 
-from channels.test import ChannelTestCase, WSClient
+from django.test import TransactionTestCase as ChannelTestCase
+from channels.testing import WebsocketCommunicator as WSClient
 
 from django.utils import timezone
 from django.urls import reverse
@@ -18,7 +19,6 @@ from sockets.models import Socket
 from banker.mutations import buy_chips
 
 
-
 class FrontendTest(ChannelTestCase):
     """
     A base test class which provides functions for interacting w/ the
@@ -27,21 +27,18 @@ class FrontendTest(ChannelTestCase):
     self.ws_to_backend, self.ws_to_frontend
     """
 
-    def setUp(self, url,
-                    setup_user=True,
-                    setup_http=True,
-                    setup_ws=True):
+    def setUp(self, url, setup_user=True, setup_http=True, setup_ws=True):
         super().setUp()
         self.url = url
 
         # TODO: refactor this flag messyness
 
         if setup_user:
-            self.user = self.setup_user('testuser')
+            self.user = self.setup_user("testuser")
 
         if setup_http:
             self.http_to_frontend = []
-            self.http_to_backend =[]
+            self.http_to_backend = []
             self.http = self.setup_http()
             self.initial_http_response = self.make_initial_http_request()
 
@@ -62,27 +59,27 @@ class FrontendTest(ChannelTestCase):
         dump a replayable log of the test up to the current point in time
         """
 
-        filename = filename or f'{self.__class__.__name__}_dump.json'
+        filename = filename or f"{self.__class__.__name__}_dump.json"
         table_dump = {
-            'notes': notes,
-            'settings': {
-                'DEBUG': settings.DEBUG,
-                'GIT_SHA': settings.GIT_SHA,
+            "notes": notes,
+            "settings": {
+                "DEBUG": settings.DEBUG,
+                "GIT_SHA": settings.GIT_SHA,
             },
-            'user': self.user if self.user.is_authenticated else None,
-            'http_to_backend': self.http_to_backend,    # aka requests
-            'http_to_frontend': self.http_to_frontend,  # aka responses
-            'ws_to_backend': self.ws_to_backend,
-            'ws_to_frontend': self.ws_to_frontend,
-            'time': {
-                'server_time': timezone.now().timestamp() * 1000,
-            }
+            "user": self.user if self.user.is_authenticated else None,
+            "http_to_backend": self.http_to_backend,  # aka requests
+            "http_to_frontend": self.http_to_frontend,  # aka responses
+            "ws_to_backend": self.ws_to_backend,
+            "ws_to_frontend": self.ws_to_frontend,
+            "time": {
+                "server_time": timezone.now().timestamp() * 1000,
+            },
         }
 
-        with open(filename, 'w', encoding='utf-8') as f:
+        with open(filename, "w", encoding="utf-8") as f:
             f.write(to_json_str(table_dump, indent=4))
 
-        print(f'[√] {self.__class__} dumped frontend log to: {filename}')
+        print(f"[√] {self.__class__} dumped frontend log to: {filename}")
 
     ### Page Methods
     def setup_user(self, username=None):
@@ -94,8 +91,8 @@ class FrontendTest(ChannelTestCase):
             User = get_user_model()
             return User.objects.create_user(
                 username=username,
-                email='',
-                password='batteryhorsecorrectstaple',
+                email="",
+                password="batteryhorsecorrectstaple",
             )
 
     def teardown_user(self):
@@ -114,44 +111,48 @@ class FrontendTest(ChannelTestCase):
 
     def make_initial_http_request(self):
         # get initial page props
-        return self.request({
-            'url': self.url + '?props_json=1',
-            'method': 'GET',
-            'params': {},
-        })
+        return self.request(
+            {
+                "url": self.url + "?props_json=1",
+                "method": "GET",
+                "params": {},
+            }
+        )
 
-    def request(self, request: dict=None):
+    def request(self, request: dict = None):
         """make an HTTP request to the backend, returns an HTTPResponse"""
 
         request = request or {}
         uname = self.user.username if self.user.is_authenticated else None
-        request.update({
-            'url': request.get('url', self.url),
-            'method': request.get('method', 'GET'),
-            'params': request.get('params', {}),
-            'username': uname,
-        })
+        request.update(
+            {
+                "url": request.get("url", self.url),
+                "method": request.get("method", "GET"),
+                "params": request.get("params", {}),
+                "username": uname,
+            }
+        )
 
-        if request['method'] == 'GET':
-            response = self.http.get(request['url'], request['params'])
-        elif request['method'] == 'POST':
-            response = self.http.post(request['url'], request['params'])
-        elif request['method'] == 'PATCH':
-            response = self.http.post(request['url'], request['params'])
+        if request["method"] == "GET":
+            response = self.http.get(request["url"], request["params"])
+        elif request["method"] == "POST":
+            response = self.http.post(request["url"], request["params"])
+        elif request["method"] == "PATCH":
+            response = self.http.post(request["url"], request["params"])
         else:
-            msg = 'Invalid request, expected: GET/POST/PATCH'
+            msg = "Invalid request, expected: GET/POST/PATCH"
             raise NotImplementedError(msg)
 
         response_json = {
-            'class': response.__class__.__name__,
-            'status_code': response.status_code,
-            'content': response.content,
-            'url': getattr(response, 'url', None),
+            "class": response.__class__.__name__,
+            "status_code": response.status_code,
+            "content": response.content,
+            "url": getattr(response, "url", None),
         }
 
         try:
-            response_json['json'] = response.json()
-            del response_json['content']
+            response_json["json"] = response.json()
+            del response_json["content"]
         except ValueError:
             pass
 
@@ -176,12 +177,14 @@ class FrontendTest(ChannelTestCase):
         """open a simulated WSClient websocket connection to the backend"""
 
         try:
-            self.ws.send_and_consume('websocket.connect', {'path': self.url})
-            self.ws_to_backend.append({
-                'type': 'websocket.connect',
-                'TIMESTAMP': str(timezone.now().timestamp() * 1000),
-                'SEQ_NUM': self.sent_seq_num,
-            })
+            self.ws.send_and_consume("websocket.connect", {"path": self.url})
+            self.ws_to_backend.append(
+                {
+                    "type": "websocket.connect",
+                    "TIMESTAMP": str(timezone.now().timestamp() * 1000),
+                    "SEQ_NUM": self.sent_seq_num,
+                }
+            )
             self.sent_seq_num += 1
             return self.receive()
         except AssertionError:
@@ -191,13 +194,16 @@ class FrontendTest(ChannelTestCase):
     def disconnect_ws(self):
         """send a clean WSClient disconnect to the backend handler"""
         try:
-            handler = self.ws.send_and_consume('websocket.disconnect',
-                                               {'path': self.url})
-            self.ws_to_backend.append({
-                'type': 'websocket.disconnect',
-                'TIMESTAMP': str(timezone.now().timestamp() * 1000),
-                'SEQ_NUM': self.sent_seq_num,
-            })
+            handler = self.ws.send_and_consume(
+                "websocket.disconnect", {"path": self.url}
+            )
+            self.ws_to_backend.append(
+                {
+                    "type": "websocket.disconnect",
+                    "TIMESTAMP": str(timezone.now().timestamp() * 1000),
+                    "SEQ_NUM": self.sent_seq_num,
+                }
+            )
             self.sent_seq_num += 1
             return handler
         except AssertionError:
@@ -208,16 +214,21 @@ class FrontendTest(ChannelTestCase):
         """
         send a ws msg from the frontend to the backend, returns a Handler
         """
-        action.update({
-            'TIMESTAMP': str(timezone.now().timestamp() * 1000),
-            'SEQ_NUM': self.sent_seq_num,
-        })
+        action.update(
+            {
+                "TIMESTAMP": str(timezone.now().timestamp() * 1000),
+                "SEQ_NUM": self.sent_seq_num,
+            }
+        )
         self.sent_seq_num += 1
 
-        handler = self.ws.send_and_consume('websocket.receive', {
-            'path': self.url,
-            'text': to_json_str(action),
-        })
+        handler = self.ws.send_and_consume(
+            "websocket.receive",
+            {
+                "path": self.url,
+                "text": to_json_str(action),
+            },
+        )
         self.ws_to_backend.append(action)
         return handler
 
@@ -227,9 +238,11 @@ class FrontendTest(ChannelTestCase):
         msg_to_frontend = self.ws.receive()
         self.recv_seq_num += 1
         if msg_to_frontend:
-            msg_to_frontend.update({
-                'SEQ_NUM': self.recv_seq_num,
-            })
+            msg_to_frontend.update(
+                {
+                    "SEQ_NUM": self.recv_seq_num,
+                }
+            )
             self.ws_to_frontend.append(msg_to_frontend)
             return msg_to_frontend
         return None
@@ -242,23 +255,21 @@ class MockRequest(HttpRequest):
         super().__init__()
         client = client or Client()
         # TODO: a comment explaining this line, and also < 80 chars
-        self.resolver_match = type('resolver_match', (), {'url_name': 'test_url'})()
+        self.resolver_match = type("resolver_match", (), {"url_name": "test_url"})()
 
         def build_absolute_uri():
-            return 'http://oddslingers.com/TEST_URL'
+            return "http://oddslingers.com/TEST_URL"
 
         self.build_absolute_uri = build_absolute_uri
         User = get_user_model()
         self.user = User.objects.create_user(
-            username='test_user',
-            email='',
-            password='correcthorsebatterystaple',
+            username="test_user",
+            email="",
+            password="correcthorsebatterystaple",
             **(user_defaults or {}),
         )
         self.session = client.session
-        execute_mutations(
-            buy_chips(self.user, 10000)
-        )
+        execute_mutations(buy_chips(self.user, 10000))
 
 
 class SimpleViewTest(TestCase):
@@ -279,6 +290,7 @@ class SimpleViewTest(TestCase):
 
                 assert 'user' self.view.get_context(self.request)
     """
+
     VIEW_CLASS = None
     _VIEW = None
     _USER = None
@@ -297,13 +309,11 @@ class SimpleViewTest(TestCase):
     def user(self):
         User = get_user_model()
         self._USER = self._USER or User.objects.create_user(
-            username='test_user',
-            email='',
-            password='correcthorsebatterystaple',
+            username="test_user",
+            email="",
+            password="correcthorsebatterystaple",
         )
-        execute_mutations(
-            buy_chips(self._USER, 10000)
-        )
+        execute_mutations(buy_chips(self._USER, 10000))
         return self._USER
 
     @property

@@ -2,6 +2,7 @@ from django.test import TestCase
 
 from poker.constants import Action, Event, AnimationEvent
 
+
 class ConstantsTest(TestCase):
     def enforce_consistency(self, enum_type, expected_values):
         for enum in enum_type:
@@ -9,10 +10,10 @@ class ConstantsTest(TestCase):
             assert expected_values[enum] == enum.value
 
     def test_constants(self):
-        ''' This test is here to make sure the enums defined in poker.constants
+        """This test is here to make sure the enums defined in poker.constants
         NEVER CHANGE. This is crucial because they are stored in the database
         according to their integer values, so if any change the database will be
-        incorrect. '''
+        incorrect."""
         action = {
             Action.BET: 1,
             Action.RAISE_TO: 2,

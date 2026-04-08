@@ -9,9 +9,9 @@
 */
 
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 
-ReactDOM.render(
+createRoot(global.react_mount).render(
     <div {...global.props}>
         {global.props.error ?
             <div className="alert alert-danger empty-response">
@@ -32,6 +32,5 @@ ReactDOM.render(
                     check the value of <b>RequestHandler.component</b>.
                 </div>)
         }
-    </div>,
-    global.react_mount
+    </div>
 )

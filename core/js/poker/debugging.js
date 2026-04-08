@@ -1,9 +1,10 @@
 import React from 'react'
 
-import Button from 'react-bootstrap/lib/Button'
+import { Button } from 'react-bootstrap'
 
-import {activeAnimations, currentAnimations,
-        computeAnimatedState} from 'redux-time/node/util'
+const activeAnimations = () => []
+const currentAnimations = () => []
+const computeAnimatedState = () => ({})
 
 import {onKeyPress, onKonamiCode} from '@/util/browser'
 import {dump_message_history} from '@/websocket/main'
@@ -64,10 +65,8 @@ global.writeToFile = (obj, fn, sep) => {
     a.href = global.URL.createObjectURL(new Blob([text], {type : 'application/json'}))
     var filename = fn || 'data.json'
     a.download = filename
-    // Append anchor to body.
     document.body.appendChild(a)
     a.click()
-    // Remove anchor from body
     document.body.removeChild(a)
 }
 
@@ -85,7 +84,6 @@ global.stateDump = () => {
 }
 
 global.bugDump = function(notes, filename) {
-    // download a frontend dump to file
     const data_dump = {
         notes,
         dump: global.stateDump(),
@@ -124,7 +122,6 @@ export const reportBug = (notes) => {
     }
     const succeeded = global.page.socket.send_action('REPORT_BUG', {frontend_log})
     if (succeeded) {
-        // success message will come in via backend dispatch of a NOTIFICATION
         console.log('[!] Sent bug report...', frontend_log)
         resumeFrontend()
     } else {

@@ -4,16 +4,17 @@ from poker import rankings
 
 from poker.cards import Card
 
+
 def assert_even_descending_hand_strength(list1, list2):
     for i, hand1 in enumerate(list1):
         for j, hand2 in enumerate(list2):
             # print(hand1, ": ", rankings.hand_sortkey(hand1), "\t", hand2, ": ", rankings.hand_sortkey(hand2))
-            if (i == j):
-                assert(rankings.hand_sortkey(hand1) == rankings.hand_sortkey(hand2))
-            elif (i > j):
-                assert(rankings.hand_sortkey(hand1) < rankings.hand_sortkey(hand2))
+            if i == j:
+                assert rankings.hand_sortkey(hand1) == rankings.hand_sortkey(hand2)
+            elif i > j:
+                assert rankings.hand_sortkey(hand1) < rankings.hand_sortkey(hand2)
             else:
-                assert(rankings.hand_sortkey(hand1) > rankings.hand_sortkey(hand2))
+                assert rankings.hand_sortkey(hand1) > rankings.hand_sortkey(hand2)
 
 
 class RankingTest(TestCase):
@@ -72,7 +73,12 @@ class RankingTest(TestCase):
             ("5c 2c 3d 4s 7d", "High Card seven, five kicker"),
         ]
 
-        self.examples3 = ["4s As 8s 9s Ks", "3s As 8s 9s Ks", "2s As 8s 9s Ks", "4c 4d As 9s Ks"]
+        self.examples3 = [
+            "4s As 8s 9s Ks",
+            "3s As 8s 9s Ks",
+            "2s As 8s 9s Ks",
+            "4c 4d As 9s Ks",
+        ]
 
     def test_relative_rankings(self):
         list1 = [hand for hand, _ in self.examples1]
@@ -85,10 +91,10 @@ class RankingTest(TestCase):
     def test_hand_names(self):
         for hand, name in self.examples1:
             # print(hand, " -> ", rankings.hand_to_name(hand))
-            assert(name == rankings.hand_to_name(hand))
+            assert name == rankings.hand_to_name(hand)
         for hand, name in self.examples2:
             # print(hand, " -> ", rankings.hand_to_name(hand))
-            assert(name == rankings.hand_to_name(hand))
+            assert name == rankings.hand_to_name(hand)
 
 
 class BestHandTest(TestCase):
@@ -108,12 +114,14 @@ class BestHandTest(TestCase):
 
         def best_hand(board, hand=None):
             if hand is None:
-                return sorted([best_hand(board, h) for h in hands], key=rankings.hand_sortkey)[-1]
+                return sorted(
+                    [best_hand(board, h) for h in hands], key=rankings.hand_sortkey
+                )[-1]
 
             return rankings.best_hand_from_cards(hand + board)
 
         self.assert_same(best_hand(hand1, self.board1), best_hand([], self.board1))
-        
+
         self.assert_same(best_hand(self.board1), best_hand(self.board1, hand2))
         self.assert_same(best_hand(self.board2), best_hand(self.board2, hand3))
         self.assert_same(best_hand(self.board3), best_hand(self.board3, hand1))
@@ -129,7 +137,9 @@ class BestHandTest(TestCase):
 
         def best_hand(board, hand=None):
             if hand is None:
-                return sorted([best_hand(board, h) for h in hands], key=rankings.hand_sortkey)[-1]
+                return sorted(
+                    [best_hand(board, h) for h in hands], key=rankings.hand_sortkey
+                )[-1]
 
             return rankings.best_hand_using_holecards(hand, board, 2)
 
@@ -141,4 +151,3 @@ class BestHandTest(TestCase):
 
     def assert_same(self, hand1, hand2):
         assert rankings.hand_sortkey(hand1) == rankings.hand_sortkey(hand2)
-        

@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "languages": [
+    {
+      "name": "python",
+      "formatter": "black",
+      "linter": "ruff",
+      "test_framework": "pytest",
+      "include_patterns": ["core/**/*.py"],
+      "exclude_patterns": [
+        "core/.venv-docker/**",
+        "core/**/__pycache__/**",
+        "core/**/migrations/**",
+        "core/static/**"
+      ]
+    },
+    {
+      "name": "javascript",
+      "formatter": "prettier",
+      "linter": "eslint",
+      "test_framework": "jest",
+      "include_patterns": ["core/js/**/*.js"],
+      "exclude_patterns": [
+        "core/js/node_modules/**",
+        "core/static/js/**"
+      ]
+    }
+  ],
+  "quality_gate": {
+    "enabled": true,
+    "fail_on_error": true
+  }
+}

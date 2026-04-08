@@ -1,12 +1,8 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import classNames from 'classnames'
-import format from 'date-fns/format'
+import { format } from 'date-fns'
 
-import Button from 'react-bootstrap/lib/Button'
-import FormControl from 'react-bootstrap/lib/FormControl'
-import DropdownButton from 'react-bootstrap/lib/DropdownButton'
-import MenuItem from 'react-bootstrap/lib/MenuItem'
+import { Button, Form, DropdownButton, Dropdown } from 'react-bootstrap'
 
 import {is_centered, onKeyPress, is_mobile} from '@/util/browser'
 import {ljust, hashCode} from '@/util/javascript'
@@ -20,7 +16,6 @@ import {Icon} from '@/components/icons'
 import {PlayByPlay} from '@/chat/play-by-play'
 import {sendChatMessage, chat_side_effects} from '@/chat/reducers'
 import {getLastUserChatLine} from '@/poker/selectors'
-// import {VideoPanel} from '@/video/components'
 
 
 const USERNAME_COLORS = [
@@ -91,14 +86,11 @@ const parseTagProps = (tag) => {
 }
 
 export const colorizeChatMessage = (message) => {
-    // e.g. FLOP: 8♦, Q♠, J♠
 
-    // Step 1: replace matches in str with tags that we can parse
     for (let [pattern, replacement] of CHAT_REPLACEMENTS) {
         message = message.replace(pattern, replacement)
     }
 
-    // Step 2: convert concatted string tags to list of react elements
     const elems = message.split('|||').map((tag, idx) =>
         <span {...parseTagProps(tag)} key={idx}/>)
 
@@ -139,6 +131,7 @@ class ChatLine extends React.Component {
 class ChatComponent extends React.Component {
     constructor(props){
         super(props)
+        this.chatInputRef = React.createRef()
         const local_pbp = localStorageGet('show_playbyplay')
         const show_playbyplay = local_pbp !== null ? local_pbp === "true" : true
         const local_bbls = localStorageGet('show_chat_bubbles')
@@ -258,7 +251,7 @@ class ChatComponent extends React.Component {
         }
     }
     autofillLastLine(){
-        if (global.user && document.activeElement === ReactDOM.findDOMNode(this.refs.chatInput)){
+        if (global.user && document.activeElement === this.chatInputRef.current){
             const last_line = getLastUserChatLine(this.props.chat.lines, global.user.username)
             if (last_line != null){
                 this.setState({input_text: last_line.message})
@@ -290,41 +283,41 @@ class ChatComponent extends React.Component {
                                         id="chat-settings"
                                         title={<Icon name="gear"/>}>
 
-                            <MenuItem key="show-dealer-msgs"
+                            <Dropdown.Item key="show-dealer-msgs"
                                       onClick={() => this.onToggleMessages('show_dealer_msgs')}>
                                 {addCheckedIcon(this.state.show_dealer_msgs)}
                                 Show dealer messages
-                            </MenuItem>
-                            <MenuItem key="show-winning-msgs"
+                            </Dropdown.Item>
+                            <Dropdown.Item key="show-winning-msgs"
                                       onClick={() => this.onToggleMessages('show_win_msgs')}>
                                 {addCheckedIcon(this.state.show_win_msgs)}
                                 Show winning messages
-                            </MenuItem>
-                            <MenuItem key="show-spectator-msgs"
+                            </Dropdown.Item>
+                            <Dropdown.Item key="show-spectator-msgs"
                                       onClick={() => this.onToggleMessages('show_spectator_msgs')}>
                                 {addCheckedIcon(this.state.show_spectator_msgs)}
                                 Show spectator messages
-                            </MenuItem>
+                            </Dropdown.Item>
                             {(global.user && !is_tournament) &&
-                                <MenuItem key="show-chat-bubbles"
+                                <Dropdown.Item key="show-chat-bubbles"
                                           onClick={() => this.onToggleMessages('show_chat_bubbles')}>
                                     {addCheckedIcon(this.state.show_chat_bubbles)}
                                     Show chat bubbles
-                                </MenuItem>
+                                </Dropdown.Item>
                             }
                             {!is_tournament &&
-                                <MenuItem key="show-chat"
+                                <Dropdown.Item key="show-chat"
                                           onClick={() => this.onToggleMessages('show_chat_msgs')}>
                                     {addCheckedIcon(this.state.show_chat_msgs)}
                                     Show chat
-                                </MenuItem>
+                                </Dropdown.Item>
                             }
                             {(global.user && !is_mobile() && !is_tournament) &&
-                                <MenuItem key="show-playbyplay"
+                                <Dropdown.Item key="show-playbyplay"
                                           onClick={() => this.onToggleMessages('show_playbyplay')}>
                                     {addCheckedIcon(this.state.show_playbyplay)}
                                     Show Play-By-Play panel
-                                </MenuItem>
+                                </Dropdown.Item>
                             }
                         </DropdownButton>
 
@@ -374,8 +367,8 @@ class ChatComponent extends React.Component {
                         <div className="chat-actions">
                             <button className="toggle-chat-presets"
                                     onClick={::this.toggleChatPresets}>🙂</button>
-                            <FormControl id="chat-input"
-                                         ref="chatInput"
+                            <Form.Control id="chat-input"
+                                         ref={this.chatInputRef}
                                          type="text"
                                          placeholder="Message"
                                          value={this.state.input_text}

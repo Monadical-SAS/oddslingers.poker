@@ -17,20 +17,19 @@ from poker.tests.test_log import assert_equivalent_game_states, ReplayerTest
 class MockModelsTest(TestCase):
     def test_mockplayer_has_mockpokertable(self):
         mock_table, _ = MockPokerTable.objects.update_or_create(
-            name='my mock table',
-            is_mock=True
+            name="my mock table", is_mock=True
         )
         mock_player, _ = MockPlayer.objects.update_or_create(
-            mock_name='my mock player',
-            table=mock_table
+            mock_name="my mock player", table=mock_table
         )
         assert mock_table == mock_player.table
         mock_player.refresh_from_db(fields=PLAYER_REFRESH_FIELDS)
         assert mock_table == mock_player.table
 
+
 class EventReplayerTest(TestCase):
-    def setUp(self, filename='no_events.json', **kwargs):
-        with open(filename, 'r') as f:
+    def setUp(self, filename="no_events.json", **kwargs):
+        with open(filename, "r") as f:
             self.hh = json.load(f)
 
         self.replayer = EventReplayer(self.hh, **kwargs)
@@ -40,8 +39,8 @@ class EventReplayerTest(TestCase):
 
 
 class ActionReplayerTest(TestCase):
-    def setUp(self, filename='no_events.json', **kwargs):
-        with open(filename, 'r') as f:
+    def setUp(self, filename="no_events.json", **kwargs):
+        with open(filename, "r") as f:
             self.hh = json.load(f)
 
         self.replayer = ActionReplayer(self.hh, **kwargs)
@@ -52,7 +51,7 @@ class ActionReplayerTest(TestCase):
 
 class EndIterationTest(ActionReplayerTest):
     def setUp(self):
-        self.filename = os.path.join(HH_TEST_PATH, 'a_few_hands.json')
+        self.filename = os.path.join(HH_TEST_PATH, "a_few_hands.json")
         super().setUp(self.filename)
 
     def test_step_forward_with_multihand(self):
@@ -69,17 +68,17 @@ class EndIterationTest(ActionReplayerTest):
 
 class EventControlsTest(EventReplayerTest):
     def setUp(self):
-        self.filename = os.path.join(HH_TEST_PATH, 'a_few_hands.json')
+        self.filename = os.path.join(HH_TEST_PATH, "a_few_hands.json")
         super().setUp(self.filename)
 
     def test_event_controls(self):
         self.replayer.skip_to_hand_idx(0)
 
-        assert self.replayer.current_hand()['table']['hand_number'] == 0
+        assert self.replayer.current_hand()["table"]["hand_number"] == 0
         self.replayer.next_hand()
-        assert self.replayer.current_hand()['table']['hand_number'] == 1
+        assert self.replayer.current_hand()["table"]["hand_number"] == 1
         self.replayer.next_hand()
-        assert self.replayer.current_hand()['table']['hand_number'] == 2
+        assert self.replayer.current_hand()["table"]["hand_number"] == 2
 
         # 56 is a SIT_IN event; should be ignored
         self.replayer._skip_to_event(56)
@@ -102,7 +101,7 @@ class EventControlsTest(EventReplayerTest):
 
 class IsLastHandTest(ActionReplayerTest):
     def setUp(self):
-        self.filename = os.path.join(HH_TEST_PATH, 'a_few_hands.json')
+        self.filename = os.path.join(HH_TEST_PATH, "a_few_hands.json")
         super().setUp(self.filename)
 
     def test_consistent_potsize(self):
@@ -112,9 +111,10 @@ class IsLastHandTest(ActionReplayerTest):
         self.replayer.skip_to_hand_idx(-1)
         assert self.replayer.is_last_hand()
 
+
 class ReplayerWithSubscribersTest(ActionReplayerTest):
     def setUp(self):
-        self.filename = os.path.join(HH_TEST_PATH, 'a_few_hands.json')
+        self.filename = os.path.join(HH_TEST_PATH, "a_few_hands.json")
         super().setUp(self.filename, subscriber_types=[AnimationSubscriber])
 
     def test_animation_subscriber(self):
@@ -124,11 +124,12 @@ class ReplayerWithSubscribersTest(ActionReplayerTest):
 
         gamestate = gamestate_json(self.replayer.accessor, subscribers=subs)
 
-        assert 'animations' in gamestate
+        assert "animations" in gamestate
+
 
 class ReplayerDescribeTest(ActionReplayerTest):
     def setUp(self):
-        self.filename = os.path.join(HH_TEST_PATH, 'a_few_hands.json')
+        self.filename = os.path.join(HH_TEST_PATH, "a_few_hands.json")
         super().setUp(self.filename)
 
     def test_animation_subscriber(self):
@@ -139,7 +140,7 @@ class ReplayerDescribeTest(ActionReplayerTest):
 
 class ActionReplayerCurrentActionIsNextTest(ActionReplayerTest):
     def setUp(self):
-        self.filename = os.path.join(HH_TEST_PATH, 'a_few_hands.json')
+        self.filename = os.path.join(HH_TEST_PATH, "a_few_hands.json")
         super().setUp(self.filename)
 
     def test_current_action_is_next(self):
@@ -149,7 +150,7 @@ class ActionReplayerCurrentActionIsNextTest(ActionReplayerTest):
         while True:
             try:
                 rep.controller.subscribers[0].log = []
-                next_action = rep.current_action()['action'].upper()
+                next_action = rep.current_action()["action"].upper()
                 rep.step_forward(multi_hand=True)
                 rep.controller.subscribers[0].log
                 former_action = str(rep.controller.subscribers[0].log[0][1])
@@ -160,7 +161,7 @@ class ActionReplayerCurrentActionIsNextTest(ActionReplayerTest):
 
 class ActionReplayerMultiHandTest(ActionReplayerTest):
     def setUp(self):
-        self.filename = os.path.join(HH_TEST_PATH, 'a_few_hands.json')
+        self.filename = os.path.join(HH_TEST_PATH, "a_few_hands.json")
         super().setUp(self.filename)
 
     def test_multi_hand_step_forward(self):
@@ -178,7 +179,7 @@ class ActionReplayerMultiHandTest(ActionReplayerTest):
 
 class EventReplayerCurrentEventIsNextTest(EventReplayerTest):
     def setUp(self):
-        self.filename = os.path.join(HH_TEST_PATH, 'a_few_hands.json')
+        self.filename = os.path.join(HH_TEST_PATH, "a_few_hands.json")
         super().setUp(self.filename)
 
     def test_current_event_is_next(self):
@@ -188,7 +189,7 @@ class EventReplayerCurrentEventIsNextTest(EventReplayerTest):
         while True:
             try:
                 rep.controller.subscribers[0].log = []
-                next_event = rep.current_event()['event']
+                next_event = rep.current_event()["event"]
                 rep.step_forward()
                 rep.controller.subscribers[0].log
                 former_event = str(rep.controller.subscribers[0].log[0][1])
@@ -199,19 +200,21 @@ class EventReplayerCurrentEventIsNextTest(EventReplayerTest):
 
 class TestReplayerConstruction(TestCase):
     def setUp(self):
-        self.filename = os.path.join(HH_TEST_PATH, 'a_few_hands.json')
+        self.filename = os.path.join(HH_TEST_PATH, "a_few_hands.json")
 
     def test_from_file_on_action_replayer(self):
-        with open(self.filename, 'r') as file:
+        with open(self.filename, "r") as file:
             replayer = ActionReplayer.from_file(file, hand_idx=0, logging=True)
 
-            assert replayer.current_action()["action"] == "FOLD", \
-                "Did not set the first action correctly"
+            assert (
+                replayer.current_action()["action"] == "FOLD"
+            ), "Did not set the first action correctly"
 
             replayer.step_forward()
 
-            assert replayer.current_action()["action"] == "RAISE_TO", \
-                "Did not set the first action correctly when moved forward"
+            assert (
+                replayer.current_action()["action"] == "RAISE_TO"
+            ), "Did not set the first action correctly when moved forward"
 
             replayer.step_forward()
             replayer.step_forward()
@@ -219,85 +222,81 @@ class TestReplayerConstruction(TestCase):
 
             axn_is_raise_to = replayer.current_action()["action"] == "RAISE_TO"
             subj_is_cowpig = replayer.current_action()["subj"] == "cowpig"
-            assert (axn_is_raise_to and subj_is_cowpig), \
-                "Did not set the action correctly when moved forward three " \
-                "times"
-            assert replayer.file == file, \
-                "The returned replayer must to have the same file"
-            assert replayer.hand_idx == 0, \
-                "It's not setting the hand_idx as 0"
-            assert replayer.action_idx == 4, \
-                'Did not moved forward four actions'
+            assert axn_is_raise_to and subj_is_cowpig, (
+                "Did not set the action correctly when moved forward three " "times"
+            )
+            assert (
+                replayer.file == file
+            ), "The returned replayer must to have the same file"
+            assert replayer.hand_idx == 0, "It's not setting the hand_idx as 0"
+            assert replayer.action_idx == 4, "Did not moved forward four actions"
 
     def test_from_file_on_event_replayer(self):
-        with open(self.filename, 'r') as file:
+        with open(self.filename, "r") as file:
             replayer = EventReplayer.from_file(file, hand_idx=1, logging=True)
 
-            assert replayer.current_event()["event"] == "CHAT", \
-                "Did set the first event correctly"
+            assert (
+                replayer.current_event()["event"] == "CHAT"
+            ), "Did set the first event correctly"
 
             replayer.step_forward()
 
-            assert replayer.current_event()["event"] == "SET_BLIND_POS", \
-                "Did not set the event correctly when moved forward"
+            assert (
+                replayer.current_event()["event"] == "SET_BLIND_POS"
+            ), "Did not set the event correctly when moved forward"
 
             replayer.step_forward()
             replayer.step_forward()
             replayer.step_forward()
 
-            assert replayer.current_event()["event"] == "POST", \
-                "Did not set the event correctly when moved forward three " \
-                "times"
-            assert replayer.file == file, \
-                "The returned replayer must to have the same file"
-            assert replayer.hand_idx == 1, \
-                "It's not setting the hand_idx as 1"
+            assert replayer.current_event()["event"] == "POST", (
+                "Did not set the event correctly when moved forward three " "times"
+            )
+            assert (
+                replayer.file == file
+            ), "The returned replayer must to have the same file"
+            assert replayer.hand_idx == 1, "It's not setting the hand_idx as 1"
 
     def test_from_table_on_action_replayer(self):
-        with open(self.filename, 'r') as file:
-            initial_replayer = ActionReplayer(json_log=json.load(file),
-                                              hand_idx=0,
-                                              logging=True)
+        with open(self.filename, "r") as file:
+            initial_replayer = ActionReplayer(
+                json_log=json.load(file), hand_idx=0, logging=True
+            )
             initial_replayer.step_forward()
             initial_replayer.step_forward()
             initial_replayer.step_forward()
             initial_replayer.commit()
 
             replayer = ActionReplayer.from_table(
-                initial_replayer.table,
-                hand_idx=0,
-                logging=True
+                initial_replayer.table, hand_idx=0, logging=True
             )
 
             replayer_curr_action = replayer.current_action()["action"].upper()
             initial_replyr_actions = initial_replayer.current_hand()["actions"]
             init_replyr_first_action = initial_replyr_actions[0]["action"]
-            assert (replayer_curr_action == init_replyr_first_action), \
-                "Did not set the first action correctly"
+            assert (
+                replayer_curr_action == init_replyr_first_action
+            ), "Did not set the first action correctly"
 
             replayer.step_forward()
             replayer.step_forward()
 
             replayer_curr_action = replayer.current_action()["action"].upper()
             init_replyr_third_action = initial_replyr_actions[2]["action"]
-            assert (replayer_curr_action == init_replyr_third_action), \
-                "Did not set the action correctly when moved forward 2 times"
+            assert (
+                replayer_curr_action == init_replyr_third_action
+            ), "Did not set the action correctly when moved forward 2 times"
 
             initial_replayer.skip_to_hand_idx(0)
             initial_replayer.step_forward()
             initial_replayer.step_forward()
 
-            assert_equivalent_game_states(
-                initial_replayer.accessor,
-                replayer.accessor
-            )
+            assert_equivalent_game_states(initial_replayer.accessor, replayer.accessor)
 
     def test_from_table_on_event_replayer(self):
-        with open(self.filename, 'r') as file:
+        with open(self.filename, "r") as file:
             initial_replayer = EventReplayer(
-                json_log=json.load(file),
-                hand_idx=0,
-                logging=True
+                json_log=json.load(file), hand_idx=0, logging=True
             )
             initial_replayer.step_forward()
             initial_replayer.step_forward()
@@ -305,66 +304,63 @@ class TestReplayerConstruction(TestCase):
             initial_replayer.commit()
 
             replayer = EventReplayer.from_table(
-                initial_replayer.table,
-                hand_idx=0,
-                logging=True
+                initial_replayer.table, hand_idx=0, logging=True
             )
 
             replyr_curr_evnt_subj = replayer.current_event()["subj"]
             init_replyr_events = initial_replayer.current_hand()["events"]
             init_replyr_first_evnt = init_replyr_events[0]["subj"]
-            assert (replyr_curr_evnt_subj == init_replyr_first_evnt), \
-                "Did not set the first event correctly"
+            assert (
+                replyr_curr_evnt_subj == init_replyr_first_evnt
+            ), "Did not set the first event correctly"
 
             replayer.step_forward()
             replayer.step_forward()
 
             replyr_curr_evnt_subj = replayer.current_event()["subj"]
             init_replyr_third_event = init_replyr_events[2]["subj"]
-            assert (replyr_curr_evnt_subj == init_replyr_third_event), \
-                "Did not set the first event correctly when moved forward"
+            assert (
+                replyr_curr_evnt_subj == init_replyr_third_event
+            ), "Did not set the first event correctly when moved forward"
 
 
 class TestReplayerConstructorParams(TestCase):
     def setUp(self):
-        self.filename = os.path.join(HH_TEST_PATH, 'a_few_hands.json')
+        self.filename = os.path.join(HH_TEST_PATH, "a_few_hands.json")
 
     def test_from_file_hand_number(self):
         rep = EventReplayer.from_file(self.filename, hand_idx=-2)
-        assert rep.current_hand()['table']['hand_number'] == 7
+        assert rep.current_hand()["table"]["hand_number"] == 7
 
-        rep = ActionReplayer.from_file(
-            self.filename, hand_idx=2, session_id='banana'
-        )
-        assert rep.current_hand()['table']['hand_number'] == 2
-        assert rep.session_id == 'banana'
+        rep = ActionReplayer.from_file(self.filename, hand_idx=2, session_id="banana")
+        assert rep.current_hand()["table"]["hand_number"] == 2
+        assert rep.session_id == "banana"
 
         rep = EventReplayer.from_file(
-            self.filename, hand_number=2, session_id='banana', logging=True
+            self.filename, hand_number=2, session_id="banana", logging=True
         )
-        assert rep.current_hand()['table']['hand_number'] == 2
+        assert rep.current_hand()["table"]["hand_number"] == 2
         assert rep.logging
-        assert rep.session_id == 'banana'
+        assert rep.session_id == "banana"
 
         rep = ActionReplayer.from_file(self.filename, hand_number=3)
-        assert rep.current_hand()['table']['hand_number'] == 3
+        assert rep.current_hand()["table"]["hand_number"] == 3
         assert rep.action_idx == 0
 
         rep = ActionReplayer.from_file(
-            self.filename, hand_number=6, logging=True, session_id='banana'
+            self.filename, hand_number=6, logging=True, session_id="banana"
         )
-        assert rep.current_hand()['table']['hand_number'] == 6
+        assert rep.current_hand()["table"]["hand_number"] == 6
         assert rep.logging
-        assert rep.session_id == 'banana'
+        assert rep.session_id == "banana"
 
 
 class ActionReplayerLoggingTest(TestCase):
-    TEMP_FN = os.path.join(DEBUG_DUMP_DIR, 'tmp.json')
+    TEMP_FN = os.path.join(DEBUG_DUMP_DIR, "tmp.json")
+
     def test_action_replayer_logging(self):
-        with open('poker/tests/data/a_few_hands.json') as file:
-            replayer = ActionReplayer.from_file(file,
-                                                hand_idx=0,
-                                                logging=True)
+        with open("poker/tests/data/a_few_hands.json") as file:
+            replayer = ActionReplayer.from_file(file, hand_idx=0, logging=True)
 
         while True:
             try:
@@ -372,7 +368,7 @@ class ActionReplayerLoggingTest(TestCase):
             except StopIteration:
                 break
 
-        replayer.controller.log.save_to_file(self.TEMP_FN, player='all')
+        replayer.controller.log.save_to_file(self.TEMP_FN, player="all")
 
         with open(self.TEMP_FN) as file:
             new_replayer = ActionReplayer.from_file(file, hand_idx=0)
@@ -384,8 +380,7 @@ class ActionReplayerLoggingTest(TestCase):
                 replayer.step_forward(multi_hand=True)
                 new_replayer.step_forward(multi_hand=True)
 
-                assert_equivalent_game_states(replayer.accessor,
-                                              new_replayer.accessor)
+                assert_equivalent_game_states(replayer.accessor, new_replayer.accessor)
 
             except StopIteration:
                 break
@@ -396,9 +391,10 @@ class ActionReplayerLoggingTest(TestCase):
 
 
 class ReplayerOriginalLogTest(TestCase):
-    TEMP_FN = os.path.join(DEBUG_DUMP_DIR, 'tmp.json')
+    TEMP_FN = os.path.join(DEBUG_DUMP_DIR, "tmp.json")
+
     def test_original_log(self):
-        with open('poker/tests/data/a_few_hands.json') as file:
+        with open("poker/tests/data/a_few_hands.json") as file:
             log_str = file.read()
 
         json_log = json.loads(log_str)
@@ -416,7 +412,7 @@ class ReplayerOriginalLogTest(TestCase):
 
 class DescribeFunctionsTest(ActionReplayerTest):
     def setUp(self):
-        self.filename = os.path.join(HH_TEST_PATH, 'a_few_hands.json')
+        self.filename = os.path.join(HH_TEST_PATH, "a_few_hands.json")
         super().setUp(self.filename)
 
     def test_describe_functions(self):
@@ -439,31 +435,25 @@ class DescribeFunctionsTest(ActionReplayerTest):
 
 class PresetActionReplayTest(ReplayerTest):
     def test_preset_action_replay(self):
-        self.setup_hand(blinds_positions={
-            'btn_pos': 0,
-            'sb_pos': 1,
-            'bb_pos': 2
-        })
+        self.setup_hand(blinds_positions={"btn_pos": 0, "sb_pos": 1, "bb_pos": 2})
         ctrl = self.controller
         ctrl.step()
 
         ctrl.dispatch(
-            'SET_PRESET_CHECKFOLD',
-            set_to='true',
-            player_id=self.pirate_player.id
+            "SET_PRESET_CHECKFOLD", set_to="true", player_id=self.pirate_player.id
         )
-        ctrl.dispatch('RAISE_TO', amt=8, player_id=self.cowpig_player.id)
-        ctrl.dispatch('CALL', player_id=self.cuttlefish_player.id)
+        ctrl.dispatch("RAISE_TO", amt=8, player_id=self.cowpig_player.id)
+        ctrl.dispatch("CALL", player_id=self.cuttlefish_player.id)
 
-        log = self.controller.log.get_log(player='all')
-        assert len(log['hands'][0]['actions']) == 4
+        log = self.controller.log.get_log(player="all")
+        assert len(log["hands"][0]["actions"]) == 4
         replayer = ActionReplayer(log)
 
         for _ in range(3):
             replayer.step_forward()
 
-        assert str(self.pirate_player.last_action) == 'FOLD'
-        assert str(self.cuttlefish_player.last_action) == 'CALL'
+        assert str(self.pirate_player.last_action) == "FOLD"
+        assert str(self.cuttlefish_player.last_action) == "CALL"
 
 
 # class PortActionsTest(TestCase):

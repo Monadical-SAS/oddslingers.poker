@@ -2,8 +2,7 @@ import React from 'react'
 import {reduxify} from '@/util/reduxify'
 import classNames from 'classnames'
 
-import Col from 'react-bootstrap/lib/Col'
-import Button from 'react-bootstrap/lib/Button'
+import { Col, Button } from 'react-bootstrap'
 
 import {mapStateToProps, mapDispatchToProps} from '@/tournament_summary/components/shared'
 
@@ -12,7 +11,6 @@ const handleJoin = (id, tourney_path, onSubmitAction) => {
     if (global.user) {
         onSubmitAction('JOIN_TOURNAMENT')
     } else {
-        // redirect to login page
         global.location = '/accounts/login/?next=' + tourney_path
     }
 }

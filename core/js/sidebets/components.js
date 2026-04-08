@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 
-import Button from 'react-bootstrap/lib/Button'
+import { Button } from 'react-bootstrap'
 
 import {Icon} from '@/components/icons'
 import {tooltip} from '@/util/dom'

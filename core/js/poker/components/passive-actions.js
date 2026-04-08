@@ -1,8 +1,7 @@
 import React from 'react'
 import {reduxify} from '@/util/reduxify'
 
-import Button from 'react-bootstrap/lib/Button'
-import Modal from 'react-bootstrap/lib/Modal'
+import { Button, Modal } from 'react-bootstrap'
 
 import {Icon} from '@/components/icons'
 import {ModalTrigger} from '@/components/modals'
@@ -245,7 +244,6 @@ export class LeaveSeatModalTrigger extends ModalTrigger {
         )
     }
     onConfirm() {
-        // Disable onbeforeunload event to quit the second confirmation by default
         global.onbeforeunload = null
 
         this.props.onSubmitAction('LEAVE_SEAT')
@@ -346,8 +344,6 @@ export const mapStateToProps = (state) => {
         muck_after_winning: global.user && global.user.muck_after_winning,
         can_sit: !logged_in_player,
         can_leave: avail.has('LEAVE_SEAT'),
-        // if a player is sitting out, they can always sit in unless
-        //  they don't have enough chips
         not_enough_chips: player.sitting_out && !avail.has('SIT_IN') && !player.sit_in_next_hand,
         tournament: table.tournament,
         cards: player.cards,

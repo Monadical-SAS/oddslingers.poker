@@ -2,6 +2,13 @@ const path = require('path');
 
 module.exports = {
   mode: 'production',
+  target: 'web',
+  resolve: {
+    fallback: {
+      path: false,
+      fs: false,
+    },
+  },
   entry: {
     'user': './pages/user.js',
     'table': './pages/table.js',
@@ -10,7 +17,6 @@ module.exports = {
     'sidebet': './pages/sidebet.js',
     'tournament-summary': './pages/tournament-summary.js',
     'debugger': './pages/debugger.js',
-    // 'recompiling': './pages/recompiling.js',
   },
   output: {
     path: path.resolve(__dirname, 'build/pages'),
@@ -28,7 +34,6 @@ module.exports = {
     ]
   },
   optimization: {
-    // splitChunks: true,
     minimize: true,
   },
   performance: {

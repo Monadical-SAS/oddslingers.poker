@@ -2,15 +2,7 @@ import React from 'react'
 import {reduxify} from '@/util/reduxify'
 import isEmpty from 'lodash/isEmpty'
 
-import Modal from 'react-bootstrap/lib/Modal'
-import Alert from 'react-bootstrap/lib/Alert'
-import Button from 'react-bootstrap/lib/Button'
-import FormGroup from 'react-bootstrap/lib/FormGroup'
-import FormControl from 'react-bootstrap/lib/FormControl'
-import ControlLabel from 'react-bootstrap/lib/ControlLabel'
-import HelpBlock from 'react-bootstrap/lib/HelpBlock'
-import InputGroup from 'react-bootstrap/lib/InputGroup'
-import Checkbox from 'react-bootstrap/lib/Checkbox'
+import { Modal, Alert, Button, Form, InputGroup } from 'react-bootstrap'
 
 import {tooltip, preventNonNumbers} from '@/util/dom'
 import {select_text, openNewTab} from '@/util/browser'
@@ -65,7 +57,7 @@ class TableInfoModal extends ModalTrigger {
                         </ul>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button bsStyle="success" onClick={::this.onClose}>
+                        <Button variant="success" onClick={::this.onClose}>
                             Ok &nbsp;<Icon name="check"/>
                         </Button>
                     </Modal.Footer>
@@ -196,7 +188,7 @@ export class ShareTableModalTrigger extends ModalTrigger {
                             <pre id="share-link" style={{...pre_style, border: '1px solid orange', textDecoration: 'underline'}}>
                                 {this.state.share_linky}
                             </pre>
-                            <Button bsStyle="default"
+                            <Button variant="secondary"
                                     onClick={::this.onCopy}
                                     {...tooltip("Copy to clipboard", "top")}>
                                 Copy!
@@ -205,16 +197,14 @@ export class ShareTableModalTrigger extends ModalTrigger {
                         <br/>
                         {global.user && <div>
                             Or invite a friend to this table via email: <span className="text-green green">{this.state.sent}</span>
-                            <FormGroup>
+                            <Form.Group>
                                 <InputGroup>
-                                    <FormControl type="email" id="new-user-email" placeholder="friend@example.com"/>
-                                    <InputGroup.Button>
-                                        <Button bsStyle="default" onClick={::this.onInvite}>
-                                            Invite via email &nbsp;<Icon name="envelope"/>
-                                        </Button>
-                                    </InputGroup.Button>
+                                    <Form.Control type="email" id="new-user-email" placeholder="friend@example.com"/>
+                                    <Button variant="secondary" onClick={::this.onInvite}>
+                                        Invite via email &nbsp;<Icon name="envelope"/>
+                                    </Button>
                                 </InputGroup>
-                            </FormGroup>
+                            </Form.Group>
                         </div>}
 
                         Use this code to embed this table:
@@ -222,7 +212,7 @@ export class ShareTableModalTrigger extends ModalTrigger {
                         <pre style={pre_style}>{embedableIFrame}</pre>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button bsStyle="success" onClick={::this.onClose}>
+                        <Button variant="success" onClick={::this.onClose}>
                             Ok &nbsp;<Icon name="check"/>
                         </Button>
                     </Modal.Footer>
@@ -283,13 +273,13 @@ export class ReportBugModalTrigger extends ModalTrigger {
                         <br/>
                         Please describe the issue with at least one sentence:<br/>
                         <br/>
-                        <FormGroup>
-                            <FormControl componentClass="textarea"
+                        <Form.Group>
+                            <Form.Control as="textarea"
                                          value={this.state.summary}
                                          placeholder="Type a quick summary of the issue you saw to submit a bug report..."
                                          onChange={::this.onChangeSummary}
                                          style={{minHeight: 120}}/>
-                        </FormGroup>
+                        </Form.Group>
 
                         If you help us fix a bug you get a "Bug Hunter" badge and 10,000 bonus chips!
                     </Modal.Body>
@@ -298,7 +288,7 @@ export class ReportBugModalTrigger extends ModalTrigger {
                             Live Chat Support &nbsp;<Icon name="comments-o"/>
                         </a>
                         <Button onClick={::this.onCancel}>Cancel</Button>
-                        <Button bsStyle="success" onClick={::this.onSubmit} disabled={this.state.summary.length <= 5}>
+                        <Button variant="success" onClick={::this.onSubmit} disabled={this.state.summary.length <= 5}>
                             Submit
                         </Button>
                     </Modal.Footer>
@@ -390,7 +380,7 @@ export class OneTimeBuyModalTrigger extends BuyChipsModalTrigger {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <FormGroup validationState={this.getValidationState().form_group_class}>
+                        <Form.Group>
                             <center style={{fontSize: 17}}>
                                 Add chips to this table from your playchip <a href={`/user/${global.user.username}`} target="_blank">wallet</a> balance of {global.user.balance.toLocaleString()}㆔.<br/>
                             </center><hr/>
@@ -399,8 +389,7 @@ export class OneTimeBuyModalTrigger extends BuyChipsModalTrigger {
                                     <source srcSet="/static/images/chips.webp" type="image/webp"/>
                                     <img src="/static/images/chips.png" alt="Chips"/>
                                 </picture>
-                                <FormControl id="buyin-amt"
-                                             componentClass="input"
+                                <Form.Control id="buyin-amt"
                                              type="number"
                                              value={this.state.input_value}
                                              min={this.props.legal_min_buyin}
@@ -408,28 +397,28 @@ export class OneTimeBuyModalTrigger extends BuyChipsModalTrigger {
                                              placeholder={this.props.legal_min_buyin}
                                              onChange={::this.onInputChange}
                                              onKeyDown={preventNonNumbers}/>
-                                <ControlLabel>Chips</ControlLabel>
+                                <Form.Label>Chips</Form.Label>
                                 {this.state.can_buy ?
-                                    <HelpBlock style={{display: this.getValidationState().help_block_display}}>
+                                    <Form.Text style={{display: this.getValidationState().help_block_display}}>
                                         This amount must be between {this.props.legal_min_buyin} and {this.props.legal_max_buyin}
-                                        &nbsp;<Icon name="info-circle" 
+                                        &nbsp;<Icon name="info-circle"
                                             {...tooltip('This interval is calculed using your current stack + pending buyin and min-max buyin from the table')} />
-                                    </HelpBlock>
-                                    : <HelpBlock>
+                                    </Form.Text>
+                                    : <Form.Text>
                                         You don't need to buy any chips
-                                    </HelpBlock>}
+                                    </Form.Text>}
                             </div>
                             {this.props.player_auto_rebuy ?
-                                <Alert bsStyle="info">
+                                <Alert variant="info">
                                     Note: You have auto-rebuy enabled, it is currently set to {Number(this.props.player_auto_rebuy).toLocaleString()} chips
                                 </Alert>
                                 : null}
-                        </FormGroup>
+                        </Form.Group>
                     </Modal.Body>
                     <Modal.Footer>
                         <span>
                             <Button onClick={::this.onCancel}>Cancel</Button>
-                            <Button bsStyle="success" onClick={::this.onConfirm} disabled={!this.isValidInput()}>
+                            <Button variant="success" onClick={::this.onConfirm} disabled={!this.isValidInput()}>
                                 Add {Number(this.state.input_value).toLocaleString()} Chips to Table
                             </Button>
                         </span>
@@ -491,9 +480,9 @@ export class AutoRebuyModalTrigger extends BuyChipsModalTrigger {
                             <br/>
                             Your playchip <a href={`/user/${global.user.username}`} target="_blank">wallet</a> has a balance of {global.user.balance.toLocaleString()}㆔.<br/>
                         </center><hr/>
-                        <FormGroup validationState={this.getValidationState().form_group_class}>
+                        <Form.Group>
                             {this.props.player_auto_rebuy ?
-                                <Alert bsStyle="info">
+                                <Alert variant="info">
                                     Auto-rebuy is currently set to {Number(this.props.player_auto_rebuy).toLocaleString()} chips
                                 </Alert>
                                 : null}
@@ -502,8 +491,7 @@ export class AutoRebuyModalTrigger extends BuyChipsModalTrigger {
                                     <source srcSet="/static/images/chips.webp" type="image/webp"/>
                                     <img src="/static/images/chips.png" alt="Chips"/>
                                 </picture>
-                                <FormControl id="buyin-amt"
-                                             componentClass="input"
+                                <Form.Control id="buyin-amt"
                                              type="number"
                                              value={this.state.input_value}
                                              min={this.props.min_buyin}
@@ -511,25 +499,25 @@ export class AutoRebuyModalTrigger extends BuyChipsModalTrigger {
                                              placeholder={this.props.min_buyin}
                                              onChange={::this.onInputChange}
                                              onKeyDown={preventNonNumbers}/>
-                                <ControlLabel>Chips ({this.state.input_in_bbs} bbs)</ControlLabel>
-                                <HelpBlock style={{display: this.getValidationState().help_block_display}}>
+                                <Form.Label>Chips ({this.state.input_in_bbs} bbs)</Form.Label>
+                                <Form.Text style={{display: this.getValidationState().help_block_display}}>
                                     This amount must be between {this.props.min_buyin} and {this.props.max_buyin}
-                                </HelpBlock>
+                                </Form.Text>
                             </div>
-                        </FormGroup>
-                        <Checkbox className="chips-form"
+                        </Form.Group>
+                        <Form.Check type="checkbox"
+                                  className="chips-form"
                                   defaultChecked={this.state.default_for_all_tables}
-                                  onChange={::this.onAllTablesCheck}>
-                            Set {this.state.input_in_bbs} bbs default auto-rebuy on all tables
-                        </Checkbox>
+                                  onChange={::this.onAllTablesCheck}
+                                  label={`Set ${this.state.input_in_bbs} bbs default auto-rebuy on all tables`}/>
                     </Modal.Body>
                     <Modal.Footer>
                         <span>
-                            <Button bsStyle="danger" className="pull-left" onClick={::this.turnOffAutoRebuyin}>
+                            <Button variant="danger" className="pull-left" onClick={::this.turnOffAutoRebuyin}>
                                 Turn off
                             </Button>
                             <Button onClick={::this.onCancel}>Cancel</Button>
-                            <Button bsStyle="success" onClick={::this.onConfirm} disabled={!this.isValidInput()}>
+                            <Button variant="success" onClick={::this.onConfirm} disabled={!this.isValidInput()}>
                                 Enable auto-rebuying at {Number(this.state.input_value).toLocaleString()} chips
                             </Button>
                         </span>
@@ -597,7 +585,7 @@ class HandHistoryModal extends ModalTrigger {
                                     </pre>
                                 </div>
                             </div>
-                            : <Alert bsStyle="info">
+                            : <Alert variant="info">
                                 <br/><br/>
                                 <center style={{fontSize: '20px'}}>
                                     <Spinner/>
@@ -611,17 +599,17 @@ class HandHistoryModal extends ModalTrigger {
                         {hand_history.length > 0 ?
                             <span>
                                 <Button style={{float: 'left'}} onClick={::this.onCancel}>Close</Button>
-                                <Button bsStyle="warning"
+                                <Button variant="warning"
                                         onClick={::this.onMoveBackward}>
                                     <Icon name="angle-double-left"/>
                                 </Button>
                                 &nbsp; &nbsp; Hand {curr_hand_number}/{hand_history.length} &nbsp; &nbsp;
-                                <Button bsStyle="warning"
+                                <Button variant="warning"
                                         onClick={::this.onMoveForward}>
                                     <Icon name="angle-double-right"/>
                                 </Button>
                             </span>
-                            : <Button bsStyle="success" onClick={::this.onClose}>
+                            : <Button variant="success" onClick={::this.onClose}>
                                 Ok &nbsp;<Icon name="check"/>
                             </Button>}
                     </Modal.Footer>

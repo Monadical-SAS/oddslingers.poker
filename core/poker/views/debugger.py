@@ -31,26 +31,28 @@ from ui.views.base_views import BaseView, ReactView
 
 
 class TableDebuggerList(BaseView):
-    title = 'TableDebuggerList'
-    template = 'poker/debugger_list.html'
+    title = "TableDebuggerList"
+    template = "poker/debugger_list.html"
     login_required = True
 
-    @require_staff(redirect_url='Tables', allow_debug=True)
+    @require_staff(redirect_url="Tables", allow_debug=True)
     def get(self, request):
         self.context = {
-            'tables': (
+            "tables": (
                 (table.short_id, table.name)
-                for table in (PokerTable.objects
-                                        .filter(is_mock=False)
-                                        .only('id', 'name')
-                                        .order_by('-modified'))
+                for table in (
+                    PokerTable.objects.filter(is_mock=False)
+                    .only("id", "name")
+                    .order_by("-modified")
+                )
             ),
-            'replayers': (
+            "replayers": (
                 (table.short_id, table.name)
-                for table in (PokerTable.objects
-                                        .filter(is_mock=True)
-                                        .only('id', 'name')
-                                        .order_by('-modified'))
+                for table in (
+                    PokerTable.objects.filter(is_mock=True)
+                    .only("id", "name")
+                    .order_by("-modified")
+                )
             ),
         }
         return super().get(request)
@@ -68,34 +70,38 @@ def get_replayer_by_id(id, hand_number=-1, action_idx=0, session_id=None):
     if not table.is_mock:
         # pause heartbeat when debugging a live table
         stop_tablebeat(table)
-        table.sockets.send_action('ERROR',
-                details='Stopped game temporarily for debugging purposes.')
+        table.sockets.send_action(
+            "ERROR", details="Stopped game temporarily for debugging purposes."
+        )
     # TODO: handle fetching the proper replayer for a mock table
 
     hand_number = -1 if hand_number is None else int(hand_number)
 
-    return ActionReplayer.from_table(table, action_idx, hand_number,
-                                     session_id=session_id,
-                                     subscriber_types=[AnimationSubscriber])
+    return ActionReplayer.from_table(
+        table,
+        action_idx,
+        hand_number,
+        session_id=session_id,
+        subscriber_types=[AnimationSubscriber],
+    )
 
 
-def get_replayer_by_filename(filename,
-                             hand_number=-1,
-                             action_idx=0,
-                             session_id=None):
+def get_replayer_by_filename(filename, hand_number=-1, action_idx=0, session_id=None):
     """construct an ActionReplayer from a given handhistory filename"""
 
     hand_number = -1 if hand_number is None else int(hand_number)
     action_idx = 0 if action_idx is None else int(action_idx)
 
-    dump_path = os.path.join(settings.BASE_DIR, 'poker',
-                             'tests', 'data', filename)
+    dump_path = os.path.join(settings.BASE_DIR, "poker", "tests", "data", filename)
 
-    return ActionReplayer.from_file(open(dump_path, 'r'),
-                                    hand_number,
-                                    action_idx,
-                                    subscriber_types=[AnimationSubscriber],
-                                    session_id=session_id)
+    return ActionReplayer.from_file(
+        open(dump_path, "r"),
+        hand_number,
+        action_idx,
+        subscriber_types=[AnimationSubscriber],
+        session_id=session_id,
+    )
+
 
 def is_invalid_debugger_path(table, hand_number, action_idx):
     """
@@ -112,40 +118,36 @@ def is_invalid_debugger_path(table, hand_number, action_idx):
     if hand_number > table.hand_number:
         return True
 
-    assert 0 <= hand_number <= table.hand_number and 0 <= action_idx, \
-            'Hand number or action_idx out of range.'
+    assert (
+        0 <= hand_number <= table.hand_number and 0 <= action_idx
+    ), "Hand number or action_idx out of range."
     return False
 
 
-def get_replayer_by_path(id_or_filename,
-                         hand_number=None,
-                         action_idx=None,
-                         session_id=None):
+def get_replayer_by_path(
+    id_or_filename, hand_number=None, action_idx=None, session_id=None
+):
     """given a table id or handhistory filename, get an ActionReplayer"""
     # print('get_replayer_by_path', hand_number, action_idx)
-    replayer = get_replayer_by_id(id_or_filename,
-                                  hand_number,
-                                  action_idx,
-                                  session_id)
+    replayer = get_replayer_by_id(id_or_filename, hand_number, action_idx, session_id)
     if not replayer:
-        replayer = get_replayer_by_filename(id_or_filename,
-                                            hand_number,
-                                            action_idx,
-                                            session_id)
+        replayer = get_replayer_by_filename(
+            id_or_filename, hand_number, action_idx, session_id
+        )
     return replayer
 
 
 class BackendDebugger(ReactView):
-    title = 'Backend Debugger Ticket'
-    component = 'pages/debugger.js'
-    template = 'ui/debug.html'
+    title = "Backend Debugger Ticket"
+    component = "pages/debugger.js"
+    template = "ui/debug.html"
 
-    @require_staff(redirect_url='Tables', allow_debug=True)
+    @require_staff(redirect_url="Tables", allow_debug=True)
     def get(self, request, **kwargs):
 
-        ticket_id = kwargs.get('ticket_id')
-        hand_number = int(request.GET.get('hand_number', 0))
-        action_idx = request.GET.get('action_idx', 0)
+        ticket_id = kwargs.get("ticket_id")
+        hand_number = int(request.GET.get("hand_number", 0))
+        action_idx = request.GET.get("action_idx", 0)
         try:
             qs = SupportTicket.objects
             if isinstance(ticket_id, UUID):
@@ -153,7 +155,7 @@ class BackendDebugger(ReactView):
             else:
                 self.ticket = qs.get(id__startswith=ticket_id)
         except SupportTicket.DoesNotExist:
-            return redirect('/tables')
+            return redirect("/tables")
 
         # cache_key = f'backend-debugger-log-:{self.ticket.id}'
         json_log = read_hand_history(self.ticket)
@@ -162,34 +164,37 @@ class BackendDebugger(ReactView):
         #     cache.set(cache_key, json_log)
 
         if action_idx and int(action_idx):
-            self.replayer = ActionReplayer(json_log=json_log,
-                                           hand_number=hand_number,
-                                           action_idx=int(action_idx) - 1,
-                                           subscriber_types=[AnimationSubscriber])
+            self.replayer = ActionReplayer(
+                json_log=json_log,
+                hand_number=hand_number,
+                action_idx=int(action_idx) - 1,
+                subscriber_types=[AnimationSubscriber],
+            )
         else:
-            self.replayer = ActionReplayer(json_log=json_log,
-                                           hand_number=hand_number,
-                                           action_idx=int(action_idx),
-                                           subscriber_types=[AnimationSubscriber])
-
+            self.replayer = ActionReplayer(
+                json_log=json_log,
+                hand_number=hand_number,
+                action_idx=int(action_idx),
+                subscriber_types=[AnimationSubscriber],
+            )
 
         if not self.replayer:
             # prevent reflected XSS in url
             sanitized = sanitize_html(
                 self.ticket.table.id, strip=True, allow_safe=False
             )
-            return redirect(f'/tables/?search={sanitized}')
+            return redirect(f"/tables/?search={sanitized}")
 
         table = self.replayer.controller.table
 
-        props = '?props_json=1' if request.GET.get('props_json') else ''
+        props = "?props_json=1" if request.GET.get("props_json") else ""
 
         # redirect to full path if path is missing some info
         if is_invalid_debugger_path(table, hand_number, action_idx):
             hand_number = table.hand_number
             action_idx = action_idx or 0
-            props = f'{props}&action_idx={action_idx}&hand_number={hand_number}'
-            path = f'/support/{self.ticket.short_id}/bdebugger{props}'
+            props = f"{props}&action_idx={action_idx}&hand_number={hand_number}"
+            path = f"/support/{self.ticket.short_id}/bdebugger{props}"
 
             return redirect(path)
 
@@ -205,19 +210,17 @@ class BackendDebugger(ReactView):
                 else:
                     action_idx = int(action_idx) - 1
 
-                props = f'{props}&action_idx={action_idx}&hand_number={hand_number}'
-                path = f'/support/{self.ticket.short_id}/bdebugger{props}'
+                props = f"{props}&action_idx={action_idx}&hand_number={hand_number}"
+                path = f"/support/{self.ticket.short_id}/bdebugger{props}"
 
                 return redirect(path)
 
         username = None
         gamestate = self.replayer.gamestate_json(username)
-        gamestate['ticket_id'] = self.ticket.short_id
-        gamestate['hand_number'] = hand_number
-        gamestate['action_idx'] = action_idx
-        self.props = {
-            'gamestate': gamestate
-        }
+        gamestate["ticket_id"] = self.ticket.short_id
+        gamestate["hand_number"] = hand_number
+        gamestate["action_idx"] = action_idx
+        self.props = {"gamestate": gamestate}
 
         # print('self.props:')
         # print(to_json_str(self.props, indent=4))
@@ -226,9 +229,9 @@ class BackendDebugger(ReactView):
 
 
 class FrontendDebugger(ReactView):
-    title = 'Frontend Debugger Ticket'
-    component = 'pages/debugger.js'
-    template = 'ui/debug.html'
+    title = "Frontend Debugger Ticket"
+    component = "pages/debugger.js"
+    template = "ui/debug.html"
     ticket = None
 
     def _get_gamestate(self, op, gs_list, idx):
@@ -238,13 +241,13 @@ class FrontendDebugger(ReactView):
                 gamestate = gs_list[idx]
             except IndexError:
                 break
-            if gamestate['type'] == 'UPDATE_GAMESTATE':
+            if gamestate["type"] == "UPDATE_GAMESTATE":
                 break
             idx = op(idx, 1)
 
-        gamestate['idx'] = idx
-        gamestate['ticket_id'] = self.ticket.short_id
-        gamestate['debugger'] = 'FrontendDebugger'
+        gamestate["idx"] = idx
+        gamestate["ticket_id"] = self.ticket.short_id
+        gamestate["debugger"] = "FrontendDebugger"
         return gamestate
 
     def get_next_gamestate(self, messages_received, idx):
@@ -253,7 +256,7 @@ class FrontendDebugger(ReactView):
     def get_prev_gamestate(self, messages_received, idx):
         return self._get_gamestate(operator.sub, messages_received, idx)
 
-    @require_staff(redirect_url='Tables', allow_debug=True)
+    @require_staff(redirect_url="Tables", allow_debug=True)
     def get(self, request, ticket_id=None):
         return super().get(request, ticket_id)
 
@@ -269,18 +272,14 @@ class FrontendDebugger(ReactView):
 
         frontend_log = read_frontend_log(self.ticket)
         if frontend_log:
-            idx = int(request.GET.get('message_idx') or 0)
-            messages_received = frontend_log['ws_to_frontend']
-            operation = request.GET.get('op')
+            idx = int(request.GET.get("message_idx") or 0)
+            messages_received = frontend_log["ws_to_frontend"]
+            operation = request.GET.get("op")
 
-            if operation == 'sub':
-                return {
-                    'gamestate': self.get_prev_gamestate(messages_received, idx)
-                }
+            if operation == "sub":
+                return {"gamestate": self.get_prev_gamestate(messages_received, idx)}
             else:
-                return {
-                    'gamestate': self.get_next_gamestate(messages_received, idx)
-                }
+                return {"gamestate": self.get_next_gamestate(messages_received, idx)}
         else:
             return {}
 

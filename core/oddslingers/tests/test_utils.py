@@ -8,48 +8,40 @@ from django.utils import timezone
 class DeepDiffTest(TestCase):
     def test_deep_diff(self):
         dict1 = {
-            'diff_dict': {
-                'list_to_num': [1, 2, 3],
-                'change_and_remove': {
-                    'changed_list': ['the', 'witch', 'is', 'dead'],
-                    'removed': 'derp'
+            "diff_dict": {
+                "list_to_num": [1, 2, 3],
+                "change_and_remove": {
+                    "changed_list": ["the", "witch", "is", "dead"],
+                    "removed": "derp",
                 },
-                'dict_no_diff': {
-                    'chimi': 1,
-                    'churri': 2
-                }
+                "dict_no_diff": {"chimi": 1, "churri": 2},
             },
-            'same_val': 8,
-            'same_val2': 'pop'
+            "same_val": 8,
+            "same_val2": "pop",
         }
 
         dict2 = {
-            'diff_dict': {
-                'list_to_num': 1.5,
-                'change_and_remove': {
-                    'changed_list': ['the', 'witch', 'is', 'funky']
-                },
-                'dict_no_diff': {
-                    'chimi': 1,
-                    'churri': 2
-                },
-                'added_sub': 1234
+            "diff_dict": {
+                "list_to_num": 1.5,
+                "change_and_remove": {"changed_list": ["the", "witch", "is", "funky"]},
+                "dict_no_diff": {"chimi": 1, "churri": 2},
+                "added_sub": 1234,
             },
-            'same_val': 8,
-            'same_val2': 'pop',
-            'added_top': 'goober'
+            "same_val": 8,
+            "same_val2": "pop",
+            "added_top": "goober",
         }
 
         expected_diff = {
-            'diff_dict': {
-                'list_to_num': 1.5,
-                'change_and_remove': {
-                    'changed_list': ['the', 'witch', 'is', 'funky'],
-                    'removed': None
+            "diff_dict": {
+                "list_to_num": 1.5,
+                "change_and_remove": {
+                    "changed_list": ["the", "witch", "is", "funky"],
+                    "removed": None,
                 },
-                'added_sub': 1234
+                "added_sub": 1234,
             },
-            'added_top': 'goober'
+            "added_top": "goober",
         }
         # import ipdb; ipdb.set_trace()
         actual_diff = deep_diff(dict1, dict2)
@@ -81,6 +73,7 @@ class TimezoneMocker:
         returns to its original behaviour after entering debug
         mode
     """
+
     def __init__(self, mock_time):
         self.mock_time = mock_time
         self.prev_tz = timezone.now
@@ -117,6 +110,7 @@ class TimezoneMockerTest(TestCase):
 
 class MonkeyPatch:
     """monkey-patch a method with a mock method"""
+
     def __init__(self, klass, method_name, mock_method):
         self.klass = klass
         self.mock_method = mock_method

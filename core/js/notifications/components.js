@@ -1,8 +1,8 @@
 import React from 'react'
-import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+import { formatDistanceToNow } from 'date-fns'
 
 import classNames from 'classnames'
-import Alert from 'react-bootstrap/lib/Alert'
+import { Alert } from 'react-bootstrap'
 
 export class Notification extends React.Component {
     constructor(props) {
@@ -72,7 +72,7 @@ export class Notification extends React.Component {
         }, delay || 8000)
 
         return showing ?
-                <Alert bsStyle={bsStyle || 'info'}
+                <Alert variant={bsStyle || 'info'}
                        className={classNames(`notification notification-${type || 'base'}`,
                                              `notification-${subtype || 'base'}`)}>
                     {!noClose &&
@@ -90,7 +90,7 @@ export class Notification extends React.Component {
                     {ts ?
                         <div style={{opacity: 0.8, fontSize: '0.8em', marginTop: 6}} className="timestamp">
                             {/* See: https://momentjs.com/docs/#/displaying/calendar-time/ */
-                                distanceInWordsToNow(ts)
+                                formatDistanceToNow(ts)
                             }
                         </div>
                       : null}

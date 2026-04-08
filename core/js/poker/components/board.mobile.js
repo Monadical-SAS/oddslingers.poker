@@ -3,8 +3,7 @@ import {reduxify} from '@/util/reduxify'
 
 import isEqual from 'lodash/isEqual'
 
-import Alert from 'react-bootstrap/lib/Alert'
-import Button from 'react-bootstrap/lib/Button'
+import { Alert, Button } from 'react-bootstrap'
 
 import {DealerButtonComponent} from '@/poker/components/board'
 import {Cards} from '@/poker/components/cards'
@@ -23,7 +22,7 @@ class EmptyBoardComponent extends React.Component {
     }
     render() {
         return <div className="board" style={{...this.props.style}}>
-            <Alert id="empty-table-message" bsStyle="success">
+            <Alert id="empty-table-message" variant="success">
                 <h4>Invite people to this table to begin playing.</h4>
                 <div>
                     <pre id="share-link" style={{userSelect: 'all', textAlign: 'center'}}>
@@ -83,7 +82,7 @@ export const Board = reduxify({
     render: (props) => {
         if (props.tournament && props.tournament.status === 'FINISHED') {
             return <div className="board">
-                <Alert id="empty-table-message" bsStyle="info">
+                <Alert id="empty-table-message" variant="info">
                     <h4>This tournament has finished</h4>
                     <Button bsStyle="default" onClick={() => global.location = props.tournament.path}>
                         Check the results

@@ -2,7 +2,7 @@ import React from 'react'
 import {reduxify} from '@/util/reduxify'
 import classNames from 'classnames'
 
-import Button from 'react-bootstrap/lib/Button'
+import { Button } from 'react-bootstrap'
 import {Icon} from '@/components/icons'
 
 import {

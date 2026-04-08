@@ -6,10 +6,10 @@ from poker.tablebeat import stop_tablebeat
 
 
 class Command(BaseCommand):
-    help = 'Set a PokerTable to is_archived=True'
+    help = "Set a PokerTable to is_archived=True"
 
     def add_arguments(self, parser):
-        parser.add_argument('table_id', type=str)
+        parser.add_argument("table_id", type=str)
 
     def handle(self, table_id):
         table = PokerTable.objects.get(id__startswith=table_id)

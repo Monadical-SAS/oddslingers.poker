@@ -2,8 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import {reduxify} from '@/util/reduxify'
 
-import Button from 'react-bootstrap/lib/Button'
-import Col from 'react-bootstrap/lib/Col'
+import { Button, Col } from 'react-bootstrap'
 
 import {Icon} from '@/components/icons'
 import {tooltip} from '@/util/dom'

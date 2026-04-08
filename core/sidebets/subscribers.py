@@ -11,8 +11,8 @@ from poker.constants import Event, ACTIVE_PLAYSTATES
 
 from sidebets.views import make_sidebet
 
-
 User = get_user_model()
+
 
 class SidebetSubscriber(Subscriber):
     def __init__(self, accessor):
@@ -27,13 +27,11 @@ class SidebetSubscriber(Subscriber):
         try:
             sidebets_qs = self.accessor.table.sidebets
         except AttributeError:
-            sidebets_qs = self.accessor.table.sidebet_set.exclude(status='closed')
+            sidebets_qs = self.accessor.table.sidebet_set.exclude(status="closed")
 
         new_sidebets = set()
         for sidebet in sidebets_qs:
-            sidebet.player = self.accessor.player_by_player_id(
-                sidebet.player.id
-            )
+            sidebet.player = self.accessor.player_by_player_id(sidebet.player.id)
             new_sidebets.add(sidebet)
 
         return new_sidebets
@@ -61,23 +59,20 @@ class SidebetSubscriber(Subscriber):
                     self.to_broadcast[sidebet.user].append(sidebet)
 
         elif event == Event.CREATE_SIDEBET:
-            user = kwargs['user']
-            plyr = kwargs['player']
-            amt = Decimal(kwargs['amt'])
+            user = kwargs["user"]
+            plyr = kwargs["player"]
+            amt = Decimal(kwargs["amt"])
             try:
                 sidebet, transfer = make_sidebet(
-                    user, plyr, amt, delay=None, status='opening'
+                    user, plyr, amt, delay=None, status="opening"
                 )
-                self.objects_to_save += [
-                    sidebet,
-                    *transfer
-                ]
+                self.objects_to_save += [sidebet, *transfer]
                 self.to_broadcast[sidebet.user].append(sidebet)
             except ValueError:
                 pass
 
         elif event == Event.CLOSE_SIDEBET:
-            sidebets = kwargs['sidebets']
+            sidebets = kwargs["sidebets"]
             for sidebet in sidebets:
                 if sidebet.is_active():
                     sidebet.prepare_to_close()
@@ -99,35 +94,28 @@ class SidebetSubscriber(Subscriber):
         for sidebet in self.sidebets:
             if sidebet.player.id == player.id:
                 transfer = sidebet.close(use_current_stack=True)
-                self.objects_to_save += [
-                    sidebet,
-                    *transfer
-                ]
+                self.objects_to_save += [sidebet, *transfer]
 
     def set_closing_sidebets(self):
         for sidebet in self.sidebets:
             if sidebet.is_closing():
                 transfer = sidebet.close(use_current_stack=True)
-                self.objects_to_save += [
-                    sidebet,
-                    *transfer
-                ]
+                self.objects_to_save += [sidebet, *transfer]
 
     def close_sidebets(self):
         for sidebet in self.sidebets:
             if sidebet.player.stack == 0:
                 sidebet.ending_stack = 0
                 transfer = sidebet.close()
-                self.objects_to_save += [
-                    sidebet,
-                    *transfer
-                ]
+                self.objects_to_save += [sidebet, *transfer]
 
     def initialize_stack(self, sidebet):
         now = timezone.now() + timedelta(seconds=1)
-        if (now >= sidebet.start_time
-                and not sidebet.starting_stack
-                and sidebet.player.playing_state in ACTIVE_PLAYSTATES):
+        if (
+            now >= sidebet.start_time
+            and not sidebet.starting_stack
+            and sidebet.player.playing_state in ACTIVE_PLAYSTATES
+        ):
             sidebet.starting_stack = sidebet.player.stack
 
         return sidebet
@@ -138,23 +126,22 @@ class SidebetSubscriber(Subscriber):
                 if sidebet.player.user.id == src.id and sidebet.is_active():
                     sidebet.ending_stack = sidebet.player.stack - amt
                     transfer = sidebet.close()
-                    self.objects_to_save += [
-                        sidebet,
-                        *transfer
-                    ]
+                    self.objects_to_save += [sidebet, *transfer]
 
                     user = sidebet.user
                     plyr = sidebet.player
                     new_amt = sidebet.current_value()
                     parent = sidebet.sidebet_parent or sidebet
                     new_sidebet, new_transfer = make_sidebet(
-                        user, plyr, new_amt, parent, delay=None, rebuy=True,
+                        user,
+                        plyr,
+                        new_amt,
+                        parent,
+                        delay=None,
+                        rebuy=True,
                     )
                     new_sidebet = self.initialize_stack(new_sidebet)
-                    self.objects_to_save += [
-                        new_sidebet,
-                        *new_transfer
-                    ]
+                    self.objects_to_save += [new_sidebet, *new_transfer]
 
     # def wins_and_losses(self):
     #     stack_record = PlayerStartingStackHistory.objects.get(
@@ -183,7 +170,7 @@ class SidebetSubscriber(Subscriber):
 
     def updates_for_broadcast(self, player=None, spectator=None):
         updates = self.to_broadcast[spectator]
-        return {'sidebets': updates or []}
+        return {"sidebets": updates or []}
 
     def commit(self):
         for obj in self.objects_to_save:

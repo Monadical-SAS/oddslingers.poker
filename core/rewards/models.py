@@ -12,9 +12,9 @@ from .constants import BADGE_DESCRIPTIONS
 class Badge(BaseModel):
     objects = SeasonRegularManager()
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                on_delete=models.CASCADE,
-                                null=False)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=False
+    )
 
     created = models.DateTimeField(auto_now_add=True)
     season = models.IntegerField(db_index=True)
@@ -26,19 +26,18 @@ class Badge(BaseModel):
     )
 
     class Meta:
-        index_together = (('user', 'season'),)
+        indexes = [models.Index(fields=["user", "season"])]
 
     @property
     def description(self):
-        assert self.name in BADGE_DESCRIPTIONS.keys(),\
-            "incorrect name choice in badge"
+        assert self.name in BADGE_DESCRIPTIONS.keys(), "incorrect name choice in badge"
 
         season = self.season
-        if 'week' in self.name:
+        if "week" in self.name:
             week = self.get_badge_week(season)
             return BADGE_DESCRIPTIONS[self.name].format(week, season)
 
-        if 'season' in self.name:
+        if "season" in self.name:
             return BADGE_DESCRIPTIONS[self.name].format(season)
 
         return BADGE_DESCRIPTIONS[self.name]
@@ -64,4 +63,3 @@ class Badge(BaseModel):
 #     king_of_the_hill_points = models.IntegerField(default=0)
 
 #     total_rewards_points = models.IntegerField(default=0)
-

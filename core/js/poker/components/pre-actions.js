@@ -1,7 +1,7 @@
 import React from 'react'
 import {reduxify} from '@/util/reduxify'
 
-import Checkbox from 'react-bootstrap/lib/Checkbox'
+import { Form } from 'react-bootstrap'
 
 import {getGamestate, getLoggedInPlayer} from '@/poker/selectors'
 
@@ -87,23 +87,23 @@ class PreActionsComponent extends React.Component {
         return <div className="preactions">
             <div className="checkbox-actions">
                 {can_set_preset_call &&
-                    <Checkbox
+                    <Form.Check type="checkbox"
+                        label={`\u00a0Call ${amt_to_call.toLocaleString()}`}
                         checked={this.state.preset_call}
-                        onChange={() => this.setPresetCall(total_call_amt, !this.state.preset_call)}>
-                        &nbsp;Call {amt_to_call.toLocaleString()}
-                    </Checkbox>}
+                        onChange={() => this.setPresetCall(total_call_amt, !this.state.preset_call)}
+                    />}
                 {can_set_preset_check &&
-                    <Checkbox
+                    <Form.Check type="checkbox"
+                        label="&nbsp;Check"
                         checked={this.state.preset_check}
-                        onChange={() => this.setPresetCheck(!this.state.preset_check)}>
-                        &nbsp;Check
-                    </Checkbox>}
+                        onChange={() => this.setPresetCheck(!this.state.preset_check)}
+                    />}
                 {can_set_preset_checkfold &&
-                    <Checkbox
+                    <Form.Check type="checkbox"
+                        label={`\u00a0${amt_to_call === 0 ? 'Check/Fold' : 'Fold'}`}
                         checked={this.state.preset_checkfold}
-                        onChange={() => this.setPresetCheckFold(!this.state.preset_checkfold)}>
-                        &nbsp;{amt_to_call === 0 ? 'Check/Fold' : 'Fold'}
-                    </Checkbox>}
+                        onChange={() => this.setPresetCheckFold(!this.state.preset_checkfold)}
+                    />}
             </div>
         </div>
     }

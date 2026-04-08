@@ -1,1 +1,1 @@
-default_app_config = 'ui.apps.UiConfig'
+default_app_config = "ui.apps.UiConfig"

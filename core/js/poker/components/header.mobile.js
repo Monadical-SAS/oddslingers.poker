@@ -1,8 +1,7 @@
 import React from 'react'
 import {reduxify} from '@/util/reduxify'
 
-import DropdownButton from 'react-bootstrap/lib/DropdownButton'
-import MenuItem from 'react-bootstrap/lib/MenuItem'
+import { DropdownButton, Dropdown } from 'react-bootstrap'
 
 import {Icon} from '@/components/icons'
 
@@ -25,11 +24,11 @@ import {
 
 class ToggleSounds extends ToggleSoundsClass {
     render() {
-        return <MenuItem key="toggle-sounds"
+        return <Dropdown.Item key="toggle-sounds"
                          onClick={() => this.onToggle() }>
             <Icon name={`volume-${this.state.muted ? 'off' : 'up'}`}/>&nbsp;
             {`${this.state.muted ? 'Unmute' : 'Mute'}`} sounds
-        </MenuItem>
+        </Dropdown.Item>
     }
 }
 
@@ -43,51 +42,51 @@ export const GameHeader = reduxify({
                             id="header-settings"
                             title="Options">
 
-                <MenuItem key="game-info">
+                <Dropdown.Item key="game-info">
                     <TableInfoModalTrigger table={props}>
                             <Icon name='bar-chart'/>
                             Game Info
                     </TableInfoModalTrigger>
-                </MenuItem>
+                </Dropdown.Item>
 
                 {props.is_private &&
-                    <MenuItem key="show-player-winnings">
+                    <Dropdown.Item key="show-player-winnings">
                         <PlayerWinningsModalTrigger>
                             <Icon name='money' /> Show Player Winnings
                         </PlayerWinningsModalTrigger>
-                    </MenuItem>}
+                    </Dropdown.Item>}
 
-                <MenuItem key="show-hand-history">
+                <Dropdown.Item key="show-hand-history">
                     <HandHistoryModalTrigger>
                             <Icon name='file-text-o'/> Show Hand History
                     </HandHistoryModalTrigger>
-                </MenuItem>
+                </Dropdown.Item>
 
-                <MenuItem key="share-table-link">
+                <Dropdown.Item key="share-table-link">
                     <ShareTableModalTrigger table={props}>
                             <Icon name='share-square'/> Share Table Link
                     </ShareTableModalTrigger>
-                </MenuItem>
+                </Dropdown.Item>
 
-                <MenuItem key="report-bug">
+                <Dropdown.Item key="report-bug">
                     <ReportBugModalTrigger>
                             <Icon name='bug'/> Report a Bug
                     </ReportBugModalTrigger>
-                </MenuItem>
+                </Dropdown.Item>
                 <ToggleSounds muted_sounds={props.muted_sounds}
                               onToggleSound={props.onToggleSound}/>
 
                 {global.props.DEBUG &&
-                    <MenuItem key="pause"
+                    <Dropdown.Item key="pause"
                               onClick={pauseBackend}>
                         <Icon name="pause"/> Pause action
-                    </MenuItem>
+                    </Dropdown.Item>
                     }
                 {global.props.DEBUG &&
-                    <MenuItem key="nextaction"
+                    <Dropdown.Item key="nextaction"
                               onClick={nextAction}>
                         <Icon name="angle-double-right"/> Next action
-                    </MenuItem>
+                    </Dropdown.Item>
                     }
             </DropdownButton>
         </header>
@@ -104,10 +103,10 @@ const RebuyMenu = ({bb, can_buy, can_set_auto_rebuy, title,
                                     max_buyin={max_buyin}
                                     player_auto_rebuy={player_auto_rebuy}
                                     onSubmitAction={onSubmitAction}>
-                <MenuItem className="dropdown-item"
+                <Dropdown.Item className="dropdown-item"
                           key="one-time-buy">
                     Add chips
-                </MenuItem>
+                </Dropdown.Item>
             </OneTimeBuyModalTrigger>}
 
         {can_set_auto_rebuy &&
@@ -116,10 +115,10 @@ const RebuyMenu = ({bb, can_buy, can_set_auto_rebuy, title,
                                    bb={bb}
                                    player_auto_rebuy={player_auto_rebuy}
                                    onSubmitAction={onSubmitAction}>
-                <MenuItem className="dropdown-item"
+                <Dropdown.Item className="dropdown-item"
                           key="auto-rebuy">
                     Set auto rebuy...
-                </MenuItem>
+                </Dropdown.Item>
             </AutoRebuyModalTrigger>}
     </DropdownButton>
 

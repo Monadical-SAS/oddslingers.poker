@@ -1,14 +1,10 @@
 import React from 'react'
 
-import Button from 'react-bootstrap/lib/Button'
-import FormControl from 'react-bootstrap/lib/FormControl'
-import FormGroup from 'react-bootstrap/lib/FormGroup'
-import InputGroup from 'react-bootstrap/lib/InputGroup'
+import { Button, Form, InputGroup } from 'react-bootstrap'
 
 import {Icon} from '@/components/icons'
 
 
-const InputGroupButton = InputGroup.Button
 
 
 export const SearchField = ({onSearch, onChange, text='Search', width=250, bsStyle='default', icon='search', ...props}) => {
@@ -32,16 +28,14 @@ export const SearchField = ({onSearch, onChange, text='Search', width=250, bsSty
     return <span>
         <style>{search_form_style}</style>
         <form action="#" onSubmit={onSubmit} className="search-field">
-            <FormGroup>
+            <Form.Group>
                 <InputGroup>
-                    <FormControl type="search" id={id} {...props} onChange={() => {onChange($(`#${id}`).val())}}/>
-                    <InputGroupButton>
-                        <Button bsStyle={bsStyle} onClick={onSubmit} type="submit">
-                            <Icon name={icon}/> {text}
-                        </Button>
-                    </InputGroupButton>
+                    <Form.Control type="search" id={id} {...props} onChange={() => {onChange($(`#${id}`).val())}}/>
+                    <Button bsStyle={bsStyle} onClick={onSubmit} type="submit">
+                        <Icon name={icon}/> {text}
+                    </Button>
                 </InputGroup>
-            </FormGroup>
+            </Form.Group>
         </form>
     </span>
 }

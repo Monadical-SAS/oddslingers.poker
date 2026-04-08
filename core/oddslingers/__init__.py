@@ -10,26 +10,26 @@ from django.utils import autoreload
 from django.conf import settings
 
 
-
 # Override django runserver reloader to kill heartbeats when restarting
 #   or Ctrl-C'ed
 def django_restart_with_reloader():
     """this must exactly match the contents of:
-            django.utils.autoreload.restart_with_reloader
-            without the first `while True:` at the top
+        django.utils.autoreload.restart_with_reloader
+        without the first `while True:` at the top
 
-        update this with every django update
-        (or just fix it when it breaks, sorry future dev who reads this)
-        (glitches in this code only affect the dev environment)
+    update this with every django update
+    (or just fix it when it breaks, sorry future dev who reads this)
+    (glitches in this code only affect the dev environment)
     """
 
-    args = [sys.executable] + ['-W%s' % o for o in sys.warnoptions] + sys.argv
+    args = [sys.executable] + ["-W%s" % o for o in sys.warnoptions] + sys.argv
     new_environ = os.environ.copy()
-    new_environ["RUN_MAIN"] = 'true'
+    new_environ["RUN_MAIN"] = "true"
     exit_code = subprocess.call(args, env=new_environ)
     if exit_code != 3:
         return exit_code
     return 0
+
 
 def restart_with_reloader():
     """kill heartbeats whenever django gets reloaded"""
@@ -37,13 +37,15 @@ def restart_with_reloader():
     t = settings.AUTOSTART_TABLEBEAT
     b = settings.AUTOSTART_BOTBEAT
 
-    print(f'{ANSI["green"]}'
-          '[+] Starting Django runserver with automatic '
-          f'{"tablebeat" if t else ""}'
-          f'{" and " if t or b else ""}'
-          f'{"botbeat" if b else ""}'
-          f'{" loading" if t or b else " loading turned off"}'
-          f'{ANSI["reset"]}')
+    print(
+        f'{ANSI["green"]}'
+        "[+] Starting Django runserver with automatic "
+        f'{"tablebeat" if t else ""}'
+        f'{" and " if t or b else ""}'
+        f'{"botbeat" if b else ""}'
+        f'{" loading" if t or b else " loading turned off"}'
+        f'{ANSI["reset"]}'
+    )
 
     def sigterm_handler(_signo, _stack_frame):
         raise SystemExit(0)
@@ -58,7 +60,6 @@ def restart_with_reloader():
 
     finally:
         kill_all_heartbeats()
-
 
 
 ### Monkey Patches

@@ -1,11 +1,7 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 
-import Row from 'react-bootstrap/lib/Row'
-import Col from 'react-bootstrap/lib/Col'
-import Alert from 'react-bootstrap/lib/Alert'
-import Tabs from 'react-bootstrap/lib/Tabs'
-import Tab from 'react-bootstrap/lib/Tab'
+import { Row, Col, Alert, Tabs, Tab } from 'react-bootstrap'
 
 import {SearchField} from '@/components/search-field'
 import {Spinner} from '@/components/icons'
@@ -76,10 +72,8 @@ class UserList extends React.Component {
         }
     }
     componentDidMount() {
-        // display search results if there is a search hash in URL
         if (document.location.hash.indexOf('#filter=') == 0) {
             const query = decodeURIComponent(document.location.hash.split('#filter=', 2)[1])
-            // console.log(document.location.hash, query)
             this.onFilter(query)
         }
     }
@@ -126,7 +120,7 @@ class UserList extends React.Component {
                         <SearchField onSearch={::this.onSearch}
                                      onChange={::this.onFilter}
                                      value={search}
-                                     bsStyle={'default'}
+                                     variant={'default'}
                                      placeholder="Search for a player..."/>
 
                         {/*&nbsp;&nbsp;
@@ -134,7 +128,7 @@ class UserList extends React.Component {
                     </div>
 
                     {(errors && errors.length) ?
-                        <Alert bsStyle="danger" className="tables-alert">
+                        <Alert variant="danger" className="tables-alert">
                             <h4>{errors.join('\n')}</h4>
                         </Alert> : null}
                 </center>
@@ -197,7 +191,7 @@ class UserList extends React.Component {
 
             <br/><br/>
             {(search && user_list.length == 0) ?
-                <Alert bsStyle="warning" className="tables-alert">
+                <Alert variant="warning" className="tables-alert">
                     <br/>
                     <h4>No players found matching "{search}".</h4>
                 </Alert> : null}
@@ -216,7 +210,6 @@ class UserList extends React.Component {
 }
 
 
-ReactDOM.render(
+createRoot(global.react_mount).render(
     React.createElement(UserList, global.props),
-    global.react_mount,
 )

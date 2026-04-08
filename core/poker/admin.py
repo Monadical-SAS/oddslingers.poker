@@ -16,24 +16,41 @@ from .models import (
 
 
 class PlayerAdmin(admin.ModelAdmin):
-    list_display = ('short_id', 'username', 'table', 'seated', 'position', 'stack')
+    list_display = ("short_id", "username", "table", "seated", "position", "stack")
+
 
 class PokerTableAdmin(admin.ModelAdmin):
-    list_display = ('short_id', 'name', 'table_type', 'tournament', 'num_seats', 'sb', 'bb', 'min_buyin', 'max_buyin', 'hand_number')
-    search_fields = ('id', 'name', 'table_type', 'tournament')
+    list_display = (
+        "short_id",
+        "name",
+        "table_type",
+        "tournament",
+        "num_seats",
+        "sb",
+        "bb",
+        "min_buyin",
+        "max_buyin",
+        "hand_number",
+    )
+    search_fields = ("id", "name", "table_type", "tournament")
+
 
 class HandHistoryAdmin(admin.ModelAdmin):
-    list_display = ('id', 'table', 'timestamp', 'hand_number')
+    list_display = ("id", "table", "timestamp", "hand_number")
+
 
 class ChatHistoryAdmin(admin.ModelAdmin):
-    list_display = ('short_id', 'users')
+    list_display = ("short_id", "users")
 
     def users(self, history):
-        return ', '.join({
-            str(s)
-            for s in history.chatline_set.all()
-                            .values_list('user__username', flat=True)    
-        })
+        return ", ".join(
+            {
+                str(s)
+                for s in history.chatline_set.all().values_list(
+                    "user__username", flat=True
+                )
+            }
+        )
 
 
 admin.site.register(Player, PlayerAdmin)

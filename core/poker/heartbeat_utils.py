@@ -12,11 +12,12 @@ from django.conf import settings
 from oddslingers.utils import ANSI, to_json_str, is_testing
 from oddslingers.system import DOUBLE_FORK
 
-logger = logging.getLogger('heartbeat')
+logger = logging.getLogger("heartbeat")
 redis_queue = redis.Redis(**settings.REDIS_CONF)
 
 
 ### Exception Classes
+
 
 class HeartbeatException(Exception):
     pass
@@ -37,29 +38,27 @@ DispatchValue = Union[dict, str]
 
 def queue_redis_dispatch(key: str, dispatch: DispatchValue) -> None:
     """add a json dict to a queue identified by the given key"""
-    json_dispatch = bytes(to_json_str(dispatch), 'utf-8')
+    json_dispatch = bytes(to_json_str(dispatch), "utf-8")
     redis_queue.rpush(key, json_dispatch)
 
 
-def pop_redis_dispatch(key: str,
-                       timeout: int=0) -> Optional[DispatchValue]:
+def pop_redis_dispatch(key: str, timeout: int = 0) -> Optional[DispatchValue]:
     """pop a json dict off the queue identified by the given key"""
     timeout = timeout or settings.HEARTBEAT_POLL
     dispatch = redis_queue.blpop(key, timeout=timeout)
 
-    if dispatch and dispatch[0] == key.encode('utf-8'):
+    if dispatch and dispatch[0] == key.encode("utf-8"):
         return json.loads(dispatch[1].decode())
 
     return None
 
 
-def peek_redis_dispatch(key: str,
-                        timeout: int=0) -> Optional[DispatchValue]:
+def peek_redis_dispatch(key: str, timeout: int = 0) -> Optional[DispatchValue]:
     """peek at the top of a queue identified by the given key"""
     timeout = timeout or settings.HEARTBEAT_POLL
     dispatch = redis_queue.blpop(key, timeout=timeout)
 
-    if dispatch and dispatch[0] == key.encode('utf-8'):
+    if dispatch and dispatch[0] == key.encode("utf-8"):
         redis_queue.lpush(key, dispatch[1])
         return json.loads(dispatch[1].decode())
 
@@ -78,15 +77,16 @@ def list_redis_dispatch(key: str) -> List[DispatchValue]:
 
 
 @contextmanager
-def HeartbeatEnvironment(cmd, daemonize=True, share_db=False,
-                         allow_multiple=False, verbosity=1, **config):
+def HeartbeatEnvironment(
+    cmd, daemonize=True, share_db=False, allow_multiple=False, verbosity=1, **config
+):
     """Context Manager to step in and out of the special django process
-       setup needed to run the heartbeat process.  This handles:
-         - preventing multiple heartbeats from running at once
-         - closing the parent's db connections
-         - double-forking the child heartbeat process off the parent
-         - reopening new db connections for the child process
-         - handling Ctrl+C and SIGTERMs and exiting gracefully
+    setup needed to run the heartbeat process.  This handles:
+      - preventing multiple heartbeats from running at once
+      - closing the parent's db connections
+      - double-forking the child heartbeat process off the parent
+      - reopening new db connections for the child process
+      - handling Ctrl+C and SIGTERMs and exiting gracefully
     """
     # Only for certain local dev testing situations, uncomment if needed:
     # if not allow_multiple:
@@ -96,8 +96,7 @@ def HeartbeatEnvironment(cmd, daemonize=True, share_db=False,
     #         raise HeartbeatAlreadyRunningException()
 
     if verbosity:
-        msg = f'{ANSI["lightyellow"]}[*] Starting '\
-              f'{" ".join(cmd)} {ANSI["reset"]}'
+        msg = f'{ANSI["lightyellow"]}[*] Starting ' f'{" ".join(cmd)} {ANSI["reset"]}'
         logger.info(msg)
 
     # dont share connection with fork, connections will be re-opened
@@ -129,23 +128,29 @@ def GracefulExitHandler(cmd):
         yield
 
     except KeyboardInterrupt:
-        logger.info(f'\n{ANSI["green"]}'
-                    f'[X] Stopped ./manage.py {" ".join(cmd)} (CTRL-C) '
-                    f'{ANSI["reset"]}')
+        logger.info(
+            f'\n{ANSI["green"]}'
+            f'[X] Stopped ./manage.py {" ".join(cmd)} (CTRL-C) '
+            f'{ANSI["reset"]}'
+        )
 
     except SystemExit as e:
-        exit_signal = int(str(e)) or 'SIGTERM'
-        logger.info(f'\n{ANSI["red"]}'
-                    f'[X] Stopped ./manage.py {" ".join(cmd)} ({exit_signal})'
-                    f'{ANSI["reset"]}')
+        exit_signal = int(str(e)) or "SIGTERM"
+        logger.info(
+            f'\n{ANSI["red"]}'
+            f'[X] Stopped ./manage.py {" ".join(cmd)} ({exit_signal})'
+            f'{ANSI["reset"]}'
+        )
 
 
 def print_empty_tablebeat_stopped(table, reason):
     if settings.DEBUG:
-        print(f'{ANSI["lightyellow"]}[i] Stopping table '\
-            f'heartbeat because {reason}: '\
-            f'{table.short_id} ({table}) '\
-            f'{ANSI["reset"]}')
+        print(
+            f'{ANSI["lightyellow"]}[i] Stopping table '
+            f"heartbeat because {reason}: "
+            f"{table.short_id} ({table}) "
+            f'{ANSI["reset"]}'
+        )
 
 
 @is_testing

@@ -2,11 +2,7 @@ import React from 'react'
 import SimpleWebRTC from 'simplewebrtc'
 import {reduxify} from '@/util/reduxify'
 
-import Col from 'react-bootstrap/lib/Col'
-import DropdownButton from 'react-bootstrap/lib/DropdownButton'
-import MenuItem from 'react-bootstrap/lib/MenuItem'
-import Button from 'react-bootstrap/lib/Button'
-import Label from 'react-bootstrap/lib/Label'
+import { Col, DropdownButton, Dropdown, Button, Badge } from 'react-bootstrap'
 
 import {Icon} from '@/components/icons'
 import {tooltip} from '@/util/dom'
@@ -89,7 +85,7 @@ export class VideoPanelContainer extends React.Component {
         this.room_id = props.room_id || global.props.gamestate.table.id
         this.nick = props.nick || (global.user ? global.user.username : `anon-${generateUUID()}`)
         this.state = {
-            mode: 'off',     // off | connecting | on
+            mode: 'off',
             details: '',
             theirs: {},
             local: 'off',
@@ -227,11 +223,8 @@ export class VideoPanelContainer extends React.Component {
         })
         try {
             this.webrtc = new SimpleWebRTC({
-                // the id/element dom element that will hold "our" video
                 localVideoEl: 'video-ours',
-                // the id/element dom element that will hold remote videos
                 remoteVideosEl: 'video-theirs',
-                // immediately ask for camera access
                 autoRequestMedia: false,
                 detectSpeakingEvents: true,
                 url: window.location.protocol + '//' + window.location.hostname,
@@ -347,27 +340,25 @@ export class VideoPanelContainer extends React.Component {
             &nbsp; &nbsp;
             <DropdownButton id='video-options' title="Stream options">
                 {!this.state.show ?
-                    <MenuItem key="view-stream" onClick={::this.onShowVideo}>
+                    <Dropdown.Item key="view-stream" onClick={::this.onShowVideo}>
                         View Stream
-                    </MenuItem> : null}
+                    </Dropdown.Item> : null}
                 {this.state.show ?
-                    <MenuItem key="close-stream" onClick={::this.onCloseVideo}>
+                    <Dropdown.Item key="close-stream" onClick={::this.onCloseVideo}>
                         Close Stream
-                    </MenuItem> : null}
+                    </Dropdown.Item> : null}
                 {this.state.local === 'off' ?
-                    <MenuItem key="start-stream" onClick={::this.onStartVideoStream}>
+                    <Dropdown.Item key="start-stream" onClick={::this.onStartVideoStream}>
                         Start Local Stream
-                    </MenuItem> : null}
+                    </Dropdown.Item> : null}
                 {this.state.local === 'on' ?
-                    <MenuItem key="stop-stream" onClick={::this.onStopVideoStream}>
+                    <Dropdown.Item key="stop-stream" onClick={::this.onStopVideoStream}>
                         Stop Local Stream
-                    </MenuItem> : null}
+                    </Dropdown.Item> : null}
             </DropdownButton>
             &nbsp; &nbsp; &nbsp; &nbsp;
         </div>
 
-        // decide how wide to make each video based on the total number of
-        // streams we need to display
         const min_width = 6
         const num_streams = 1 + Object.keys(this.state.theirs).length
         let width_fraction = 12 / num_streams
@@ -377,7 +368,7 @@ export class VideoPanelContainer extends React.Component {
         return <div className="video-panel">
             <div>
                 <Col sm={12}>
-                    <Label bsStyle="success">[{this.state.people_online} PPL ONLINE]</Label>
+                    <Badge bg="success">[{this.state.people_online} PPL ONLINE]</Badge>
                 </Col>
                 <Col sm={12}>
                     {status_bar}

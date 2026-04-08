@@ -6,12 +6,11 @@ from timeit import default_timer as timer
 
 from oddslingers.utils import ExtendedEncoder
 
-from poker.hand_ranges import (
-    Hand, HandRange, FULL_RANGE, with_hand_values, pruned
-)
+from poker.hand_ranges import Hand, HandRange, FULL_RANGE, with_hand_values, pruned
 
-def monte_carlo(handranges, board='', dead='', hand_values=True):
-    '''
+
+def monte_carlo(handranges, board="", dead="", hand_values=True):
+    """
     Takes a game situation and returns a bunch of useful info based
     on monte carlo rollout of the board.
 
@@ -67,7 +66,7 @@ def monte_carlo(handranges, board='', dead='', hand_values=True):
             'finished': <bool; should always be True>,
         }
     }
-    '''
+    """
 
     # type checking is important because monte_carlo subprocess
     #   will fail silently with invalid input
@@ -84,46 +83,45 @@ def monte_carlo(handranges, board='', dead='', hand_values=True):
     assert isinstance(dead, Hand)
 
     carlo_input = {
-        'ranges': [str(hr) for hr in handranges],
-        'board': board, #str(board),
-        'dead': dead, #str(dead),
-        'recordHandWins': hand_values,
+        "ranges": [str(hr) for hr in handranges],
+        "board": board,  # str(board),
+        "dead": dead,  # str(dead),
+        "recordHandWins": hand_values,
     }
     start_time = timer()
     completed_process = subprocess.run(
-        'bin/monte_carlo',
+        "bin/monte_carlo",
         input=json.dumps(carlo_input, cls=ExtendedEncoder),
         stdout=subprocess.PIPE,  # this changes in 3.7
         encoding=locale.getpreferredencoding(),
     )
     end_time = timer()
     output = json.loads(completed_process.stdout)
-    output['results']['equity'] = [
-        round(equity, 4)
-        for equity in output['results']['equity']
+    output["results"]["equity"] = [
+        round(equity, 4) for equity in output["results"]["equity"]
     ]
-    output['results']['total_proc_time'] = end_time - start_time
+    output["results"]["total_proc_time"] = end_time - start_time
     if hand_values:
-        output['results']['hand_values'] = {
+        output["results"]["hand_values"] = {
             Hand(hand): round(value, 4)
-            for hand, value in output['results']['hand_values'].items()
+            for hand, value in output["results"]["hand_values"].items()
         }
 
     return output
 
 
-def overall_hand_percentile(hand, board=''):
-    '''
+def overall_hand_percentile(hand, board=""):
+    """
     determines the "percentile" of the hand, equal to:
     all_hands.index(hand) / len(all_hands)
     assuming hands are ordered best-to-worst
-    '''
+    """
 
-    if board == '':
+    if board == "":
         return FULL_RANGE.percentile(hand)
 
     all_possible = pruned(FULL_RANGE, known_cards=board)
     carlo_input = [all_possible, all_possible]
-    carlo_results = monte_carlo(carlo_input, board)['results']
-    handrange = with_hand_values(all_possible, carlo_results['hand_values'])
+    carlo_results = monte_carlo(carlo_input, board)["results"]
+    handrange = with_hand_values(all_possible, carlo_results["hand_values"])
     return handrange.percentile(hand)

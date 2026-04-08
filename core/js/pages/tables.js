@@ -1,16 +1,10 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import classNames from 'classnames'
 
-import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+import { formatDistanceToNow } from 'date-fns'
 
-import Button from 'react-bootstrap/lib/Button'
-import Row from 'react-bootstrap/lib/Row'
-import Col from 'react-bootstrap/lib/Col'
-import Alert from 'react-bootstrap/lib/Alert'
-import Checkbox from 'react-bootstrap/lib/Checkbox'
-import Tabs from 'react-bootstrap/lib/Tabs'
-import Tab from 'react-bootstrap/lib/Tab'
+import { Button, Row, Col, Alert, Form, Tabs, Tab } from 'react-bootstrap'
 
 import {Icon} from '@/components/icons'
 import {SearchField} from '@/components/search-field'
@@ -328,7 +322,7 @@ export const TableThumbnail = ({table}) => {
             {table.hotness_level ?
                     <Icon name="circle-o"
                           style={{color: activity_colors[table.hotness_level]}}
-                          title={`Last activity: ${distanceInWordsToNow(table.modified)} ago`}/>
+                          title={`Last activity: ${formatDistanceToNow(table.modified)} ago`}/>
                   : <Icon name="circle-o"
                           style={{color: '#ddd'}}
                           title="Waiting for more players..."/>}
@@ -400,7 +394,7 @@ export const TableThumbnail = ({table}) => {
                 <form action="/api/table/archive/" method="POST" target="_blank">
                     <CSRFToken/>
                     <input type="hidden" name="id" value={table.id}/>
-                    <Button type="submit" bsStyle="info">Archive</Button>
+                    <Button type="submit" variant="info">Archive</Button>
                 </form> : null}
         </Col>
         </a>
@@ -507,12 +501,9 @@ const TableForm = ({onNewTable, cashGameBBs, thresholdBBEmailVerified, state}) =
     <div>
         {global.user &&
             <div className="table-args">
-                <Checkbox id="is-private-table"
-                          onClick={() => onPrivateClick('table')}>
-                    Private
-                    &nbsp;<Icon name="info-circle"
-                                {...tooltip(PRIVATE_TOOLTIP_TEXT, 'top')}/>
-                </Checkbox>
+                <Form.Check type="checkbox" id="is-private-table"
+                          onClick={() => onPrivateClick('table')}
+                          label={<>Private &nbsp;<Icon name="info-circle" {...tooltip(PRIVATE_TOOLTIP_TEXT, 'top')}/></>}/>
                 <span className="hideable-table-name">Name:</span>
                 <input id="new-table-name"
                        className="hideable-table-name"
@@ -569,7 +560,7 @@ const TableForm = ({onNewTable, cashGameBBs, thresholdBBEmailVerified, state}) =
         <hr/>
         <Button className={classNames(global.user && 'center-create-btn')}
                 onClick={() => onNewTable(false)}
-                bsStyle="success">
+                variant="success">
 
             Create New Cash Table &nbsp;<Icon name="plus"/>
         </Button>
@@ -596,12 +587,9 @@ const TournamentForm = ({onNewTable, tourneyBuyinAmts, state}) =>
         }
         {global.user && can_create_tournaments(tourneyBuyinAmts) &&
             <div className="table-args">
-                <Checkbox id="is-private-tourney"
-                          onClick={() => onPrivateClick('tournament')}>
-                    Private
-                    &nbsp;<Icon name="info-circle"
-                                {...tooltip(PRIVATE_TOOLTIP_TEXT, 'top')}/>
-                </Checkbox>
+                <Form.Check type="checkbox" id="is-private-tourney"
+                          onClick={() => onPrivateClick('tournament')}
+                          label={<>Private &nbsp;<Icon name="info-circle" {...tooltip(PRIVATE_TOOLTIP_TEXT, 'top')}/></>}/>
                 <span className="hideable-tournament-name">Name:</span>
                 <input id="new-tourney-name"
                        className="hideable-tournament-name"
@@ -644,7 +632,7 @@ const TournamentForm = ({onNewTable, tourneyBuyinAmts, state}) =>
         {can_create_tournaments(tourneyBuyinAmts) &&
             <Button className={classNames(global.user && 'center-create-btn')}
                     onClick={() => onNewTable(true)}
-                    bsStyle="success">
+                    variant="success">
                 Create New Tourney &nbsp;<Icon name="plus"/>
             </Button>
         }
@@ -669,7 +657,7 @@ class TableList extends React.Component {
         this.state = {
             search: getSearchHashInUrl(),
             now: now,
-            updated: distanceInWordsToNow(now),
+            updated: formatDistanceToNow(now),
             show_cash_tables: true,
             show_tournaments: true,
             show_locked: true,
@@ -680,7 +668,6 @@ class TableList extends React.Component {
             filter_errors: []
         }
 
-        // get user balance async
         asyncGetUserBalance()
     }
     validate(args) {
@@ -710,7 +697,6 @@ class TableList extends React.Component {
             global.location = '/accounts/login/?next=/tables/#newtable'
             return
         }
-        // post creates a new table
         const element = is_tournament ? 'tourney' : 'table'
         const args = {
             'table_type': $(`#new-${element}-tabletype`).val() || '',
@@ -739,7 +725,7 @@ class TableList extends React.Component {
             $("#new-table-container").addClass("active")
         })
         setInterval(() => {
-            this.setState({'updated': distanceInWordsToNow(this.state.now)})
+            this.setState({'updated': formatDistanceToNow(this.state.now)})
         }, 60000)
     }
     filterTables() {
@@ -920,7 +906,7 @@ class TableList extends React.Component {
                     </div>
                 </Col>
                 {(errors && errors.length) ?
-                    <Alert bsStyle="danger" className="tables-alert">
+                    <Alert variant="danger" className="tables-alert">
                         <h4>{errors.join('\n')}</h4>
                     </Alert> : null}
             </Row>
@@ -961,7 +947,7 @@ class TableList extends React.Component {
                             Create New Game
                         </h4>
                         <hr/>
-                        <Tabs bsStyle="pills" defaultActiveKey={1} style={{textAlign: 'center'}} id="type-of-game">
+                        <Tabs variant="pills" defaultActiveKey={1} style={{textAlign: 'center'}} id="type-of-game">
                             <Tab eventKey={1} title="Cash Game" className="cash-game-tab">
                                 <TableForm onNewTable={::this.onNewTable}
                                            cashGameBBs={this.props.cash_game_bbs}
@@ -984,7 +970,6 @@ class TableList extends React.Component {
 }
 
 
-ReactDOM.render(
+createRoot(global.react_mount).render(
     React.createElement(TableList, global.props),
-    global.react_mount,
 )

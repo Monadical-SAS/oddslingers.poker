@@ -1,8 +1,9 @@
+import asyncio
 import datetime
 import logging
 
-from hashlib import md5
-from channels import Channel, Group
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
 
 from django.db import models
 from django.conf import settings
@@ -10,8 +11,12 @@ from django.utils import timezone
 from django.contrib.gis.geoip2 import GeoIP2
 from django.contrib.sessions.models import Session
 
-from oddslingers.utils import (to_json_str, debug_print_io, log_io_message,
-                          add_timestamp_and_hash)
+from oddslingers.utils import (
+    to_json_str,
+    debug_print_io,
+    log_io_message,
+    add_timestamp_and_hash,
+)
 from oddslingers.model_utils import BaseModel
 
 from .constants import (
@@ -19,7 +24,26 @@ from .constants import (
     ROUTING_KEY,
 )
 
-logger = logging.getLogger('sockets')
+logger = logging.getLogger("sockets")
+
+
+async def _send_all(channel_layer, names: list, message: dict) -> int:
+    """Dispatch one message to all channel names concurrently.
+
+    Using asyncio.gather keeps the async→sync boundary a single crossing
+    instead of O(N) crossings (one per recipient in the old loop).
+    """
+
+    async def _send_one(name: str) -> bool:
+        try:
+            await channel_layer.send(name, message)
+            return True
+        except Exception:
+            logger.warning("Failed to send to channel %s", name, exc_info=True)
+            return False
+
+    results = await asyncio.gather(*[_send_one(n) for n in names])
+    return sum(1 for ok in results if ok)
 
 
 class SocketQuerySet(models.QuerySet):
@@ -27,50 +51,31 @@ class SocketQuerySet(models.QuerySet):
     represents a group of socket connections, to mass-send use
     .send_action() and .send_json()
     """
+
     _channel_names = ()
 
-    def group(self):
-        """
-        get a django channels Group consisting of all the
-        reply_channels in the QuerySet
-        """
-        self._channel_names = self.values_list('channel_name', flat=True)
-
-        if not self._channel_names:
-            empty_group = Group('emptyname')
-            empty_group.empty = True
-            return empty_group
-
-        # group name is the hash of all the channel_names
-        combined_names = b''.join(
-            i.encode('utf-8', errors='replace')
-            for i in self._channel_names
-        )
-        group_id = md5(combined_names).hexdigest()
-        combined_group = Group(name=group_id)
-
-        for channel_name in self._channel_names:
-            if channel_name.startswith('bot-'):
-                continue
-            combined_group.add(Channel(channel_name))
-        return combined_group
-
     def send_str(self, content: str):
-        group = self.group()
-        # Group.send and group.empty check is necessary to prevent
-        #   ChannelFull errors caused by sending to empty group or
-        #   group with dead Channels. do not replace this with a for
-        #   loop that sends to each channel separately
-        if not getattr(group, 'empty', False):
-            group.send({'text': content}, immediately=True)
-            return len(self._channel_names)
-        return 0
+        channel_layer = get_channel_layer()
+        if channel_layer is None:
+            return 0
+        names = [
+            n
+            for n in self.values_list("channel_name", flat=True)
+            if not n.startswith("bot-")
+        ]
+        if not names:
+            return 0
+        return async_to_sync(_send_all)(
+            channel_layer,
+            names,
+            {"type": "websocket.send", "text": content},
+        )
 
     def send_json(self, content: dict):
         """send some json to the entire QuerySet of Sockets"""
         content = add_timestamp_and_hash(content)
         debug_print_io(out=True, content=content)
-        log_io_message(self, direction='out', content=content)
+        log_io_message(self, direction="out", content=content)
 
         encoded_json = to_json_str(content)
         return self.send_str(encoded_json)
@@ -97,7 +102,7 @@ class SocketQuerySet(models.QuerySet):
         self.send_action(PING_TYPE)
         self.purge_inactive()
 
-    def purge_inactive(self, in_last_mins: int=5):
+    def purge_inactive(self, in_last_mins: int = 5):
         """delete all the sockets with a last_ping over 5min ago"""
         n_mins_ago = timezone.now() - datetime.timedelta(minutes=in_last_mins)
 
@@ -117,15 +122,15 @@ class Socket(BaseModel):
     #   above
     objects = SocketQuerySet.as_manager()
 
-    session = models.ForeignKey(Session,
-                                on_delete=models.CASCADE,
-                                blank=True,
-                                null=True)
-    channel_name = models.CharField(max_length=64, unique=True)
+    session = models.ForeignKey(
+        Session, on_delete=models.CASCADE, blank=True, null=True
+    )
+    # Channels 4 channel names can exceed 64 chars (spec allows up to 100).
+    channel_name = models.CharField(max_length=255, unique=True)
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                             null=True,
-                             on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, null=True, on_delete=models.CASCADE
+    )
     path = models.CharField(max_length=128, db_index=True)
 
     active = models.BooleanField(default=False)
@@ -135,16 +140,18 @@ class Socket(BaseModel):
 
     def __repr__(self):
         """<Socket username@/table/1234 (inactive)>"""
-        uname = self.user.username if self.user else 'anon'
-        is_inactive = '' if self.active else ' (inactive)'
-        last_active = self.last_ping.strftime('%h %d %H:%M')
-        return f'<Socket {uname}@{self.path}{is_inactive} ({last_active})>'
+        uname = self.user.username if self.user else "anon"
+        is_inactive = "" if self.active else " (inactive)"
+        last_active = (
+            self.last_ping.strftime("%h %d %H:%M") if self.last_ping else "never"
+        )
+        return f"<Socket {uname}@{self.path}{is_inactive} ({last_active})>"
 
     def __str__(self):
         return repr(self)
 
     def geoip(self):
-        if not self.user_ip or self.user_ip == '127.0.0.1':
+        if not self.user_ip or self.user_ip == "127.0.0.1":
             return None
 
         try:
@@ -157,21 +164,29 @@ class Socket(BaseModel):
     def usersession(self):
         return self.session.usersession
 
-    @property
-    def reply_channel(self):
-        return Channel(self.channel_name)
-
     def send_str(self, content: str):
-        if not self.channel_name.startswith('bot-'):
-            self.reply_channel.send({'text': content}, immediately=True)
+        if self.channel_name.startswith("bot-"):
+            return
+        channel_layer = get_channel_layer()
+        if channel_layer is None:
+            return
+        try:
+            async_to_sync(channel_layer.send)(
+                self.channel_name,
+                {"type": "websocket.send", "text": content},
+            )
+        except Exception:
+            logger.warning(
+                "Failed to send to channel %s", self.channel_name, exc_info=True
+            )
 
     def send_json(self, content: dict):
         content = add_timestamp_and_hash(content)
         self.log_message(out=True, content=content)
-        log_io_message(self, direction='out', content=content)
-        
+        log_io_message(self, direction="out", content=content)
+
         encoded_json = to_json_str(content)
-        self.reply_channel.send({'text': encoded_json})
+        self.send_str(encoded_json)
 
     def send_action(self, action_type: str, **kwargs):
         self.send_json({**kwargs, ROUTING_KEY: action_type})
@@ -191,11 +206,11 @@ class Socket(BaseModel):
 
         # optionally, remove the path=self.path filter to check ALL
         #   the user's active sockets
-        related = Socket.objects\
-                        .filter(user=self.user, path=self.path)\
-                        .exclude(id=self.id)
+        related = Socket.objects.filter(user=self.user, path=self.path).exclude(
+            id=self.id
+        )
         related.cleanup_stale()
 
-    def log_message(self, out: bool=True, content: dict=None, unknown=False):
+    def log_message(self, out: bool = True, content: dict = None, unknown=False):
         """log pretty websocket messages to console for easy flow debugging"""
         debug_print_io(out=out, content=content, unknown=unknown)

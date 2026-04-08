@@ -1,7 +1,7 @@
 import React from 'react'
 import {reduxify} from '@/util/reduxify'
 
-import Col from 'react-bootstrap/lib/Col'
+import { Col } from 'react-bootstrap'
 
 import {Icon} from '@/components/icons'
 import {chipAmtStr} from '@/util/javascript'

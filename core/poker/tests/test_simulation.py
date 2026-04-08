@@ -15,10 +15,13 @@ from oddslingers.mutations import execute_mutations
 
 from poker.bots import get_robot_move
 from poker.cards import Card
-from poker.constants import (NL_HOLDEM, PL_OMAHA, NL_BOUNTY, Event,
-                             PlayingState)
-from poker.controllers import (HoldemController, OmahaController,
-                                BountyController, controller_type_for_table)
+from poker.constants import NL_HOLDEM, PL_OMAHA, NL_BOUNTY, Event, PlayingState
+from poker.controllers import (
+    HoldemController,
+    OmahaController,
+    BountyController,
+    controller_type_for_table,
+)
 from poker.handhistory import DBLog
 from poker.megaphone import gamestate_json
 from poker.models import Player, PokerTable, HandHistory
@@ -32,6 +35,7 @@ from rewards.tests import FivePlayerBadgeTest
 
 from banker.mutations import buy_chips
 
+
 class BotTest(FivePlayerBadgeTest):
     def setUp(self):
         super().setUp()
@@ -44,7 +48,7 @@ class BotTest(FivePlayerBadgeTest):
                 player.save()
         stats_subscriber = TableStatsSubscriber(self.controller.accessor)
         self.controller.subscribers.append(stats_subscriber)
-        self.dump_filename = os.path.join(settings.DEBUG_DUMP_DIR, 'filedump_test.json')
+        self.dump_filename = os.path.join(settings.DEBUG_DUMP_DIR, "filedump_test.json")
 
     def tearDown(self):
         super().tearDown()
@@ -63,10 +67,12 @@ class BotTest(FivePlayerBadgeTest):
                 controller.join_table(player.user.id)
 
         for player in acc.players:
-            if (not player.playing_state == PlayingState.SIT_IN_PENDING
-                    and player.is_sitting_out()
-                    and player.stack >= acc.min_amt_to_play(player)):
-                controller.dispatch('sit_in', player_id=player.id)
+            if (
+                not player.playing_state == PlayingState.SIT_IN_PENDING
+                and player.is_sitting_out()
+                and player.stack >= acc.min_amt_to_play(player)
+            ):
+                controller.dispatch("sit_in", player_id=player.id)
 
         assert acc.enough_players_to_play()
 
@@ -80,20 +86,20 @@ class BotTest(FivePlayerBadgeTest):
             next_to_act = acc.next_to_act()
             # print('next_to_act:', next_to_act)
             if random.random() > 0.1:
-                action, kwargs = get_robot_move(acc,
-                                             controller.log,
-                                             delay=False,
-                                             stupid=stupid_ai,
-                                             warnings=False)
+                action, kwargs = get_robot_move(
+                    acc, controller.log, delay=False, stupid=stupid_ai, warnings=False
+                )
                 # print(player, action, kwargs)
                 controller.dispatch(action, **kwargs)
 
-                if (action.lower() == 'fold'
-                        and random.random() > 0.8
-                        and acc.table.hand_number == curr_hand):
+                if (
+                    action.lower() == "fold"
+                    and random.random() > 0.8
+                    and acc.table.hand_number == curr_hand
+                ):
                     # print('leaving seat...')
                     # 20% of the time, player decides to get up after folding
-                    controller.dispatch('leave_seat', player_id=next_to_act.id)
+                    controller.dispatch("leave_seat", player_id=next_to_act.id)
                     left_table.append(next_to_act)
 
             else:
@@ -108,11 +114,12 @@ class BotTest(FivePlayerBadgeTest):
                         # print('jk coming back')
                         nvm = timeout_players.pop()
                         back_in_players.append(nvm)
-                        controller.dispatch('sit_in', player_id=nvm.id)
+                        controller.dispatch("sit_in", player_id=nvm.id)
 
             # try:
-            self.assertEqual(1400, sum(p.stack + p.total_contributed()
-                                                    for p in acc.players))
+            self.assertEqual(
+                1400, sum(p.stack + p.total_contributed() for p in acc.players)
+            )
             self.assert_avg_stack_in_stats(controller)
             self.assert_no_private_data_leaks(controller)
             self.assert_blinds_invariants(controller)
@@ -148,9 +155,10 @@ class BotTest(FivePlayerBadgeTest):
         sidepot_total = sum(pot for pot, _ in sidepots)
         uncollected = sum(p.uncollected_bets for p in acc.players)
         curr_pot = acc.current_pot()
-        assert sidepot_total + uncollected == curr_pot, \
-                'current_pot() should always be the money in the '\
-                'center + money in front of the players.'
+        assert sidepot_total + uncollected == curr_pot, (
+            "current_pot() should always be the money in the "
+            "center + money in front of the players."
+        )
 
     def assert_no_private_data_leaks(self, controller):
         acc = controller.accessor
@@ -160,24 +168,24 @@ class BotTest(FivePlayerBadgeTest):
             if not player_json:
                 return
 
-            if 'cards' in player_json:
-                for card in player_json['cards'].values():
-                    if card['card'] != '?':
-                        raise Exception('Private data leak detected!')
+            if "cards" in player_json:
+                for card in player_json["cards"].values():
+                    if card["card"] != "?":
+                        raise Exception("Private data leak detected!")
 
-            if 'available_actions' in player_json:
-                raise Exception('Available_actions is leaking')
+            if "available_actions" in player_json:
+                raise Exception("Available_actions is leaking")
 
         for player in acc.seated_players():
             payload = gamestate_json(acc, player, subs)
 
-            for player_id, player_json in payload['players'].items():
+            for player_id, player_json in payload["players"].items():
                 if player_id != str(player.id):
                     raise_on_private_leak(player_json)
 
-            for animation in payload['animations']:
-                if 'diff' in animation and 'players' in animation['diff']:
-                    for player_id, player_json in animation['diff']['players'].items():
+            for animation in payload["animations"]:
+                if "diff" in animation and "players" in animation["diff"]:
+                    for player_id, player_json in animation["diff"]["players"].items():
                         if player_id != str(player.id):
                             raise_on_private_leak(player_json)
 
@@ -188,25 +196,26 @@ class BotTest(FivePlayerBadgeTest):
         player = random.choice(acc.seated_players())
         payload = gamestate_json(acc, player, subs)
 
-        for animation in payload['animations']:
-            if animation['type'] == 'NEW_STREET':
+        for animation in payload["animations"]:
+            if animation["type"] == "NEW_STREET":
                 assert any(
-                    'sidepot_summary' in patch['path']
-                    for patch in animation['patches']
-                ), 'NEW_STREET should always patch sidepot_summary'
+                    "sidepot_summary" in patch["path"] for patch in animation["patches"]
+                ), "NEW_STREET should always patch sidepot_summary"
 
                 uncollected_paths = [
-                    patch['path'][:patch['path'].index('/amt')]
-                    for patch in animation['patches']
-                    if 'uncollected_bets' in patch['path']
+                    patch["path"][: patch["path"].index("/amt")]
+                    for patch in animation["patches"]
+                    if "uncollected_bets" in patch["path"]
                 ]
 
-                assert len(uncollected_paths), \
-                        'NEW_STREET should always patch uncollected_bets'
+                assert len(
+                    uncollected_paths
+                ), "NEW_STREET should always patch uncollected_bets"
 
                 for patch_path in uncollected_paths:
-                    assert patch_path in animation['value'], \
-                            'Frontend needs all uncollected_bets in [value]'
+                    assert (
+                        patch_path in animation["value"]
+                    ), "Frontend needs all uncollected_bets in [value]"
 
     def assert_blinds_invariants(self, controller):
         acc = controller.accessor
@@ -251,11 +260,11 @@ class BotTest(FivePlayerBadgeTest):
         for player in acc.active_players():
             json_to_send = gamestate_json(acc, player, subs)
             assert "players" in json_to_send
-            assert 'cards' in json_to_send['players'][str(player.id)]
+            assert "cards" in json_to_send["players"][str(player.id)]
 
     def assert_logging_replaying_works(self, controller):
         # print('assert_logging_replaying_works()')
-        controller.debug_filedump('this is a test', self.dump_filename)
+        controller.debug_filedump("this is a test", self.dump_filename)
 
         rep = ActionReplayer.from_file(self.dump_filename)
         hand_idx = random.choice(range(len(rep.hands)))
@@ -271,24 +280,25 @@ class BotTest(FivePlayerBadgeTest):
                 break
 
             if rep.accessor.table.hand_number != hand_number and deck_str:
-                assert deck_str != rep.accessor.table.deck_str, \
-                        'Two consecutive same deals == critical bug!\n'\
-                        f'deck_str: {deck_str}\n'\
-                        f'rep deck_str: {rep.accessor.table.deck_str}\n'\
-                        f'hand_number: {hand_number}\n'\
-                        f'rep hand_number: {rep.accessor.table.hand_number}'
+                assert deck_str != rep.accessor.table.deck_str, (
+                    "Two consecutive same deals == critical bug!\n"
+                    f"deck_str: {deck_str}\n"
+                    f"rep deck_str: {rep.accessor.table.deck_str}\n"
+                    f"hand_number: {hand_number}\n"
+                    f"rep hand_number: {rep.accessor.table.hand_number}"
+                )
                 deck_str = rep.accessor.table.deck_str
                 hand_number = rep.accessor.table.hand_number
 
             i += 1
             if i > 50000:
                 raise Exception(
-                    'Replayer stepped forward 50000 times. ',
-                    f'Something is broken:\n{rep.describe(print_me=False)}'
+                    "Replayer stepped forward 50000 times. ",
+                    f"Something is broken:\n{rep.describe(print_me=False)}",
                 )
 
 
-@tag('monte-carlo')
+@tag("monte-carlo")
 class HoldemBotTest(BotTest):
     def test_holdem_ai_moves(self):
         self.controller = HoldemController(self.table, self.players)
@@ -304,17 +314,17 @@ class HoldemBotTest(BotTest):
                 acc = ctrl.accessor
                 self.simulate_hand_and_test_assumptions(ctrl, stupid_ai=False)
             except Exception as err:
-                msg = to_json_str({
-                    'state': acc.describe(False),
-                    'err': traceback.format_exc(),
-                })
-                ctrl.dump_for_test(hand='all',
-                                   fn_pattern='simfail_',
-                                   notes=msg)
+                msg = to_json_str(
+                    {
+                        "state": acc.describe(False),
+                        "err": traceback.format_exc(),
+                    }
+                )
+                ctrl.dump_for_test(hand="all", fn_pattern="simfail_", notes=msg)
                 raise type(err)(str(err)).with_traceback(err.__traceback__)
 
 
-@tag('monte-carlo')
+@tag("monte-carlo")
 class BountyBotTest(BotTest):
     def test_holdem_ai_moves(self):
         self.table.table_type = NL_BOUNTY
@@ -331,13 +341,13 @@ class BountyBotTest(BotTest):
                 acc = ctrl.accessor
                 self.simulate_hand_and_test_assumptions(ctrl, stupid_ai=False)
             except Exception as err:
-                msg = to_json_str({
-                    'state': acc.describe(False),
-                    'err': traceback.format_exc(),
-                })
-                ctrl.dump_for_test(hand='all',
-                                   fn_pattern='simfail_',
-                                   notes=msg)
+                msg = to_json_str(
+                    {
+                        "state": acc.describe(False),
+                        "err": traceback.format_exc(),
+                    }
+                )
+                ctrl.dump_for_test(hand="all", fn_pattern="simfail_", notes=msg)
                 raise type(err)(str(err)).with_traceback(err.__traceback__)
 
 
@@ -357,20 +367,19 @@ class OmahaBotTest(BotTest):
                 acc = ctrl.accessor
                 self.simulate_hand_and_test_assumptions(ctrl, stupid_ai=True)
             except Exception as err:
-                msg = to_json_str({
-                    'state': acc.describe(False),
-                    'err': traceback.format_exc(),
-                })
-                ctrl.dump_for_test(hand='all',
-                                   fn_pattern='simfail_',
-                                   notes=msg)
+                msg = to_json_str(
+                    {
+                        "state": acc.describe(False),
+                        "err": traceback.format_exc(),
+                    }
+                )
+                ctrl.dump_for_test(hand="all", fn_pattern="simfail_", notes=msg)
                 raise type(err)(str(err)).with_traceback(err.__traceback__)
 
 
 class HHLogAssumptionsTest(BotTest):
     def hhlog_assumptions(self, controllertype):
-        self.controller = controllertype(self.accessor.table,
-                                         log=DBLog(self.accessor))
+        self.controller = controllertype(self.accessor.table, log=DBLog(self.accessor))
         self.accessor = self.controller.accessor
         self.controller.verbose = False
 
@@ -396,24 +405,24 @@ class HHLogAssumptionsTest(BotTest):
                     self.assert_new_hand()
                 self.last_hand_number = self.accessor.table.hand_number
 
-        self.controller.subscribers.append(
-            AssumptionTestSubscriber(self.accessor)
-        )
+        self.controller.subscribers.append(AssumptionTestSubscriber(self.accessor))
         self.controller.step()
         i = 0
         while i < 50 and self.accessor.enough_players_to_play():
             try:
-                action, kwargs = get_robot_move(self.accessor,
-                                             self.controller.log,
-                                             delay=False,
-                                             stupid=True,
-                                             warnings=False)
+                action, kwargs = get_robot_move(
+                    self.accessor,
+                    self.controller.log,
+                    delay=False,
+                    stupid=True,
+                    warnings=False,
+                )
                 self.controller.dispatch(action, **kwargs)
                 i += 1
             except Exception as err:
-                self.controller.dump_for_test(hand='all',
-                                              fn_pattern='hhlogfail_',
-                                              notes=traceback.format_exc())
+                self.controller.dump_for_test(
+                    hand="all", fn_pattern="hhlogfail_", notes=traceback.format_exc()
+                )
                 raise type(err)(str(err)).with_traceback(err.__traceback__)
 
 
@@ -449,10 +458,9 @@ class OmahaHandTest(FivePlayerBadgeTest):
 
         self.table.table_type = PL_OMAHA
 
-        self.controller = OmahaController(self.table,
-                                          self.players,
-                                          log=DoesNothing(),
-                                          subscribers=[])
+        self.controller = OmahaController(
+            self.table, self.players, log=DoesNothing(), subscribers=[]
+        )
         self.controller.timing_events = lambda _, __: []
 
         dispatch = self.controller.player_dispatch
@@ -461,41 +469,41 @@ class OmahaHandTest(FivePlayerBadgeTest):
 
         assert len(self.players[0].cards) == 4
 
-        dispatch('raise_to', player_id=alexeimartov, amt=7)
-        dispatch('fold', player_id=pirate)
-        dispatch('call', player_id=cuttlefish, amt=7)
-        dispatch('fold', player_id=ajfenix)
+        dispatch("raise_to", player_id=alexeimartov, amt=7)
+        dispatch("fold", player_id=pirate)
+        dispatch("call", player_id=cuttlefish, amt=7)
+        dispatch("fold", player_id=ajfenix)
 
         # $1 raise is too small
         with self.assertRaises(ValueError):
-            dispatch('raise_to', player_id=cowpig, amt=1)
+            dispatch("raise_to", player_id=cowpig, amt=1)
 
         # cannot bet, only raise
         with self.assertRaises(ValueError):
-            dispatch('bet', player_id=cowpig, amt=2)
+            dispatch("bet", player_id=cowpig, amt=2)
 
         # maximum bet should be $29
         with self.assertRaises(ValueError):
-            dispatch('raise_to', player_id=cowpig, amt=30)
+            dispatch("raise_to", player_id=cowpig, amt=30)
 
-        dispatch('raise_to', player_id=cowpig, amt=29)
+        dispatch("raise_to", player_id=cowpig, amt=29)
 
-        dispatch('call', player_id=alexeimartov, amt=29)
-        dispatch('call', player_id=cuttlefish, amt=29)
+        dispatch("call", player_id=alexeimartov, amt=29)
+        dispatch("call", player_id=cuttlefish, amt=29)
 
-        assert self.controller.accessor.current_pot() == 29*3 + 1
+        assert self.controller.accessor.current_pot() == 29 * 3 + 1
 
         # FLOP
         self.controller.step()
 
-        dispatch('bet', player_id=cowpig, amt=45)
+        dispatch("bet", player_id=cowpig, amt=45)
 
         # not cowpig's turn to act
         with self.assertRaises(ValueError):
-            dispatch('fold', player_id=cowpig)
+            dispatch("fold", player_id=cowpig)
 
-        dispatch('call', player_id=alexeimartov)
-        dispatch('fold', player_id=cuttlefish)
+        dispatch("call", player_id=alexeimartov)
+        dispatch("fold", player_id=cuttlefish)
 
         assert self.controller.accessor.current_pot() == 88 + 90
 
@@ -504,25 +512,27 @@ class OmahaHandTest(FivePlayerBadgeTest):
 
         # cowpig's remaining stack is (100 - 29 - 45 = 26)
         with self.assertRaises(ValueError):
-            dispatch('bet', player_id=cowpig, amt=99)
+            dispatch("bet", player_id=cowpig, amt=99)
 
-        dispatch('bet', player_id=cowpig, amt=26)
-        dispatch('call', player_id=alexeimartov, amt=26)
+        dispatch("bet", player_id=cowpig, amt=26)
+        dispatch("call", player_id=alexeimartov, amt=26)
 
-        self.cowpig_player.cards = [
-            Card('Ah'), Card('Kc'), Card('Jh'), Card('Tc')
-        ]
+        self.cowpig_player.cards = [Card("Ah"), Card("Kc"), Card("Jh"), Card("Tc")]
         self.alexeimartov_player.cards = [
-            Card('8s'), Card('9c'), Card('8c'), Card('Ts')
+            Card("8s"),
+            Card("9c"),
+            Card("8c"),
+            Card("Ts"),
         ]
 
-        self.table.board = [Card('3c'), Card('Ac'), Card('2h'), Card('Jc')]
+        self.table.board = [Card("3c"), Card("Ac"), Card("2h"), Card("Jc")]
 
         self.controller.step()
 
         # cowpig should win, with the K-high flush
         assert self.alexeimartov_player.stack_available == 300
         assert self.cowpig_player.stack_available == 230
+
 
 class BountyHandTest(FivePlayerBadgeTest):
     def test_bounty_payout(self):
@@ -534,53 +544,54 @@ class BountyHandTest(FivePlayerBadgeTest):
         cuttlefish = self.cuttlefish_player.id  # $300
 
         def rigged_table_deal(self, card):
-            rig = [Card('Js'), Card('2h'), Card('3s'), Card('9d'), Card('2c')]
-            self.board = rig[:len(self.board) + 1]
-            return (('board', self.board), *self.on_record_action())
+            rig = [Card("Js"), Card("2h"), Card("3s"), Card("9d"), Card("2c")]
+            self.board = rig[: len(self.board) + 1]
+            return (("board", self.board), *self.on_record_action())
 
-        self.real_table_deal = PokerTable.on_deal # used in tearDown
+        self.real_table_deal = PokerTable.on_deal  # used in tearDown
         PokerTable.on_deal = rigged_table_deal
 
         cards_to_deal = {
-            'ajfenix': [Card('8h'), Card('3h')],
-            'cowpig': [Card('7s'), Card('2c')],
-            'alexeimartov': [Card('Ad'), Card('3d')],
-            'pirate': [Card('5h'), Card('7h')],
-            'cuttlefish': [Card('9h'), Card('Ts')]
+            "ajfenix": [Card("8h"), Card("3h")],
+            "cowpig": [Card("7s"), Card("2c")],
+            "alexeimartov": [Card("Ad"), Card("3d")],
+            "pirate": [Card("5h"), Card("7h")],
+            "cuttlefish": [Card("9h"), Card("Ts")],
         }
+
         def rigged_player_deal(self, card):
             rig = cards_to_deal[self.username]
-            self.cards = rig[:len(self.cards) + 1]
-            return (('cards', self.cards),)
+            self.cards = rig[: len(self.cards) + 1]
+            return (("cards", self.cards),)
 
         self.real_player_deal = Player.on_deal  # used in tearDown
         Player.on_deal = rigged_player_deal
 
         self.table.table_type = NL_BOUNTY
         self.controller = BountyController(
-            self.table, self.players,
-            subscribers=[]) # rigged deal breaks AnimationSubscriber
+            self.table, self.players, subscribers=[]
+        )  # rigged deal breaks AnimationSubscriber
         self.controller.subscribers = [
             LogSubscriber(self.controller.log),
-            BadgeSubscriber(self.controller.accessor, self.controller.log)
+            BadgeSubscriber(self.controller.accessor, self.controller.log),
         ]
         self.controller.step()
 
         # just making sure the monkeypatch worked
-        assert self.ajfenix_player.cards == [Card('8h'), Card('3h')]
+        assert self.ajfenix_player.cards == [Card("8h"), Card("3h")]
 
         dispatch = self.controller.dispatch
-        dispatch('call', player_id=alexeimartov)
-        dispatch('call', player_id=pirate)
-        dispatch('call', player_id=cuttlefish)
-        dispatch('call', player_id=ajfenix)
-        dispatch('check', player_id=cowpig)
+        dispatch("call", player_id=alexeimartov)
+        dispatch("call", player_id=pirate)
+        dispatch("call", player_id=cuttlefish)
+        dispatch("call", player_id=ajfenix)
+        dispatch("check", player_id=cowpig)
 
-        dispatch('fold', player_id=ajfenix)
-        dispatch('check', player_id=cowpig)
-        dispatch('fold', player_id=alexeimartov)
-        dispatch('fold', player_id=pirate)
-        dispatch('fold', player_id=cuttlefish)
+        dispatch("fold", player_id=ajfenix)
+        dispatch("check", player_id=cowpig)
+        dispatch("fold", player_id=alexeimartov)
+        dispatch("fold", player_id=pirate)
+        dispatch("fold", player_id=cuttlefish)
 
         # cowpig wins (typical)
         assert self.cowpig_player.stack == 108
@@ -589,7 +600,7 @@ class BountyHandTest(FivePlayerBadgeTest):
         assert len(self.controller.accessor.table.board) == 0
 
         # and we enter a forced flip where cowpig gets dealt 27o again
-        dispatch('fold', player_id=cowpig)
+        dispatch("fold", player_id=cowpig)
 
         # cuttlefish wins the flip
         assert self.cuttlefish_player.stack_available == 298 + 108 * 3
@@ -621,9 +632,7 @@ class BotBenchmarkTest(FivePlayerBadgeTest):
             ai_times = []
 
             for player in self.players:
-                execute_mutations(
-                    buy_chips(player.user, 10000000)
-                )
+                execute_mutations(buy_chips(player.user, 10000000))
             for player in self.players:
                 player.auto_rebuy = 200
 
@@ -631,11 +640,13 @@ class BotBenchmarkTest(FivePlayerBadgeTest):
                 for _ in range(n_actions):
                     player = self.controller.accessor.next_to_act()
                     ai_start = time()
-                    action, kwargs = get_robot_move(self.controller.accessor,
-                                                 self.controller.log,
-                                                 warnings=False,
-                                                 delay=False,
-                                                 stupid=False)
+                    action, kwargs = get_robot_move(
+                        self.controller.accessor,
+                        self.controller.log,
+                        warnings=False,
+                        delay=False,
+                        stupid=False,
+                    )
                     ai_times.append(time() - ai_start)
 
                     self.controller.dispatch(action, **kwargs)
@@ -647,10 +658,10 @@ class BotBenchmarkTest(FivePlayerBadgeTest):
             mean_ai = statistics.mean(ai_times)
             std_ai = statistics.stdev(ai_times)
 
-            print('Bot benchmark:')
-            print(f'{n_actions} performed in {diff} seconds')
-            print(f'{aps} actions per second')
-            print(f'max: {max(ai_times)}, mean: {mean_ai}, std: {std_ai}')
+            print("Bot benchmark:")
+            print(f"{n_actions} performed in {diff} seconds")
+            print(f"{aps} actions per second")
+            print(f"max: {max(ai_times)}, mean: {mean_ai}, std: {std_ai}")
 
 
 class DebugDumpOrbitsTest(FivePlayerBadgeTest):
@@ -661,52 +672,49 @@ class DebugDumpOrbitsTest(FivePlayerBadgeTest):
     # 4: alexeimartov (400)
     def setUp(self):
         super().setUp()
-        self.file_name = 'orbits_dump_test.json'
+        self.file_name = "orbits_dump_test.json"
 
     def test_orbits_leave_seat_dump(self):
-        execute_mutations(
-            buy_chips(self.pirate, amt=1000)
-        )
-        blind_pos = {'btn_pos': 1, 'sb_pos': 2, 'bb_pos': 3}
+        execute_mutations(buy_chips(self.pirate, amt=1000))
+        blind_pos = {"btn_pos": 1, "sb_pos": 2, "bb_pos": 3}
         player_hole_cards = {
-            self.players[0]: '7c,2d',
-            self.players[1]: 'Kh,Ac',
-            self.players[2]: 'Kc,Ad',
-            self.players[3]: 'Kd,Ah',
-            self.players[4]: '7d,2h',
+            self.players[0]: "7c,2d",
+            self.players[1]: "Kh,Ac",
+            self.players[2]: "Kc,Ad",
+            self.players[3]: "Kd,Ah",
+            self.players[4]: "7d,2h",
         }
-        self.setup_hand(blinds_positions=blind_pos,
-                        player_hole_cards=player_hole_cards)
+        self.setup_hand(blinds_positions=blind_pos, player_hole_cards=player_hole_cards)
         ctrl = self.controller
         acc = self.controller.accessor
-        ctrl.dispatch('sit_out', player_id=self.cowpig_player.id)
-        ctrl.dispatch('fold', player_id=acc.next_to_act().id)
-        ctrl.dispatch('fold', player_id=acc.next_to_act().id)
-        ctrl.dispatch('fold', player_id=acc.next_to_act().id)
-        ctrl.dispatch('fold', player_id=acc.next_to_act().id)
+        ctrl.dispatch("sit_out", player_id=self.cowpig_player.id)
+        ctrl.dispatch("fold", player_id=acc.next_to_act().id)
+        ctrl.dispatch("fold", player_id=acc.next_to_act().id)
+        ctrl.dispatch("fold", player_id=acc.next_to_act().id)
+        ctrl.dispatch("fold", player_id=acc.next_to_act().id)
 
         assert len(acc.active_players()) == 4
 
         hand_counter = 0
-        # We need to skip cowpig 3 times
+        # We need to skip cowpig 3 times
         while hand_counter < 20:
-            ctrl.dispatch('fold', player_id=acc.next_to_act().id)
-            ctrl.dispatch('fold', player_id=acc.next_to_act().id)
-            ctrl.dispatch('fold', player_id=acc.next_to_act().id)
+            ctrl.dispatch("fold", player_id=acc.next_to_act().id)
+            ctrl.dispatch("fold", player_id=acc.next_to_act().id)
+            ctrl.dispatch("fold", player_id=acc.next_to_act().id)
             hand_counter += 1
 
-        ctrl.dispatch('fold', player_id=acc.next_to_act().id)
-        ctrl.dispatch('leave_seat', player_id=self.pirate_player.id)
-        ctrl.dispatch('fold', player_id=acc.next_to_act().id)
-        ctrl.dispatch('fold', player_id=acc.next_to_act().id)
+        ctrl.dispatch("fold", player_id=acc.next_to_act().id)
+        ctrl.dispatch("leave_seat", player_id=self.pirate_player.id)
+        ctrl.dispatch("fold", player_id=acc.next_to_act().id)
+        ctrl.dispatch("fold", player_id=acc.next_to_act().id)
 
         ctrl.join_table(self.pirate.id)
-        ctrl.dispatch('fold', player_id=acc.next_to_act().id)
-        ctrl.dispatch('fold', player_id=acc.next_to_act().id)
+        ctrl.dispatch("fold", player_id=acc.next_to_act().id)
+        ctrl.dispatch("fold", player_id=acc.next_to_act().id)
         self._simulate_test_replayer_dump_file()
 
     def _simulate_test_replayer_dump_file(self):
-        self.controller.debug_filedump('this is a test', self.file_name)
+        self.controller.debug_filedump("this is a test", self.file_name)
 
         rep = ActionReplayer.from_file(self.file_name)
         # In hand 17 cowpig has 3 orbits and is sitting out
@@ -722,8 +730,8 @@ class DebugDumpOrbitsTest(FivePlayerBadgeTest):
             i += 1
             if i > 50000:
                 raise Exception(
-                    'Replayer stepped forward 50000 times. ',
-                    f'Something is broken:\n{rep.describe(print_me=False)}'
+                    "Replayer stepped forward 50000 times. ",
+                    f"Something is broken:\n{rep.describe(print_me=False)}",
                 )
 
     def tearDown(self):
@@ -747,18 +755,20 @@ class DifferentDatesTimestampTest(FivePlayerBadgeTest):
 
         self.controller.setup_hand()
 
-        self.controller.dispatch('FOLD', player_id=alexeimartov)
-        self.controller.dispatch('FOLD', player_id=pirate)
-        self.controller.dispatch('FOLD', player_id=cuttlefish)
+        self.controller.dispatch("FOLD", player_id=alexeimartov)
+        self.controller.dispatch("FOLD", player_id=pirate)
+        self.controller.dispatch("FOLD", player_id=cuttlefish)
         # at this point table is paused 23 hours
 
         hand = HandHistory.objects.get(hand_number=table.hand_number)
         hand_ts = hand.timestamp
         for idx, action in enumerate(hand.actions()):
-            action.timestamp = hand_ts - datetime.timedelta(hours=23) + datetime.timedelta(seconds=idx)
+            action.timestamp = (
+                hand_ts - datetime.timedelta(hours=23) + datetime.timedelta(seconds=idx)
+            )
             action.save()
         hand.save()
 
         # we are simulating resuming the table after 23 hours, so timestamp
         # with just hours, minuts and seconds is lower than before
-        self.controller.dispatch('FOLD', player_id=ajfenix)
+        self.controller.dispatch("FOLD", player_id=ajfenix)

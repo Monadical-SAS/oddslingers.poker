@@ -1,7 +1,6 @@
 import React from 'react'
 
-import Button from 'react-bootstrap/lib/Button'
-import Modal from 'react-bootstrap/lib/Modal'
+import { Button, Modal } from 'react-bootstrap'
 
 import {Icon} from '@/components/icons'
 
@@ -53,4 +52,3 @@ export const NewVisitorModal = () => (
         </Modal>
       : null)
 
-// $('#welcome-modal').on('click', hideNewVisitorModal)

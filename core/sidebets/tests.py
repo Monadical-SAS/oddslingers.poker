@@ -17,6 +17,7 @@ from sidebets.models import Sidebet
 
 User = get_user_model()
 
+
 class SidebetTest(TableWithChipsTest):
     # 0: pirate_player          400
     # 1: cuttlefish_player      300
@@ -33,19 +34,13 @@ class SidebetTest(TableWithChipsTest):
         ]
 
         self.railplover = User.objects.create_user(
-            username='railplover',
-            email='railplover@hello.com',
-            password='banana'
+            username="railplover", email="railplover@hello.com", password="banana"
         )
         self.railpigeon = User.objects.create_user(
-            username='railpigeon',
-            email='railpigeon@hello.com',
-            password='banana'
+            username="railpigeon", email="railpigeon@hello.com", password="banana"
         )
         self.railostrich = User.objects.create_user(
-            username='prailostrich',
-            email='railostrich@hello.com',
-            password='banana'
+            username="prailostrich", email="railostrich@hello.com", password="banana"
         )
 
         mutations = [
@@ -63,40 +58,36 @@ class SidebetTest(TableWithChipsTest):
 class SidebetWinAndLossTest(SidebetTest):
     def setUp(self):
         super().setUp()
-        sidebet_a, _ = make_sidebet(self.railpigeon,
-                                 self.cuttlefish_player,
-                                 amt=10,
-                                 delay=None)
+        sidebet_a, _ = make_sidebet(
+            self.railpigeon, self.cuttlefish_player, amt=10, delay=None
+        )
         sidebet_a.starting_stack = self.cuttlefish_player.stack
         sidebet_a.save()
 
-        sidebet_b, _ = make_sidebet(self.railostrich,
-                                 self.ajfenix_player,
-                                 amt=10,
-                                 delay=None)
+        sidebet_b, _ = make_sidebet(
+            self.railostrich, self.ajfenix_player, amt=10, delay=None
+        )
         sidebet_b.starting_stack = self.ajfenix_player.stack
         sidebet_b.save()
 
     def test_sidebet_win_and_loss(self):
         ctrl = self.controller
         self.setup_hand(
-            blinds_positions={'btn_pos': 0, 'sb_pos': 1, 'bb_pos': 2},
+            blinds_positions={"btn_pos": 0, "sb_pos": 1, "bb_pos": 2},
             player_hole_cards={
-                self.pirate_player: '2s,3h',
-                self.cuttlefish_player: 'Ac,Kc',
-                self.ajfenix_player: 'Qc,Qd',
-                self.cowpig_player: '3c,2d',
+                self.pirate_player: "2s,3h",
+                self.cuttlefish_player: "Ac,Kc",
+                self.ajfenix_player: "Qc,Qd",
+                self.cowpig_player: "3c,2d",
             },
             add_log=True,
-            board_str='5d,Qh,Qs',
+            board_str="5d,Qh,Qs",
         )
 
-        ctrl.dispatch('FOLD', player_id=self.cowpig_player.id)
-        ctrl.dispatch('FOLD', player_id=self.pirate_player.id)
-        ctrl.dispatch('RAISE_TO',
-                      player_id=self.cuttlefish_player.id,
-                      amt=300)
-        ctrl.dispatch('CALL', player_id=self.ajfenix_player.id)
+        ctrl.dispatch("FOLD", player_id=self.cowpig_player.id)
+        ctrl.dispatch("FOLD", player_id=self.pirate_player.id)
+        ctrl.dispatch("RAISE_TO", player_id=self.cuttlefish_player.id, amt=300)
+        ctrl.dispatch("CALL", player_id=self.ajfenix_player.id)
         # ajfenix doubles up; cuttlefish loses 2/3 of stack
 
         cuttelfish_sidebet = get_sidebets(self.railpigeon, ctrl.table)[0]
@@ -109,20 +100,24 @@ class SidebetWithOddsTest(SidebetTest):
     def setUp(self):
         super().setUp()
 
-        sidebet_a, _ = make_sidebet(self.railpigeon,
-                                 self.cuttlefish_player,
-                                 amt=10,
-                                 delay=None,
-                                 odds=0.5,)
+        sidebet_a, _ = make_sidebet(
+            self.railpigeon,
+            self.cuttlefish_player,
+            amt=10,
+            delay=None,
+            odds=0.5,
+        )
         sidebet_a.starting_stack = self.cuttlefish_player.stack
         sidebet_a.save()
 
         self.aj_odds = 1.5
-        sidebet_b, _ = make_sidebet(self.railostrich,
-                                 self.ajfenix_player,
-                                 amt=10,
-                                 delay=None,
-                                 odds=self.aj_odds,)
+        sidebet_b, _ = make_sidebet(
+            self.railostrich,
+            self.ajfenix_player,
+            amt=10,
+            delay=None,
+            odds=self.aj_odds,
+        )
         sidebet_b.starting_stack = self.ajfenix_player.stack
         sidebet_b.save()
 
@@ -130,23 +125,21 @@ class SidebetWithOddsTest(SidebetTest):
 
         ctrl = self.controller
         self.setup_hand(
-            blinds_positions={'btn_pos': 0, 'sb_pos': 1, 'bb_pos': 2},
+            blinds_positions={"btn_pos": 0, "sb_pos": 1, "bb_pos": 2},
             player_hole_cards={
-                self.pirate_player: '2s,3h',
-                self.cuttlefish_player: 'Ac,Kc',
-                self.ajfenix_player: 'Qc,Qd',
-                self.cowpig_player: '3c,2d',
+                self.pirate_player: "2s,3h",
+                self.cuttlefish_player: "Ac,Kc",
+                self.ajfenix_player: "Qc,Qd",
+                self.cowpig_player: "3c,2d",
             },
             add_log=True,
-            board_str='5d,Qh,Qs',
+            board_str="5d,Qh,Qs",
         )
 
-        ctrl.dispatch('FOLD', player_id=self.cowpig_player.id)
-        ctrl.dispatch('FOLD', player_id=self.pirate_player.id)
-        ctrl.dispatch('RAISE_TO',
-                      player_id=self.cuttlefish_player.id,
-                      amt=300)
-        ctrl.dispatch('CALL', player_id=self.ajfenix_player.id)
+        ctrl.dispatch("FOLD", player_id=self.cowpig_player.id)
+        ctrl.dispatch("FOLD", player_id=self.pirate_player.id)
+        ctrl.dispatch("RAISE_TO", player_id=self.cuttlefish_player.id, amt=300)
+        ctrl.dispatch("CALL", player_id=self.ajfenix_player.id)
         # ajfenix doubles up; cuttlefish loses 2/3 of stack
 
         # odds don't affect losses
@@ -155,66 +148,59 @@ class SidebetWithOddsTest(SidebetTest):
 
         # odds do affect winnings
         ajfenix_sidebet = get_sidebets(self.railostrich, ctrl.table)[0]
-        expected = (10 + 10 * self.aj_odds)
+        expected = 10 + 10 * self.aj_odds
         assert float(ajfenix_sidebet.current_value()) - expected < 0.01
 
 
 class SidebetClosesPlayerGetsStackedTest(SidebetTest):
     def setUp(self):
         super().setUp()
-        sidebet_a, _ = make_sidebet(self.railpigeon,
-                                    self.ajfenix_player,
-                                    amt=10,
-                                    delay=None)
+        sidebet_a, _ = make_sidebet(
+            self.railpigeon, self.ajfenix_player, amt=10, delay=None
+        )
         sidebet_a.starting_stack = self.ajfenix_player.stack
         sidebet_a.save()
 
-        sidebet_b, _ = make_sidebet(self.railostrich,
-                                    self.cuttlefish_player,
-                                    amt=10,
-                                    delay=None)
+        sidebet_b, _ = make_sidebet(
+            self.railostrich, self.cuttlefish_player, amt=10, delay=None
+        )
         sidebet_b.starting_stack = self.cuttlefish_player.stack
         sidebet_b.save()
 
     def test_sidebet_closes_player_gets_stacked(self):
         ctrl = self.controller
         self.setup_hand(
-            blinds_positions={'btn_pos': 0, 'sb_pos': 1, 'bb_pos': 2},
+            blinds_positions={"btn_pos": 0, "sb_pos": 1, "bb_pos": 2},
             player_hole_cards={
-                self.pirate_player: '2s,3h',
-                self.cuttlefish_player: 'Qc,Qd',
-                self.ajfenix_player: 'Ac,Kc',
-                self.cowpig_player: '3c,2d',
+                self.pirate_player: "2s,3h",
+                self.cuttlefish_player: "Qc,Qd",
+                self.ajfenix_player: "Ac,Kc",
+                self.cowpig_player: "3c,2d",
             },
             add_log=True,
-            board_str='5d,Qh,Qs',
+            board_str="5d,Qh,Qs",
         )
-        ctrl.dispatch('SET_AUTO_REBUY',
-                      player_id=self.ajfenix_player.id,
-                      amt=200)
-        ctrl.dispatch('FOLD', player_id=self.cowpig_player.id)
-        ctrl.dispatch('FOLD', player_id=self.pirate_player.id)
-        ctrl.dispatch('RAISE_TO',
-                      player_id=self.cuttlefish_player.id,
-                      amt=300)
-        ctrl.dispatch('CALL', player_id=self.ajfenix_player.id)
+        ctrl.dispatch("SET_AUTO_REBUY", player_id=self.ajfenix_player.id, amt=200)
+        ctrl.dispatch("FOLD", player_id=self.cowpig_player.id)
+        ctrl.dispatch("FOLD", player_id=self.pirate_player.id)
+        ctrl.dispatch("RAISE_TO", player_id=self.cuttlefish_player.id, amt=300)
+        ctrl.dispatch("CALL", player_id=self.ajfenix_player.id)
         # ajfenix gets stacked
 
         ajfenix_sidebet = get_sidebets(self.railpigeon, ctrl.table)[0]
-        assert ajfenix_sidebet.status == 'closed'
+        assert ajfenix_sidebet.status == "closed"
         assert ajfenix_sidebet.current_value() == 0
 
         cuttlefish_sidebet = get_sidebets(self.railostrich, ctrl.table)[0]
-        assert cuttlefish_sidebet.status == 'active'
+        assert cuttlefish_sidebet.status == "active"
 
 
 class NewSidebetRebuyTest(SidebetTest):
     def setUp(self):
         super().setUp()
-        sidebet, _ = make_sidebet(self.railostrich,
-                                  self.ajfenix_player,
-                                  amt=10,
-                                  delay=None)
+        sidebet, _ = make_sidebet(
+            self.railostrich, self.ajfenix_player, amt=10, delay=None
+        )
         sidebet.starting_stack = self.ajfenix_player.stack
         sidebet.save()
 
@@ -225,35 +211,27 @@ class NewSidebetRebuyTest(SidebetTest):
         assert ajfenix_sidebets.count() == 1
 
         self.setup_hand(
-            blinds_positions={'btn_pos': 0, 'sb_pos': 1, 'bb_pos': 2},
+            blinds_positions={"btn_pos": 0, "sb_pos": 1, "bb_pos": 2},
             add_log=True,
         )
-        ctrl.dispatch('SET_AUTO_REBUY',
-                      player_id=self.ajfenix_player.id,
-                      amt=300)
+        ctrl.dispatch("SET_AUTO_REBUY", player_id=self.ajfenix_player.id, amt=300)
 
-        ctrl.dispatch('FOLD', player_id=self.cowpig_player.id)
-        ctrl.dispatch('FOLD', player_id=self.pirate_player.id)
-        ctrl.dispatch('RAISE_TO',
-                      player_id=self.cuttlefish_player.id,
-                      amt=5)
-        ctrl.dispatch('RAISE_TO',
-                      player_id=self.ajfenix_player.id,
-                      amt=100)
-        ctrl.dispatch('RAISE_TO',
-                      player_id=self.cuttlefish_player.id,
-                      amt=200)
-        ctrl.dispatch('FOLD', player_id=self.ajfenix_player.id)
+        ctrl.dispatch("FOLD", player_id=self.cowpig_player.id)
+        ctrl.dispatch("FOLD", player_id=self.pirate_player.id)
+        ctrl.dispatch("RAISE_TO", player_id=self.cuttlefish_player.id, amt=5)
+        ctrl.dispatch("RAISE_TO", player_id=self.ajfenix_player.id, amt=100)
+        ctrl.dispatch("RAISE_TO", player_id=self.cuttlefish_player.id, amt=200)
+        ctrl.dispatch("FOLD", player_id=self.ajfenix_player.id)
 
         ajfenix_sidebets = get_sidebets(self.railostrich, ctrl.table)
         assert ajfenix_sidebets.count() == 2
 
-        ajfenix_closed_sidebets = ajfenix_sidebets.filter(status='closed')
+        ajfenix_closed_sidebets = ajfenix_sidebets.filter(status="closed")
         assert ajfenix_closed_sidebets.count() == 1
         ajfenix_closed_sidebet = ajfenix_closed_sidebets.get()
         assert ajfenix_closed_sidebet.current_value() == 5
 
-        ajfenix_active_sidebets = ajfenix_sidebets.filter(status='active')
+        ajfenix_active_sidebets = ajfenix_sidebets.filter(status="active")
         assert ajfenix_active_sidebets.count() == 1
         ajfenix_active_sidebet = ajfenix_active_sidebets.get()
         assert ajfenix_active_sidebet.amt == 5
@@ -263,93 +241,87 @@ class NewSidebetRebuyTest(SidebetTest):
 class CloseSidebetTest(SidebetTest):
     def setUp(self):
         super().setUp()
-        sidebet_a, _ = make_sidebet(self.railpigeon,
-                                    self.cuttlefish_player,
-                                    amt=10,
-                                    delay=None)
+        sidebet_a, _ = make_sidebet(
+            self.railpigeon, self.cuttlefish_player, amt=10, delay=None
+        )
         sidebet_a.starting_stack = self.cuttlefish_player.stack
         sidebet_a.save()
-        sidebet_b, _ = make_sidebet(self.railpigeon,
-                                    self.cuttlefish_player,
-                                    amt=20,
-                                    delay=None)
+        sidebet_b, _ = make_sidebet(
+            self.railpigeon, self.cuttlefish_player, amt=20, delay=None
+        )
         sidebet_b.starting_stack = self.cuttlefish_player.stack
         sidebet_b.save()
-        sidebet_c, _ = make_sidebet(self.railostrich,
-                                    self.cuttlefish_player,
-                                    amt=20,
-                                    delay=None)
+        sidebet_c, _ = make_sidebet(
+            self.railostrich, self.cuttlefish_player, amt=20, delay=None
+        )
         sidebet_c.starting_stack = self.cuttlefish_player.stack
         sidebet_c.save()
 
     def test_close_sidebet(self):
         ctrl = self.controller
         self.setup_hand(
-            blinds_positions={'btn_pos': 0, 'sb_pos': 1, 'bb_pos': 2},
+            blinds_positions={"btn_pos": 0, "sb_pos": 1, "bb_pos": 2},
             player_hole_cards={
-                self.pirate_player: '2s,3h',
-                self.cuttlefish_player: 'Qc,Qd',
-                self.ajfenix_player: 'Ac,Kc',
-                self.cowpig_player: '3c,2d',
+                self.pirate_player: "2s,3h",
+                self.cuttlefish_player: "Qc,Qd",
+                self.ajfenix_player: "Ac,Kc",
+                self.cowpig_player: "3c,2d",
             },
             add_log=True,
-            board_str='5d,Qh,Qs',
+            board_str="5d,Qh,Qs",
         )
-        ctrl.dispatch('CLOSE_SIDEBET',
-                      player_id=self.cuttlefish_player.id,
-                      user_id=self.railpigeon.id)
-        ctrl.dispatch('FOLD', player_id=self.cowpig_player.id)
-        ctrl.dispatch('FOLD', player_id=self.pirate_player.id)
-        ctrl.dispatch('RAISE_TO',
-                      player_id=self.cuttlefish_player.id,
-                      amt=200)
-        ctrl.dispatch('CALL', player_id=self.ajfenix_player.id)
+        ctrl.dispatch(
+            "CLOSE_SIDEBET",
+            player_id=self.cuttlefish_player.id,
+            user_id=self.railpigeon.id,
+        )
+        ctrl.dispatch("FOLD", player_id=self.cowpig_player.id)
+        ctrl.dispatch("FOLD", player_id=self.pirate_player.id)
+        ctrl.dispatch("RAISE_TO", player_id=self.cuttlefish_player.id, amt=200)
+        ctrl.dispatch("CALL", player_id=self.ajfenix_player.id)
 
         sidebets = get_sidebets(self.railpigeon, ctrl.table)
         cuttlefish_sidebet = sidebets[0]
-        assert cuttlefish_sidebet.status == 'closed'
+        assert cuttlefish_sidebet.status == "closed"
         assert float(cuttlefish_sidebet.current_value()) - 33.33 < 0.01
 
         cuttlefish_sidebet = sidebets[1]
-        assert cuttlefish_sidebet.status == 'closed'
+        assert cuttlefish_sidebet.status == "closed"
         assert float(cuttlefish_sidebet.current_value()) - 26.66 < 0.01
 
         cuttlefish_sidebet = get_sidebets(self.railostrich, ctrl.table)[0]
-        assert cuttlefish_sidebet.status == 'active'
+        assert cuttlefish_sidebet.status == "active"
 
 
 class SidebetClosesPlayerLeaveSeatTest(SidebetTest):
     def setUp(self):
         super().setUp()
-        sidebet, _ = make_sidebet(self.railpigeon,
-                                  self.ajfenix_player,
-                                  amt=10,
-                                  delay=None)
+        sidebet, _ = make_sidebet(
+            self.railpigeon, self.ajfenix_player, amt=10, delay=None
+        )
         sidebet.starting_stack = self.ajfenix_player.stack
         sidebet.save()
 
     def test_sidebet_closes_player_gets_stacked(self):
         ctrl = self.controller
         self.setup_hand(
-            blinds_positions={'btn_pos': 0, 'sb_pos': 1, 'bb_pos': 2},
+            blinds_positions={"btn_pos": 0, "sb_pos": 1, "bb_pos": 2},
             player_hole_cards={
-                self.pirate_player: '2s,3h',
-                self.cuttlefish_player: 'Qc,Qd',
-                self.ajfenix_player: 'Ac,Kc',
-                self.cowpig_player: '3c,2d',
+                self.pirate_player: "2s,3h",
+                self.cuttlefish_player: "Qc,Qd",
+                self.ajfenix_player: "Ac,Kc",
+                self.cowpig_player: "3c,2d",
             },
             add_log=True,
-            board_str='5d,Qh,Qs',
+            board_str="5d,Qh,Qs",
         )
-        ctrl.dispatch('FOLD', player_id=self.cowpig_player.id)
-        ctrl.dispatch('FOLD', player_id=self.pirate_player.id)
-        ctrl.dispatch('CALL',
-                      player_id=self.cuttlefish_player.id,
-                      amt=2)
-        ctrl.dispatch('LEAVE_SEAT', player_id=self.ajfenix_player.id)
+        ctrl.dispatch("FOLD", player_id=self.cowpig_player.id)
+        ctrl.dispatch("FOLD", player_id=self.pirate_player.id)
+        ctrl.dispatch("CALL", player_id=self.cuttlefish_player.id, amt=2)
+        ctrl.dispatch("LEAVE_SEAT", player_id=self.ajfenix_player.id)
 
         ajfenix_sidebet = get_sidebets(self.railpigeon, ctrl.table)[0]
-        assert ajfenix_sidebet.status == 'closed'
+        assert ajfenix_sidebet.status == "closed"
         assert float(ajfenix_sidebet.current_value()) - 10 < 0.01
 
 

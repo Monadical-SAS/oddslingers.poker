@@ -1,17 +1,14 @@
 import React from 'react'
-import parse from 'date-fns/parse'
-import differenceInSeconds from 'date-fns/difference_in_seconds'
+import { parseISO, differenceInSeconds } from 'date-fns'
 
-import Button from 'react-bootstrap/lib/Button'
-import Modal from 'react-bootstrap/lib/Modal'
+import { Button, Modal } from 'react-bootstrap'
 
 import {Icon} from '@/components/icons'
 
 
-// display modal if user was created less than 15sec ago
 let is_new_user = false
 if (global.user && global.user.date_joined) {
-    const joined_seconds_ago = differenceInSeconds(Date.now(), parse(global.user.date_joined))
+    const joined_seconds_ago = differenceInSeconds(Date.now(), parseISO(global.user.date_joined))
     is_new_user = joined_seconds_ago < 15
 }
 
@@ -48,4 +45,3 @@ export const WelcomeModal = () => (
         </Modal>
       : null)
 
-// $('#welcome-modal').on('click', hideWelcomeModal)

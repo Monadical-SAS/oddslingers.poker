@@ -2,7 +2,7 @@ import React from 'react'
 import {reduxify} from '@/util/reduxify'
 import classNames from 'classnames'
 
-import Button from 'react-bootstrap/lib/Button'
+import { Button } from 'react-bootstrap'
 
 import {getGamestate, getPlayerBuyin} from '@/poker/selectors'
 import {sitIn, onSubmitAction} from '@/poker/reducers'
@@ -23,7 +23,6 @@ export const handleSitIn = (sitInFunc, table_path) => {
         localStorageSet('passive_actions_title_blinks', 0)
         sitInFunc()
     } else {
-        // redirect to login page, then back to table or embedded table
         if (isEmbedded(global)) {
             const embed_path = table_path.replace('/table/', '/embed/')
             global.location = `/accounts/login/?next=${embed_path}`
@@ -193,13 +192,11 @@ export const SitDownButton = reduxify({
         let enable_sitdownbutton = true
 
         if (is_logged_in) {
-            // hide/show button completely
             show_sitdownbutton = (
-                !is_fetching_bal          // hide until balance fetched via ajax
-                && props.can_sit          // hide if already seated
-                && !props.is_tournament)  // hide if it's a table on a tourney
+                !is_fetching_bal
+                && props.can_sit
+                && !props.is_tournament)
 
-            // enablde=green, disabled=greyed-out button when shown
             enable_sitdownbutton = (
                 Boolean(props.available_seats)
                 && props.user_has_enough_funds

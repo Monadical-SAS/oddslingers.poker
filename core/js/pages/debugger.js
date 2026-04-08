@@ -1,11 +1,9 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 
 import {createStore, combineReducers} from 'redux'
 import {Provider} from 'react-redux'
-import {animationsReducer, startAnimation} from 'redux-time'
-
-import {initial_state as anim_state} from 'redux-time/node/reducers'
+import {animationsReducer, startAnimation, initial_state as anim_state} from '@/util/animation-stubs'
 
 import {gamestate} from '@/poker/reducers'
 import {chat} from '@/chat/reducers'
@@ -20,7 +18,6 @@ import {Sounds} from '@/sounds/containers'
 import {NewVisitorModal} from '@/components/new-visitor-modal'
 import {TournamentResultModal} from '@/components/tournament-modals'
 import {startPokerProcess} from '@/poker/process'
-// import {ForcedActions} from '@/poker/debugging'
 
 import {SwapTable} from '@/components/swaptable'
 
@@ -43,7 +40,6 @@ export const TableDebugger = {
         if (props.gamestate) {
             global.loading.init_start = Date.now()
             if (global.DEBUG) {
-                // time between page finished loading and initialization running
                 const parse_time = global.loading.init_start - global.loading.end
                 console.groupCollapsed(`%c[+] PARSED JS ${parse_time}ms`, 'color:orange')
             }
@@ -73,34 +69,28 @@ export const TableDebugger = {
             global.loading.init_end = Date.now()
             if (global.DEBUG) {
                 console.groupEnd()
-                // time between page finished loading and initialization running
                 const init_time = global.loading.init_end - global.loading.init_start
                 const username = global.user ? global.user.username : 'anon'
                 console.log(`%c[+] INITIALIZED PAGE ${init_time}ms: ${username}@${global.ENVIRONMENT}`, 'color:orange', this.view)
             }
 
-            // this group of references define everything available to a Page
             return {props, store, socket, time, poker}
         }
         return {}
     },
     setupStore(reducers, initial_state) {
-        // create the redux store for the page
         return createStore(combineReducers(
             reducers,
             initial_state,
         ))
     },
     setupAnimation(store, initial_state, autostart) {
-        // trigger re-rendering on every requestAnimationFrame
         return startAnimation(store, initial_state, autostart)
     },
     setupPoker(store, time, initial_gamestate) {
-        // handle translating incoming messages into frontend animations
         return startPokerProcess(store, time, initial_gamestate)
     },
     setupSocket() {
-        // create the websocket connection to the backend
         return {name: 'MockSocket', queue: [], close: () => {}}
 
     },
@@ -139,14 +129,12 @@ export const TableDebugger = {
     },
     mount(props, mount_point) {
         global.page = this.init(props, true)
-        ReactDOM.render(
+        createRoot(mount_point).render(
             this.render(global.page),
-            mount_point,
         )
     },
 }
 
 if (global.react_mount) {
-    // we're in a browser, so mount the page
     TableDebugger.mount(global.props, global.react_mount)
 }

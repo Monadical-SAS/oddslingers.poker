@@ -1,14 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 
-import Row from 'react-bootstrap/lib/Row'
-import Col from 'react-bootstrap/lib/Col'
-import Modal from 'react-bootstrap/lib/Modal'
-import Alert from 'react-bootstrap/lib/Alert'
-import Button from 'react-bootstrap/lib/Button'
-import FormGroup from 'react-bootstrap/lib/FormGroup'
-import FormControl from 'react-bootstrap/lib/FormControl'
-import ControlLabel from 'react-bootstrap/lib/ControlLabel'
+import { Row, Col, Modal, Alert, Button, Form } from 'react-bootstrap'
 
 import {ModalTrigger} from '@/components/modals'
 import {SteppableRangeInput} from '@/components/steppable-range-input'
@@ -80,17 +73,17 @@ export class SidebetModalTrigger extends ModalTrigger {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body className='text-center'>
-                        <Alert bsStyle="info">
+                        <Alert variant="info">
                             You can place a sidebet for a player you're watching.
                             If they win chips, so do you!
                         </Alert>
-                        <FormGroup className="sidebet-group"
+                        <Form.Group className="sidebet-group"
                                    validationState={this.state.validation_class}>
-                            <ControlLabel>
+                            <Form.Label>
                             Amount{this.state.validation_class === 'error'?
                                    `: ${this.state.msg}` : ''}
-                            </ControlLabel>
-                            <FormControl
+                            </Form.Label>
+                            <Form.Control
                                 type="number"
                                 className="sidebet-input"
                                 placeholder='0'
@@ -101,17 +94,17 @@ export class SidebetModalTrigger extends ModalTrigger {
                                 onChange={(e) => this.onChangeSidebet(e.target.value)}
                                 step={1}
                                 />
-                        </FormGroup>
-                        <FormGroup className="sidebet-odds">
-                            <ControlLabel>Odds</ControlLabel>
-                            <FormControl
+                        </Form.Group>
+                        <Form.Group className="sidebet-odds">
+                            <Form.Label>Odds</Form.Label>
+                            <Form.Control
                                 disabled={true}
                                 type="number"
                                 className="sidebet-input"
                                 placeholder='0'
                                 value={this.props.odds}
                                 />
-                        </FormGroup><br/>
+                        </Form.Group><br/>
                         <SteppableRangeInput className="sidebet-slider"
                                              value={this.state.value}
                                              min={1}
@@ -124,7 +117,7 @@ export class SidebetModalTrigger extends ModalTrigger {
                     <Modal.Footer>
                         <span>
                             <Button onClick={::this.onCancel}>Cancel</Button>
-                            <Button bsStyle="success" onClick={::this.onConfirm}>
+                            <Button variant="success" onClick={::this.onConfirm}>
                                 Start
                             </Button>
                         </span>
@@ -270,13 +263,13 @@ export class ChangeSidebetModalTrigger extends ModalTrigger {
                         <Row>
                         <br/>
                             <Col xs={6}>
-                                <FormGroup className="sidebet-group"
+                                <Form.Group className="sidebet-group"
                                            validationState={this.state.validation_class}>
-                                    <ControlLabel>
+                                    <Form.Label>
                                         Add sidebet {this.state.validation_class === 'error'?
                                                 `: ${this.state.msg}` : ''}
-                                    </ControlLabel>
-                                    <FormControl
+                                    </Form.Label>
+                                    <Form.Control
                                         type="number"
                                         className="sidebet-input"
                                         placeholder='0'
@@ -287,11 +280,11 @@ export class ChangeSidebetModalTrigger extends ModalTrigger {
                                         onChange={(e) => this.onChangeSidebet(e.target.value)}
                                         step={1}
                                         />
-                                </FormGroup>
+                                </Form.Group>
                             </Col>
                             <Col xs={6}>
                                 <b>Close Sidebets:</b><br/>
-                                <Button bsStyle="default" onClick={::this.onEndSidebet}>
+                                <Button variant="default" onClick={::this.onEndSidebet}>
                                     Close on new hand
                                 </Button>
                             </Col>
@@ -300,7 +293,7 @@ export class ChangeSidebetModalTrigger extends ModalTrigger {
                     <Modal.Footer>
                         <span>
                             <Button onClick={::this.onCancel}>Close</Button>
-                            <Button bsStyle="success" onClick={::this.onConfirm}>
+                            <Button variant="success" onClick={::this.onConfirm}>
                                 Add sidebet on new hand
                             </Button>
                         </span>

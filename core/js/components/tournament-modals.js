@@ -1,8 +1,7 @@
 import React from 'react'
 import {reduxify} from '@/util/reduxify'
 
-import Button from 'react-bootstrap/lib/Button'
-import Modal from 'react-bootstrap/lib/Modal'
+import { Button, Modal } from 'react-bootstrap'
 
 import {Icon} from '@/components/icons'
 
@@ -106,8 +105,6 @@ export const TournamentResultModal = reduxify({
             global.user && result.user === global.user.username
         )
 
-        // We are using the same notifications logic to sync the modal with the
-        // WIN animation
         const modal_ready = table.badge_ready || false
         const result = player_results.length && player_results[0]
         if (modal_ready && result) {

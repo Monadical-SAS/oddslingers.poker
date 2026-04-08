@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Col from 'react-bootstrap/lib/Col'
+import { Col } from 'react-bootstrap'
 
 import {Chat} from '@/chat/components.desktop'
 

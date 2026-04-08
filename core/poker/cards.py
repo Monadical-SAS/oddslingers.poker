@@ -1,8 +1,9 @@
 from oddslingers.utils import secure_random_number
 
+
 def to_cards(hand):
     if isinstance(hand, str):
-        return [Card(s) for s in hand.split(' ')]
+        return [Card(s) for s in hand.split(" ")]
     elif isinstance(hand[0], str):
         return [Card(s) for s in hand]
     elif isinstance(hand[0], Card):
@@ -16,45 +17,45 @@ def pluralize(card_or_rank):
         rankname = card_or_rank
     else:
         rankname = card_or_rank.rank
-    if rankname == 'six':
-        return 'sixes'
+    if rankname == "six":
+        return "sixes"
     else:
-        return rankname + 's'
+        return rankname + "s"
 
 
-RANKS = ('2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A')
-SUITS = ('c', 'd', 'h', 's')
+RANKS = ("2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A")
+SUITS = ("c", "d", "h", "s")
 PRETTY_SUITS = {
-    'c': '♣',
-    'd': '♦',
-    'h': '♥',
-    's': '♠',
+    "c": "♣",
+    "d": "♦",
+    "h": "♥",
+    "s": "♠",
 }
-INDICES = [f'{r}{s}' for r in RANKS for s in SUITS]
+INDICES = [f"{r}{s}" for r in RANKS for s in SUITS]
 
 
 class Card:
     suitnames = {
-        'c': 'clubs',
-        'd': 'diamonds',
-        'h': 'hearts',
-        's': 'spades',
+        "c": "clubs",
+        "d": "diamonds",
+        "h": "hearts",
+        "s": "spades",
     }
 
     ranknames = {
-        '2': 'two',
-        '3': 'three',
-        '4': 'four',
-        '5': 'five',
-        '6': 'six',
-        '7': 'seven',
-        '8': 'eight',
-        '9': 'nine',
-        'T': 'ten',
-        'J': 'jack',
-        'Q': 'queen',
-        'K': 'king',
-        'A': 'ace'
+        "2": "two",
+        "3": "three",
+        "4": "four",
+        "5": "five",
+        "6": "six",
+        "7": "seven",
+        "8": "eight",
+        "9": "nine",
+        "T": "ten",
+        "J": "jack",
+        "Q": "queen",
+        "K": "king",
+        "A": "ace",
     }
 
     def __init__(self, rank, suit=None):
@@ -80,13 +81,13 @@ class Card:
         return self.__str__()
 
     def __str__(self):
-        return f'{self.rank}{self.suit}'
+        return f"{self.rank}{self.suit}"
 
     def __repr__(self):
         return self.__str__()
 
     def pretty(self):
-        return f'{self.rank}{PRETTY_SUITS[self.suit]}'
+        return f"{self.rank}{PRETTY_SUITS[self.suit]}"
 
     def __eq__(self, other):
         if isinstance(other, self.__class__):
@@ -100,22 +101,22 @@ class Card:
     def __lt__(self, other):
         if isinstance(other, self.__class__):
             return self.index < other.index
-        raise TypeError(f'Cannot compare Card to {other.__class__}')
+        raise TypeError(f"Cannot compare Card to {other.__class__}")
 
     def __gt__(self, other):
         if isinstance(other, self.__class__):
             return self.index > other.index
-        raise TypeError(f'Cannot compare Card to {other.__class__}')
+        raise TypeError(f"Cannot compare Card to {other.__class__}")
 
     def __le__(self, other):
         if isinstance(other, self.__class__):
             return self.index <= other.index
-        raise TypeError(f'Cannot compare Card to {other.__class__}')
+        raise TypeError(f"Cannot compare Card to {other.__class__}")
 
     def __ge__(self, other):
         if isinstance(other, self.__class__):
             return self.index >= other.index
-        raise TypeError(f'Cannot compare Card to {other.__class__}')
+        raise TypeError(f"Cannot compare Card to {other.__class__}")
 
     def __hash__(self):
         return self.index
@@ -125,7 +126,7 @@ class Card:
             return self.rank
         elif i == 1:
             return self.suit
-        raise IndexError('Card objects only have a rank and suit')
+        raise IndexError("Card objects only have a rank and suit")
 
 
 class Deck:

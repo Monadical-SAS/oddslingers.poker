@@ -51,6 +51,7 @@ class BadgeTest(GenericTableTest):
         HandHistory.objects.all().delete()
         super().tearDown()
 
+
 class FivePlayerBadgeTest(FivePlayerTableTest):
     # 0: pirate       (400)
     # 1: cuttlefish   (300)
@@ -75,45 +76,47 @@ class FivePlayerBadgeTest(FivePlayerTableTest):
         HandHistory.objects.all().delete()
         super().tearDown()
 
+
 class BadgeSubscriberTest(BadgeTest):
     def test_player_winnings_from_history(self):
-        blind_pos = {'btn_pos': 1, 'sb_pos': 2, 'bb_pos': 3}
+        blind_pos = {"btn_pos": 1, "sb_pos": 2, "bb_pos": 3}
         player_hole_cards = {
-            self.players[0]: '7c,2d',
-            self.players[1]: 'Kh,Ac',
-            self.players[2]: 'Kc,Ad',
-            self.players[3]: 'Kd,Ah',
+            self.players[0]: "7c,2d",
+            self.players[1]: "Kh,Ac",
+            self.players[2]: "Kc,Ad",
+            self.players[3]: "Kd,Ah",
         }
-        self.setup_hand(blinds_positions=blind_pos,
-                        player_hole_cards=player_hole_cards)
+        self.setup_hand(blinds_positions=blind_pos, player_hole_cards=player_hole_cards)
         ctrl = self.controller
         acc = self.controller.accessor
 
         nxt = acc.next_to_act()
-        ctrl.dispatch('raise_to', player_id=nxt.id, amt=275)
-        ctrl.dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.dispatch('call', player_id=acc.next_to_act().id)
+        ctrl.dispatch("raise_to", player_id=nxt.id, amt=275)
+        ctrl.dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.dispatch("call", player_id=acc.next_to_act().id)
 
         # ajfenix and cowpig are all-in
-        ctrl.dispatch('check', player_id=acc.next_to_act().id)
-        ctrl.dispatch('check', player_id=acc.next_to_act().id)
+        ctrl.dispatch("check", player_id=acc.next_to_act().id)
+        ctrl.dispatch("check", player_id=acc.next_to_act().id)
 
-        ctrl.dispatch('check', player_id=acc.next_to_act().id)
-        ctrl.dispatch('check', player_id=acc.next_to_act().id)
-        acc.table.board = ['2h', '2c', '4h', '5h', 'Kd']
+        ctrl.dispatch("check", player_id=acc.next_to_act().id)
+        ctrl.dispatch("check", player_id=acc.next_to_act().id)
+        acc.table.board = ["2h", "2c", "4h", "5h", "Kd"]
 
         # pirate bets, cuttlefish raises, pirate raises, cuttlefish folds
-        ctrl.dispatch('bet', player_id=acc.next_to_act().id, amt=5)
-        ctrl.dispatch('raise_to', player_id=acc.next_to_act().id, amt=10)
-        ctrl.dispatch('raise_to', player_id=acc.next_to_act().id, amt=15)
-        ctrl.player_dispatch('fold', player_id=acc.next_to_act().id)
+        ctrl.dispatch("bet", player_id=acc.next_to_act().id, amt=5)
+        ctrl.dispatch("raise_to", player_id=acc.next_to_act().id, amt=10)
+        ctrl.dispatch("raise_to", player_id=acc.next_to_act().id, amt=15)
+        ctrl.player_dispatch("fold", player_id=acc.next_to_act().id)
         ctrl.internal_dispatch(ctrl.return_uncalled_bets())
-        ctrl.internal_dispatch([
-            (SIDE_EFFECT_SUBJ, Event.NEW_STREET, {}),
-            *ctrl.wins_and_losses(),
-            (SIDE_EFFECT_SUBJ, Event.SHOWDOWN_COMPLETE, {}),
-        ])
+        ctrl.internal_dispatch(
+            [
+                (SIDE_EFFECT_SUBJ, Event.NEW_STREET, {}),
+                *ctrl.wins_and_losses(),
+                (SIDE_EFFECT_SUBJ, Event.SHOWDOWN_COMPLETE, {}),
+            ]
+        )
 
         player_wins = self.badge_subscriber.player_winnings_from_history()
         assert len(player_wins.items()) == 1
@@ -121,21 +124,19 @@ class BadgeSubscriberTest(BadgeTest):
 
         showdown_wins = 100 + 200 + 200 + 200
         other_wins = 75 + 75 + 10 + 10
-        assert pirate_wins['showdown'] == showdown_wins
-        assert pirate_wins['non-showdown'] == other_wins
-        assert pirate_wins['total'] == showdown_wins + other_wins
+        assert pirate_wins["showdown"] == showdown_wins
+        assert pirate_wins["non-showdown"] == other_wins
+        assert pirate_wins["total"] == showdown_wins + other_wins
         assert len(player_wins.keys()) == 1
 
 
 class TestUserProfileBadges(FrontendTest):
     def setUp(self):
-        username = 'test_user'
+        username = "test_user"
         self.user = self.setup_user(username=username)
-        Badge(user=self.user,
-              name='shove',
-              season=settings.CURRENT_SEASON).save()
+        Badge(user=self.user, name="shove", season=settings.CURRENT_SEASON).save()
 
-        url = reverse('UserProfile', args=(username,))
+        url = reverse("UserProfile", args=(username,))
         super().setUp(url, setup_user=False)
 
     def tearDown(self):
@@ -144,27 +145,30 @@ class TestUserProfileBadges(FrontendTest):
 
     def test_badge_props(self):
         response = self.request()
-        props = response.context['props']
+        props = response.context["props"]
 
-        assert 'badges' in props
-        assert 'shove' in props['badges']
-        assert props['badges']['shove']['title'].endswith('x1')
-        created = props['badges']['shove']['ts']
+        assert "badges" in props
+        assert "shove" in props["badges"]
+        assert props["badges"]["shove"]["title"].endswith("x1")
+        created = props["badges"]["shove"]["ts"]
         assert (timezone.now() - created).total_seconds() < 30
 
+
 class ActionReplayerTestWithUsers(TestCase):
-    def setUp(self, filename='no_events.json', **kwargs):
-        with open(filename, 'r') as f:
+    def setUp(self, filename="no_events.json", **kwargs):
+        with open(filename, "r") as f:
             self.hh = json.load(f)
 
-        self.replayer = ActionReplayer(self.hh,
-                                       subscriber_types=(BadgeSubscriber,),
-                                       **kwargs)
+        self.replayer = ActionReplayer(
+            self.hh, subscriber_types=(BadgeSubscriber,), **kwargs
+        )
         User = get_user_model()
         for player in self.replayer.controller.accessor.players:
-            player.user = User(username=player.username,
-                               email=f'{player.username}@example.com',
-                               password='banana')
+            player.user = User(
+                username=player.username,
+                email=f"{player.username}@example.com",
+                password="banana",
+            )
 
     def tearDown(self):
         Badge.objects.all().delete()
@@ -179,84 +183,63 @@ class ShoveTest(BadgeTest):
     def test_shove(self):
         self.table.btn_idx = 0
         self.controller.step()
-        self.controller.dispatch('raise_to',
-                                 player_id=self.cowpig_player.id,
-                                 amt=100)
+        self.controller.dispatch("raise_to", player_id=self.cowpig_player.id, amt=100)
 
-        assert (self.cowpig
-                    .badge_set
-                    .filter(name='shove')
-                    .count())
+        assert self.cowpig.badge_set.filter(name="shove").count()
 
     def test_two_shoves_count_as_one(self):
         """
         Newcomer badges now are earned just once, so we will use shove to
         represent this
         """
-        Badge(user=self.cowpig,
-              name='shove',
-              season=settings.CURRENT_SEASON).save()
+        Badge(user=self.cowpig, name="shove", season=settings.CURRENT_SEASON).save()
         self.table.btn_idx = 0
         self.controller.step()
-        self.controller.dispatch('raise_to',
-                                 player_id=self.cowpig_player.id,
-                                 amt=100)
+        self.controller.dispatch("raise_to", player_id=self.cowpig_player.id, amt=100)
 
-        assert (self.cowpig
-                    .badge_set
-                    .filter(name='shove')
-                    .count() == 1)
+        assert self.cowpig.badge_set.filter(name="shove").count() == 1
 
 
 class BigWinTest(BadgeTest):
     # win a pot over 500bbs
     def test_big_win(self):
-        blind_pos = {'btn_pos': 1, 'sb_pos': 2, 'bb_pos': 3}
+        blind_pos = {"btn_pos": 1, "sb_pos": 2, "bb_pos": 3}
         player_hole_cards = {
-            self.players[0]: '2s,2d',
-            self.players[1]: 'Kh,Ac',
-            self.players[2]: 'Kc,Ad',
-            self.players[3]: 'Kd,Ah'
+            self.players[0]: "2s,2d",
+            self.players[1]: "Kh,Ac",
+            self.players[2]: "Kc,Ad",
+            self.players[3]: "Kd,Ah",
         }
         assert self.players[0].user.userbalance().balance == 0
 
-        self.setup_hand(blinds_positions=blind_pos,
-                        player_hole_cards=player_hole_cards)
+        self.setup_hand(blinds_positions=blind_pos, player_hole_cards=player_hole_cards)
         self.cowpig_player.stack = Decimal(400)
 
         ctrl = self.controller
         acc = self.controller.accessor
 
         nxt = acc.next_to_act()
-        ctrl.dispatch('raise_to', player_id=nxt.id, amt=nxt.stack_available)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
+        ctrl.dispatch("raise_to", player_id=nxt.id, amt=nxt.stack_available)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
 
-        acc.table.board = ['2h', '2c', '4h', '5h', 'Kd']
+        acc.table.board = ["2h", "2c", "4h", "5h", "Kd"]
         ctrl.step()
         ctrl.commit()
 
-        big_win = self.players[0].user\
-                                 .badge_set\
-                                 .filter(name='big_win')
+        big_win = self.players[0].user.badge_set.filter(name="big_win")
         assert big_win.count() == 1
 
-        true_grit = self.players[0].user\
-                                   .badge_set\
-                                   .filter(name='true_grit')
+        true_grit = self.players[0].user.badge_set.filter(name="true_grit")
         assert not true_grit.count()
 
         # asserts new balance three badges
 
-        shove = self.players[0].user\
-                               .badge_set\
-                               .filter(name='shove')
+        shove = self.players[0].user.badge_set.filter(name="shove")
         assert shove.count() == 1
 
-        quads = self.players[0].user\
-                               .badge_set\
-                               .filter(name='quads')
+        quads = self.players[0].user.badge_set.filter(name="quads")
         assert quads.count() == 1
 
         expected_bonuses = NEWCOMER_REWARD * 2 + REGULAR_BADGE_REWARD
@@ -276,38 +259,35 @@ class BountyWinTest(BadgeTest):
         self.cowpig_player.stack = Decimal(600)
         self.pirate_player.stack = Decimal(600)
         self.controller = BountyController(self.table, players=self.players)
-        blind_pos = {'btn_pos': 1, 'sb_pos': 2, 'bb_pos': 3}
+        blind_pos = {"btn_pos": 1, "sb_pos": 2, "bb_pos": 3}
         player_hole_cards = {
-            self.players[0]: '2s,7d',
-            self.players[1]: '2h,9c',
-            self.players[2]: '5c,Ad',
-            self.players[3]: '7c,4h'
+            self.players[0]: "2s,7d",
+            self.players[1]: "2h,9c",
+            self.players[2]: "5c,Ad",
+            self.players[3]: "7c,4h",
         }
 
-        self.setup_hand(blinds_positions=blind_pos,
-                        player_hole_cards=player_hole_cards)
+        self.setup_hand(blinds_positions=blind_pos, player_hole_cards=player_hole_cards)
 
         ctrl = self.controller
         acc = self.controller.accessor
 
         nxt = acc.next_to_act()
-        ctrl.dispatch('raise_to', player_id=nxt.id, amt=nxt.stack_available)
-        ctrl.dispatch('fold', player_id=acc.next_to_act().id)
-        ctrl.dispatch('fold', player_id=acc.next_to_act().id)
-        ctrl.dispatch('fold', player_id=acc.next_to_act().id)
+        ctrl.dispatch("raise_to", player_id=nxt.id, amt=nxt.stack_available)
+        ctrl.dispatch("fold", player_id=acc.next_to_act().id)
+        ctrl.dispatch("fold", player_id=acc.next_to_act().id)
+        ctrl.dispatch("fold", player_id=acc.next_to_act().id)
 
         assert self.accessor.table.bounty_flag
 
-        ctrl.dispatch('call', player_id=acc.next_to_act().id)
+        ctrl.dispatch("call", player_id=acc.next_to_act().id)
 
         # a bounty showdown should not trigger showdown badges
-        true_grit = Badge.objects.filter(name='true_grit')
+        true_grit = Badge.objects.filter(name="true_grit")
         assert not true_grit
 
         # winning the bounty awards the bountytown badge
-        bountytown = self.players[0].user\
-                                    .badge_set\
-                                    .filter(name='bountytown')
+        bountytown = self.players[0].user.badge_set.filter(name="bountytown")
         assert bountytown
 
 
@@ -346,84 +326,75 @@ class BigBluffTest(BadgeTest):
 class TheDuckTest(BadgeTest):
     # win a 400bb+ pot with 72o at showdown
     def test_the_duck_awarded(self):
-        blind_pos = {'btn_pos': 1, 'sb_pos': 2, 'bb_pos': 3}
+        blind_pos = {"btn_pos": 1, "sb_pos": 2, "bb_pos": 3}
         player_hole_cards = {
-            self.players[0]: '7c,2d',
-            self.players[1]: 'Kh,Ac',
-            self.players[2]: 'Kc,Ad',
-            self.players[3]: 'Kd,Ah'
+            self.players[0]: "7c,2d",
+            self.players[1]: "Kh,Ac",
+            self.players[2]: "Kc,Ad",
+            self.players[3]: "Kd,Ah",
         }
-        self.setup_hand(blinds_positions=blind_pos,
-                        player_hole_cards=player_hole_cards)
+        self.setup_hand(blinds_positions=blind_pos, player_hole_cards=player_hole_cards)
 
         ctrl = self.controller
         acc = self.controller.accessor
 
         nxt = acc.next_to_act()
-        ctrl.dispatch('raise_to', player_id=nxt.id, amt=nxt.stack_available)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
+        ctrl.dispatch("raise_to", player_id=nxt.id, amt=nxt.stack_available)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
 
-        acc.table.board = ['2h', '2c', '4h', '5h', 'Kd']
+        acc.table.board = ["2h", "2c", "4h", "5h", "Kd"]
         ctrl.step()
         ctrl.commit()
 
-        assert (self.players[0].user
-                              .badge_set
-                              .filter(name='the_duck')
-                              .count())
+        assert self.players[0].user.badge_set.filter(name="the_duck").count()
 
     def test_the_duck_not_awarded_without_400bbs_at_showdown(self):
-        blind_pos = {'btn_pos': 1, 'sb_pos': 2, 'bb_pos': 3}
+        blind_pos = {"btn_pos": 1, "sb_pos": 2, "bb_pos": 3}
         player_hole_cards = {
-            self.players[0]: '7c,2d',
-            self.players[1]: 'Kh,Ac',
-            self.players[2]: 'Kc,Ad',
-            self.players[3]: 'Kd,Ah'
+            self.players[0]: "7c,2d",
+            self.players[1]: "Kh,Ac",
+            self.players[2]: "Kc,Ad",
+            self.players[3]: "Kd,Ah",
         }
-        self.setup_hand(blinds_positions=blind_pos,
-                        player_hole_cards=player_hole_cards)
+        self.setup_hand(blinds_positions=blind_pos, player_hole_cards=player_hole_cards)
 
         ctrl = self.controller
         acc = self.controller.accessor
 
         nxt = acc.next_to_act()
-        ctrl.dispatch('raise_to', player_id=nxt.id, amt=275)
-        ctrl.dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.dispatch('call', player_id=acc.next_to_act().id)
+        ctrl.dispatch("raise_to", player_id=nxt.id, amt=275)
+        ctrl.dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.dispatch("call", player_id=acc.next_to_act().id)
 
         # ajfenix and cowpig are all-in
-        ctrl.dispatch('check', player_id=acc.next_to_act().id)
-        ctrl.dispatch('check', player_id=acc.next_to_act().id)
+        ctrl.dispatch("check", player_id=acc.next_to_act().id)
+        ctrl.dispatch("check", player_id=acc.next_to_act().id)
 
-        ctrl.dispatch('check', player_id=acc.next_to_act().id)
-        ctrl.dispatch('check', player_id=acc.next_to_act().id)
+        ctrl.dispatch("check", player_id=acc.next_to_act().id)
+        ctrl.dispatch("check", player_id=acc.next_to_act().id)
 
-        ctrl.dispatch('bet', player_id=acc.next_to_act().id, amt=2)
-        ctrl.player_dispatch('fold', player_id=acc.next_to_act().id)
+        ctrl.dispatch("bet", player_id=acc.next_to_act().id, amt=2)
+        ctrl.player_dispatch("fold", player_id=acc.next_to_act().id)
         ctrl.step()
         ctrl.commit()
 
         # the showdown sidepot was only worth 350bbs
-        assert (not self.players[0].user
-                                   .badge_set
-                                   .filter(name='the_duck')
-                                   .count())
+        assert not self.players[0].user.badge_set.filter(name="the_duck").count()
 
 
 class SpecificHandTest(BadgeTest):
     def test_quads_straight_flush_and_steel_wheel(self):
-        blind_pos = {'btn_pos': 1, 'sb_pos': 2, 'bb_pos': 3}
+        blind_pos = {"btn_pos": 1, "sb_pos": 2, "bb_pos": 3}
         player_hole_cards = {
-            self.players[0]: 'Ac,As',
-            self.players[1]: '2d,3d',
-            self.players[2]: '7d,9d',
-            self.players[3]: 'Kd,Qd'
+            self.players[0]: "Ac,As",
+            self.players[1]: "2d,3d",
+            self.players[2]: "7d,9d",
+            self.players[3]: "Kd,Qd",
         }
-        self.setup_hand(blinds_positions=blind_pos,
-                        player_hole_cards=player_hole_cards)
+        self.setup_hand(blinds_positions=blind_pos, player_hole_cards=player_hole_cards)
 
         for player in self.players:
             player.stack = Decimal(200)
@@ -432,104 +403,86 @@ class SpecificHandTest(BadgeTest):
         acc = self.controller.accessor
 
         nxt = acc.next_to_act()
-        ctrl.dispatch('raise_to', player_id=nxt.id, amt=nxt.stack_available)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
+        ctrl.dispatch("raise_to", player_id=nxt.id, amt=nxt.stack_available)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
 
-        acc.table.board = ['Ad', '4d', '5d', '8d', 'Ah']
+        acc.table.board = ["Ad", "4d", "5d", "8d", "Ah"]
         ctrl.step()
         ctrl.commit()
 
         # did not win with four-of-a-kind
-        assert not (self.players[0].user
-                                   .badge_set
-                                   .filter(name='quads')
-                                   .count())
+        assert not (self.players[0].user.badge_set.filter(name="quads").count())
         # did not win with an ace-to-5 straight flush at showdown
-        assert (self.players[1].user
-                               .badge_set
-                               .filter(name='steel_wheel')
-                               .count())
+        assert self.players[1].user.badge_set.filter(name="steel_wheel").count()
         # won with a straight flush at showdown
-        assert (self.players[1].user
-                               .badge_set
-                               .filter(name='straight_flush')
-                               .count())
+        assert self.players[1].user.badge_set.filter(name="straight_flush").count()
 
     def test_quads_win(self):
-        blind_pos = {'btn_pos': 1, 'sb_pos': 2, 'bb_pos': 3}
+        blind_pos = {"btn_pos": 1, "sb_pos": 2, "bb_pos": 3}
         player_hole_cards = {
-            self.players[0]: 'Ac,As',
-            self.players[1]: 'Jd,3d',
-            self.players[2]: 'Td,8d',
-            self.players[3]: 'Kd,Qd'
+            self.players[0]: "Ac,As",
+            self.players[1]: "Jd,3d",
+            self.players[2]: "Td,8d",
+            self.players[3]: "Kd,Qd",
         }
-        self.setup_hand(blinds_positions=blind_pos,
-                        player_hole_cards=player_hole_cards)
+        self.setup_hand(blinds_positions=blind_pos, player_hole_cards=player_hole_cards)
 
         ctrl = self.controller
         acc = self.controller.accessor
 
         nxt = acc.next_to_act()
-        ctrl.dispatch('raise_to', player_id=nxt.id, amt=nxt.stack_available)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
+        ctrl.dispatch("raise_to", player_id=nxt.id, amt=nxt.stack_available)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
 
-        acc.table.board = ['Ad', '4d', '5d', '6d', 'Ah']
+        acc.table.board = ["Ad", "4d", "5d", "6d", "Ah"]
         ctrl.step()
         ctrl.commit()
 
         # won with four-of-a-kind
-        assert (self.players[0].user
-                              .badge_set
-                              .filter(name='quads')
-                              .count())
+        assert self.players[0].user.badge_set.filter(name="quads").count()
 
     # win with a royal flush at showdown
     def test_royalty(self):
-        blind_pos = {'btn_pos': 1, 'sb_pos': 2, 'bb_pos': 3}
+        blind_pos = {"btn_pos": 1, "sb_pos": 2, "bb_pos": 3}
         player_hole_cards = {
-            self.players[0]: 'Ac,Kc',
-            self.players[1]: 'Jd,3d',
-            self.players[2]: 'Td,8d',
-            self.players[3]: 'Kd,Qd'
+            self.players[0]: "Ac,Kc",
+            self.players[1]: "Jd,3d",
+            self.players[2]: "Td,8d",
+            self.players[3]: "Kd,Qd",
         }
-        self.setup_hand(blinds_positions=blind_pos,
-                        player_hole_cards=player_hole_cards)
+        self.setup_hand(blinds_positions=blind_pos, player_hole_cards=player_hole_cards)
 
         ctrl = self.controller
         acc = self.controller.accessor
 
         nxt = acc.next_to_act()
-        ctrl.dispatch('raise_to', player_id=nxt.id, amt=nxt.stack_available)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
+        ctrl.dispatch("raise_to", player_id=nxt.id, amt=nxt.stack_available)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
 
-        acc.table.board = ['Jc', 'Qc', 'Tc', 'Th', 'Jh']
+        acc.table.board = ["Jc", "Qc", "Tc", "Th", "Jh"]
         ctrl.step()
         ctrl.commit()
 
         # won with a royal flush
-        assert (self.players[0].user
-                              .badge_set
-                              .filter(name='royalty')
-                              .count())
+        assert self.players[0].user.badge_set.filter(name="royalty").count()
 
 
 class RoundersHandTest(BadgeTest):
     def test_the_teddy_and_mike_mcd(self):
-        blind_pos = {'btn_pos': 1, 'sb_pos': 2, 'bb_pos': 3}
+        blind_pos = {"btn_pos": 1, "sb_pos": 2, "bb_pos": 3}
         player_hole_cards = {
-            self.players[0]: 'Ac,As',
-            self.players[1]: 'Ad,5h',
-            self.players[2]: '7d,9d',
-            self.players[3]: 'Kd,Qd',
+            self.players[0]: "Ac,As",
+            self.players[1]: "Ad,5h",
+            self.players[2]: "7d,9d",
+            self.players[3]: "Kd,Qd",
         }
-        self.setup_hand(blinds_positions=blind_pos,
-                        player_hole_cards=player_hole_cards)
+        self.setup_hand(blinds_positions=blind_pos, player_hole_cards=player_hole_cards)
 
         for player in self.players:
             player.stack = Decimal(200)
@@ -537,40 +490,33 @@ class RoundersHandTest(BadgeTest):
         ctrl = self.controller
         acc = self.controller.accessor
 
-        ctrl.dispatch('raise_to', player_id=acc.next_to_act().id, amt=200)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
+        ctrl.dispatch("raise_to", player_id=acc.next_to_act().id, amt=200)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
         ctrl.player_dispatch(
-            'fold',
+            "fold",
             player_id=acc.next_to_act().id,
             sit_out=True,
         )
-        ctrl.player_dispatch('fold', player_id=acc.next_to_act().id)
+        ctrl.player_dispatch("fold", player_id=acc.next_to_act().id)
 
-        acc.table.board = ['Ah', '5d', '6d', '5c', '9d']
+        acc.table.board = ["Ah", "5d", "6d", "5c", "9d"]
         ctrl.step()
         ctrl.commit()
 
         # win with pocket aces against an Ax full house
-        assert (self.players[0].user
-                               .badge_set
-                               .filter(name='the_teddy')
-                               .count())
+        assert self.players[0].user.badge_set.filter(name="the_teddy").count()
         # lose with an Ax full house against pocket aces
-        assert (self.players[1].user
-                               .badge_set
-                               .filter(name='mike_mcd')
-                               .count())
+        assert self.players[1].user.badge_set.filter(name="mike_mcd").count()
 
     def test_the_teddy_and_mike_mcd_doesnt_count(self):
-        blind_pos = {'btn_pos': 1, 'sb_pos': 2, 'bb_pos': 3}
+        blind_pos = {"btn_pos": 1, "sb_pos": 2, "bb_pos": 3}
         player_hole_cards = {
-            self.players[0]: 'Ac,As',
-            self.players[1]: 'Ad,5h',
-            self.players[2]: '7d,9d',
-            self.players[3]: 'Kd,Qd',
+            self.players[0]: "Ac,As",
+            self.players[1]: "Ad,5h",
+            self.players[2]: "7d,9d",
+            self.players[3]: "Kd,Qd",
         }
-        self.setup_hand(blinds_positions=blind_pos,
-                        player_hole_cards=player_hole_cards)
+        self.setup_hand(blinds_positions=blind_pos, player_hole_cards=player_hole_cards)
 
         for player in self.players:
             player.stack = Decimal(200)
@@ -578,31 +524,26 @@ class RoundersHandTest(BadgeTest):
         ctrl = self.controller
         acc = self.controller.accessor
 
-        ctrl.dispatch('raise_to', player_id=acc.next_to_act().id, amt=100)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
+        ctrl.dispatch("raise_to", player_id=acc.next_to_act().id, amt=100)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
 
         ctrl.step()
-        acc.table.board = ['Ah', '5d', '6d', '5c', '9d']
+        acc.table.board = ["Ah", "5d", "6d", "5c", "9d"]
 
-        ctrl.dispatch('check', player_id=acc.next_to_act().id)
-        ctrl.dispatch('check', player_id=acc.next_to_act().id)
-        ctrl.dispatch('bet', player_id=acc.next_to_act().id, amt=100)
-        ctrl.dispatch('fold', player_id=acc.next_to_act().id)
-        ctrl.dispatch('fold', player_id=acc.next_to_act().id)
-        ctrl.dispatch('fold', player_id=acc.next_to_act().id)
+        ctrl.dispatch("check", player_id=acc.next_to_act().id)
+        ctrl.dispatch("check", player_id=acc.next_to_act().id)
+        ctrl.dispatch("bet", player_id=acc.next_to_act().id, amt=100)
+        ctrl.dispatch("fold", player_id=acc.next_to_act().id)
+        ctrl.dispatch("fold", player_id=acc.next_to_act().id)
+        ctrl.dispatch("fold", player_id=acc.next_to_act().id)
 
         # won without showdown--doesn't count
-        assert not (self.players[0].user
-                                   .badge_set
-                                   .filter(name='the_teddy')
-                                   .count())
+        assert not (self.players[0].user.badge_set.filter(name="the_teddy").count())
         # lost without showdown--doesn't count
-        assert not (self.players[1].user
-                                   .badge_set
-                                   .filter(name='mike_mcd')
-                                   .count())
+        assert not (self.players[1].user.badge_set.filter(name="mike_mcd").count())
+
 
 class ItsATrapTest(BadgeTest):
     # check-raise all-in on the river, get called, and win
@@ -623,49 +564,44 @@ class ItsATrapTest(BadgeTest):
         # TODO
         pass
 
+
 class TrueGritTest(BadgeTest):
     # win a 500bb+ pot without ever betting or raising
     def _setup_stuff(self):
-        blind_pos = {'btn_pos': 1, 'sb_pos': 2, 'bb_pos': 3}
+        blind_pos = {"btn_pos": 1, "sb_pos": 2, "bb_pos": 3}
         player_hole_cards = {
-            self.players[0]: 'Kd,Ah',
-            self.players[1]: 'Kh,Ac',
-            self.players[2]: 'Kc,Ad',
-            self.players[3]: '2s,2d'
+            self.players[0]: "Kd,Ah",
+            self.players[1]: "Kh,Ac",
+            self.players[2]: "Kc,Ad",
+            self.players[3]: "2s,2d",
         }
-        self.setup_hand(blinds_positions=blind_pos,
-                        player_hole_cards=player_hole_cards)
+        self.setup_hand(blinds_positions=blind_pos, player_hole_cards=player_hole_cards)
         self.cowpig_player.stack = Decimal(400)
 
     def _earn_true_grit(self):
         ctrl = self.controller
         acc = self.controller.accessor
         nxt = acc.next_to_act()
-        ctrl.dispatch('raise_to', player_id=nxt.id, amt=nxt.stack_available)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
+        ctrl.dispatch("raise_to", player_id=nxt.id, amt=nxt.stack_available)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
 
-        acc.table.board = ['2h', '2c', '4h', '5h', 'Kd']
+        acc.table.board = ["2h", "2c", "4h", "5h", "Kd"]
         ctrl.step()
         ctrl.commit()
 
     def test_true_grit(self):
         self._setup_stuff()
         self._earn_true_grit()
-        assert (self.players[3].user
-                               .badge_set
-                               .filter(name='true_grit')
-                               .exists())
+        assert self.players[3].user.badge_set.filter(name="true_grit").exists()
 
     def test_true_grit_non_twice(self):
         self._setup_stuff()
         user = self.players[3].user
-        Badge(user=user,
-              name='true_grit',
-              season=settings.CURRENT_SEASON).save()
+        Badge(user=user, name="true_grit", season=settings.CURRENT_SEASON).save()
         self._earn_true_grit()
-        assert user.badge_set.filter(name='true_grit').count() == 1
+        assert user.badge_set.filter(name="true_grit").count() == 1
 
 
 class DoubleCheckRaiseTest(BadgeTest):
@@ -693,23 +629,22 @@ class DoubleCheckRaiseTest(BadgeTest):
         # TODO
         pass
 
-
     # === luck or wins/losses badges ===
+
 
 class PlayChipsTest(BadgeTest):
     # obtain a play-chip balance of 1,000,000 chips or more
     @skip
     def test_so_many_chips(self):
         # TODO: implement this
-        blind_pos = {'btn_pos': 1, 'sb_pos': 2, 'bb_pos': 3}
+        blind_pos = {"btn_pos": 1, "sb_pos": 2, "bb_pos": 3}
         player_hole_cards = {
-            self.players[0]: 'Kd,Ah',
-            self.players[1]: 'Kh,Ac',
-            self.players[2]: 'Kc,Ad',
-            self.players[3]: '2s,4d'
+            self.players[0]: "Kd,Ah",
+            self.players[1]: "Kh,Ac",
+            self.players[2]: "Kc,Ad",
+            self.players[3]: "2s,4d",
         }
-        self.setup_hand(blinds_positions=blind_pos,
-                        player_hole_cards=player_hole_cards)
+        self.setup_hand(blinds_positions=blind_pos, player_hole_cards=player_hole_cards)
         for player in self.players:
             player.stack = Decimal(500000)
 
@@ -717,33 +652,29 @@ class PlayChipsTest(BadgeTest):
         acc = self.controller.accessor
 
         nxt = acc.next_to_act()
-        ctrl.dispatch('raise_to', player_id=nxt.id, amt=nxt.stack_available)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
+        ctrl.dispatch("raise_to", player_id=nxt.id, amt=nxt.stack_available)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
 
-        acc.table.board = ['2h', '2c', '4h', '5h', 'Kd']
+        acc.table.board = ["2h", "2c", "4h", "5h", "Kd"]
         ctrl.step()
         ctrl.commit()
 
-        assert (self.players[3].user
-                               .badge_set
-                               .filter(name='so_many_chips')
-                               .count())
+        assert self.players[3].user.badge_set.filter(name="so_many_chips").count()
 
     # obtain a play-chip balance of 9,999,999 chips or more
     @skip
     def test_play_chip_diety(self):
-        #TODO: implement this
-        blind_pos = {'btn_pos': 1, 'sb_pos': 2, 'bb_pos': 3}
+        # TODO: implement this
+        blind_pos = {"btn_pos": 1, "sb_pos": 2, "bb_pos": 3}
         player_hole_cards = {
-            self.players[0]: 'Kd,Ah',
-            self.players[1]: 'Kh,Ac',
-            self.players[2]: 'Kc,Ad',
-            self.players[3]: '2s,4d'
+            self.players[0]: "Kd,Ah",
+            self.players[1]: "Kh,Ac",
+            self.players[2]: "Kc,Ad",
+            self.players[3]: "2s,4d",
         }
-        self.setup_hand(blinds_positions=blind_pos,
-                        player_hole_cards=player_hole_cards)
+        self.setup_hand(blinds_positions=blind_pos, player_hole_cards=player_hole_cards)
         for player in self.players:
             player.stack = Decimal(4000000)
 
@@ -751,19 +682,17 @@ class PlayChipsTest(BadgeTest):
         acc = self.controller.accessor
 
         nxt = acc.next_to_act()
-        ctrl.dispatch('raise_to', player_id=nxt.id, amt=nxt.stack_available)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
-        ctrl.player_dispatch('call', player_id=acc.next_to_act().id)
+        ctrl.dispatch("raise_to", player_id=nxt.id, amt=nxt.stack_available)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
+        ctrl.player_dispatch("call", player_id=acc.next_to_act().id)
 
-        acc.table.board = ['2h', '2c', '4h', '5h', 'Kd']
+        acc.table.board = ["2h", "2c", "4h", "5h", "Kd"]
         ctrl.step()
         ctrl.commit()
 
-        assert (self.players[3].user
-                               .badge_set
-                               .filter(name='play_chip_diety')
-                               .count())
+        assert self.players[3].user.badge_set.filter(name="play_chip_diety").count()
+
 
 class NiceSessionTest(BadgeTest):
     # win 500bbs or more in a continuous session
@@ -819,7 +748,6 @@ class NiceSessionTest(BadgeTest):
     def test_this_is_rigged(self):
         # TODO
         pass
-
 
     # === grinder badges ===
 

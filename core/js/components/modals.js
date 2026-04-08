@@ -1,7 +1,6 @@
 import React from 'react'
 
-import Button from 'react-bootstrap/lib/Button'
-import Modal from 'react-bootstrap/lib/Modal'
+import { Button, Modal } from 'react-bootstrap'
 
 import {Icon} from '@/components/icons'
 
@@ -16,7 +15,6 @@ export class ModalTrigger extends React.Component {
         this.setState({show: false})
     }
     onKeyPress(e) {
-        // confirm if they press enter (esc is handled automatically by Bootstrap)
         if (e.keyCode == 13) {
             this.onConfirm()
         }

@@ -6,39 +6,50 @@ from datetime import timedelta
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
-from oddslingers.utils import (rotated, ExtendedEncoder, idx_dict,
-                          autocast, decimal_floor, fnv_hash,
-                          secure_random_number)
+from oddslingers.utils import (
+    rotated,
+    ExtendedEncoder,
+    idx_dict,
+    autocast,
+    decimal_floor,
+    fnv_hash,
+    secure_random_number,
+)
 
 from poker.bot_personalities import bot_personality, DEFAULT_BIO
 from poker.constants import (
-    Event, Action, NL_HOLDEM, PL_OMAHA, NL_BOUNTY,
-    FOLD_OR_TOGGLE_PENDING, PlayingState, TOURNEY_AUTOFOLD_DELAY,
-    NUM_HOLECARDS, ACTIVE_PLAYSTATES, BOUNTY_HANDS,
-    BOUNTY_TOURNEY_BBS_TO_CALL, BUMP_AFTER_INACTIVE_MINS,
-    MAX_ORBITS_SITTING_OUT
+    Event,
+    Action,
+    NL_HOLDEM,
+    PL_OMAHA,
+    NL_BOUNTY,
+    FOLD_OR_TOGGLE_PENDING,
+    PlayingState,
+    TOURNEY_AUTOFOLD_DELAY,
+    NUM_HOLECARDS,
+    ACTIVE_PLAYSTATES,
+    BOUNTY_HANDS,
+    BOUNTY_TOURNEY_BBS_TO_CALL,
+    BUMP_AFTER_INACTIVE_MINS,
+    MAX_ORBITS_SITTING_OUT,
 )
 from poker.hand_ranges import hand_to_description
 from poker.models import Player
-from poker.rankings import (best_hand_from_cards, best_hand_using_holecards,
-                            hand_sortkey)
+from poker.rankings import best_hand_from_cards, best_hand_using_holecards, hand_sortkey
 from poker.megaphone import player_sockets
 
 from sidebets.models import Sidebet
 
 from banker.utils import balance
 
-
-logger = logging.getLogger('poker')
+logger = logging.getLogger("poker")
 
 
 def filter_nonactors(players):
     return [
-        plyr for plyr in players
-        if (
-            plyr.playing_state in ACTIVE_PLAYSTATES
-            and plyr.cards
-        )
+        plyr
+        for plyr in players
+        if (plyr.playing_state in ACTIVE_PLAYSTATES and plyr.cards)
     ]
 
 
@@ -62,10 +73,12 @@ class PokerAccessor:
 
     def gamestate(self, convert=False):
         output = {
-            'table_json': self.table_json(),
-            'private_jsons': {player.id: self.private_player_json(player)
-             for player in self.seated_players()},
-            'public_json': self.players_json(),
+            "table_json": self.table_json(),
+            "private_jsons": {
+                player.id: self.private_player_json(player)
+                for player in self.seated_players()
+            },
+            "public_json": self.players_json(),
         }
         if convert:
             return ExtendedEncoder.convert_for_json(output)
@@ -73,7 +86,7 @@ class PokerAccessor:
 
     def players_json(self, for_player=None):
         # WARNING: for_player returns info private to that player
-        if for_player == 'all':
+        if for_player == "all":
             private = lambda player: True
         else:
             private = lambda player: player == for_player
@@ -88,59 +101,55 @@ class PokerAccessor:
         if self.table.created_by:
             created_by = self.table.created_by.username
         else:
-            created_by = 'OddSlingers'
+            created_by = "OddSlingers"
 
         return {
-            'id': str(self.table.id),
-            'short_id': str(self.table.short_id),
-            'name': self.table.name,
-            'path': self.table.path,
-            'variant': self.table.variant,
-            'sb': self.table.sb or 0,
-            'bb': self.table.bb or 0,
-            'board': idx_dict({'card': card}
-                              for card in self.table.board or ()),
-            'btn_idx': self.table.btn_idx,
-            'num_seats': self.table.num_seats,
-            'available_seats': (self.table.num_seats
-                                - len(self.seated_players())),
-            'hand_number': self.table.hand_number,
-            'total_pot': self.current_pot(),
-            'sidepot_summary': self.frontend_sidepot_summary(),
-            'to_act_id': str(next_actor.id) if next_actor else None,
-            'seconds_to_act': self.seconds_to_act(),
-            'last_action_timestamp': self.table.last_action_timestamp,
-            'min_buyin': self.table.min_buyin,
-            'max_buyin': self.table.max_buyin,
-            'created_by': created_by,
-            'sidebets_enabled': self.table.sidebets_enabled,
-            'is_private': self.table.is_private,
-            'tournament': (
-                self.table.tournament and self.table.tournament.__json__()
-            )
+            "id": str(self.table.id),
+            "short_id": str(self.table.short_id),
+            "name": self.table.name,
+            "path": self.table.path,
+            "variant": self.table.variant,
+            "sb": self.table.sb or 0,
+            "bb": self.table.bb or 0,
+            "board": idx_dict({"card": card} for card in self.table.board or ()),
+            "btn_idx": self.table.btn_idx,
+            "num_seats": self.table.num_seats,
+            "available_seats": (self.table.num_seats - len(self.seated_players())),
+            "hand_number": self.table.hand_number,
+            "total_pot": self.current_pot(),
+            "sidepot_summary": self.frontend_sidepot_summary(),
+            "to_act_id": str(next_actor.id) if next_actor else None,
+            "seconds_to_act": self.seconds_to_act(),
+            "last_action_timestamp": self.table.last_action_timestamp,
+            "min_buyin": self.table.min_buyin,
+            "max_buyin": self.table.max_buyin,
+            "created_by": created_by,
+            "sidebets_enabled": self.table.sidebets_enabled,
+            "is_private": self.table.is_private,
+            "tournament": (self.table.tournament and self.table.tournament.__json__()),
         }
 
     def player_json(self, player, private=False):
-        is_autofolding = str(player.playing_state) == 'TOURNEY_SITTING_OUT'
+        is_autofolding = str(player.playing_state) == "TOURNEY_SITTING_OUT"
         output = {
-            'id': str(player.id),
-            'short_id': player.short_id,
-            'username': player.username,
-            'user_id': player.user_id,
-            'stack': {'amt': player.stack or 0},
-            'position': player.position,
-            'sitting_out': player.is_sitting_out(),
-            'uncollected_bets': {'amt': player.uncollected_bets or 0},
-            'is_active': player.is_active(),
-            'last_action': str(Event(player.last_action_int))
-                           if player.last_action_int
-                           else None,
-            'is_all_in': bool(self.is_all_in(player)),
+            "id": str(player.id),
+            "short_id": player.short_id,
+            "username": player.username,
+            "user_id": player.user_id,
+            "stack": {"amt": player.stack or 0},
+            "position": player.position,
+            "sitting_out": player.is_sitting_out(),
+            "uncollected_bets": {"amt": player.uncollected_bets or 0},
+            "is_active": player.is_active(),
+            "last_action": (
+                str(Event(player.last_action_int)) if player.last_action_int else None
+            ),
+            "is_all_in": bool(self.is_all_in(player)),
             # TODO: remove this and add it as an OR case to 'sitting_out'
-            'is_autofolding': is_autofolding,
+            "is_autofolding": is_autofolding,
             # 'balance': self.get_balance(player),
-            'cards': idx_dict({'card': '?'} for card in player.cards or ()),
-            'timebank': player.timebank_remaining,
+            "cards": idx_dict({"card": "?"} for card in player.cards or ()),
+            "timebank": player.timebank_remaining,
         }
 
         if private:
@@ -151,30 +160,36 @@ class PokerAccessor:
         return output
 
     def private_player_json(self, player):
-        to_act_events = {
-            'min_bet': min(self.min_bet_amt(), player.stack_available),
-        } if player == self.next_to_act() else {
-            'min_bet': None,
-        }
-        will_act_events = {
-            'amt_to_call': self.call_amt(player, diff=True),
-        } if self.will_act_this_round(player) else {
-            'amt_to_call': None,
-        }
+        to_act_events = (
+            {
+                "min_bet": min(self.min_bet_amt(), player.stack_available),
+            }
+            if player == self.next_to_act()
+            else {
+                "min_bet": None,
+            }
+        )
+        will_act_events = (
+            {
+                "amt_to_call": self.call_amt(player, diff=True),
+            }
+            if self.will_act_this_round(player)
+            else {
+                "amt_to_call": None,
+            }
+        )
         return {
-            'pending_rebuy': player.pending_rebuy,
-            'auto_rebuy': player.auto_rebuy,
-            'preset_call': player.preset_call,
-            'preset_check': player.preset_check,
-            'preset_checkfold': player.preset_checkfold,
-            'playing_state': str(player.playing_state),
-            'logged_in': player.user and player.user.is_authenticated,
-            'cards': idx_dict({'card': card} for card in player.cards or ()),
-            'available_actions': [
-                str(e) for e in self.available_actions(player.id)
-            ],
-            'legal_min_buyin': self.legal_min_buyin(player),
-            'legal_max_buyin': self.legal_max_buyin(player),
+            "pending_rebuy": player.pending_rebuy,
+            "auto_rebuy": player.auto_rebuy,
+            "preset_call": player.preset_call,
+            "preset_check": player.preset_check,
+            "preset_checkfold": player.preset_checkfold,
+            "playing_state": str(player.playing_state),
+            "logged_in": player.user and player.user.is_authenticated,
+            "cards": idx_dict({"card": card} for card in player.cards or ()),
+            "available_actions": [str(e) for e in self.available_actions(player.id)],
+            "legal_min_buyin": self.legal_min_buyin(player),
+            "legal_max_buyin": self.legal_max_buyin(player),
             **self.sitting_checkboxes(player),
             **to_act_events,
             **will_act_events,
@@ -182,24 +197,28 @@ class PokerAccessor:
 
     def bot_player_json(self, player):
         personality = bot_personality(player.user.username)
-        profile = personality.get('profile', {})
+        profile = personality.get("profile", {})
         return {
-            'is_robot': True,
-            'profile_image': '/static/images/bender.png',
-            'bio': profile.get('bio') or DEFAULT_BIO,
-            'personality_preflop': profile.get('preflop'),
-            'personality_postflop':  profile.get('postflop'),
+            "is_robot": True,
+            "profile_image": "/static/images/bender.png",
+            "bio": profile.get("bio") or DEFAULT_BIO,
+            "personality_preflop": profile.get("preflop"),
+            "personality_postflop": profile.get("postflop"),
         }
 
     def sitting_checkboxes(self, player):
         state = player.playing_state
-        return {
-            'sit_in_at_blinds': state == PlayingState.SIT_IN_AT_BLINDS_PENDING,
-            'sit_in_next_hand': state == PlayingState.SIT_IN_PENDING,
-        } if player.is_sitting_out() else {
-            'sit_out_at_blinds': player.sit_out_at_blinds,
-            'sit_out_next_hand': state == PlayingState.SIT_OUT_PENDING,
-        }
+        return (
+            {
+                "sit_in_at_blinds": state == PlayingState.SIT_IN_AT_BLINDS_PENDING,
+                "sit_in_next_hand": state == PlayingState.SIT_IN_PENDING,
+            }
+            if player.is_sitting_out()
+            else {
+                "sit_out_at_blinds": player.sit_out_at_blinds,
+                "sit_out_next_hand": state == PlayingState.SIT_OUT_PENDING,
+            }
+        )
 
     def get_balance(self, player):
         if player.user:
@@ -212,12 +231,10 @@ class PokerAccessor:
 
             return total_balance + player.stack
         else:
-            return 'robot dollars'
+            return "robot dollars"
 
     def player_contributions(self, exclude_uncollected_bets=True):
-        return [
-            pot for pot, ppl in self.sidepot_summary(exclude_uncollected_bets)
-        ]
+        return [pot for pot, ppl in self.sidepot_summary(exclude_uncollected_bets)]
 
     def _filter_active_players(self):
         return [plyr for plyr in self.players if plyr.is_active()]
@@ -259,11 +276,14 @@ class PokerAccessor:
             return seated_plyrs
 
         return [
-            robot for robot in seated_plyrs
-            if (robot.is_robot
+            robot
+            for robot in seated_plyrs
+            if (
+                robot.is_robot
                 and self.is_bored(robot)
                 and not robot.sit_out_at_blinds
-                and robot.playing_state == PlayingState.SITTING_IN)
+                and robot.playing_state == PlayingState.SITTING_IN
+            )
         ]
 
     def inactive_humans(self):
@@ -276,17 +296,19 @@ class PokerAccessor:
         # bump a signle human if they are inactive and disconnected
         if len(seated_plyrs) == 1:
             return [
-                plyr for plyr in seated_plyrs
+                plyr
+                for plyr in seated_plyrs
                 if not plyr.is_robot
-                    and plyr.last_action_timestamp < time_ago
-                    and not player_sockets(plyr)
+                and plyr.last_action_timestamp < time_ago
+                and not player_sockets(plyr)
             ]
 
         return [
-            plyr for plyr in seated_plyrs
+            plyr
+            for plyr in seated_plyrs
             if not plyr.is_robot
-                and plyr.playing_state == PlayingState.SITTING_OUT
-                and plyr.last_action_timestamp < time_ago
+            and plyr.playing_state == PlayingState.SITTING_OUT
+            and plyr.last_action_timestamp < time_ago
         ]
 
     def should_bump_for_orbits_out(self, player):
@@ -302,22 +324,16 @@ class PokerAccessor:
         players = []
         for pos in range(self.table.num_seats):
             plyr = self.players_at_position(
-                pos,
-                active_only=False,
-                include_unseated=False
+                pos, active_only=False, include_unseated=False
             )
             if plyr:
                 players.append(plyr)
         return players
 
     def seated_humans(self):
-        return [
-            plyr for plyr in self.players
-            if not plyr.is_robot and plyr.seated
-        ]
+        return [plyr for plyr in self.players if not plyr.is_robot and plyr.seated]
 
-    def active_players(self, rotate=None,
-                             include_pending_at_idx=None):
+    def active_players(self, rotate=None, include_pending_at_idx=None):
         if rotate is None:
             rotate = self.first_to_act_pos() or 0
 
@@ -327,15 +343,15 @@ class PokerAccessor:
             players = []
             for i in player_idxs:
                 plyr = self.players_at_position(i)
-                if (i == include_pending_at_idx
-                        and self.player_is_active_or_pending(plyr)):
+                if i == include_pending_at_idx and self.player_is_active_or_pending(
+                    plyr
+                ):
                     players.append(plyr)
                 elif plyr is not None and plyr.is_active():
                     players.append(plyr)
         else:
             players = [
-                self.players_at_position(i, active_only=True)
-                for i in player_idxs
+                self.players_at_position(i, active_only=True) for i in player_idxs
             ]
 
         return [plyr for plyr in players if plyr is not None]
@@ -347,24 +363,27 @@ class PokerAccessor:
 
     def predeal_active_players(self):
         return [
-            plyr for plyr in self.seated_players()
+            plyr
+            for plyr in self.seated_players()
             if plyr.playing_state in ACTIVE_PLAYSTATES
             and plyr.last_action != Event.FOLD
         ]
 
     def players_with_pending_actions(self):
         return [
-            plyr for plyr in self.seated_players()
-            if plyr.playing_state in (
+            plyr
+            for plyr in self.seated_players()
+            if plyr.playing_state
+            in (
                 PlayingState.SIT_IN_PENDING,
                 PlayingState.SIT_OUT_PENDING,
                 PlayingState.LEAVE_SEAT_PENDING,
             )
         ]
 
-    def players_at_position(self, position: int,
-                                  active_only=False,
-                                  include_unseated=False):
+    def players_at_position(
+        self, position: int, active_only=False, include_unseated=False
+    ):
         """
         returns a single player at the position, or a list if more than
         one player
@@ -373,15 +392,15 @@ class PokerAccessor:
 
         if active_only:
             active = [plyr for plyr in players if plyr.is_active()]
-            assert len(active) <= 1, \
-                'Sanity check fail: more than one player active at '\
-                'a position'
+            assert len(active) <= 1, (
+                "Sanity check fail: more than one player active at " "a position"
+            )
             return active.pop() if active else None
         elif not include_unseated:
             seated = [plyr for plyr in players if plyr.seated]
-            assert len(seated) <= 1, \
-                'Sanity check fail: more than one player seated at '\
-                'a position'
+            assert len(seated) <= 1, (
+                "Sanity check fail: more than one player seated at " "a position"
+            )
             return seated.pop() if seated else None
 
         return players
@@ -402,13 +421,14 @@ class PokerAccessor:
         potsize, pot_contributors = pot_summary
 
         showdown_players = self.showdown_players()
-        players_to_pay = self.winners(p for p in pot_contributors
-                                       if p in showdown_players)
+        players_to_pay = self.winners(
+            p for p in pot_contributors if p in showdown_players
+        )
 
         n_winners = Decimal(len(players_to_pay))
         payout_size = self.round_wager(Decimal(potsize) / n_winners)
         prec = self.table.precision
-        smallest_chip = round(Decimal(10**(-prec)), prec)
+        smallest_chip = round(Decimal(10 ** (-prec)), prec)
         n_extra_chips = (potsize - (payout_size * n_winners)) / smallest_chip
 
         output = {}
@@ -427,12 +447,12 @@ class PokerAccessor:
                     amt_won += smallest_chip
 
                 output[plyr] = {
-                    'amt': amt_won,
-                    'pot_id': pot_id,
-                    'showdown': len(showdown_set) > 1,
+                    "amt": amt_won,
+                    "pot_id": pot_id,
+                    "showdown": len(showdown_set) > 1,
                 }
-                if output[plyr]['showdown']:
-                    output[plyr]['winning_hand'] = self.player_hand(plyr)
+                if output[plyr]["showdown"]:
+                    output[plyr]["winning_hand"] = self.player_hand(plyr)
 
                 n_paid += 1
 
@@ -444,18 +464,17 @@ class PokerAccessor:
         return decimal_floor(wager, prec)
 
     def can_play(self, player):
-        playing = player.playing_state  in (
+        playing = player.playing_state in (
             PlayingState.SITTING_IN,
             PlayingState.SIT_OUT_PENDING,
             PlayingState.TOURNEY_SITTING_OUT,
             PlayingState.LEAVE_SEAT_PENDING,
         )
-        ready_to_play = (
-            player.stack >= self.min_amt_to_play(player)
-            and player.playing_state in (
-                PlayingState.SIT_IN_AT_BLINDS_PENDING,
-                PlayingState.SIT_IN_PENDING,
-            )
+        ready_to_play = player.stack >= self.min_amt_to_play(
+            player
+        ) and player.playing_state in (
+            PlayingState.SIT_IN_AT_BLINDS_PENDING,
+            PlayingState.SIT_IN_PENDING,
         )
         return playing or ready_to_play
 
@@ -483,10 +502,11 @@ class PokerAccessor:
             player = self.player_by_player_id(player)
         if not player:
             # print(player, [str(p.id) for p in self.players])
-            raise ValueError(f'No player with id {player}')
-        assert player.table == self.table, \
-            'available_actions() called on accessor for a player '\
-            'belonging to a different table'
+            raise ValueError(f"No player with id {player}")
+        assert player.table == self.table, (
+            "available_actions() called on accessor for a player "
+            "belonging to a different table"
+        )
 
         if not player.seated:
             # note: This should not be dispatched directly to join table!
@@ -514,7 +534,7 @@ class PokerAccessor:
         actions = [Action.SET_AUTO_REBUY]
 
         if player.stack + player.pending_rebuy < self.table.max_buyin:
-           actions.append(Action.BUY)
+            actions.append(Action.BUY)
 
         return actions
 
@@ -569,8 +589,10 @@ class PokerAccessor:
 
         # note: there is no PlayingState.SIT_OUT_AT_BLINDS; it's
         #   its own field on the Player model. Sorry future dev.
-        msg = f'Sanity fail: PlayingState {player.playing_state.value}'\
-               " shouldn't be possible."
+        msg = (
+            f"Sanity fail: PlayingState {player.playing_state.value}"
+            " shouldn't be possible."
+        )
         raise Exception(msg)
 
     def _sitting_in_actions(self, player):
@@ -595,8 +617,10 @@ class PokerAccessor:
         else:
             sitting_in_actions.append(Action.CHECK)
 
-        if (player.stack + player.uncollected_bets > raise_size
-                and not self.everyone_is_all_in(exclude=player)):
+        if (
+            player.stack + player.uncollected_bets > raise_size
+            and not self.everyone_is_all_in(exclude=player)
+        ):
             if raise_size == 0:
                 sitting_in_actions.append(Action.BET)
             else:
@@ -617,11 +641,14 @@ class PokerAccessor:
 
     def will_act_this_round(self, player):
         not_folding = player.last_action not in FOLD_OR_TOGGLE_PENDING
-        return (len(player.cards)
-                and not_folding
-                and not self.is_all_in(player)
-                and (self.call_amt(player, diff=True) > 0
-                        or player.last_action == Event.POST))
+        return (
+            len(player.cards)
+            and not_folding
+            and not self.is_all_in(player)
+            and (
+                self.call_amt(player, diff=True) > 0 or player.last_action == Event.POST
+            )
+        )
 
     def is_all_in(self, player):
         return player.stack == 0 and len(player.cards)
@@ -636,12 +663,12 @@ class PokerAccessor:
         return self.players_at_position(self.table.bb_idx, active_only=True)
 
     def current_pot(self):
-        return sum(player.total_contributed()
-                    for player in self._filter_active_players())
+        return sum(
+            player.total_contributed() for player in self._filter_active_players()
+        )
 
     def current_uncollected(self):
-        return sum(player.uncollected_bets
-                    for player in self._filter_active_players())
+        return sum(player.uncollected_bets for player in self._filter_active_players())
 
     def is_new_round(self):
         return self.is_first_hand() or self.btn_is_locked()
@@ -674,9 +701,7 @@ class PokerAccessor:
             return self.table.bb_idx
 
     def user_has_active_sidebets(self, user_id, table_id):
-        qs = Sidebet.objects.filter(user_id=user_id,
-                                    table_id=table_id,
-                                    status='active')
+        qs = Sidebet.objects.filter(user_id=user_id, table_id=table_id, status="active")
         return qs.count() > 0
 
     def user_sidebets_for_player(self, user, player):
@@ -698,46 +723,38 @@ class PokerAccessor:
 
     def player_by_user_id(self, user_id):
         players = [
-            p for p in self.players
-            if (p.user and str(p.user.id) == str(user_id))
+            p for p in self.players if (p.user and str(p.user.id) == str(user_id))
         ]
         if not players:
             try:
-                return Player.objects.get(user__id=user_id,
-                                          table__id=self.table.id)
+                return Player.objects.get(user__id=user_id, table__id=self.table.id)
             except Player.DoesNotExist:
                 return None
 
-        assert len(players) == 1, (
-            "Sanity check fail: multiple players returned"
-        )
+        assert len(players) == 1, "Sanity check fail: multiple players returned"
         return players[0]
 
     def player_by_player_id(self, player_id):
         players = [
-            p for p in self.players
-            if p.id == player_id or str(p.id) == str(player_id)
+            p for p in self.players if p.id == player_id or str(p.id) == str(player_id)
         ]
         if not players:
             return None
-        assert len(players) == 1, (
-            "Sanity check fail: multiple players returned"
-        )
+        assert len(players) == 1, "Sanity check fail: multiple players returned"
         return players[0]
 
     def player_by_username(self, username):
         players = [p for p in self.players if p.username == username]
         if not players:
             return None
-        assert len(players) == 1, (
-            "Sanity check fail: multiple players returned"
-        )
+        assert len(players) == 1, "Sanity check fail: multiple players returned"
         return players[0]
 
     def is_out_of_time(self, player):
         autofold_delay = self.seconds_to_act() + player.timebank_remaining
-        should_have_acted_by = (self.table.last_action_timestamp
-                                 + timedelta(seconds=autofold_delay))
+        should_have_acted_by = self.table.last_action_timestamp + timedelta(
+            seconds=autofold_delay
+        )
         return timezone.now() > should_have_acted_by
 
     def is_legal_betsize(self, player, amt):
@@ -755,13 +772,9 @@ class PokerAccessor:
         if player is None:
             amt_adjusted = amt
         else:
-            pending_rebuy = player.pending_rebuy if include_pending_rebuy \
-                            else 0
+            pending_rebuy = player.pending_rebuy if include_pending_rebuy else 0
             amt_adjusted = amt + player.stack + pending_rebuy
-        return (
-            self.table.min_buyin <= amt_adjusted <= self.table.max_buyin
-            and amt > 0
-        )
+        return self.table.min_buyin <= amt_adjusted <= self.table.max_buyin and amt > 0
 
     def legal_min_buyin(self, player):
         current_amt = player.stack + player.pending_rebuy
@@ -818,8 +831,10 @@ class PokerAccessor:
             if player.stack > 0 and self.has_not_acted(player):
                 return player
             elif player.last_action in (Event.BET, Event.RAISE_TO):
-                if (last_raiser is None
-                    or player.uncollected_bets > last_raiser.uncollected_bets):
+                if (
+                    last_raiser is None
+                    or player.uncollected_bets > last_raiser.uncollected_bets
+                ):
                     last_raiser = player
 
         # otherwise, we need to find the largest raise at the table
@@ -855,20 +870,20 @@ class PokerAccessor:
             return []
 
         return [
-            plyr for plyr in self.seated_players()
+            plyr
+            for plyr in self.seated_players()
             if plyr.playing_state == PlayingState.SIT_IN_PENDING
         ]
 
     def btn_sb_locations(self, next_sb, next_bb, curr_bb_idx):
-        if (len(self.active_players(include_pending_at_idx=next_bb)) == 2
-                    or self.hu_blinds_wait_edgecase_players(next_bb)):
+        if len(
+            self.active_players(include_pending_at_idx=next_bb)
+        ) == 2 or self.hu_blinds_wait_edgecase_players(next_bb):
             already_in = self.active_players()
-            assert len(already_in) == 2, \
-                'sanity check fail: hu_blinds_edgecase when not hu'
-            sb_player = [
-                plyr for plyr in already_in
-                if plyr.position != next_bb
-            ].pop()
+            assert (
+                len(already_in) == 2
+            ), "sanity check fail: hu_blinds_edgecase when not hu"
+            sb_player = [plyr for plyr in already_in if plyr.position != next_bb].pop()
             return sb_player.position, sb_player.position
         else:
             next_btn = (next_sb - 1) % self.table.num_seats
@@ -876,8 +891,9 @@ class PokerAccessor:
             plyr = self.players_at_position(next_btn, active_only=True)
             while not plyr:
                 next_btn = (next_btn - 1) % self.table.num_seats
-                assert next_btn != next_bb, \
-                    'Sanity check fail: btn rotated back onto bb'
+                assert (
+                    next_btn != next_bb
+                ), "Sanity check fail: btn rotated back onto bb"
                 plyr = self.players_at_position(next_btn, active_only=True)
 
             return next_btn, next_sb
@@ -905,8 +921,7 @@ class PokerAccessor:
         if player is None:
             return False
 
-        return (player.is_active()
-                or player.playing_state == PlayingState.SIT_IN_PENDING)
+        return player.is_active() or player.playing_state == PlayingState.SIT_IN_PENDING
 
     def next_bb_location_info(self, curr_bb_idx):
         skipped_positions = []
@@ -917,8 +932,9 @@ class PokerAccessor:
         while not self.player_is_active_or_pending(next_player):
             skipped_positions.append(next_bb)
             next_bb = (next_bb + 1) % self.table.num_seats
-            assert next_bb != curr_bb_idx, \
-                "Sanity check fail: bb rotated back onto itself"
+            assert (
+                next_bb != curr_bb_idx
+            ), "Sanity check fail: bb rotated back onto itself"
             next_player = self.players_at_position(next_bb)
 
         return (next_bb, skipped_positions)
@@ -951,15 +967,14 @@ class PokerAccessor:
         # n_already_in == 0 is an edgecase where everyone from the previous
         #   hand sat out simultaneously, and more than one player queued
         #   a sit in
-        if (n_already_in == len(plyrs)
-                or self.is_first_hand()
-                or n_already_in == 0):
+        if n_already_in == len(plyrs) or self.is_first_hand() or n_already_in == 0:
             random_next_player_idx = secure_random_number(max_num=len(plyrs))
             btn_idx = plyrs[random_next_player_idx].position
         else:
-            assert n_already_in == 1, \
-                    "This should only happen when btn is locked "\
-                    "or in the effectively_new_game_edgecase"
+            assert n_already_in == 1, (
+                "This should only happen when btn is locked "
+                "or in the effectively_new_game_edgecase"
+            )
             btn_idx = already_in[0].position
 
         return btn_idx
@@ -983,12 +998,13 @@ class PokerAccessor:
 
         max_wager = max(get_wagers(p) for p in actives)
         return [
-            p for p in actives
+            p
+            for p in actives
             if (
-                get_wagers(p) > 0 and
-                p.last_action not in FOLD_OR_TOGGLE_PENDING and
-                not p.stack and
-                get_wagers(p) < max_wager
+                get_wagers(p) > 0
+                and p.last_action not in FOLD_OR_TOGGLE_PENDING
+                and not p.stack
+                and get_wagers(p) < max_wager
             )
         ]
 
@@ -999,10 +1015,11 @@ class PokerAccessor:
         return player.user.userbalance().balance >= amt
 
     def sidepot_summary(self, exclude_uncollected_bets=False):
-        '''
-            returns a list of the sidepots in order of the
-            [main pot, sidepot involving smallest...biggest stacks]
-        '''
+        """
+        returns a list of the sidepots in order of the
+        [main pot, sidepot involving smallest...biggest stacks]
+        """
+
         def get_wagers(p):
             if exclude_uncollected_bets:
                 return p.wagers - p.uncollected_bets
@@ -1038,13 +1055,11 @@ class PokerAccessor:
         # sidepot added here for edgecase where there is only dead
         #   money in the center
         last_pot = sidepot + sum(
-            get_wagers(p) - last_allin_amt for p in actives
+            get_wagers(p) - last_allin_amt
+            for p in actives
             if get_wagers(p) > last_allin_amt
         )
-        last_contributors = {
-            p for p in actives
-            if get_wagers(p) > last_allin_amt
-        }
+        last_contributors = {p for p in actives if get_wagers(p) > last_allin_amt}
 
         if last_pot:
             sidepots.append((last_pot, last_contributors))
@@ -1053,7 +1068,7 @@ class PokerAccessor:
 
     def frontend_sidepot_summary(self, exclude_uncollected_bets=True):
         return idx_dict(
-            {'amt': value}
+            {"amt": value}
             for value in self.player_contributions(exclude_uncollected_bets)
         )
 
@@ -1065,34 +1080,39 @@ class PokerAccessor:
             Event.POST,
         ]
         players.sort(key=lambda p: p.wagers, reverse=True)
-        players.sort(key=lambda p: order.index(p.last_action)
-                                    if p.last_action in order
-                                    else 999)
+        players.sort(
+            key=lambda p: order.index(p.last_action) if p.last_action in order else 999
+        )
 
         if players and players[0].last_action in (Event.BET, Event.POST):
             return 2 * players[0].uncollected_bets
         elif players and players[0].last_action == Event.RAISE_TO:
-            return (  players[0].uncollected_bets
-                    + players[0].uncollected_bets
-                    - players[1].uncollected_bets)
+            return (
+                players[0].uncollected_bets
+                + players[0].uncollected_bets
+                - players[1].uncollected_bets
+            )
 
-        assert self.table.bb, 'Table has no big blind set.'
+        assert self.table.bb, "Table has no big blind set."
         return self.table.bb
 
     def call_amt(self, player=None, diff=False):
-        '''
+        """
         diff:
             False: total size of uncollected bets after calling
             True: amt more to put into the pot, given uncollected_bets
-        '''
+        """
         showdown_players = self.showdown_players(0)
-        assert showdown_players, \
-            "call_amt() called when there are no players left in the hand"
+        assert (
+            showdown_players
+        ), "call_amt() called when there are no players left in the hand"
         amt = max(plyr.uncollected_bets for plyr in showdown_players)
         if player is not None:
             if diff:
-                return min(amt - player.uncollected_bets,
-                        player.stack_available - player.uncollected_bets)
+                return min(
+                    amt - player.uncollected_bets,
+                    player.stack_available - player.uncollected_bets,
+                )
             return min(amt, player.stack_available)
         return amt
 
@@ -1103,8 +1123,10 @@ class PokerAccessor:
         # if anyone hasn't been dealt their cards yet, return True
         n_cards = NUM_HOLECARDS[self.table.table_type]
         for plyr in self.predeal_active_players():
-            if (len(plyr.cards) < n_cards
-                    and plyr.last_action not in (Event.FOLD, Event.SIT_OUT)):
+            if len(plyr.cards) < n_cards and plyr.last_action not in (
+                Event.FOLD,
+                Event.SIT_OUT,
+            ):
                 return True
         return False
 
@@ -1129,7 +1151,7 @@ class PokerAccessor:
     def seconds_since_last_action(self):
         if self.table.last_action_timestamp is None:
             return None
-        timestamp_diff = (timezone.now() - self.table.last_action_timestamp)
+        timestamp_diff = timezone.now() - self.table.last_action_timestamp
         return timestamp_diff.total_seconds()
 
     def seconds_to_act(self):
@@ -1137,8 +1159,9 @@ class PokerAccessor:
         if next_plyr is None:
             return 0
 
-        basetime = self.table.seconds_per_action_base \
-                 + self.newbie_time_bonus(next_plyr)
+        basetime = self.table.seconds_per_action_base + self.newbie_time_bonus(
+            next_plyr
+        )
 
         num_blinds_in_pot = self.current_pot() / self.table.bb
         if num_blinds_in_pot < 10:
@@ -1201,13 +1224,13 @@ class PokerAccessor:
 
     def players_who_showed_down(self):
         return [
-            plyr for plyr in self.active_players()
-            if plyr.last_action != Event.FOLD
+            plyr for plyr in self.active_players() if plyr.last_action != Event.FOLD
         ]
 
     def bots_who_should_sit_in(self):
         return [
-            plyr for plyr in self.seated_players()
+            plyr
+            for plyr in self.seated_players()
             if (
                 plyr.is_robot
                 and not plyr.playing_state == PlayingState.SIT_IN_PENDING
@@ -1219,25 +1242,25 @@ class PokerAccessor:
     def pos_str(self, player):
         tbl = self.table
         if player.position == tbl.btn_idx and player.position == tbl.sb_idx:
-            return 'btn/sb'
+            return "btn/sb"
         elif player.position == tbl.btn_idx:
-            return 'btn'
+            return "btn"
         elif player.position == tbl.sb_idx:
-            return 'sb'
+            return "sb"
         elif player.position == tbl.bb_idx:
-            return 'bb'
+            return "bb"
 
-        return ''
+        return ""
 
     # use this when debugging
     def describe(self, print_me=True):
         tbl = self.table
 
         desc = [
-            f'{tbl.name}\t{tbl.sb}/{tbl.bb} {tbl.table_type}\t'
-            f'hand {tbl.hand_number}'
+            f"{tbl.name}\t{tbl.sb}/{tbl.bb} {tbl.table_type}\t"
+            f"hand {tbl.hand_number}"
         ]
-        desc.append(f'board: {str(tbl.board)}')
+        desc.append(f"board: {str(tbl.board)}")
 
         # try:
         #     rotate_to = self.first_to_act_pos()
@@ -1247,46 +1270,58 @@ class PokerAccessor:
         def cards_or_state(player):
             state = player.playing_state
             if state == PlayingState.SITTING_IN:
-                cards_str = ','.join(str(card) for card in player.cards)
-                cards_str = cards_str or 'in'
+                cards_str = ",".join(str(card) for card in player.cards)
+                cards_str = cards_str or "in"
             elif state == PlayingState.SITTING_OUT:
-                cards_str = 'out'
+                cards_str = "out"
             elif state == PlayingState.SIT_IN_PENDING:
-                cards_str = 'pend:in'
+                cards_str = "pend:in"
             elif state == PlayingState.SIT_OUT_PENDING:
-                cards_str = 'pend:out'
+                cards_str = "pend:out"
             elif state == PlayingState.SIT_IN_AT_BLINDS_PENDING:
-                cards_str = 'pend:blinds'
+                cards_str = "pend:blinds"
             elif state == PlayingState.LEAVE_SEAT_PENDING:
-                cards_str = 'pend:leave'
+                cards_str = "pend:leave"
             elif state == PlayingState.DISCONNECTED:
-                cards_str = 'disc'
+                cards_str = "disc"
             elif state == PlayingState.TOURNEY_SITTING_OUT:
-                cards_str = 'afk(tourn)'
+                cards_str = "afk(tourn)"
             else:
-                print('unknown playing_state!!!!')
-                import ipdb; ipdb.set_trace()
+                print("unknown playing_state!!!!")
+                import ipdb
 
-            return f'[{cards_str:^11}]'
+                ipdb.set_trace()
 
-        fmt_str = '{:>6} {}: {:^10}\t{:^13}\t{:^7} - {:^7} - {:^12}({})'
+            return f"[{cards_str:^11}]"
+
+        fmt_str = "{:>6} {}: {:^10}\t{:^13}\t{:^7} - {:^7} - {:^12}({})"
         desc.append(
-            fmt_str.format('pos', '#', 'name', 'cards/state', 'stack',
-                           'wagers', 'last_action', 'uncollected')
+            fmt_str.format(
+                "pos",
+                "#",
+                "name",
+                "cards/state",
+                "stack",
+                "wagers",
+                "last_action",
+                "uncollected",
+            )
         )
         desc += [
-            fmt_str.format(self.pos_str(plyr),
-                            plyr.position,
-                            plyr.username[:10],
-                            cards_or_state(plyr),
-                            plyr.stack,
-                            plyr.wagers,
-                            plyr.last_action or 'none',
-                            plyr.uncollected_bets)
+            fmt_str.format(
+                self.pos_str(plyr),
+                plyr.position,
+                plyr.username[:10],
+                cards_or_state(plyr),
+                plyr.stack,
+                plyr.wagers,
+                plyr.last_action or "none",
+                plyr.uncollected_bets,
+            )
             for plyr in rotated(self.seated_players(), 0)
         ]
 
-        output = '\n'.join(desc)
+        output = "\n".join(desc)
         if print_me:
             print(output)
         else:
@@ -1296,27 +1331,31 @@ class PokerAccessor:
         acc = self
         desc = []
         desc.append("==PLAYER STATE==")
-        desc.append('pos\tname\tstack\twagers\tuncollected\tlast_action')
+        desc.append("pos\tname\tstack\twagers\tuncollected\tlast_action")
         for plyr in acc.active_players():
             pos_str = self.pos_str(plyr)
-            desc.append('{}\t{:<5}\t{}\t{}\t{}\t{}'.format(pos_str,
-                                                        plyr.username[:5],
-                                                        plyr.stack,
-                                                        plyr.wagers,
-                                                        plyr.uncollected_bets,
-                                                        plyr.last_action))
+            desc.append(
+                "{}\t{:<5}\t{}\t{}\t{}\t{}".format(
+                    pos_str,
+                    plyr.username[:5],
+                    plyr.stack,
+                    plyr.wagers,
+                    plyr.uncollected_bets,
+                    plyr.last_action,
+                )
+            )
 
-        desc.append('--------------------')
+        desc.append("--------------------")
         uncollected = sum(p.uncollected_bets for p in acc.players)
         wagers = sum(p.wagers for p in acc.players)
         stacks = sum(p.stack for p in acc.players)
-        desc.append(f'total\t{stacks}\t{wagers}\t{uncollected}\n')
-        desc.append('==SIDEPOT SUMMARY==')
-        desc.append('pot_amt\tplayers')
+        desc.append(f"total\t{stacks}\t{wagers}\t{uncollected}\n")
+        desc.append("==SIDEPOT SUMMARY==")
+        desc.append("pot_amt\tplayers")
         for pot, ppl in acc.sidepot_summary(exclude_uncollected_bets=True):
-            desc.append(f'{pot:<7}\t{ppl}')
+            desc.append(f"{pot:<7}\t{ppl}")
 
-        output = '\n'.join(desc)
+        output = "\n".join(desc)
         if print_me:
             print(output)
         else:
@@ -1325,6 +1364,7 @@ class PokerAccessor:
 
 class HoldemAccessor(PokerAccessor):
     """Default poker is hold'em, so no need to override anything"""
+
     pass
 
 
@@ -1353,8 +1393,7 @@ class BountyAccessor(PokerAccessor):
         if self.table.bounty_flag:
             if not self.is_predeal() and self.is_preflop():
                 bounty_winner = [
-                    p for p in self.active_players()
-                    if p.last_action is None
+                    p for p in self.active_players() if p.last_action is None
                 ]
                 # this means should only ever happen between
                 #   the bounty_sequence and call_sequence in forced_flip
@@ -1370,7 +1409,7 @@ class IrishAccessor(PokerAccessor):
     """Accessor methods that need to change for irish poker"""
 
     def __init__(self):
-        raise NotImplementedError('Irish is not yet implemented.')
+        raise NotImplementedError("Irish is not yet implemented.")
 
 
 class FreezeoutAccessor:
@@ -1392,31 +1431,30 @@ class FreezeoutAccessor:
 
         # note: there is no PlayingState.SIT_OUT_AT_BLINDS; it's
         #   its own field on the Player model. Sorry future dev.
-        msg = f'Sanity fail: PlayingState {player.playing_state.value}'\
-               " shouldn't be possible in a tournament."
+        msg = (
+            f"Sanity fail: PlayingState {player.playing_state.value}"
+            " shouldn't be possible in a tournament."
+        )
         raise Exception(msg)
 
     def tourney_first_to_act_grace_period(self, player):
         last_action = self.table.last_action_timestamp
         autofold_delay = timedelta(seconds=TOURNEY_AUTOFOLD_DELAY)
-        return (
-            self.is_acting_first(player)
-            and timezone.now() < (last_action + autofold_delay)
+        return self.is_acting_first(player) and timezone.now() < (
+            last_action + autofold_delay
         )
 
     def is_acting_first(self, player):
-        necessary_conditions = (self.is_preflop()
-                                and player.id == self.first_to_act().id)
+        necessary_conditions = self.is_preflop() and player.id == self.first_to_act().id
         if self.heads_up():
             return necessary_conditions and player.last_action == Event.POST
 
         return necessary_conditions and player.last_action is None
 
     def has_not_acted(self, player):
-        return (
-            player.last_action in (None, Event.POST)
-            or (player.last_action == Event.SIT_OUT
-                and player.playing_state == PlayingState.TOURNEY_SITTING_OUT)
+        return player.last_action in (None, Event.POST) or (
+            player.last_action == Event.SIT_OUT
+            and player.playing_state == PlayingState.TOURNEY_SITTING_OUT
         )
 
     def tournament_is_over(self):
@@ -1460,4 +1498,3 @@ def accessor_type_for_table(table):
         if table.tournament:
             return OmahaFreezeoutAccessor
         return OmahaAccessor
-

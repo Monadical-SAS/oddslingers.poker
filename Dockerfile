@@ -7,10 +7,7 @@
 #    docker-compose run django ./manage.py ...
 
 # Debian-based image is faster than alpine because it can install pip wheels
-# Downgraded to 3.7 https://github.com/python/typed_ast/issues/124 
-# ref1: https://github.com/python/mypy/issues/7001
-# ref2: https://github.com/dbader/pytest-mypy/pull/44
-FROM python:3.7-buster
+FROM python:3.12-bookworm
 
 # Configuration defaults
 ENV ODDSLINGERS_ROOT "/opt/oddslingers.poker"
@@ -30,14 +27,14 @@ ENV PYTHONUNBUFFERED 1
 # Install system requirements
 RUN apt-get update && apt-get install -y \
     # psycopg2 requirements
-    python-psycopg2 libpq-dev \
+    libpq-dev \
     # fish shell
     fish \
     # npm
     npm \
     # gosu
     gosu \
-    # Needed for typed-ast dependency
+    # Needed for compiled C extension packages (psycopg2, cryptography, etc.)
     build-essential \
     # python requirements
     python3-dev python3-pip python3-venv jq \
@@ -51,24 +48,25 @@ RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg -
 RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
 RUN apt-get update && apt-get install -y nodejs
 
-# Setup Python virtualenv separately from code dir in /opt/oddslingers/.venv-docker.
-#   It needs to be outside of the code dir because the code is mounted as a volume
-#   and would overwite the docker-specific venv with the incompatible host venv.
+# No virtualenv needed — the Docker container IS the isolation layer.
+# System site-packages at /usr/local/lib/python3.12 are not overwritten by
+# volume mounts (./core, ./data, ./bin, ./env) so there is no venv/host conflict.
 
 WORKDIR "$ODDSLINGERS_ROOT"
-RUN pip install virtualenv && \
-    virtualenv "$VENV_NAME"
-ENV PATH="$ODDSLINGERS_ROOT/$VENV_NAME/bin:${ODDSLINGERS_ROOT}/bin:./node_modules/.bin:${PATH}"
+ENV PATH="${ODDSLINGERS_ROOT}/bin:./node_modules/.bin:${PATH}"
 
 # Add .git HEAD to container 
 ADD .git/HEAD ./.git/HEAD
 ADD .git/refs/heads/ ./.git/refs/heads/
 
-# Install the python dependencies from requirements.txt into /opt/oddslingers.poker/.venv-docker.
-COPY ./core/Pipfile.lock "$ODDSLINGERS_ROOT/Pipfile.lock"
-RUN jq -r '.default,.develop | to_entries[] | .key + .value.version' "$ODDSLINGERS_ROOT/Pipfile.lock" | \
-    pip install --no-cache-dir -r /dev/stdin && \
-    rm "$ODDSLINGERS_ROOT/Pipfile.lock"
+# Install Python dependencies.
+# requirements.lock is the pinned lockfile generated from core/requirements.txt via:
+#   uv pip compile --python-version 3.12 --python-platform linux core/requirements.txt -o core/requirements.lock
+# Regenerate with: python3 bin/gen-requirements.py core/Pipfile > core/requirements.txt && uv pip compile ...
+COPY ./core/requirements.lock /tmp/requirements.lock
+RUN pip install --upgrade pip setuptools && \
+    pip install --no-cache-dir -r /tmp/requirements.lock && \
+    rm /tmp/requirements.lock
 RUN npm install --global npm && npm install --global yarn
 RUN userdel "$DJANGO_USER" && addgroup --system "$DJANGO_USER" && \
     adduser --system --ingroup "$DJANGO_USER" --shell /bin/false "$DJANGO_USER"

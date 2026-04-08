@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 
 import {createStore, combineReducers} from 'redux'
 import {Provider} from 'react-redux'
@@ -32,14 +32,12 @@ export const TournamentSummary = {
         return {socket, store, props}
     },
     setupStore(reducers, initial_state) {
-        // create the redux store for the page
         return createStore(combineReducers(
             reducers,
             initial_state,
         ))
     },
     setupSocket(store, time) {
-        // create the websocket connection to the backend
         if (!global.WebSocket) return {name: 'MockSocket', close: () => {}}
 
         return new SocketRouter(
@@ -82,14 +80,12 @@ export const TournamentSummary = {
     },
     mount(props, mount_point) {
         global.page = this.init(props, true)
-        ReactDOM.render(
+        createRoot(mount_point).render(
             this.render(global.page),
-            mount_point,
         )
     },
 }
 
 if (global.react_mount) {
-    // we're in a browser, so mount the page
     TournamentSummary.mount(global.props, global.react_mount)
 }

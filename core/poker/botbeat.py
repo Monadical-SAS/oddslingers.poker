@@ -7,7 +7,7 @@ import subprocess
 from typing import Optional, List
 from time import sleep
 
-from raven.contrib.django.raven_compat.models import client
+from oddslingers.monitoring import client
 from django.utils import timezone
 from django.conf import settings
 
@@ -28,16 +28,14 @@ from .heartbeat_utils import (
     list_redis_dispatch,
 )
 
-logger = logging.getLogger('poker')
+logger = logging.getLogger("poker")
 
 
 ### Heartbeat Queue Functions
 
+
 def queue_botbeat_dispatch(table_id: str) -> None:
-    return queue_redis_dispatch(
-        settings.REDIS_BOTBEAT_KEY,
-        table_id
-    )
+    return queue_redis_dispatch(settings.REDIS_BOTBEAT_KEY, table_id)
 
 
 def pop_botbeat_dispatch() -> Optional[str]:
@@ -59,21 +57,23 @@ def list_botbeat_dispatch() -> List[str]:
 ### Heartbeat Process Management
 
 # name of the management command that calls botbeat_entrypoint
-COMMAND_NAME = 'bot_heartbeat'
+COMMAND_NAME = "bot_heartbeat"
 
-def botbeat_pid(exclude_pid: int=None) -> Optional[int]:
+
+def botbeat_pid(exclude_pid: int = None) -> Optional[int]:
     return find_process(COMMAND_NAME, exclude_pid=exclude_pid)
 
 
-def stop_botbeat(exclude_pid: int=None, block: bool=True) -> bool:
+def stop_botbeat(exclude_pid: int = None, block: bool = True) -> bool:
     pid = botbeat_pid(exclude_pid=exclude_pid)
     if pid:
         return stop_process(pid, block=block)
     return False
 
 
-def start_botbeat(fork=True, daemonize=True,
-                  share_db=False, verbose=True, stupid=False) -> Optional[int]:
+def start_botbeat(
+    fork=True, daemonize=True, share_db=False, verbose=True, stupid=False
+) -> Optional[int]:
     stupid = stupid or settings.POKER_AI_STUPID
 
     if settings.IS_TESTING:
@@ -86,27 +86,24 @@ def start_botbeat(fork=True, daemonize=True,
         return pid
 
     if not settings.AUTOSTART_BOTBEAT:
-        print(f'[X] Not starting botbeat because '
-              f'settings.AUTOSTART_BOTBEAT = False')
+        print("[X] Not starting botbeat because settings.AUTOSTART_BOTBEAT = False")
         return None
 
     if fork:
-        manage_path = os.path.join(settings.BASE_DIR, 'manage.py')
+        manage_path = os.path.join(settings.BASE_DIR, "manage.py")
         if settings.DEBUG:
             log_file = sys.stdout
         else:
-            log_file = open(settings.BOTBEAT_LOG, 'a+')
-            logger.info(
-                f'[i] Logging botbeat stdout to {settings.BOTBEAT_LOG}'
-            )
+            log_file = open(settings.BOTBEAT_LOG, "a+")
+            logger.info(f"[i] Logging botbeat stdout to {settings.BOTBEAT_LOG}")
 
         subprocess.Popen(
             [
-                'python',
+                "python",
                 manage_path,
                 COMMAND_NAME,
-                '--daemonize',
-                *(('--stupid',) if stupid else ()),
+                "--daemonize",
+                *(("--stupid",) if stupid else ()),
             ],
             stdout=log_file,
             stderr=log_file,
@@ -114,16 +111,14 @@ def start_botbeat(fork=True, daemonize=True,
         )
         return botbeat_pid()
     else:
-        botbeat_entrypoint(daemonize=daemonize,
-                           share_db=share_db,
-                           verbosity=verbose,
-                           stupid=stupid)
+        botbeat_entrypoint(
+            daemonize=daemonize, share_db=share_db, verbosity=verbose, stupid=stupid
+        )
         # if fork is false, the function runs forever and never returns
         return None
 
 
-def botbeat_entrypoint(loop=True, verbose=True,
-                       stupid=False, **config) -> None:
+def botbeat_entrypoint(loop=True, verbose=True, stupid=False, **config) -> None:
     stupid = stupid or settings.POKER_AI_STUPID
 
     with HeartbeatEnvironment([COMMAND_NAME], **config):
@@ -132,8 +127,9 @@ def botbeat_entrypoint(loop=True, verbose=True,
 
 ### Heartbeat Content
 
+
 def botbeat_loop(loop=True, verbose=True, stupid=settings.POKER_AI_STUPID):
-    exception = Exception('Failed to start.')
+    exception = Exception("Failed to start.")
     failing_table = None
     try:
         while True:
@@ -143,30 +139,24 @@ def botbeat_loop(loop=True, verbose=True, stupid=settings.POKER_AI_STUPID):
                 botbeat_step(queued_tables, verbose=verbose, stupid=stupid)
             except Exception as err:
                 exception = err
-                if settings.IS_TESTING:
-                    import ipdb; ipdb.set_trace()
-
                 # get failing table id attached to exception by botbeat_step
-                if hasattr(err, 'table_id'):
+                if hasattr(err, "table_id"):
                     failing_table = PokerTable.objects.get(id=err.table_id)
 
                 botbeat_info = assemble_botbeat_info(
-                    queued_tables,
-                    failing_table,
-                    stupid
+                    queued_tables, failing_table, stupid
                 )
                 ticket = ticket_from_botbeat_exception(
-                    failing_table,
-                    exception,
-                    traceback.format_exc(),
-                    botbeat_info
+                    failing_table, exception, traceback.format_exc(), botbeat_info
                 )
 
-                client.extra_context({
-                    'ticket_id': ticket.id,
-                    'ticket_dir': ticket.dir,
-                    'artifacts': ticket.artifacts,
-                })
+                client.extra_context(
+                    {
+                        "ticket_id": ticket.id,
+                        "ticket_dir": ticket.dir,
+                        "artifacts": ticket.artifacts,
+                    }
+                )
                 raise
 
             if not loop:
@@ -174,8 +164,8 @@ def botbeat_loop(loop=True, verbose=True, stupid=settings.POKER_AI_STUPID):
 
     except Exception:
         # if supposed to run forever, but stopped for some reason
-        msg = f'Botbeat quit due to errors on {failing_table}! {exception}'
-        track_analytics_event.send('botbeat', msg)
+        msg = f"Botbeat quit due to errors on {failing_table}! {exception}"
+        track_analytics_event.send("botbeat", msg)
         raise
 
 
@@ -194,7 +184,7 @@ def botbeat_step(queued_tables, verbose=True, stupid=settings.POKER_AI_STUPID):
                 try:
                     next_table = PokerTable.objects.get(id=table_id)
                 except Exception as err:
-                    msg = f'Error querying tbl_id {table_id} in botbeat: {err}'
+                    msg = f"Error querying tbl_id {table_id} in botbeat: {err}"
                     warn(msg)
                     continue
 
@@ -213,20 +203,20 @@ def botbeat_step(queued_tables, verbose=True, stupid=settings.POKER_AI_STUPID):
                         acc,
                         ctrl.log,
                         delay=not settings.POKER_AI_INSTANT,
-                        stupid=stupid
+                        stupid=stupid,
                     )
                 except Exception as err:
                     if settings.IS_TESTING or stupid:
                         raise type(err).with_traceback(err.__traceback__)
 
                     msg = (
-                        'getting random move because get_smart_move() failed:'
-                        f'\n{traceback.format_exc()}'
+                        "getting random move because get_smart_move() failed:"
+                        f"\n{traceback.format_exc()}"
                     )
-                    now_str = timezone.now().strftime('%Y-%m-%d.%H-%M-%S')
-                    filename = f'smart_err_{acc.table.short_id}_{now_str}.log'
+                    now_str = timezone.now().strftime("%Y-%m-%d.%H-%M-%S")
+                    filename = f"smart_err_{acc.table.short_id}_{now_str}.log"
                     filepath = os.path.join(settings.DEBUG_DUMP_DIR, filename)
-                    with open(filepath, 'w+') as f:
+                    with open(filepath, "w+") as f:
                         f.write(msg)
                     ai_move = get_robot_move(
                         acc,
@@ -242,9 +232,9 @@ def botbeat_step(queued_tables, verbose=True, stupid=settings.POKER_AI_STUPID):
                 else:
                     action_type, kwargs = ai_move
                     dispatch_msg = {
-                        'table_id': table_id,
-                        'action': {
-                            'type': action_type,
+                        "table_id": table_id,
+                        "action": {
+                            "type": action_type,
                             **kwargs,
                         },
                     }
@@ -267,44 +257,45 @@ def botbeat_step(queued_tables, verbose=True, stupid=settings.POKER_AI_STUPID):
 
         # Log action details and timing to stdout
         if verbose:
-            player_id = dispatch_msg['action']['player_id']
-            action_name = dispatch_msg['action']['type'].ljust(16)
+            player_id = dispatch_msg["action"]["player_id"]
+            action_name = dispatch_msg["action"]["type"].ljust(16)
             player = acc.player_by_player_id(player_id).username
-            thinking = round((end_ts - start_ts)*1000, 1)
-            is_stupid = 'stupid' if stupid else 'smart'
+            thinking = round((end_ts - start_ts) * 1000, 1)
+            is_stupid = "stupid" if stupid else "smart"
 
             print(
-                f'{ANSI["black"]}[*] BOT : {action_name} {player}'
-                f'({is_stupid}) {thinking}ms @ {acc.table.name} '
-                f'({acc.table.short_id}) {ANSI["reset"]}'
+                f"{ANSI['black']}[*] BOT : {action_name} {player}"
+                f"({is_stupid}) {thinking}ms @ {acc.table.name} "
+                f"({acc.table.short_id}) {ANSI['reset']}"
             )
 
-        queue_tablebeat_dispatch(
-            dispatch_msg['table_id'],
-            dispatch_msg['action']
-        )
+        queue_tablebeat_dispatch(dispatch_msg["table_id"], dispatch_msg["action"])
 
         # This should work because the last table_id looked at
         #   should be the one that the move was made for.
         #   Otherwise the table_id might get popped w/the delay_tables
         #   and then re-queued by the tablebeat before getting here.
-        check_id_match(dispatch_msg['table_id'], pop_botbeat_dispatch())
+        check_id_match(dispatch_msg["table_id"], pop_botbeat_dispatch())
 
 
 def warn(msg, table=None):
     if settings.DEBUG:
         print(msg)
     else:
-        extra = {
-            'table_id': table.id,
-            'table_name': table.name,
-            'table_ts': table.modified,
-            'table_hand_number': table.hand_number,
-        } if table else {}
+        extra = (
+            {
+                "table_id": table.id,
+                "table_name": table.name,
+                "table_ts": table.modified,
+                "table_hand_number": table.hand_number,
+            }
+            if table
+            else {}
+        )
         logger.warning(msg, extra=extra)
 
     if settings.IS_TESTING:
-        raise Exception(f'Got warning {msg}')
+        raise Exception(f"Got warning {msg}")
 
 
 def check_id_match(id1, id2):

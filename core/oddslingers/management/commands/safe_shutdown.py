@@ -4,7 +4,7 @@ from oddslingers import kill_all_heartbeats
 
 
 class Command(BaseCommand):
-    help = 'Bring all tables to a safe stopping point and kill the heartbeats.'
+    help = "Bring all tables to a safe stopping point and kill the heartbeats."
 
     def handle(self, *args, **options):
         # 0. Stop heartbeats from accepting new input

@@ -45,4 +45,3 @@
 #                 assert sum(success_arr[:]) == n_actions
 
 #             assert 1400 == sum(p.stack + p.wagers for p in contr.accessor.players)
-

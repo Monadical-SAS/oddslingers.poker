@@ -18,7 +18,7 @@ from oddslingers.models import User, UserSession
 from poker.models import PokerTable, HandHistory
 from poker.bot_personalities import PERSONALITIES
 
-logger = logging.getLogger('dramatiq')
+logger = logging.getLogger("dramatiq")
 
 
 @dramatiq.actor(priority=3)
@@ -26,7 +26,9 @@ def send_signup_email(username):
     user = get_user_model().objects.get(username=username)
     if not user.email:
         print(f'Cant send welcome email because user "{username}" has no email!')
-        logger.warning(f'Cant send welcome email because user "{username}" has no email!')
+        logger.warning(
+            f'Cant send welcome email because user "{username}" has no email!'
+        )
         return
 
     welcome_email = f"""
@@ -46,19 +48,23 @@ def send_signup_email(username):
         Have any questions?  Just reply to this email (hello@oddslingers.com).
     """
 
-    send_mail('Welcome to OddSlingers!', welcome_email, "hello@oddslingers.com", [user.email])
+    send_mail(
+        "Welcome to OddSlingers!", welcome_email, "hello@oddslingers.com", [user.email]
+    )
 
 
 def support_email_subject(ticket: SupportTicket) -> str:
     from support.artifacts import read_notes
-    ticket_notes = read_notes(ticket) or ''
-    short_subj = ticket.subject or ticket_notes[:26].replace('\n', ' ') + '...'
-    return f'Support request #{ticket.short_id}: {short_subj}'
+
+    ticket_notes = read_notes(ticket) or ""
+    short_subj = ticket.subject or ticket_notes[:26].replace("\n", " ") + "..."
+    return f"Support request #{ticket.short_id}: {short_subj}"
 
 
 @dramatiq.actor(priority=3)
 def send_support_email(ticket_id: str):
     from support.artifacts import read_notes
+
     ticket = SupportTicket.objects.get(id=ticket_id)
     ticket_notes = read_notes(ticket)
     email_subject = support_email_subject(ticket)
@@ -88,7 +94,7 @@ def send_support_email(ticket_id: str):
         send_mail(email_subject, email_body, "support@oddslingers.com", [user_email])
 
     # email the admins (settings.SUPPORT_GIVERS) about the ticket
-    reply_to = user_email or 'noreply@oddslingers.com'
+    reply_to = user_email or "noreply@oddslingers.com"
     send_mail(email_subject, email_body, reply_to, settings.SUPPORT_GIVERS)
 
 
@@ -109,24 +115,23 @@ def send_support_email_reply(ticket_id: str, reply: str):
     send_mail(email_subject, email_body, "support@oddslingers.com", [user_email])
 
 
-
 @dramatiq.actor(priority=3)
 def send_invite_email(email, table_path: str, username: str):
-    subject = 'Come join my poker table on Oddslingers!'
-    body =  f'''I invite you to join me for a game of poker on oddslingers.com!\n
+    subject = "Come join my poker table on Oddslingers!"
+    body = f"""I invite you to join me for a game of poker on oddslingers.com!\n
                 \nYou can sit down at my table here:
                 {settings.DEFAULT_HTTP_PROTOCOL}://{settings.DEFAULT_HOST}{table_path} \n
-                \n--From {username}'''
+                \n--From {username}"""
 
     send_mail(subject, body, "hello@oddslingers.com", [email])
 
 
 @dramatiq.actor(priority=3)
 def send_chips_email(email, from_username, amount, next_url):
-    subject = f'You\'ve been given {amount} chips to play on Oddslingers!'
+    subject = f"You've been given {amount} chips to play on Oddslingers!"
     signup_path = f'{reverse("Signup")}?{urlencode({"next": next_url})}'
-    claim_chips_url = f'{settings.BASE_URL}{signup_path}'
-    body =  f"""
+    claim_chips_url = f"{settings.BASE_URL}{signup_path}"
+    body = f"""
         Hello friend.
 
         I've sent you {amount} chips to come and play poker on OddSlingers.
@@ -145,46 +150,84 @@ def daily_report(send_zulip=True):
 
     new_signups = get_user_model().objects.filter(created__gt=yesterday)
     active_sessions = UserSession.objects.filter(last_activity__gt=yesterday)
-    total_hands = HandHistory.objects.exclude(table__is_tutorial=True).exclude(table__is_mock=True).count()
+    total_hands = (
+        HandHistory.objects.exclude(table__is_tutorial=True)
+        .exclude(table__is_mock=True)
+        .count()
+    )
     total_users = User.objects.exclude(is_robot=True).exclude(is_staff=True).count()
-    total_tables = PokerTable.objects.exclude(is_mock=True).exclude(is_tutorial=True).count()
+    total_tables = (
+        PokerTable.objects.exclude(is_mock=True).exclude(is_tutorial=True).count()
+    )
 
     top_players = defaultdict(int)
-    for hand in HandHistory.objects.exclude(table__is_tutorial=True).exclude(table__is_mock=True).filter(timestamp__gt=yesterday):
+    for hand in (
+        HandHistory.objects.exclude(table__is_tutorial=True)
+        .exclude(table__is_mock=True)
+        .filter(timestamp__gt=yesterday)
+    ):
         for player in hand.players_json:
-            if player['username'] in PERSONALITIES or player['username'] == 'Vim Diesel':
+            if (
+                player["username"] in PERSONALITIES
+                or player["username"] == "Vim Diesel"
+            ):
                 continue
-            top_players[player['username']] += 1
+            top_players[player["username"]] += 1
 
     today_hands = sum(hands for username, hands in top_players.items())
 
     countries = defaultdict(int)
     devices = defaultdict(int)
     for session in active_sessions:
-        country = (session.location_json or {}).get('country_name', '').strip()
+        country = (session.location_json or {}).get("country_name", "").strip()
         if country:
             countries[country] += 1
 
         if session.device:
             devices[session.device] += 1
 
-    countries = [f'{country}: {count}' for country, count in sorted(countries.items(), key=lambda a: -a[1])]
-    devices = [f'{device}: {count}' for device, count in sorted(devices.items(), key=lambda a: -a[1])]
+    countries = [
+        f"{country}: {count}"
+        for country, count in sorted(countries.items(), key=lambda a: -a[1])
+    ]
+    devices = [
+        f"{device}: {count}"
+        for device, count in sorted(devices.items(), key=lambda a: -a[1])
+    ]
 
     def todays_winnings(username):
         u = User.objects.get(username=username)
-        credits = u.sent_transfers.filter(timestamp__gt=yesterday).aggregate(Sum('amt'))['amt__sum'] or 0
-        debits = u.recv_transfers.filter(timestamp__gt=yesterday).aggregate(Sum('amt'))['amt__sum'] or 0
+        credits = (
+            u.sent_transfers.filter(timestamp__gt=yesterday).aggregate(Sum("amt"))[
+                "amt__sum"
+            ]
+            or 0
+        )
+        debits = (
+            u.recv_transfers.filter(timestamp__gt=yesterday).aggregate(Sum("amt"))[
+                "amt__sum"
+            ]
+            or 0
+        )
         return int(credits - debits)
 
-    user_desc = lambda u: f'{u.hands_played} hands played by [{u.username}](https://oddslingers.com/user/{u.username}) {u.email} {getattr(u.usersession_set.last(), "device", "")}'
-    player_desc = lambda u, h: f'[{u}](https://oddslingers.com/user/{u}) played {h} hands and won ㆔{todays_winnings(u)}'
-    user_summary = '\n - '.join(user_desc(u) for u in sorted(new_signups, key=lambda u: -u.hands_played))
-    player_summary = '\n - '.join(player_desc(username, hands) for username, hands in sorted(top_players.items(), key=lambda p: -p[1]))
+    user_desc = (
+        lambda u: f'{u.hands_played} hands played by [{u.username}](https://oddslingers.com/user/{u.username}) {u.email} {getattr(u.usersession_set.last(), "device", "")}'
+    )
+    player_desc = (
+        lambda u, h: f"[{u}](https://oddslingers.com/user/{u}) played {h} hands and won ㆔{todays_winnings(u)}"
+    )
+    user_summary = "\n - ".join(
+        user_desc(u) for u in sorted(new_signups, key=lambda u: -u.hands_played)
+    )
+    player_summary = "\n - ".join(
+        player_desc(username, hands)
+        for username, hands in sorted(top_players.items(), key=lambda p: -p[1])
+    )
 
     hands_by_user = 0
     if total_users != 0:
-        hands_by_user = round((total_hands / 1000)/total_users, 1)
+        hands_by_user = round((total_hands / 1000) / total_users, 1)
 
     report_msg = f"""
 **All-time:**
@@ -210,28 +253,30 @@ def daily_report(send_zulip=True):
 """
 
     if send_zulip:
-        notify_zulip(report_msg, topic='Daily Report', stream='analytics')
+        notify_zulip(report_msg, topic="Daily Report", stream="analytics")
 
     return report_msg
 
 
 @dramatiq.actor(priority=2)
-def track_analytics_event(username: Optional[str],
-                          event: str,
-                          topic: str = 'Site Events',
-                          stream: str = 'analytics'):
+def track_analytics_event(
+    username: Optional[str],
+    event: str,
+    topic: str = "Site Events",
+    stream: str = "analytics",
+):
 
-    username_str = f'{username}: ' if username else ''
+    username_str = f"{username}: " if username else ""
 
-    if settings.ODDSLINGERS_ENV == 'BETA':
-        notify_zulip(f'{username_str}{event}', topic=f'{topic} (Beta)', stream=stream)
+    if settings.ODDSLINGERS_ENV == "BETA":
+        notify_zulip(f"{username_str}{event}", topic=f"{topic} (Beta)", stream=stream)
     else:
-        notify_zulip(f'{username_str}{event}', topic=topic, stream=stream)
+        notify_zulip(f"{username_str}{event}", topic=topic, stream=stream)
 
 
 @dramatiq.actor(priority=2)
-def message_to_zulip_support(message: str, topic: str='hello'):
-    notify_zulip(message, topic=topic, stream='support')
+def message_to_zulip_support(message: str, topic: str = "hello"):
+    notify_zulip(message, topic=topic, stream="support")
 
 
 @dramatiq.actor(priority=1)
@@ -241,6 +286,7 @@ def async_start_tablebeat(table_id: str):
     table = PokerTable.objects.get(id=table_id)
     start_tablebeat(table)
 
+
 @dramatiq.actor(priority=1)
 def check_server_load(warn_zulip=True, restart_heartbeats=True) -> tuple:
 
@@ -248,43 +294,42 @@ def check_server_load(warn_zulip=True, restart_heartbeats=True) -> tuple:
     warnings = []
     restart_needed = False
 
-    system_max_load = MAX_LOAD.get(settings.ODDSLINGERS_ENV, MAX_LOAD['DEV'])
+    system_max_load = MAX_LOAD.get(settings.ODDSLINGERS_ENV, MAX_LOAD["DEV"])
     is_overloaded = lambda stat: current_stats[stat] > system_max_load[stat]
 
-    if is_overloaded('CPU') or is_overloaded('Number of Processes'):
-        warnings.append('CPU use is too high!')
+    if is_overloaded("CPU") or is_overloaded("Number of Processes"):
+        warnings.append("CPU use is too high!")
         restart_needed = True
 
-    if is_overloaded('Memory'):
-        warnings.append('Memory use is too high!')
+    if is_overloaded("Memory"):
+        warnings.append("Memory use is too high!")
         restart_needed = True
 
-    if is_overloaded('Disk Space'):
-        warnings.append(
-            f'Disk space is almost full! Please manually delete files.'
-        )
+    if is_overloaded("Disk Space"):
+        warnings.append(f"Disk space is almost full! Please manually delete files.")
 
     if restart_heartbeats and restart_needed:
         kill_all_heartbeats()
-        warnings.append('Restarted heartbeats.')
+        warnings.append("Restarted heartbeats.")
 
     if warnings and warn_zulip:
-        zulip_msg = '\n'.join((
-            f'**Warning: Server {settings.HOSTNAME} ({settings.ODDSLINGERS_ENV}) has very high load!**',
-            *warnings,
-            '---',
-            *(f'{stat}: {val}% capacity' for stat, val in current_stats.items()),
-        ))
-        notify_zulip(zulip_msg, topic='Load Warnings', stream='logs')
+        zulip_msg = "\n".join(
+            (
+                f"**Warning: Server {settings.HOSTNAME} ({settings.ODDSLINGERS_ENV}) has very high load!**",
+                *warnings,
+                "---",
+                *(f"{stat}: {val}% capacity" for stat, val in current_stats.items()),
+            )
+        )
+        notify_zulip(zulip_msg, topic="Load Warnings", stream="logs")
 
     return warnings, current_stats
 
+
 @dramatiq.actor(priority=3)
-def ticket_from_table_report_bug(socket_id: str,
-                                 table_id: str,
-                                 notes: str,
-                                 frontend_log: dict,
-                                 reported_by: str):
+def ticket_from_table_report_bug(
+    socket_id: str, table_id: str, notes: str, frontend_log: dict, reported_by: str
+):
     from support.incidents import ticket_from_table_report_bug
     from sockets.models import Socket
 
@@ -295,17 +340,20 @@ def ticket_from_table_report_bug(socket_id: str,
     socket = Socket.objects.get(id=socket_id)
 
     socket.send_action(
-        'NOTIFICATION', notifications=[{
-            'type': 'admin',
-            'bsStyle': 'success',
-            'title': 'Support ticket has finished submitting.',
-            'delay': 60000,
-            'description': (
-                'Admins will review this table and get back to you. '
-                f'See ticket #{ticket.short_id} on the Support page '
-                'for reference.'
-            ),
-            'url': f"{reverse('Support')}#{ticket.short_id}"
-        }],
+        "NOTIFICATION",
+        notifications=[
+            {
+                "type": "admin",
+                "bsStyle": "success",
+                "title": "Support ticket has finished submitting.",
+                "delay": 60000,
+                "description": (
+                    "Admins will review this table and get back to you. "
+                    f"See ticket #{ticket.short_id} on the Support page "
+                    "for reference."
+                ),
+                "url": f"{reverse('Support')}#{ticket.short_id}",
+            }
+        ],
     )
     return ticket

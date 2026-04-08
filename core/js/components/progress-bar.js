@@ -1,19 +1,16 @@
 import React from 'react'
 import {reduxify} from '@/util/reduxify'
 import classNames from 'classnames'
-import parse from 'date-fns/parse'
-import addSeconds from 'date-fns/add_seconds'
-import differenceInMilliseconds from 'date-fns/difference_in_milliseconds'
+import { parseISO, addSeconds, differenceInMilliseconds } from 'date-fns'
 
 import {playSound} from '@/sounds/reducers'
 
-global.parse = parse
+global.parse = parseISO
 
 
 const getColor = (percent) => {
     if (percent > 40) return 'green'
 
-    // interpolate red & green together to create range of colors green -> yellow -> orange -> red
     const frac = (100 - percent) / 100
     let [r,g,b] = [2 * frac, 2 * (1 - frac), 0]
     if (r > 1) r = 1
@@ -29,8 +26,8 @@ class AutoTimedProgressBarComponent extends React.Component {
     constructor(props) {
         super(props)
         const total_seconds = props.total_seconds
-        const start = parse(props.start_time)
-        const end = props.end_time ? parse(props.end_time) : addSeconds(start, total_seconds)
+        const start = parseISO(props.start_time)
+        const end = props.end_time ? parseISO(props.end_time) : addSeconds(start, total_seconds)
         this.state = {
             start,
             end,
@@ -40,13 +37,13 @@ class AutoTimedProgressBarComponent extends React.Component {
         }
     }
     preventOutOfRange(percent) {
-        if (percent < 3) return 3  // always show a little sliver of red so that the progress bar is visible
+        if (percent < 3) return 3
         if (percent > 100) return 100
         return percent
     }
     updateProgress() {
-        if (global.page.time.speed == 0) return  // pause if animation is paused
-        const now = parse(global.page.time.getActualTime())
+        if (global.page.time.speed == 0) return
+        const now = parseISO(global.page.time.getActualTime())
         const seconds_remaining = differenceInMilliseconds(this.state.end, now)
         const percent = (seconds_remaining)/(this.state.total_seconds * 10)
         if (percent < 0) {

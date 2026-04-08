@@ -1,12 +1,17 @@
-import {Become, Translate, Style, Opacity,
-        Animate, AnimateCSS} from 'redux-time/node/animations'
+
 
 import {flattened} from '@/util/javascript'
 import {offset, center, styleFor, toCenter} from '@/poker/css'
 import {SOUNDS_DURATION} from '@/constants'
 
+const Become = () => ({type: 'BECOME', stub: true})
+const Translate = () => ({type: 'TRANSLATE', stub: true})
+const Style = () => ({type: 'STYLE', stub: true})
+const Opacity = () => ({type: 'OPACITY', stub: true})
+const Animate = () => ({type: 'ANIMATE', stub: true})
+const AnimateCSS = () => ({type: 'ANIMATE_CSS', stub: true})
 
-// generate a gamestate path
+
 const pathTo = (path) =>
     `/gamestate${path === undefined ? '' : path}`
 
@@ -45,7 +50,6 @@ export const TIMED_PATCHES = ({patches, start_times}) => {
 }
 
 export const SNAPTO = ({gamestate, start_time}) => {
-    // console.log({gamestate, start_time})
     return [
         Become({
             path: pathTo(''),
@@ -967,9 +971,6 @@ export const frontend_anims_from_backend_anim = (anim_start_time,
 export const anim_delay = (type) => {
     const delays = {
         'SNAPTO': 0,
-        // 'NEW_HAND': 200,
-        // 'SET_BLIND_POS': 100,
-        // 'ANTE': 100,
         'POST': 100,
         'POST_DEAD': 100,
         'DEAL_PLAYER': 80,
@@ -988,12 +989,6 @@ export const anim_delay = (type) => {
         'MUCK': 400,
         'BOUNTY_WIN': 2400,
 
-        // 'TAKE_SEAT': 500,
-        // 'LEAVE_SEAT': 500,
-        // 'SIT_IN': 500,
-        // 'SIT_OUT': 500,
-        // 'UPDATE_STACK': 500,
-        // 'SET_LEAVING_TABLE': 500,
     }
     return delays[type] === undefined ? 0 : delays[type]
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import {reduxify} from '@/util/reduxify'
 
-import Button from 'react-bootstrap/lib/Button'
+import { Button } from 'react-bootstrap'
 
 import {tooltip} from '@/util/dom'
 import {uniquify} from '@/util/javascript'
@@ -42,14 +42,11 @@ export const compute_props = ({min_bet, max_bet, current_pot, amt_to_call}) => {
 
     let valid_bets = unique_bets.filter(bet => is_valid(bet.amt))
 
-    // make sure any all-in bets are labelled All-in
     const highest_possible_bet = valid_bets.slice(-1)[0]
     if (highest_possible_bet.amt == max_bet) {
         highest_possible_bet.label = 'All-in'
     }
 
-    // hide All-in suggested bet if it's the only button
-    // User can use the call button, which shows "all-in" instead
     if (valid_bets.length == 1 && highest_possible_bet.label == 'All-in') {
         valid_bets = []
     }

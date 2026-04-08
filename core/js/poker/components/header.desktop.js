@@ -1,8 +1,7 @@
 import React from 'react'
 import {reduxify} from '@/util/reduxify'
 
-import DropdownButton from 'react-bootstrap/lib/DropdownButton'
-import MenuItem from 'react-bootstrap/lib/MenuItem'
+import { DropdownButton, Dropdown } from 'react-bootstrap'
 import {tooltip} from '@/util/dom'
 import {Icon} from '@/components/icons'
 
@@ -79,17 +78,17 @@ const RebuyMenu = ({bb, can_buy, can_set_auto_rebuy, title, num_seats,
                                         legal_max_buyin={legal_max_buyin}
                                         player_auto_rebuy={player_auto_rebuy}
                                         onSubmitAction={onSubmitAction}>
-                    <MenuItem className="dropdown-item"
+                    <Dropdown.Item className="dropdown-item"
                             key="one-time-buy">
                         Add play-chips
-                    </MenuItem>
+                    </Dropdown.Item>
                 </OneTimeBuyModalTrigger>
-                : <MenuItem className='dropdown-item'
+                : <Dropdown.Item className='dropdown-item'
                             key='one-time-buy'
                             disabled={true}
                             {...tooltip("You alredy have the max buyin for the table")}>
                         Add play-chips
-                </MenuItem>}
+                </Dropdown.Item>}
 
             {can_set_auto_rebuy &&
                 <AutoRebuyModalTrigger min_buyin={min_buyin}
@@ -97,10 +96,10 @@ const RebuyMenu = ({bb, can_buy, can_set_auto_rebuy, title, num_seats,
                                        bb={bb}
                                        player_auto_rebuy={player_auto_rebuy}
                                        onSubmitAction={onSubmitAction}>
-                    <MenuItem className="dropdown-item"
+                    <Dropdown.Item className="dropdown-item"
                               key="auto-rebuy">
                         Set auto rebuy...
-                    </MenuItem>
+                    </Dropdown.Item>
                 </AutoRebuyModalTrigger>}
             <small className="small-balance" {...tooltip('Total available balance in your play-chip wallet.')}>
                 <a href={`/user/${global.user.username}`} target="_blank">Wallet: {Number(global.user.balance).toLocaleString()}㆔</a>
@@ -128,47 +127,47 @@ export const TableOptionsButton = reduxify({
                         id="header-settings"
                         title="Options">
 
-            <MenuItem key="game-info">
+            <Dropdown.Item key="game-info">
                 <TableInfoModalTrigger table={props}>
                         <Icon name='bar-chart'/> Show Game Info
                 </TableInfoModalTrigger>
-            </MenuItem>
+            </Dropdown.Item>
 
             {props.is_private &&
-                <MenuItem key="show-player-winnings">
+                <Dropdown.Item key="show-player-winnings">
                     <PlayerWinningsModalTrigger>
                         <Icon name='money' />&nbsp; Show Player Winnings
                     </PlayerWinningsModalTrigger>
-                </MenuItem>}
+                </Dropdown.Item>}
 
-            <MenuItem key="show-hand-history">
+            <Dropdown.Item key="show-hand-history">
                 <HandHistoryModalTrigger>
                         <Icon name='file-text-o'/>&nbsp; Show Hand History
                 </HandHistoryModalTrigger>
-            </MenuItem>
+            </Dropdown.Item>
 
-            <MenuItem key="share-table-link">
+            <Dropdown.Item key="share-table-link">
                 <ShareTableModalTrigger table={props}>
                         <Icon name='share-square'/>&nbsp; Share Table Link
                 </ShareTableModalTrigger>
-            </MenuItem>
+            </Dropdown.Item>
 
-            <MenuItem key="report-bug">
+            <Dropdown.Item key="report-bug">
                 <ReportBugModalTrigger>
                         <Icon name="comments-o"/>&nbsp; Talk to support
                 </ReportBugModalTrigger>
-            </MenuItem>
+            </Dropdown.Item>
             {global.props.DEBUG &&
-                <MenuItem key="pause"
+                <Dropdown.Item key="pause"
                           onClick={pauseBackend}>
                     <Icon name="pause"/>&nbsp; Pause action
-                </MenuItem>
+                </Dropdown.Item>
                 }
             {global.props.DEBUG &&
-                <MenuItem key="nextaction"
+                <Dropdown.Item key="nextaction"
                           onClick={nextAction}>
                     <Icon name="angle-double-right"/>&nbsp; Next action
-                </MenuItem>
+                </Dropdown.Item>
                 }
         </DropdownButton>
     })

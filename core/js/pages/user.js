@@ -1,26 +1,10 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import classNames from 'classnames'
 
-import format from 'date-fns/format'
-import addSeconds from 'date-fns/add_seconds'
-import differenceInHours from 'date-fns/difference_in_hours'
-import differenceInMinutes from 'date-fns/difference_in_minutes'
-import differenceInSeconds from 'date-fns/difference_in_seconds'
-import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+import { format, addSeconds, differenceInHours, differenceInMinutes, differenceInSeconds, formatDistanceToNow } from 'date-fns'
 
-import Row from 'react-bootstrap/lib/Row'
-import Col from 'react-bootstrap/lib/Col'
-import Alert from 'react-bootstrap/lib/Alert'
-import Modal from 'react-bootstrap/lib/Modal'
-import Button from 'react-bootstrap/lib/Button'
-import Checkbox from 'react-bootstrap/lib/Checkbox'
-import FormControl from 'react-bootstrap/lib/FormControl'
-import ControlLabel from 'react-bootstrap/lib/ControlLabel'
-import FormGroup from 'react-bootstrap/lib/FormGroup'
-import HelpBlock from 'react-bootstrap/lib/HelpBlock'
-import Tabs from 'react-bootstrap/lib/Tabs'
-import Tab from 'react-bootstrap/lib/Tab'
+import { Row, Col, Alert, Modal, Button, Form, Tabs, Tab } from 'react-bootstrap'
 
 import {Icon} from '@/components/icons'
 import {Notification} from '@/notifications/components'
@@ -73,14 +57,14 @@ class TimedChipsButton extends React.Component {
     render() {
         const now = Date.now()
         const remaining = {
-            as_words: distanceInWordsToNow(this.end_time),
+            as_words: formatDistanceToNow(this.end_time),
             hours: differenceInHours(this.end_time, now),
             minutes: differenceInMinutes(this.end_time, now) % 60,
             seconds: differenceInSeconds(this.end_time, now) % 60,
         }
         const must_wait = now < this.end_time
         return <div>
-            <Button bsStyle="success"
+            <Button variant="success"
                     onClick={onBuyChips}
                     title={`Free chips can be collected in ${remaining.as_words}.`}
                     disabled={must_wait}>
@@ -130,7 +114,7 @@ class ProfilePictureSelector extends React.Component {
                     </i>
                 </span>
                 {this.state.show &&
-                <Modal bsSize="large" aria-labelledby="contained-modal-title-lg" id="picture-picker"
+                <Modal size="large" aria-labelledby="contained-modal-title-lg" id="picture-picker"
                         show={this.state.show}
                         onHide={::this.onCloseModal}>
                     <Modal.Header closeButton>
@@ -249,13 +233,13 @@ class ChipTransfer extends React.Component {
                                         'I understand' : 'Send'
         return (
             <span>
-                <Button bsStyle="primary"
+                <Button variant="primary"
                         onClick={::this.onOpenModal}
                         title={`Send chips to ${this.state.lock_dst ? this.state.to_user : 'a friend'}`}>
                     Send chips 💸
                 </Button>
                 {this.state.show &&
-                <Modal bsSize="small" aria-labelledby="contained-modal-title-lg"
+                <Modal size="small" aria-labelledby="contained-modal-title-lg"
                         show={this.state.show}
                         onHide={::this.onCloseModal}>
                     <Modal.Header closeButton>
@@ -266,8 +250,8 @@ class ChipTransfer extends React.Component {
                     <Modal.Body>
                     {this.state.can_send ?
                         <span><center>
-                        <FormGroup validationState={validateUsername(this.state.to_user)}>
-                            <FormControl id="to_user"
+                        <Form.Group validationState={validateUsername(this.state.to_user)}>
+                            <Form.Control id="to_user"
                                          type="text"
                                          placeholder={"Username or email"}
                                          autoFocus={!this.state.lock_dst}
@@ -275,18 +259,18 @@ class ChipTransfer extends React.Component {
                                          onKeyPress={::this.handleKeyPress}
                                          onChange={::this.setUsername}
                                          disabled={this.state.lock_dst}/>
-                        </FormGroup>
-                        <FormGroup
+                        </Form.Group>
+                        <Form.Group
                             validationState={validateAmount(this.state.amount, this.props.max_amount)}>
-                            <FormControl id="amount" type="number" min="0"
+                            <Form.Control id="amount" type="number" min="0"
                                          placeholder="Amount" autoComplete="off"
                                          autoFocus={this.state.lock_dst}
                                          value={this.state.amount}
                                          onChange={::this.setAmount}
                                          onKeyPress={::this.handleKeyPress}
                                          onKeyDown={preventNonNumbers}/>
-                            <HelpBlock>{`(max ㆔${max_amount})`}</HelpBlock>
-                        </FormGroup></center>
+                            <Form.Text>{`(max ㆔${max_amount})`}</Form.Text>
+                        </Form.Group></center>
                         <div>{this.state.resp_message}</div>
                         </span>
                         :
@@ -299,7 +283,7 @@ class ChipTransfer extends React.Component {
                     </Modal.Body>
                     {this.state.can_send &&
                     <Modal.Footer>
-                        <Button bsStyle="success"
+                        <Button variant="success"
                                 onClick={::this.onSendChips}
                                 style={foot_button_style}>
                             {foot_button_label}
@@ -408,7 +392,7 @@ class TransferHistory extends React.Component {
     render() {
         return (
             <span>
-                <Button bsStyle="default" onClick={::this.onOpenModal}>
+                <Button variant="default" onClick={::this.onOpenModal}>
                     Transaction History
                 </Button>
                 {this.state.show &&
@@ -565,10 +549,9 @@ class AccountPreferences extends PreferencesPanel {
                 <br/>
                 <a href="/accounts/password/change/">Change password</a>
                 <br/><br className="hide-me"/>
-                <Checkbox defaultChecked={this.state.light_theme}
-                          onChange={(e) => this.handleDataChange(e, 'light_theme', true)}>
-                    Light theme
-                </Checkbox>
+                <Form.Check type="checkbox" label="Light theme"
+                          defaultChecked={this.state.light_theme}
+                          onChange={(e) => this.handleDataChange(e, 'light_theme', true)}/>
                 
                 <br className="hide-me"/>
                 <hr/>
@@ -614,7 +597,6 @@ class GamePreferences extends PreferencesPanel {
 
     handleRebuy(e) {
         const value = e.target.value
-        //console.log(value, value < 50, value > 200, value != 0, (value < 50 || value > 200) && value != 0)
         if ((value < 50 || value > 200) && (value != 0 || value === '')) {
             this.setState({rebuy_validation_state: 'error'})
         } else {
@@ -626,57 +608,54 @@ class GamePreferences extends PreferencesPanel {
     render() {
         return <span>
             <br className="hide-me"/><br className="hide-me"/>
-            <Checkbox defaultChecked={this.state.four_color_deck}
-                      onChange={(e) => this.handleDataChange(e, 'four_color_deck', true)}>
-                4-color deck
-            </Checkbox>
-            <Checkbox defaultChecked={this.state.muted_sounds}
-                      onChange={(e) => this.handleDataChange(e, 'muted_sounds', true)}>
-                Mute sounds
-            </Checkbox>
-            <Checkbox defaultChecked={this.state.muck_after_winning}
-                      onChange={(e) => this.handleDataChange(e, 'muck_after_winning', true)}>
-                Muck after winning
-            </Checkbox>
-            <Checkbox defaultChecked={this.state.keyboard_shortcuts}
-                      onChange={(e) => this.handleDataChange(e, 'keyboard_shortcuts', true)}>
-                Use keyboard shortcuts&nbsp;<Icon name="question-circle"
+            <Form.Check type="checkbox" label="4-color deck"
+                      defaultChecked={this.state.four_color_deck}
+                      onChange={(e) => this.handleDataChange(e, 'four_color_deck', true)}/>
+            <Form.Check type="checkbox" label="Mute sounds"
+                      defaultChecked={this.state.muted_sounds}
+                      onChange={(e) => this.handleDataChange(e, 'muted_sounds', true)}/>
+            <Form.Check type="checkbox" label="Muck after winning"
+                      defaultChecked={this.state.muck_after_winning}
+                      onChange={(e) => this.handleDataChange(e, 'muck_after_winning', true)}/>
+            <Form.Check type="checkbox"
+                      label={<span>Use keyboard shortcuts&nbsp;<Icon name="question-circle"
                                                   data-html="true"
                                                   {...tooltip(`<div align='left'>
                                                                  Use your keyboard to play:</br>
                                                                  &nbsp;&nbsp;F for fold</br>
                                                                  &nbsp;&nbsp;C for Call/Check</br>
                                                                  &nbsp;&nbsp;B/R for bet or raise to</br>
-                                                                 &nbsp;&nbsp;A for all-in</div>`, 'top')}/>
-            </Checkbox>
-            <FormGroup className="one-line"
+                                                                 &nbsp;&nbsp;A for all-in</div>`, 'top')}/></span>}
+                      defaultChecked={this.state.keyboard_shortcuts}
+                      onChange={(e) => this.handleDataChange(e, 'keyboard_shortcuts', true)}/>
+            <Form.Group className="one-line"
                        validationState={this.state.rebuy_validation_state}>
-                <ControlLabel>
+                <Form.Label>
                     Auto rebuy in bbs <Icon name="question-circle"
                                             {...tooltip('If your stack falls below this many bbs, you will automatically rebuy to make up the difference.', 'top')}/>
-                </ControlLabel>
-                <FormControl type="number"
+                </Form.Label>
+                <Form.Control type="number"
                              defaultValue={this.state.auto_rebuy_in_bbs}
                              onChange={::this.handleRebuy}
                              onKeyDown={preventNonNumbers}
                              style={{width: 155}}/>
                 {this.state.rebuy_validation_state === 'error' &&
-                    <HelpBlock>
+                    <Form.Text>
                         This value should be between 50 and 200 or should be 0 to disable auto-rebuy.
-                    </HelpBlock>}
-            </FormGroup>
-            <FormGroup className="one-line">
-                <ControlLabel>
+                    </Form.Text>}
+            </Form.Group>
+            <Form.Group className="one-line">
+                <Form.Label>
                     Sit in behaviour <Icon name="question-circle"
                                            {...tooltip('Default sit-in behaviour when you take a seat at a table.', 'top')}/>
-                </ControlLabel>
-                <FormControl componentClass="select"
+                </Form.Label>
+                <Form.Control as="select"
                              defaultValue={this.state.sit_behaviour}
                              onChange={(e) => this.handleDataChange(e, 'sit_behaviour')}>
                     {Object.keys(TAKE_SEAT_BEHAVIOURS).map(bhv =>
                         <option key={bhv} value={bhv}>{TAKE_SEAT_BEHAVIOURS[bhv]}</option>)}
-                </FormControl>
-            </FormGroup>
+                </Form.Control>
+            </Form.Group>
         </span>
     }
 }
@@ -698,30 +677,24 @@ class ChatPreferences extends GamePreferences {
     render() {
         return <span>
             <br className="hide-me"/><br className="hide-me"/>
-            <Checkbox defaultChecked={this.state.show_playbyplay}
-                      onChange={(e) => this.handleDataChange(e, 'show_playbyplay', true)}>
-                Show Play-By-Play panel
-            </Checkbox>
-            <Checkbox defaultChecked={this.state.show_dealer_msgs}
-                      onChange={(e) => this.handleDataChange(e, 'show_dealer_msgs', true)}>
-                Show dealer messages
-            </Checkbox>
-            <Checkbox defaultChecked={this.state.show_win_msgs}
-                      onChange={(e) => this.handleDataChange(e, 'show_win_msgs', true)}>
-                Show win messages
-            </Checkbox>
-            <Checkbox defaultChecked={this.state.show_chat_msgs}
-                      onChange={(e) => this.handleDataChange(e, 'show_chat_msgs', true)}>
-                Show player messages
-            </Checkbox>
-            <Checkbox defaultChecked={this.state.show_spectator_msgs}
-                      onChange={(e) => this.handleDataChange(e, 'show_spectator_msgs', true)}>
-                Show spectator messages
-            </Checkbox>
-            <Checkbox defaultChecked={this.state.show_chat_bubbles}
-                      onChange={(e) => this.handleDataChange(e, 'show_chat_bubbles', true)}>
-                Show chat bubbles on table
-            </Checkbox>
+            <Form.Check type="checkbox" label="Show Play-By-Play panel"
+                      defaultChecked={this.state.show_playbyplay}
+                      onChange={(e) => this.handleDataChange(e, 'show_playbyplay', true)}/>
+            <Form.Check type="checkbox" label="Show dealer messages"
+                      defaultChecked={this.state.show_dealer_msgs}
+                      onChange={(e) => this.handleDataChange(e, 'show_dealer_msgs', true)}/>
+            <Form.Check type="checkbox" label="Show win messages"
+                      defaultChecked={this.state.show_win_msgs}
+                      onChange={(e) => this.handleDataChange(e, 'show_win_msgs', true)}/>
+            <Form.Check type="checkbox" label="Show player messages"
+                      defaultChecked={this.state.show_chat_msgs}
+                      onChange={(e) => this.handleDataChange(e, 'show_chat_msgs', true)}/>
+            <Form.Check type="checkbox" label="Show spectator messages"
+                      defaultChecked={this.state.show_spectator_msgs}
+                      onChange={(e) => this.handleDataChange(e, 'show_spectator_msgs', true)}/>
+            <Form.Check type="checkbox" label="Show chat bubbles on table"
+                      defaultChecked={this.state.show_chat_bubbles}
+                      onChange={(e) => this.handleDataChange(e, 'show_chat_bubbles', true)}/>
         </span>
     }
 }
@@ -826,7 +799,7 @@ class LevelProgressBars extends React.Component {
 
 
         let perc_tables = 100
-        if (cashtables_level != cash_game_bbs.slice(-1)[0]){ // not max level
+        if (cashtables_level != cash_game_bbs.slice(-1)[0]){
             const next_bb = cash_game_bbs.find(bb => bb > cashtables_level)
             perc_tables = earned_chips * 100 / (n_bb_to_next_level * next_bb)
         }
@@ -1034,7 +1007,7 @@ class LevelProgressBars extends React.Component {
                             }
                             <br/><br/>
                             <a href="/tables/">
-                                <Button bsStyle="success" style={{fontSize: 18}}>
+                                <Button variant="success" style={{fontSize: 18}}>
                                     Play ㆔{cashtables_level / 2}/{cashtables_level} games to win chips and unlock Level {cash_game_bbs.indexOf(cashtables_level) + 2}!
                                 </Button>
                             </a>
@@ -1180,7 +1153,7 @@ class CongratsModal extends React.Component {
                     }
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button bsStyle="success" onClick={modalClose}>
+                    <Button variant="success" onClick={modalClose}>
                         Poker!
                     </Button>
                 </Modal.Footer>
@@ -1213,7 +1186,7 @@ class UserProfile extends React.Component {
 
         return <div className="container user-page">
         {missing_email ?
-            <Alert bsStyle="warning" className="missing-email-alert">
+            <Alert variant="warning" className="missing-email-alert">
                 You need to verify an email address in order to access your User Profile.
 
                 <br/><br/>
@@ -1288,7 +1261,7 @@ class UserProfile extends React.Component {
                             &nbsp; &nbsp;
                             <form action={`/hijack/username/${profile_user.username}/`} method="post">
                                 <CSRFToken/>
-                                <Button type="submit" bsStyle="sm" bsStyle="danger">
+                                <Button type="submit" variant="danger">
                                     View site as {profile_user.username} &nbsp;<Icon name="search"/>
                                 </Button>
                             </form>
@@ -1372,7 +1345,7 @@ class UserProfile extends React.Component {
 
                                 <br/>
                                 <center>
-                                    <Alert bsStyle="info">
+                                    <Alert variant="info">
                                         Players are ranked each season based on how many chips they've won.
 
                                         <br/><br/>
@@ -1405,7 +1378,7 @@ class UserProfile extends React.Component {
                                             <Notification notification={badge} key={idx} noClose/>)}
                                         </div>
                                     </div>
-                                  : <Alert bsStyle="warning">{profile_user.is_me ? 'You have' : 'User has'} no badges yet.</Alert>}
+                                  : <Alert variant="warning">{profile_user.is_me ? 'You have' : 'User has'} no badges yet.</Alert>}
                             </Tab>
 
                             <Tab eventKey={2} title={`${Object.keys(leaderboard_badges).length} Trophy Case`}>
@@ -1423,7 +1396,7 @@ class UserProfile extends React.Component {
                                             <Notification notification={badge} key={idx} noClose/>)}
                                         </div>
                                     </div>
-                                  : <Alert bsStyle="warning">
+                                  : <Alert variant="warning">
                                         {profile_user.is_me ? 'You have' : 'User has'} no leaderboard badges yet.
                                         <br/>
                                         <br/>
@@ -1445,7 +1418,7 @@ class UserProfile extends React.Component {
                         <div className="tables-list">
                             {tables.map(table => <TableThumbnail table={table} key={table.id}/>)}
                         </div>
-                      : <Alert bsStyle="warning">
+                      : <Alert variant="warning">
                             {profile_user.is_me ?
                                 <span>
                                     You are not at any currently active tables.
@@ -1464,7 +1437,6 @@ class UserProfile extends React.Component {
     }
 }
 
-ReactDOM.render(
+createRoot(global.react_mount).render(
     React.createElement(UserProfile, global.props),
-    global.react_mount,
 )

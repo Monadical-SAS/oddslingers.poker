@@ -27,3 +27,5 @@ data/*
 !data/certs
 .secrets-prod.env
 etc/zulip/support_bot.ini
+.temp/
+.ruff_cache/

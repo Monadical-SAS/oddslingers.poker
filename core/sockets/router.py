@@ -12,21 +12,21 @@ class SocketRouter:
         ]
 
         class MyPage(View):
-            # pass an extended RoutedSocketHandler to use a Handler with more 
+            # pass an extended RoutedSocketHandler to use a Handler with more
             #   features than the base one
             socket = SocketRouter(handler=RoutedSocketHandler)
 
             def props(self):
-                # props given to the javascript on first pageload via 
+                # props given to the javascript on first pageload via
                 #   window.props
                 return {'initial_data': {...}}
 
             @socket.connect
             def on_open(self):
-                # self inside of decorated functions refers to 
-                #   MyPage.socket.Handler(), not MyPage() (the socket's 
+                # self inside of decorated functions refers to
+                #   MyPage.socket.Handler(), not MyPage() (the socket's
                 #   view class is separate from the page's view class)
-                #   the socket.Handler class can be extended by inheriting 
+                #   the socket.Handler class can be extended by inheriting
                 #   from RoutedSocketHandler above
                 self.send_json({'connected': True})
 
@@ -42,7 +42,7 @@ class SocketRouter:
             @socket.route(re.compile('HELLO.*'))
             def on_hello(self, content):
                 json = {
-                    'received_hello': data, 
+                    'received_hello': data,
                     'on_channel_name': self.channel_name
                 }
                 self.send_json(json)
@@ -66,17 +66,21 @@ class SocketRouter:
         """decorator to attach a request handler function to a route pattern.
         accepts route patterns as exact strings, or compiled regexes.
         """
+
         def wrapper(handler):
             # if any duplicate routes, last defined wins
             self.Handler.routes.append((pattern, handler))
             return handler
+
         return wrapper
 
     def set_on_handler(self, attr: str):
         """decorator to set arbitrary methods directly on the SocketHandler"""
+
         def wrapper(value):
             setattr(self.Handler, attr, value)
             return value
+
         return wrapper
 
     def __getattr__(self, attr: str):
@@ -85,7 +89,7 @@ class SocketRouter:
 
     def __setattr__(self, attr: str, value):
         """Allow to set properties directly on the SocketHandler class"""
-        if attr == 'Handler':
-            self.__dict__['Handler'] = value
+        if attr == "Handler":
+            self.__dict__["Handler"] = value
         else:
             setattr(self.Handler, attr, value)

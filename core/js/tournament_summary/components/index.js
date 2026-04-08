@@ -1,7 +1,7 @@
 import React from 'react'
 import {reduxify} from '@/util/reduxify'
 
-import Row from 'react-bootstrap/lib/Row'
+import { Row } from 'react-bootstrap'
 
 import {Icon} from '@/components/icons'
 import {tooltip} from '@/util/dom'

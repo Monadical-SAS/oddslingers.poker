@@ -18,10 +18,13 @@ from django.conf import settings
 from banker.models import BalanceTransfer
 
 from poker.constants import (
-    TAKE_SEAT_BEHAVIOURS, PlayingState,
-    CASH_GAME_BBS, TOURNEY_BUYIN_AMTS,
-    N_BB_TO_NEXT_LEVEL, TOURNEY_BUYIN_TIMES,
-    THRESHOLD_BB_EMAIL_VERIFIED
+    TAKE_SEAT_BEHAVIOURS,
+    PlayingState,
+    CASH_GAME_BBS,
+    TOURNEY_BUYIN_AMTS,
+    N_BB_TO_NEXT_LEVEL,
+    TOURNEY_BUYIN_TIMES,
+    THRESHOLD_BB_EMAIL_VERIFIED,
 )
 
 from oddslingers.managers import SeasonRegularManager
@@ -29,8 +32,7 @@ from oddslingers.managers import SeasonRegularManager
 from .utils import DEBUG_ONLY, ANSI
 from .model_utils import BaseModel
 
-
-logger = logging.getLogger('sessions')
+logger = logging.getLogger("sessions")
 SessionStore = import_module(settings.SESSION_ENGINE).SessionStore
 
 
@@ -91,43 +93,43 @@ class User(AbstractUser, BaseModel):
         return self.username or self.short_id
 
     def __repr__(self):
-        inactive = (' (inactive)', '')[self.is_active]
-        staff = ('', ' (staff)', ' (admin)')[self.is_staff + self.is_superuser]
-        return f'<User:{self.username}{inactive}{staff}>'
+        inactive = (" (inactive)", "")[self.is_active]
+        staff = ("", " (staff)", " (admin)")[self.is_staff + self.is_superuser]
+        return f"<User:{self.username}{inactive}{staff}>"
 
     def __json__(self, *attrs):
         return {
             **self.attrs(
-                'id',
-                'email',
-                'username',
-                'first_name',
-                'last_name',
-                'date_joined',
-                'profile_picture',
-                'is_active',
-                'is_staff',
-                'is_superuser',
-                'is_authenticated',
-                'profile_picture',
-                'muted_sounds',
-                'four_color_deck',
-                'show_dealer_msgs',
-                'show_win_msgs',
-                'show_chat_msgs',
-                'show_spectator_msgs',
-                'show_chat_bubbles',
-                'show_playbyplay',
-                'auto_rebuy_in_bbs',
-                'light_theme',
-                'keyboard_shortcuts',
-                'muck_after_winning',
-                'cashtables_level',
-                'tournaments_level',
-                'has_verified_email',
+                "id",
+                "email",
+                "username",
+                "first_name",
+                "last_name",
+                "date_joined",
+                "profile_picture",
+                "is_active",
+                "is_staff",
+                "is_superuser",
+                "is_authenticated",
+                "profile_picture",
+                "muted_sounds",
+                "four_color_deck",
+                "show_dealer_msgs",
+                "show_win_msgs",
+                "show_chat_msgs",
+                "show_spectator_msgs",
+                "show_chat_bubbles",
+                "show_playbyplay",
+                "auto_rebuy_in_bbs",
+                "light_theme",
+                "keyboard_shortcuts",
+                "muck_after_winning",
+                "cashtables_level",
+                "tournaments_level",
+                "has_verified_email",
             ),
-            'str': str(self),
-            'sit_behaviour': self.get_sit_behaviour_int_display(),
+            "str": str(self),
+            "sit_behaviour": self.get_sit_behaviour_int_display(),
             **(self.attrs(*attrs) if attrs else {}),
         }
 
@@ -146,22 +148,28 @@ class User(AbstractUser, BaseModel):
 
     @property
     def profile_image(self) -> str:
-        picture = self.profile_picture or 'images/chip.png'
-        return f'/static/{picture}'
+        picture = self.profile_picture or "images/chip.png"
+        return f"/static/{picture}"
 
     @property
     def chips_in_play(self) -> float:
-        return self.player_set.filter(seated=True)\
-                              .aggregate(Sum('stack'))['stack__sum'] or 0
+        return (
+            self.player_set.filter(seated=True).aggregate(Sum("stack"))["stack__sum"]
+            or 0
+        )
 
     @property
     def public_chips_in_play(self) -> float:
-        return self.player_set.filter(seated=True, table__is_private=False)\
-                              .aggregate(Sum('stack'))['stack__sum'] or 0
+        return (
+            self.player_set.filter(seated=True, table__is_private=False).aggregate(
+                Sum("stack")
+            )["stack__sum"]
+            or 0
+        )
 
     @property
     def has_active_sidebets(self) -> bool:
-        return self.sidebet_set.filter(status='active').exists()
+        return self.sidebet_set.filter(status="active").exists()
 
     @property
     def has_verified_email(self):
@@ -169,10 +177,7 @@ class User(AbstractUser, BaseModel):
 
     @cached_property
     def hands_played(self) -> int:
-        return (
-            self.player_set.aggregate(hands=Sum('n_hands_played'))['hands']
-            or 0
-        )
+        return self.player_set.aggregate(hands=Sum("n_hands_played"))["hands"] or 0
 
     @cached_property
     def games_level(self):
@@ -186,8 +191,7 @@ class User(AbstractUser, BaseModel):
     def cashtables_level(self):
         cash_lvl = self.games_level / N_BB_TO_NEXT_LEVEL
         return max(
-            (lvl for lvl in CASH_GAME_BBS if lvl <= cash_lvl),
-            default=CASH_GAME_BBS[0]
+            (lvl for lvl in CASH_GAME_BBS if lvl <= cash_lvl), default=CASH_GAME_BBS[0]
         )
 
     @property
@@ -195,26 +199,26 @@ class User(AbstractUser, BaseModel):
         tourney_lvl = self.games_level / TOURNEY_BUYIN_TIMES
         return max(
             (lvl for lvl in TOURNEY_BUYIN_AMTS if lvl <= tourney_lvl),
-            default=TOURNEY_BUYIN_AMTS[0]
+            default=TOURNEY_BUYIN_AMTS[0],
         )
 
     @property
     def last_url(self) -> Optional[str]:
         try:
-            return self.usersession_set\
-                       .only('last_url')\
-                       .latest('last_activity')\
-                       .last_url
+            return (
+                self.usersession_set.only("last_url").latest("last_activity").last_url
+            )
         except (UserSession.DoesNotExist, AttributeError):
             return None
 
     @property
     def last_activity(self):
         try:
-            return self.usersession_set\
-                       .only('last_activity')\
-                       .latest('last_activity')\
-                       .last_activity
+            return (
+                self.usersession_set.only("last_activity")
+                .latest("last_activity")
+                .last_activity
+            )
         except (UserSession.DoesNotExist, AttributeError):
             return None
 
@@ -242,42 +246,35 @@ class User(AbstractUser, BaseModel):
     def has_email(self, email: str) -> bool:
         conditions = (
             self.email == email,
-            self.emailaddress_set.filter(email=email).exists()
+            self.emailaddress_set.filter(email=email).exists(),
         )
         return any(conditions)
 
     sent_transfers = GenericRelation(
         BalanceTransfer,
-        content_type_field='source_type',
-        object_id_field='source_id',
+        content_type_field="source_type",
+        object_id_field="source_id",
     )
 
     recv_transfers = GenericRelation(
         BalanceTransfer,
-        content_type_field='dest_type',
-        object_id_field='dest_id',
+        content_type_field="dest_type",
+        object_id_field="dest_id",
     )
 
     @DEBUG_ONLY
     @property
     def transfers(self) -> QuerySet:
         """all transfers coming from or going two this user"""
-        all_transfer_ids = (
-            set(self.sent_transfers.values_list('id'))
-          | set(self.recv_transfers.values_list('id'))
+        all_transfer_ids = set(self.sent_transfers.values_list("id")) | set(
+            self.recv_transfers.values_list("id")
         )
-        return BalanceTransfer.objects.current_season()\
-                                      .filter(id__in=all_transfer_ids)
+        return BalanceTransfer.objects.current_season().filter(id__in=all_transfer_ids)
 
 
 class UserSession(BaseModel):
     session = models.OneToOneField(Session, on_delete=SET_NULL, null=True)
-    user = models.ForeignKey(
-        User,
-        blank=True,
-        null=True,
-        on_delete=models.CASCADE
-    )
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
 
     ip = models.GenericIPAddressField(blank=True, null=True)
     user_agent = models.CharField(max_length=256, blank=True, null=True)
@@ -288,33 +285,35 @@ class UserSession(BaseModel):
     last_url = models.URLField(max_length=256, blank=True, null=True)
 
     def __str__(self) -> str:
-        deets = f'({self.device} {self.ip}) @ {self.last_url}'
-        return f'{self.user.username} {deets}'
+        deets = f"({self.device} {self.ip}) @ {self.last_url}"
+        return f"{self.user.username} {deets}"
 
     def __repr__(self) -> str:
-        return f'<UserSession:{str(self)}>'
+        return f"<UserSession:{str(self)}>"
 
     def __json__(self, *attrs) -> dict:
         return {
             **self.attrs(
-                'user_id',
-                'session_id',
-                'ip',
-                'user_agent',
-                'login_date',
-                'last_activity',
-                'expire_date',
-                'device',
-                'location',
+                "user_id",
+                "session_id",
+                "ip",
+                "user_agent",
+                "login_date",
+                "last_activity",
+                "expire_date",
+                "device",
+                "location",
             ),
-            'str': str(self),
+            "str": str(self),
             **(self.attrs(*attrs) if attrs else {}),
         }
 
     @classmethod
     def update_from_request(cls, request, user=None):
-        if (getattr(request, 'path', None) is None or
-            getattr(request, 'session', None) is None):
+        if (
+            getattr(request, "path", None) is None
+            or getattr(request, "session", None) is None
+        ):
             # if request is not a real request for some reason, skip
             # e.g. testing a FakeRequest generated by channels.test.WSClient
             return
@@ -326,22 +325,19 @@ class UserSession(BaseModel):
             #  - sessions hijacked by admins using django-hijack
             return None
 
-        if not hasattr(request, 'user'):
+        if not hasattr(request, "user"):
             # when testing with django.test.Client client.force_login(user)
             # creates a bare request which doesn't get passed through the
             # SessionMiddleware (which is what attaches request.user)
-            assert user, (
-                'User must be passed manually when not attached to request')
+            assert user, "User must be passed manually when not attached to request"
         else:
             if user:
-                assert request.user == user, (
-                    'If request.user is present, it must match the '
-                    'user passed in'
-                )
+                assert (
+                    request.user == user
+                ), "If request.user is present, it must match the user passed in"
             user = request.user
 
-        assert user.is_authenticated, \
-                'Cannot create session for anonymous user'
+        assert user.is_authenticated, "Cannot create session for anonymous user"
 
         expire_date = None
         session = list(Session.objects.filter(pk=request.session.session_key))
@@ -352,13 +348,11 @@ class UserSession(BaseModel):
             user=user,
             session_id=request.session.session_key,
             defaults={
-                'expire_date': expire_date,
-                'ip': request.META.get('REMOTE_ADDR', '')[:63] or None,
-                'user_agent': \
-                    request.META.get('HTTP_USER_AGENT', '')[:255] \
-                    or None,
-                'last_url': request.path[:255],
-            }
+                "expire_date": expire_date,
+                "ip": request.META.get("REMOTE_ADDR", "")[:63] or None,
+                "user_agent": request.META.get("HTTP_USER_AGENT", "")[:255] or None,
+                "last_url": request.path[:255],
+            },
         )
         return user_session
 
@@ -372,29 +366,32 @@ class UserSession(BaseModel):
 
     @cached_property
     def device(self) -> str:
-        return device(self.user_agent) if self.user_agent else 'Unknown'
+        return device(self.user_agent) if self.user_agent else "Unknown"
 
     @cached_property
     def location_json(self) -> Optional[dict]:
         try:
             g = GeoIP2()
-            g.country('8.8.8.8')
+            g.country("8.8.8.8")
         except Exception as e:
             if settings.DEBUG:
-                print('{lightyellow}[X] No GeoIP2 data available, make \
+                print("{lightyellow}[X] No GeoIP2 data available, make \
                         sure GeoLite2-City.mmdb is present in \
-                        settings.GEOIP_DIR{reset}'.format(**ANSI))
+                        settings.GEOIP_DIR{reset}".format(**ANSI))
                 print(e)
             else:
-                msg = 'Missing or invalid GeoIP2 database in \
-                       settings.GEOIP_path'
-                logger.warning(msg, extra={
-                    'exception': e,
-                    'db_path': settings.GEOIP_DIR,
-                })
+                msg = "Missing or invalid GeoIP2 database in \
+                       settings.GEOIP_path"
+                logger.warning(
+                    msg,
+                    extra={
+                        "exception": e,
+                        "db_path": settings.GEOIP_DIR,
+                    },
+                )
             return None
 
-        if not self.ip or not g or self.ip == '127.0.0.1':
+        if not self.ip or not g or self.ip == "127.0.0.1":
             return None
 
         try:
@@ -404,18 +401,19 @@ class UserSession(BaseModel):
 
     @cached_property
     def location(self) -> Optional[str]:
-        if self.ip == '127.0.0.1':
+        if self.ip == "127.0.0.1":
             return "There's no place like home"
 
         json = self.location_json
         if not json:
             return None
 
-        return ', '.join(
-            json[key]
-            for key in ('city', 'region', 'country_name')
-            if json[key]
-        ) or 'Unknown'
+        return (
+            ", ".join(
+                json[key] for key in ("city", "region", "country_name") if json[key]
+            )
+            or "Unknown"
+        )
 
     @cached_property
     def session_store(self) -> Optional[SessionStore]:
@@ -447,14 +445,14 @@ class UserBalance(BaseModel):
     season = models.IntegerField(default=0)
 
     def __str__(self) -> str:
-        return f'{self.user.username} ({self.balance})'
+        return f"{self.user.username} ({self.balance})"
 
     def __repr__(self) -> str:
-        return f'<UserBalance: {self.user.username} ({self.balance})>'
+        return f"<UserBalance: {self.user.username} ({self.balance})>"
 
     class Meta:
-        unique_together = (('user', 'season'),)
-        index_together = (('user', 'season'),)
+        unique_together = (("user", "season"),)
+        indexes = [models.Index(fields=["user", "season"])]
 
 
 class UserStats(BaseModel):
@@ -472,11 +470,11 @@ class UserStats(BaseModel):
     )
 
     def __repr__(self):
-        return f'<UserStats: {self.user.username}>'
+        return f"<UserStats: {self.user.username}>"
 
     class Meta:
-        unique_together = (('user', 'season'),)
-        index_together = (('user', 'season'),)
+        unique_together = (("user", "season"),)
+        indexes = [models.Index(fields=["user", "season"])]
 
 
 def user_logged_in_handler(sender, request, user, **kwargs):

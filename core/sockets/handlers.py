@@ -1,15 +1,15 @@
-import traceback
+import ipaddress
+import json
 import logging
 
-from typing import Tuple
+from typing import List, Tuple, Union
 
 from django.conf import settings
 from django.utils import timezone
-from django.contrib.sessions.models import Session
-from channels.generic.websockets import JsonWebsocketConsumer
+
+from channels.generic.websocket import WebsocketConsumer
 
 from oddslingers.utils import ANSI, debug_print_io, log_io_message
-from oddslingers.models import UserSession
 from .models import Socket
 from .constants import (
     PING_RESPONSE_TYPE,
@@ -20,54 +20,43 @@ from .constants import (
     ROUTING_KEY,
 )
 
-logger = logging.getLogger('sockets')
+logger = logging.getLogger("sockets")
+
+# Pre-parsed at module load so _is_trusted_proxy avoids re-parsing on every connect.
+# Union covers both IPv4Network and IPv6Network (ip_network() returns either).
+_TRUSTED_NETWORKS: List[Union[ipaddress.IPv4Network, ipaddress.IPv6Network]] = [
+    ipaddress.ip_network(cidr, strict=False)
+    for cidr in getattr(settings, "TRUSTED_PROXY_CIDRS", [])
+]
 
 
-class RoutedSocketHandler(JsonWebsocketConsumer):
-    """All the methods and attributes available to every websocket request"""
+def _is_trusted_proxy(ip_str: str) -> bool:
+    """Return True if ip_str falls within any TRUSTED_PROXY_CIDRS network."""
+    try:
+        addr = ipaddress.ip_address(ip_str)
+    except ValueError:
+        return False
+    return any(addr in net for net in _TRUSTED_NETWORKS)
 
-    ### Properties used to set up JsonWebsocketConsumer behavior
+
+class RoutedSocketHandler(WebsocketConsumer):
+    """All the methods and attributes available to every websocket request.
+
+    Ported from Channels 1.x JsonWebsocketConsumer to Channels 4 WebsocketConsumer.
+    AuthMiddlewareStack in asgi.py populates scope["user"] and scope["session"].
+    """
 
     # by default, dont require user to be logged in to get messages
     login_required: bool = False
-    # guess the user from the http connection header, and attach
-    #   it to all messages
-    http_user_and_session: bool = True
     socket: Socket = None
 
-    # add shared handlers you want every websocket to have here:
+    # Matching is exact string equality — regex patterns are NOT supported and will
+    # silently fall through to on_unknown_receive. Add shared handlers here:
     routes: Tuple[Tuple[str, str], ...] = (
-        # the first parameter is a string for exact matching
-        #   against the incoming type key
-        # the second parameter is either a function, the string
-        #   name of the handler function on self
-        # e.g. ('GET_TABLE', 'on_get_table')
-        (PING_RESPONSE_TYPE, 'on_ping'),
-        (HELLO_TYPE, 'on_hello'),
-        (TIME_SYNC_TYPE, 'on_time_sync'),
+        (PING_RESPONSE_TYPE, "on_ping"),
+        (HELLO_TYPE, "on_hello"),
+        (TIME_SYNC_TYPE, "on_time_sync"),
     )
-
-    def setup_session(self, extra: dict=None):
-        """initialize the socket DB model which persists the socket info"""
-        extra = extra or {}
-        if self.message.http_session:
-            session_key = self.message.http_session.session_key
-            extra['session_id'] = session_key
-
-        self.socket, created = Socket.objects.update_or_create(
-            channel_name=self.reply_channel.name,
-            defaults={
-                'user': self.user,
-                'path': self.path,
-                'active': True,
-                'last_ping': timezone.now(),
-                **extra,
-            },
-        )
-
-    @property
-    def reply_channel(self):
-        return self.message.reply_channel
 
     @property
     def view_name(self):
@@ -75,237 +64,186 @@ class RoutedSocketHandler(JsonWebsocketConsumer):
 
     @property
     def user(self):
-        if not self.message.user.is_authenticated:
+        user = self.scope.get("user")
+        if user is None or not user.is_authenticated:
             return None
-        return self.message.user
+        return user
 
-    def connect(self, message: dict=None, initialize: bool=True):
-        """called when the socket connects
-           (non-blocking, runs in parallel thread to receive)
-        """
-        ip_header = [
-            header[1] for header in message.get('headers', [])
-            if header[0] == b'x-real-ip'
-        ]
-        fallback_ip = message.get('client', [None])[0]
-        user_ip = ip_header[0] if ip_header else fallback_ip
-        user_ip = user_ip.strip() if user_ip else None
+    def setup_session(self, extra: dict = None):
+        """initialize the socket DB model which persists the socket info"""
+        extra = extra or {}
+        self.socket, created = Socket.objects.update_or_create(
+            channel_name=self.channel_name,
+            defaults={
+                "user": self.user,
+                "path": self.scope.get("path", ""),
+                "active": True,
+                "last_ping": timezone.now(),
+                **extra,
+            },
+        )
 
-        if isinstance(user_ip, bytes):
-            user_ip = user_ip.decode()
+    def connect(self):
+        """called when the socket connects"""
+        client = self.scope.get("client")
+        connecting_ip = client[0] if client else None
 
-        self.setup_session({'user_ip': user_ip})
-        if initialize:
-            # must send an empty reply immediately to open the channel
-            # otherwise initial socket HANDSHAKE is never finished
-            self.socket.reply_channel.send({'accept': True})
+        # Take the first X-Real-IP header only (avoid last-write-wins on duplicates).
+        real_ip_header = next(
+            (v for k, v in self.scope.get("headers", []) if k == b"x-real-ip"),
+            None,
+        )
+        if (
+            real_ip_header is not None
+            and connecting_ip
+            and _is_trusted_proxy(connecting_ip)
+        ):
+            # Only honour X-Real-IP when the TCP connection comes from a
+            # known reverse proxy; otherwise the header is client-forged.
+            if isinstance(real_ip_header, bytes):
+                real_ip_header = real_ip_header.decode()
+            candidate = real_ip_header.strip().split(",")[0].strip()
+            try:
+                ipaddress.ip_address(candidate)
+                user_ip = candidate
+            except ValueError:
+                user_ip = connecting_ip
+        else:
+            user_ip = connecting_ip
 
-    def disconnect(self, message, **kwargs):
-        """called when the socket disconnects
-           (non-blocking, runs in parallel thread to receive)
-        """
-        self.setup_session()
+        try:
+            self.setup_session({"user_ip": user_ip})
+        except Exception:
+            logger.exception("Failed to initialise socket session on connect")
+            # Do NOT call self.close() before accept() — undefined in Channels 4.
+            # Returning without accept() causes the ASGI server to reject the handshake.
+            # accept() is never reached here, so disconnect() will NOT be called by the
+            # ASGI server — this block is the sole cleanup path.
+            if self.socket is not None:
+                try:
+                    self.socket.delete()
+                except Exception:
+                    logger.exception(
+                        "Failed to delete partial socket row on connect failure"
+                    )
+                finally:
+                    self.socket = None
+            return
+        self.accept()
+        if not self.check_authentication():
+            # accept() has been called — disconnect() may or may not fire depending on
+            # transport. Explicitly clean up the socket row to avoid orphaned DB state.
+            if self.socket is not None:
+                try:
+                    self.socket.delete()
+                except Exception:
+                    logger.exception("Failed to delete socket row after auth rejection")
+                finally:
+                    self.socket = None
+            return
+
+    def disconnect(self, close_code):
+        """called when the socket disconnects"""
+        if self.socket is None:
+            return
         user_ip = self.socket.user_ip
         created = self.socket.created
         last_ping = self.socket.last_ping
         now = timezone.now()
         self.socket.delete()
 
-        disconnect_code = message.content.get('code')
-
-        if disconnect_code == 1006:
+        if close_code == 1006:
             details = {
-                'code': disconnect_code,
-                'path': message.content['path'],
-                'socket_age': str(last_ping - created),
-                'time_since_last_ping': str(now - last_ping),
-                'user_id': self.user.id if self.user else None,
-                'user_ip': user_ip,
-                'username': self.user.username if self.user else 'anon',
-                'email': self.user.email if self.user else None,
+                "code": close_code,
+                "path": self.scope.get("path", ""),
+                "socket_age": (
+                    str(last_ping - created) if last_ping and created else None
+                ),
+                "time_since_last_ping": str(now - last_ping) if last_ping else None,
+                "user_id": self.user.id if self.user else None,
+                "user_ip": user_ip,
+                "username": self.user.username if self.user else "anon",
             }
-            print(
-                f'{ANSI["red"]}[!] Dropped websocket connection!'
-                f'{ANSI["reset"]}'
-            )
+            print(f"{ANSI['red']}[!] Dropped websocket connection!{ANSI['reset']}")
             if settings.DEBUG:
-                print('\n'.join(f'{k}: {v}' for k, v in details.items()))
+                print("\n".join(f"{k}: {v}" for k, v in details.items()))
             else:
                 logger.warning(
-                    ('Dropped websocket due to bad network, '
-                     'nginx restart, or overloaded server.'),
+                    "Dropped websocket due to bad network, nginx restart, or overloaded server.",
                     extra=details,
                 )
 
+    def receive(self, text_data=None, bytes_data=None):
+        """called when the socket sends a message"""
+        if text_data is None:
+            return
+        try:
+            content = json.loads(text_data)
+        except (json.JSONDecodeError, ValueError):
+            logger.warning("Received invalid JSON from websocket")
+            return
+
+        self.log_message(out=False, content=content)
+        log_io_message(self, direction="in", content=content)
+        self.on_receive(content)
+
     def send_action(self, action_type: str, **kwargs):
-        """
-        send a websocket action with the given type and args to the user
-        """
-        self.setup_session()
-        self.socket.send_action(action_type=action_type, **kwargs)
+        """send a websocket action with the given type and args to the user"""
+        if self.socket is not None:
+            self.socket.send_action(action_type=action_type, **kwargs)
 
     def check_authentication(self, content=None):
         """ensure the user is authorized for the given websocket message"""
-
-        if self.login_required and not self.message.user.is_authenticated:
-            # User needs to reconnect to access sesion data (happens
-            #   when redis sessions table is erased)
-            self.send_action(
-                RECONNECT_TYPE,
-                details='No session was attached to socket, '\
-                        'the frontend should try reconnecting.'
-            )
+        if self.login_required and not (self.user and self.user.is_authenticated):
+            self.send(text_data=json.dumps({"type": RECONNECT_TYPE}))
+            self.close()
             return False
         return True
 
-    def match_handler(self, content):
-        """find the handler function for a given json websocket message"""
-        action_type = content.get(ROUTING_KEY)
-
-        # run through route patterns looking for a match to handle the msg
-        for pattern, handler in reversed(self.routes):
-            # if pattern is a compiled regex, try matching it
-            if hasattr(pattern, 'match') and pattern.match(action_type):
-                return handler
-            # if pattern is just a str, check for exact match
-            if action_type == pattern:
-                return handler
-
-        return None
-
-    def call_handler(self, handler, content):
-        """call the handler function with a given json websocket message"""
-        try:
-            if handler:
-                self.log_message(out=False, content=content, unknown=False)
-
-                if hasattr(handler, '__call__'):
-                    # if handler is a function already, call it
-                    handler(self, content)
-                else:
-                    # otherwise fetch the function on self with the
-                    #   handler's name
-                    handler_func = getattr(self, handler, None)
-                    assert handler_func, \
-                            f'No handler function with name {handler} exists'
-                    handler_func(content)
-            else:
-                self.default_route(content)
-        except Exception as e:
-            if settings.DEBUG and not settings.IS_TESTING:
-                # if backend exception occurs, send over websocket for display
-                stacktrace = traceback.format_exc()
-                self.send_action(
-                    'ERROR',
-                    success=False,
-                    errors=[repr(e)],
-                    details=stacktrace,
-                )
-                print(stacktrace)
-            elif not settings.DEBUG or settings.IS_TESTING:
-                self.send_action(
-                    'ERROR',
-                    success=False,
-                    details=repr(e),
-                    errors=[
-                        'An error occured while processing your request, '
-                        'please contact support or try again.'
-                    ],
-                )
-            if not settings.DEBUG and not settings.IS_TESTING:
-                logger.exception(e, extra={
-                        'user': self.user.attrs(
-                            'id', 'username', 'email', 'first_name',
-                            'last_name', 'date_joined', 'is_staff',
-                            'is_active'
-                        )
-                        if self.user else None
-                    },
-                )
-
-    def receive(self, content: dict, **kwargs):
-        """pass parsed json message to appropriate handler in self.routes"""
-
-        self.setup_session()
-
+    def on_receive(self, content: dict):
+        """Route incoming messages to the appropriate handler."""
         if not self.check_authentication(content):
-            return None
+            return
 
-        assert 'USER_ID' not in content and 'USERNAME' not in content, (
-            'Reserved keys USER_ID and USERNAME cannot be used in the top-level'
-            'of socket messages.')
+        msg_type = content.get(ROUTING_KEY)
+        if msg_type is None:
+            logger.warning("Received message without routing key: %s", content)
+            return
 
-        content['USER_ID'] = self.user.id if self.user else None
-        content['USERNAME'] = self.user.username if self.user else None
-        log_io_message(self.socket, direction='in', content=content)
-
-        handler = self.match_handler(content)
-        self.call_handler(handler, content)
-
-    def default_route(self, content: dict):
-        """default handler for messages that dont match any route patterns"""
-        self.log_message(out=False, content=content, unknown=True)
-        self.send_action(
-            'ERROR',
-            details=f'Unknown action: {content.get(ROUTING_KEY)}'
-        )
-        # logger.warning(f'Unrecognized websocket msg: {content}')
-
-    def on_hello(self, content: dict):
-        """
-        respond to websocket initial HELLO, confirms connection
-        and round-trip-time
-        """
-        self.send_action(
-            GOT_HELLO_TYPE,
-            user_id=self.user.id if self.user else None,
-            path=self.path,
-            # last_ping=self.socket.last_ping,
-            # user_ip=self.socket.user_ip,
-        )
-
-        if self.message.http_session:
-            session_key = self.message.http_session.session_key
-            session = (Session.objects
-                              .filter(pk=session_key)
-                              .only('expire_date').last())
-            user_session = (UserSession.objects
-                                       .filter(session_id=session_key)
-                                       .only('id')
-                                       .last())
-            if user_session and session:
-                user_session.expire_date = session.expire_date
-                user_session.save()
-            else:
-                if settings.DEBUG:
-                    pass
+        for route_type, handler in self.routes:
+            if route_type == msg_type:
+                if callable(handler):
+                    handler(content)
                 else:
-                    # Can be caused by bad django restart and/or
-                    #   bad redis session data
-                    raise Exception(
-                        'Missing a Session for a currently active user'
-                    )
+                    getattr(self, handler)(content)
+                return
 
-        # when the user refreshes/loads a page
-        # confirm any other sockets they own on the same page are active
-        self.socket.cleanup_stale()
+        self.on_unknown_receive(content)
+
+    def on_unknown_receive(self, content: dict):
+        """Handle unknown message types. Override in subclasses."""
+        self.log_message(out=False, content=content, unknown=True)
 
     def on_ping(self, content: dict):
-        """
-        when the frontend responds to a ping, confirm that their
-        socket is still alive
-        """
-        pass
+        # Inbound PING is a heartbeat ack from the frontend — update last_ping only.
+        # Do NOT echo back: PING_RESPONSE_TYPE == PING_TYPE == 'PING', so replying
+        # would cause an infinite ping-pong loop with the JS client.
+        if self.socket is not None:
+            self.socket.last_ping = timezone.now()
+            self.socket.active = True
+            self.socket.save(update_fields=["last_ping", "active"])
+
+    def on_hello(self, content: dict):
+        self.send_action(GOT_HELLO_TYPE)
+        if self.socket is not None:
+            self.socket.cleanup_stale()
 
     def on_time_sync(self, content: dict):
-        """
-        when we get a request to synchronize time, send back an empty message
-        """
-        self.send_action(TIME_SYNC_TYPE)
+        import time
 
-    def log_message(self, out=True, content=None, unknown=False):
-        """
-        log pretty websocket messages to console for easy flow
-        debugging
-        """
+        self.send_action(TIME_SYNC_TYPE, server_time=time.time())
+
+    def log_message(
+        self, out: bool = True, content: dict = None, unknown: bool = False
+    ):
         debug_print_io(out=out, content=content, unknown=unknown)

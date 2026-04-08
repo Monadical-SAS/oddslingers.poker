@@ -25,25 +25,23 @@ from django.http import HttpResponseRedirect
 from django.utils.http import urlencode
 from django.shortcuts import redirect
 from django.core.serializers.json import DjangoJSONEncoder
-from django.db.models import (DecimalField, CharField, IntegerField,
-                              AutoField, QuerySet)
+from django.db.models import DecimalField, CharField, IntegerField, AutoField, QuerySet
 from django.utils import timezone
-
 
 # ANSI Terminal escape sequences for printing colored log messages to shell
 ANSI = {
-    'reset': '\033[00;00m',
-    'lightblue': '\033[01;30m',
-    'lightyellow': '\033[01;33m',
-    'lightred': '\033[01;35m',
-    'red': '\033[01;31m',
-    'green': '\033[01;32m',
-    'blue': '\033[01;34m',
-    'white': '\033[01;37m',
-    'black': '\033[01;30m',
+    "reset": "\033[00;00m",
+    "lightblue": "\033[01;30m",
+    "lightyellow": "\033[01;33m",
+    "lightred": "\033[01;35m",
+    "red": "\033[01;31m",
+    "green": "\033[01;32m",
+    "blue": "\033[01;34m",
+    "white": "\033[01;37m",
+    "black": "\033[01;30m",
 }
 if not settings.CLI_COLOR:
-    ANSI = {k: '' for k in ANSI.keys()}  # dont show colors in log files
+    ANSI = {k: "" for k in ANSI.keys()}  # dont show colors in log files
 
 
 def DEBUG_ONLY(f):
@@ -58,14 +56,15 @@ def DEBUG_ONLY(f):
 
     @wraps(f)
     def wrapped(*args, **kwargs):
-        if 'DJANGO_DEBUG_HELPERS' in os.environ:
+        if "DJANGO_DEBUG_HELPERS" in os.environ:
             return f(*args, **kwargs)
         else:
             raise Exception(
-                'This function is not available unless you have '
+                "This function is not available unless you have "
                 '"DJANGO_DEBUG_HELPERS" set in your ENV.  '
-                'It is intended for debug shell use only.'
+                "It is intended for debug shell use only."
             )
+
     return wrapped
 
 
@@ -76,25 +75,62 @@ def sanitize_html(text, strip=False, allow_safe=True):
     a limited subset of safe ones (e.g. <b>, <i>, <img>...).
     """
     attrs = {
-        '*': [
-            'style', 'href', 'alt', 'title', 'class',
-            'border', 'padding', 'margin', 'line-height'
+        "*": [
+            "style",
+            "href",
+            "alt",
+            "title",
+            "class",
+            "border",
+            "padding",
+            "margin",
+            "line-height",
         ],
-        'img': ['src'],
+        "img": ["src"],
     }
     if not allow_safe:
         tags = []
         styles = []
     else:
         tags = [
-            'p', 'b', 'br', 'em', 'blockquote', 'strong', 'i', 'u',
-            'a', 'ul', 'li', 'ol', 'img', 'span', 'h1', 'h2', 'h3',
-            'h4', 'h5', 'h6', 'h7', 'table', 'td', 'thead', 'tbody',
-            'tr', 'div', 'sub', 'sup', 'small'
+            "p",
+            "b",
+            "br",
+            "em",
+            "blockquote",
+            "strong",
+            "i",
+            "u",
+            "a",
+            "ul",
+            "li",
+            "ol",
+            "img",
+            "span",
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6",
+            "h7",
+            "table",
+            "td",
+            "thead",
+            "tbody",
+            "tr",
+            "div",
+            "sub",
+            "sup",
+            "small",
         ]
         styles = [
-            'color', 'font-weight', 'font-size', 'font-family',
-            'text-decoration', 'font-variant'
+            "color",
+            "font-weight",
+            "font-size",
+            "font-family",
+            "text-decoration",
+            "font-variant",
         ]
 
     cleaned_text = bleach.clean(text, tags, attrs, styles, strip=strip)
@@ -105,8 +141,8 @@ def sanitize_html(text, strip=False, allow_safe=True):
 def sanitize_csv(text: str):
     """escape csv values that can contain executable excel formulas"""
     # see https://hackerone.com/reports/72785
-    text = text or ''
-    if text.startswith('=') or text.startswith('+') or text.startswith('-'):
+    text = text or ""
+    if text.startswith("=") or text.startswith("+") or text.startswith("-"):
         # prepend apostraphe to prevent excel operator hacks
         return f"'{text}"
     return text
@@ -117,7 +153,7 @@ def split_name(name: str):
     # new signup forms will pass us name instead of first & last
     split_name = name.strip().split(None, 1)  # None splits on any whitespace
     # returns (firstname, lastname)
-    return tuple(split_name) if len(split_name) == 2 else (name, '')
+    return tuple(split_name) if len(split_name) == 2 else (name, "")
 
 
 def rotated(sequence, amount):
@@ -137,8 +173,10 @@ def idx_dict(iterable):
 def decimal_floor(amt, prec):
     return Decimal(int(amt * 10**prec)) / Decimal(10**prec)
 
+
 def json_strptime(timestamp):
-    return datetime.strptime(timestamp, '%Y-%m-%dT%H:%M:%S.%f')
+    return datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%f")
+
 
 def deep_diff(dict1, dict2):
     diff = {}
@@ -152,7 +190,7 @@ def deep_diff(dict1, dict2):
                 subdiff = deep_diff(val1, val2)
                 if subdiff:
                     diff[key] = subdiff
-            elif (to_json_str(val1) != to_json_str(val2)):
+            elif to_json_str(val1) != to_json_str(val2):
                 diff[key] = val2
 
     for key, val2 in dict2.items():
@@ -204,14 +242,8 @@ def autocast(func):
                     return annotation(arg)
             return arg
 
-        new_args = [
-            convert(arg, param)
-            for arg, param in zip(args, sig.parameters)
-        ]
-        new_kwargs = {
-            param: convert(arg, param)
-            for param, arg in kwargs.items()
-        }
+        new_args = [convert(arg, param) for arg, param in zip(args, sig.parameters)]
+        new_kwargs = {param: convert(arg, param) for param, arg in kwargs.items()}
 
         return func(*new_args, **new_kwargs)
 
@@ -221,16 +253,14 @@ def autocast(func):
 def get_short_uuid(uuid) -> str:
     """get the first block of a 4-word UUID to use as a short identifier"""
     full_uuid = str(uuid)
-    return full_uuid.split('-', 1)[0]
+    return full_uuid.split("-", 1)[0]
+
 
 def shorten_uuids(data):
     """recursively shorten all UUIDs in a data structure for debug output"""
 
     if isinstance(data, dict):
-        return {
-            shorten_uuids(k): shorten_uuids(v)
-            for k, v in data.items()
-        }
+        return {shorten_uuids(k): shorten_uuids(v) for k, v in data.items()}
     elif isinstance(data, (list, tuple)):
         return [shorten_uuids(item) for item in data]
     elif isinstance(data, uuid.UUID):
@@ -245,56 +275,54 @@ def shorten_uuids(data):
 
 def syntax_highlight(code: str):
     """rudimentary color coding for JSON syntax symbols"""
-    return code\
-        .replace('[', '{red}[{reset}'.format(**ANSI))\
-        .replace(']', '{red}]{reset}'.format(**ANSI))\
-        .replace(',', '{lightyellow},{reset}'.format(**ANSI))\
-        .replace('":', '"{green}:{reset}'.format(**ANSI))\
-        .replace('"', '{blue}"{reset}'.format(**ANSI))\
-        .replace('{', '{red}{{{reset}'.format(**ANSI))\
-        .replace('": ', '"{blue}:{reset} '.format(**ANSI))\
-        .replace('}', '{red}}}{reset}'.format(**ANSI))
+    return (
+        code.replace("[", "{red}[{reset}".format(**ANSI))
+        .replace("]", "{red}]{reset}".format(**ANSI))
+        .replace(",", "{lightyellow},{reset}".format(**ANSI))
+        .replace('":', '"{green}:{reset}'.format(**ANSI))
+        .replace('"', '{blue}"{reset}'.format(**ANSI))
+        .replace("{", "{red}{{{reset}".format(**ANSI))
+        .replace('": ', '"{blue}:{reset} '.format(**ANSI))
+        .replace("}", "{red}}}{reset}".format(**ANSI))
+    )
+
 
 def get_websocket_action_color(action: Optional[str], content: Optional[dict]):
     """get the debug output color for a given websocket action type"""
-    if 'LOAD' in action:
-        return ANSI['lightblue']
-    elif 'NOTIFICATION' in action:
-        if content.get('notification', {}).get('style') == 'success':
-            return ANSI['green']
-        return ANSI['red']
-    elif 'SAVED' in action:
-        return ANSI['green']
-    elif 'UPDATE' in action:
-        return ANSI['lightred']
-    elif 'PING' in action or 'HELLO' in action:
-        return ANSI['black']
-    return ANSI['lightyellow']
+    if "LOAD" in action:
+        return ANSI["lightblue"]
+    elif "NOTIFICATION" in action:
+        if content.get("notification", {}).get("style") == "success":
+            return ANSI["green"]
+        return ANSI["red"]
+    elif "SAVED" in action:
+        return ANSI["green"]
+    elif "UPDATE" in action:
+        return ANSI["lightred"]
+    elif "PING" in action or "HELLO" in action:
+        return ANSI["black"]
+    return ANSI["lightyellow"]
 
 
-def debug_print_io(out: bool=True, content: dict=None, unknown: bool=False):
+def debug_print_io(out: bool = True, content: dict = None, unknown: bool = False):
     """log pretty websocket messages to console for easy flow debugging"""
     if not settings.STDOUT_IO_SUMMARY:
         return
 
     summary = dict(content or {})
-    action = summary.get('type', '')
+    action = summary.get("type", "")
     try:
-        del summary['type']
-        del summary['TIMESTAMP']
+        del summary["type"]
+        del summary["TIMESTAMP"]
     except KeyError:
         pass
 
     # color-highlight action keyword based on type of action
     if unknown:
         # highlight unknown incoming messages in red
-        arrow = ANSI['red'] + '[>] RECV'
+        arrow = ANSI["red"] + "[>] RECV"
     else:
-        arrow = (
-            ANSI['green'] + '[<] SENT'
-            if out else
-            ANSI['blue'] + '[>] RECV'
-        )
+        arrow = ANSI["green"] + "[<] SENT" if out else ANSI["blue"] + "[>] RECV"
 
     # dump json to str with uuids shortened
     str_summary = to_json_str(shorten_uuids(summary))
@@ -303,58 +331,59 @@ def debug_print_io(out: bool=True, content: dict=None, unknown: bool=False):
     if settings.DEBUG:
         term_width = shutil.get_terminal_size((160, 10)).columns
         # 27 is width of "[<] RECV: ACTION_NAME"
-        str_summary = str_summary[:term_width - 27]
+        str_summary = str_summary[: term_width - 27]
 
-    message = '{0}: {1}{2}{3}{4}'.format(
+    message = "{0}: {1}{2}{3}{4}".format(
         arrow,
         get_websocket_action_color(action, content),
         action.ljust(17),
         syntax_highlight(str_summary) if settings.DEBUG else str_summary,
-        ANSI['reset'],
+        ANSI["reset"],
     )
 
     if settings.DEBUG:
         print(message)
 
-def debug_print_info(content: str=None):
+
+def debug_print_info(content: str = None):
     """log pretty messages to console for easy debugging"""
 
     # color-highlight
-    symbol = ANSI['lightyellow'] + '[I] INFO'
+    symbol = ANSI["lightyellow"] + "[I] INFO"
 
-    message = '{0}: {1}{2}'.format(
-        symbol,
-        content,
-        ANSI['reset']
-    )
+    message = "{0}: {1}{2}".format(symbol, content, ANSI["reset"])
 
     if settings.DEBUG:
         print(message)
 
+
 def log_io_message(socket, direction: str, content: dict):
     """write a socket IO log message to the io log for that socket's path"""
-    assert direction in ('in', 'out')
-    if not socket: return
+    assert direction in ("in", "out")
+    if not socket:
+        return
 
-    if hasattr(socket, 'user'):
-        path = socket.path      # single socket
+    if hasattr(socket, "user"):
+        path = socket.path  # single socket
     else:
-        path = socket[0].path   # socket queryset
-        assert all(s.path == path for s in socket), (
-            'When sending messages to a group, all must have the same path')
+        path = socket[0].path  # socket queryset
+        assert all(
+            s.path == path for s in socket
+        ), "When sending messages to a group, all must have the same path"
 
     # e.g. '/table/abc124234/' to table-abc124234
-    assert path and path[0] == '/' and path[-1] == '/', (
-                f'expected path w/pattern: "/.../" but got {path}')
-    path_to_hyphens = '-'.join(path.split('/')[1:-1])
+    assert (
+        path and path[0] == "/" and path[-1] == "/"
+    ), f'expected path w/pattern: "/.../" but got {path}'
+    path_to_hyphens = "-".join(path.split("/")[1:-1])
 
     io_log_path = settings.SOCKET_IO_LOG.format(path_to_hyphens, direction)
 
-    with open(io_log_path, 'a+') as f:
+    with open(io_log_path, "a+") as f:
         # TODO: this has a performance cost on every websocket message as it
         # requires a full disk write and commit before doing anything else
         f.write(to_json_str(content, sort_keys=True))
-        f.write('\n')
+        f.write("\n")
 
 
 class StrBasedEnum(Enum):
@@ -384,10 +413,10 @@ class ExtendedEncoder(DjangoJSONEncoder):
         elif isinstance(obj, (IntegerField, AutoField)):
             return int(obj)
 
-        elif cls_name in ('Action', 'Event'):
+        elif cls_name in ("Action", "Event"):
             return obj.name
 
-        elif hasattr(obj, '__json__'):
+        elif hasattr(obj, "__json__"):
             return obj.__json__()
 
         elif isinstance(obj, QuerySet):
@@ -399,12 +428,12 @@ class ExtendedEncoder(DjangoJSONEncoder):
         elif isinstance(obj, bytes):
             return obj.decode()
 
-        elif cls_name == 'CallableBool':
+        elif cls_name == "CallableBool":
             # ^ shouldn't check using isinstance because CallableBools
             #   will eventually be deprecated
             return bool(obj)
 
-        elif cls_name == 'AnonymousUser':
+        elif cls_name == "AnonymousUser":
             # ^ cant check using isinstance since models aren't ready
             #   yet when this is called
             return None  # AnonUser should always be represented as null in JS
@@ -412,7 +441,7 @@ class ExtendedEncoder(DjangoJSONEncoder):
         elif isinstance(obj, StrBasedEnum):
             return str(obj)
 
-        elif cls_name in ('dict_items', 'dict_keys', 'dict_values'):
+        elif cls_name in ("dict_items", "dict_keys", "dict_values"):
             return tuple(obj)
 
         return DjangoJSONEncoder.default(self, obj)
@@ -435,27 +464,22 @@ class ExtendedEncoder(DjangoJSONEncoder):
 
 
 def round_to_multiple(n, multiple):
-    return multiple * round(float(n)/float(multiple))
+    return multiple * round(float(n) / float(multiple))
 
 
 def to_json_str(obj, indent=None, sort_keys=False, unicode_escape=False):
-    '''
+    """
     serializes obj to a string using encodings defined in the
     ExtendedEncoder.
 
     unicode_escape: remove unicode escape characters (allow printing
     of suit symbols and actual tabs instead of '\t')
-    '''
+    """
 
-    out = json.dumps(
-        obj,
-        cls=ExtendedEncoder,
-        indent=indent,
-        sort_keys=sort_keys
-    )
+    out = json.dumps(obj, cls=ExtendedEncoder, indent=indent, sort_keys=sort_keys)
 
     if unicode_escape:
-        return bytes(out, 'utf-8').decode('unicode_escape')
+        return bytes(out, "utf-8").decode("unicode_escape")
 
     return out
 
@@ -465,6 +489,7 @@ def optional_arg_decorator(fn):
     wrap a decorator so that it can optionally take args/kwargs
     when decorating a func
     """
+
     # http://stackoverflow.com/a/32292739/2156113
     @wraps(fn)
     def wrapped_decorator(*args, **kwargs):
@@ -482,17 +507,20 @@ def optional_arg_decorator(fn):
                 return fn(args[0])
 
         else:
+
             def real_decorator(decoratee):
                 if is_bound_method:
                     return fn(klass, decoratee, *args, **kwargs)
                 else:
                     return fn(decoratee, *args, **kwargs)
+
             return real_decorator
+
     return wrapped_decorator
 
 
 @optional_arg_decorator
-def require_staff(view_func, redirect_url='/', allow_debug=False):
+def require_staff(view_func, redirect_url="/", allow_debug=False):
     """decorates a view to redirect when the user is not staff"""
 
     @wraps(view_func)
@@ -537,6 +565,7 @@ class DoesNothing:
         """
         return self.sink
 
+
 class MockObject:
     def __init__(self, **kwargs):
         self.__dict__.update(kwargs)
@@ -552,14 +581,12 @@ class TimeOutException(Exception):
 
 def timeout_handler(signum, frame, reason=None):
     if reason:
-        raise TimeOutException(f'Timed out while {reason}!',
-                               signum=signum,
-                               frame=frame)
+        raise TimeOutException(f"Timed out while {reason}!", signum=signum, frame=frame)
 
-    raise TimeOutException('Timed out!', signum=signum, frame=frame)
+    raise TimeOutException("Timed out!", signum=signum, frame=frame)
 
 
-def set_timeout(seconds, description=''):
+def set_timeout(seconds, description=""):
     signal.alarm(0)
     handler_with_description = lambda s, f: timeout_handler(s, f, description)
     signal.signal(signal.SIGALRM, handler_with_description)
@@ -567,33 +594,33 @@ def set_timeout(seconds, description=''):
 
 
 def add_timestamp_and_hash(payload: dict):
-    payload_str = to_json_str(payload).encode('utf-8')
+    payload_str = to_json_str(payload).encode("utf-8")
     payload_hash = md5(payload_str).hexdigest()
     now_str = str(timezone.now().timestamp() * 1000)
     return {
         **payload,
-        'HASH': payload_hash,
-        'TIMESTAMP': now_str,
+        "HASH": payload_hash,
+        "TIMESTAMP": now_str,
     }
 
 
 def camelcase_to_capwords(string):
-    return capwords(string.replace('_', ' '))
+    return capwords(string.replace("_", " "))
 
 
-def get_next_filename(path, fn_pattern, extension='.json'):
+def get_next_filename(path, fn_pattern, extension=".json"):
     """e.g. if path/hh_001.json exists, return hh_002.json"""
 
     existing_files = [
-        filename for filename in os.listdir(path)
+        filename
+        for filename in os.listdir(path)
         if os.path.isfile(os.path.join(path, filename))
     ]
     conflicting_files = [
-        fn for fn in existing_files
-        if fnmatch(fn, f'*{fn_pattern}???{extension}')
+        fn for fn in existing_files if fnmatch(fn, f"*{fn_pattern}???{extension}")
     ]
 
-    parse_number = lambda fn: int(fn.split('.')[0].split('_')[1])
+    parse_number = lambda fn: int(fn.split(".")[0].split("_")[1])
     number = max([parse_number(fn) for fn in conflicting_files] or [0])
 
     next_avail_num = number + 1
@@ -601,29 +628,37 @@ def get_next_filename(path, fn_pattern, extension='.json'):
     return os.path.join(path, f"{fn_pattern}{next_avail_num:03}{extension}")
 
 
-def notify_zulip(msg, topic='Site Events', stream='analytics'):
+def notify_zulip(msg, topic="Site Events", stream="analytics"):
     if settings.DEBUG:
-        print(f'{ANSI["blue"]}[i] ZULIP MESSAGE #{stream}/{topic}: {msg}{ANSI["reset"]}')
+        print(
+            f'{ANSI["blue"]}[i] ZULIP MESSAGE #{stream}/{topic}: {msg}{ANSI["reset"]}'
+        )
 
     if not settings.SEND_ZULIP_ALERTS:
         return
 
-    if stream == 'support':
-        client = zulip.Client(config_file=f"{settings.REPO_DIR}/etc/zulip/support_bot.ini")
+    if stream == "support":
+        client = zulip.Client(
+            config_file=f"{settings.REPO_DIR}/etc/zulip/support_bot.ini"
+        )
     else:
-        client = zulip.Client(email=settings.ZULIP_EMAIL,
-                              api_key=settings.ZULIP_API_KEY,
-                              site=settings.ZULIP_SERVER)
+        client = zulip.Client(
+            email=settings.ZULIP_EMAIL,
+            api_key=settings.ZULIP_API_KEY,
+            site=settings.ZULIP_SERVER,
+        )
 
-    client.send_message({
-        'type': 'stream',
-        'to': stream,
-        'subject': topic,
-        'content': msg,
-    })
+    client.send_message(
+        {
+            "type": "stream",
+            "to": stream,
+            "subject": topic,
+            "content": msg,
+        }
+    )
 
 
-def secure_random_number(max_num: int=sys.maxsize) -> int:
+def secure_random_number(max_num: int = sys.maxsize) -> int:
     """get cryptographically secure number from the system entropy pool"""
 
     # https://docs.python.org/3/library/secrets.html
@@ -672,13 +707,15 @@ def fnv_hash(string):
 
 def is_testing(func):
     """decorates a function to make sure it can only be use while testing"""
+
     def wrapper(*args, **kwargs):
         if settings.IS_TESTING:
             return func(*args, **kwargs)
         else:
             raise Exception(
-                'This function is not available unless you have '
+                "This function is not available unless you have "
                 '"IS_TESTING" set in your settings.  '
-                'It is intended for testing use only.'
+                "It is intended for testing use only."
             )
+
     return wrapper

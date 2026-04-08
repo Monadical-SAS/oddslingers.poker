@@ -3,27 +3,21 @@ import logging
 
 from decimal import Decimal
 
-from oddslingers.utils import (
-    round_to_multiple, secure_random_number  # noqa
-)
+from oddslingers.utils import round_to_multiple, secure_random_number  # noqa
 
-from poker.hand_ranges import (
-    Hand, HandRange, FULL_RANGE, preflop_range, pruned
-)
+from poker.hand_ranges import Hand, HandRange, FULL_RANGE, preflop_range, pruned
 
 from poker.monte_carlo import monte_carlo
 
 from poker.bot_personalities import bot_personality, DEFAULT_BOT
 
-from poker.constants import (
-    NL_HOLDEM, PL_OMAHA, NL_BOUNTY, Action, Event
-)
+from poker.constants import NL_HOLDEM, PL_OMAHA, NL_BOUNTY, Action, Event
 from poker.replayer import ActionReplayer
 
 CACHE = {}
-PREFLOP_BASE_RANGES = DEFAULT_BOT['preflop']
+PREFLOP_BASE_RANGES = DEFAULT_BOT["preflop"]
 
-logger = logging.getLogger('robots')
+logger = logging.getLogger("robots")
 
 
 def secure_random_float() -> float:
@@ -32,7 +26,7 @@ def secure_random_float() -> float:
 
 
 def get_smart_move(accessor, log, delay=False, personality=None):
-    '''
+    """
     Takes a player, accessor, assumed ranges, and the log, and spits
     out the move for the player. If the player doesn't have a known
     personality, it defaults to a basic one.
@@ -47,17 +41,18 @@ def get_smart_move(accessor, log, delay=False, personality=None):
 
     Each of these steps has a lot more detail and is governed by the
     personality of the player that's passed in.
-    '''
+    """
     if accessor.table.table_type not in (NL_HOLDEM, NL_BOUNTY):
-        raise NotImplementedError(f'No monte carlo for gametype: '\
-                                  f'{accessor.table.table_type}')
+        raise NotImplementedError(
+            f"No monte carlo for gametype: " f"{accessor.table.table_type}"
+        )
 
     me = accessor.next_to_act()
     if not personality:
         personality = bot_personality(me)
-    json_log = log.get_log(player='all', current_hand_only=True)
+    json_log = log.get_log(player="all", current_hand_only=True)
 
-    logger.debug(f'\t>get_smart_move, player={me}')
+    logger.debug(f"\t>get_smart_move, player={me}")
 
     if situation_is_preflop_open(me, accessor):
         return preflop_open(me, accessor, personality)
@@ -71,14 +66,14 @@ def ai_move(me, accessor, player_ranges, json_log, personality=None):
     if not personality:
         personality = bot_personality(me)
 
-    level = bot_personality(me)['tactical']
+    level = bot_personality(me)["tactical"]
     if level == 0:
         # look at hand value vs opp ranges
         # look at number of checks
         # high value: bet, low value: don't. If
         return level_zero(me, accessor, player_ranges, json_log, personality)
 
-    return NotImplementedError('TODO: levels 1 and 2')
+    return NotImplementedError("TODO: levels 1 and 2")
     # (TODO) LVL 1
     # calculate call ranges
     # get hand value vs those ranges
@@ -92,7 +87,7 @@ def ai_move(me, accessor, player_ranges, json_log, personality=None):
     # same as LVL 1 plus:
     # get implied odds (equity vs top-of-range)
     # find equity range "shape": flat vs top-of-range == semibluff
-    return 'FOLD', {'player_id': me.id}
+    return "FOLD", {"player_id": me.id}
 
 
 # LEVEL ZERO
@@ -100,22 +95,18 @@ def level_zero(me, accessor, player_ranges, json_log, personality=None):
     if not personality:
         personality = bot_personality(me)
 
-    logger.debug(f'\t>level zero, personality={personality}')
+    logger.debug(f"\t>level zero, personality={personality}")
 
-    _chaotic = personality['chaotic']
-    _belligerent = chaos_adjusted(personality['belligerent'], _chaotic)
-    _tricky = chaos_adjusted(personality['tricky'], _chaotic)
-    _opportunistic = chaos_adjusted(personality['opportunistic'], _chaotic)
-    _storyteller = chaos_adjusted(personality['storyteller'], _chaotic)
-    _curious = chaos_adjusted(personality['curious'], _chaotic, upper_bound=3)
-    _optimist = chaos_adjusted(
-        personality['optimist'],
-        _chaotic,
-        upper_bound=3
-    )
+    _chaotic = personality["chaotic"]
+    _belligerent = chaos_adjusted(personality["belligerent"], _chaotic)
+    _tricky = chaos_adjusted(personality["tricky"], _chaotic)
+    _opportunistic = chaos_adjusted(personality["opportunistic"], _chaotic)
+    _storyteller = chaos_adjusted(personality["storyteller"], _chaotic)
+    _curious = chaos_adjusted(personality["curious"], _chaotic, upper_bound=3)
+    _optimist = chaos_adjusted(personality["optimist"], _chaotic, upper_bound=3)
 
-    logger.debug('==>level_zero AI')
-    logger.debug(f'personality:\n{personality}')
+    logger.debug("==>level_zero AI")
+    logger.debug(f"personality:\n{personality}")
     logger.debug(accessor.describe(print_me=False))
 
     myhand = Hand(me.cards)
@@ -125,16 +116,15 @@ def level_zero(me, accessor, player_ranges, json_log, personality=None):
     ]
 
     global_handrange = global_range_from_ranges(
-        ranges_with_my_hand,
-        accessor.table.board_str
+        ranges_with_my_hand, accessor.table.board_str
     )
 
     # decide whether to vbet
     myrank = global_handrange.percentile(myhand)
-    logger.debug(f'\t myrank: {myrank}')
+    logger.debug(f"\t myrank: {myrank}")
 
     slowplay = secure_random_float() < _tricky
-    logger.debug(f'\t slowplay: {slowplay}')
+    logger.debug(f"\t slowplay: {slowplay}")
 
     if not slowplay and myrank < _belligerent:
         return bet_or_raise(me, accessor)
@@ -144,11 +134,11 @@ def level_zero(me, accessor, player_ranges, json_log, personality=None):
         check_rounds = n_checks(json_log) / len(accessor.showdown_players())
         weakness = check_rounds * _opportunistic
         fe_scalar = stackpot_fold_equity_scalar(accessor)
-        logger.debug(f'\t check_rounds: {check_rounds}')
-        logger.debug(f'\t fe_scalar: {fe_scalar}')
+        logger.debug(f"\t check_rounds: {check_rounds}")
+        logger.debug(f"\t fe_scalar: {fe_scalar}")
 
         bluff = secure_random_float() < fe_scalar * (_storyteller + weakness)
-        logger.debug(f'\t bluff: {bluff}')
+        logger.debug(f"\t bluff: {bluff}")
 
         if bluff:
             return bet_or_raise(me, accessor)
@@ -156,7 +146,7 @@ def level_zero(me, accessor, player_ranges, json_log, personality=None):
     # decide whether to call
     my_equity = global_handrange.hand_values[myhand]
     call_amt = accessor.call_amt(me, diff=True)
-    logger.debug(f'\t call_amt: {call_amt}')
+    logger.debug(f"\t call_amt: {call_amt}")
 
     n_streets_left = 0
     if accessor.is_preflop():
@@ -169,12 +159,12 @@ def level_zero(me, accessor, player_ranges, json_log, personality=None):
     call_ev = ratio_adjusted(
         float(accessor.current_pot() + call_amt) * my_equity,
         float(_optimist) ** n_streets_left * float(_curious),
-        upper_bound=math.inf
+        upper_bound=math.inf,
     )
 
-    logger.debug(f'\t my_equity: {my_equity}')
-    logger.debug(f'\t pot: {float(accessor.current_pot() + call_amt)}')
-    logger.debug(f'\t call_ev: {call_ev}')
+    logger.debug(f"\t my_equity: {my_equity}")
+    logger.debug(f"\t pot: {float(accessor.current_pot() + call_amt)}")
+    logger.debug(f"\t call_ev: {call_ev}")
     call = call_ev > call_amt
     if call:
         return check_or_call(me, accessor)
@@ -183,34 +173,24 @@ def level_zero(me, accessor, player_ranges, json_log, personality=None):
 
 
 def global_range_from_ranges(handranges, board_str):
-    value_calc = monte_carlo(
-        handranges,
-        board_str
-    )
-    values = value_calc['results']['hand_values']
+    value_calc = monte_carlo(handranges, board_str)
+    values = value_calc["results"]["hand_values"]
 
     # logger.debug('\t>global_range_from_ranges')
     # logger.debug('monte_carlo:')
     # logger.debug(ExtendedEncoder.convert_for_json(value_calc))
 
-    return HandRange([
-            hand
-            for handrange in handranges
-                for hand in handrange
-        ], values)
+    return HandRange([hand for handrange in handranges for hand in handrange], values)
 
 
 def get_player_ranges(accessor, json_log):
-    curr_action_idx = len(json_log['hands'][0]['actions'])
+    curr_action_idx = len(json_log["hands"][0]["actions"])
 
-    logger.debug(f'\t>get_player_ranges @ action {curr_action_idx}')
+    logger.debug(f"\t>get_player_ranges @ action {curr_action_idx}")
 
     if accessor.table.bounty_flag:
-        logger.debug(f'\t\tbounty_flag is set--all players have FULL_RANGE')
-        return {
-            plyr.username: FULL_RANGE
-            for plyr in accessor.active_players()
-        }
+        logger.debug(f"\t\tbounty_flag is set--all players have FULL_RANGE")
+        return {plyr.username: FULL_RANGE for plyr in accessor.active_players()}
 
     # if nothing has been calculated yet, read_cache returns the default
     #   range for each player at the table (depends on position)
@@ -251,15 +231,11 @@ def get_player_ranges(accessor, json_log):
 def read_cache(accessor, at_idx=0):
     hand_number, action_idx, ranges = CACHE.get(
         accessor.table.id,
-        (accessor.table.hand_number, at_idx, get_default_ranges(accessor))
+        (accessor.table.hand_number, at_idx, get_default_ranges(accessor)),
     )
     # when it's a new hand, return
     if hand_number != accessor.table.hand_number:
-        return (
-            accessor.table.hand_number,
-            0,
-            get_default_ranges(accessor)
-        )
+        return (accessor.table.hand_number, 0, get_default_ranges(accessor))
 
     return hand_number, action_idx, ranges
 
@@ -301,8 +277,7 @@ def get_default_ranges(accessor):
     }
 
 
-def update_ranges(plyr, hand_ranges, accessor, last_wagers,
-                  last_board):
+def update_ranges(plyr, hand_ranges, accessor, last_wagers, last_board):
     # TODO: refactor this so that it's organized by action
     #   if (CALL) remove stuff from range
     #   if (RAISE) remove stuff from range
@@ -311,9 +286,7 @@ def update_ranges(plyr, hand_ranges, accessor, last_wagers,
     if last_wagers == plyr.wagers:
         if plyr.last_action == Event.FOLD:
             hand_ranges = {
-                name: hr
-                for name, hr in hand_ranges.items()
-                if name != plyr.username
+                name: hr for name, hr in hand_ranges.items() if name != plyr.username
             }
 
         if len(last_board) == len(accessor.table.board):
@@ -344,29 +317,20 @@ def update_ranges(plyr, hand_ranges, accessor, last_wagers,
         curr_pot = accessor.current_pot()
         wager_diff = float(plyr.uncollected_bets) - float(last_wagers)
         wager_ratio = wager_diff / float(curr_pot)
-        base_reduction = (
-            0.1 * (plyr.uncollected_bets > 0)
-        )
+        base_reduction = 0.1 * (plyr.uncollected_bets > 0)
         if plyr.last_action == Event.RAISE_TO:
             base_reduction *= 2
 
         raise_coeff = 1 / max(1, nth_raise - 0.5)
-        prune_ratio = (
-            (1 - wager_ratio)
-          * raise_coeff
-          * (1 - base_reduction)
-        )
+        prune_ratio = (1 - wager_ratio) * raise_coeff * (1 - base_reduction)
         logger.debug(
-            f'wager ratio: {wager_ratio}, '
-            f'raise_coeff: {raise_coeff}, '
-            f'base_reduction: {base_reduction}'
+            f"wager ratio: {wager_ratio}, "
+            f"raise_coeff: {raise_coeff}, "
+            f"base_reduction: {base_reduction}"
         )
-        logger.debug(f'postflop: ranges pruned to {prune_ratio}')
+        logger.debug(f"postflop: ranges pruned to {prune_ratio}")
 
-        new_range = pruned(
-            hand_ranges[plyr.username],
-            keep_ratio=prune_ratio
-        )
+        new_range = pruned(hand_ranges[plyr.username], keep_ratio=prune_ratio)
 
     hand_ranges[plyr.username] = new_range
     return hand_ranges
@@ -374,22 +338,16 @@ def update_ranges(plyr, hand_ranges, accessor, last_wagers,
 
 def prune_and_revalue_for_board(ranges, board_str):
     curr_board = Hand(board_str)
-    carlo = monte_carlo(
-        ranges.values(),
-        board_str
-    )
-    hand_values = carlo['results']['hand_values']
+    carlo = monte_carlo(ranges.values(), board_str)
+    hand_values = carlo["results"]["hand_values"]
     return {
-        plyr: HandRange(
-            ranges[plyr],
-            known_cards=curr_board,
-            hand_values=hand_values)
+        plyr: HandRange(ranges[plyr], known_cards=curr_board, hand_values=hand_values)
         for plyr in ranges.keys()
     }
 
 
 def player_hand_ratio_preflop(position, n_players, bbs):
-    '''
+    """
     hand-tuned equations.
     use util_scripts/preflop_handrange_tweaker.py
 
@@ -412,23 +370,23 @@ def player_hand_ratio_preflop(position, n_players, bbs):
          1
      r_adj: 1.625 1.212 1.015 0.602 0.318 0.123 0.049 0.025 0.008
      worst:  83o   83o   83o   A2o   T9o   KJo    99   AKo    KK
-    '''
-    if position == 'bb' and bbs == 1:
+    """
+    if position == "bb" and bbs == 1:
         # bb can check anything
         return 1
 
     if n_players == 2:
-        base_ratio = PREFLOP_BASE_RANGES['heads_up'][position]
+        base_ratio = PREFLOP_BASE_RANGES["heads_up"][position]
     else:
-        base_ratio = PREFLOP_BASE_RANGES['ring'][position]
+        base_ratio = PREFLOP_BASE_RANGES["ring"][position]
 
     if bbs >= 1:
         # the higher the # of bbs, the more base_ratio should be pulled
         #   toward a baseline of GRAVITY_RNG, starting at GRAVITY_BBS
         GRAVITY_BBS = 50
         GRAVITY_RNG = 0.2
-        ratio_gravity = (GRAVITY_BBS * base_ratio + bbs * GRAVITY_RNG)
-        ratio_gravity /= (GRAVITY_BBS + bbs)
+        ratio_gravity = GRAVITY_BBS * base_ratio + bbs * GRAVITY_RNG
+        ratio_gravity /= GRAVITY_BBS + bbs
         # lower DIV means tighter hr weighted at lower bb numbers
         DIV = 3
         # lower ROOT means tighter hr weighted at higher bb numbers
@@ -495,18 +453,18 @@ def stackpot_fold_equity_scalar(accessor):
 
 def has_72(plyr):
     ranks = [card.rank for card in plyr.cards]
-    return '7' in ranks and '2' in ranks
+    return "7" in ranks and "2" in ranks
 
 
 def n_checks(hh):
     checks = 0
-    for event in hh['hands'][0]['events'][::-1]:
-        if event['event'].lower() == 'check':
+    for event in hh["hands"][0]["events"][::-1]:
+        if event["event"].lower() == "check":
             checks += 1
-        if event['event'].lower() in ['bet', 'raise_to', 'call', 'post']:
+        if event["event"].lower() in ["bet", "raise_to", "call", "post"]:
             return checks
 
-    msg = 'impossible state... should have at least hit a POST event'
+    msg = "impossible state... should have at least hit a POST event"
     raise Exception(msg)
 
 
@@ -524,25 +482,22 @@ def ratio_adjusted(x, ratio, lower_bound=0, upper_bound=1):
 def preflop_open(me, accessor, personality=None):
     if personality is None:
         personality = bot_personality(me.username)
-    logger.debug(f'\t>preflop_open, personality={personality}')
-    _chaotic = personality['chaotic']
-    _preflop = personality['preflop']
-    _limper = chaos_adjusted(personality['limper'], _chaotic)
-    _limp_balance = chaos_adjusted(personality['limp_balance'], _chaotic)
+    logger.debug(f"\t>preflop_open, personality={personality}")
+    _chaotic = personality["chaotic"]
+    _preflop = personality["preflop"]
+    _limper = chaos_adjusted(personality["limper"], _chaotic)
+    _limp_balance = chaos_adjusted(personality["limp_balance"], _chaotic)
 
-    mode = 'heads_up' if len(accessor.active_players()) == 2 else 'ring'
+    mode = "heads_up" if len(accessor.active_players()) == 2 else "ring"
     preflop_ranges = _preflop[mode]
 
     position = get_player_position(accessor, me)
     percentile = FULL_RANGE.percentile(me.cards)
 
-    ratio = chaos_adjusted(
-        preflop_ranges[position],
-        chaos=_chaotic
-    )
-    logging.debug(f'percentile={percentile}, ratio={ratio}')
+    ratio = chaos_adjusted(preflop_ranges[position], chaos=_chaotic)
+    logging.debug(f"percentile={percentile}, ratio={ratio}")
     if accessor.table.table_type == NL_BOUNTY and has_72(me):
-        logger.debug('72o in BNTY; percentile set to 0.01')
+        logger.debug("72o in BNTY; percentile set to 0.01")
         percentile = 0.01
 
     if percentile < ratio:
@@ -554,62 +509,59 @@ def preflop_open(me, accessor, personality=None):
 
         limpscale = limpscale_slope * percentile + limpscale_intercept
         logging.debug(
-            f'limp =  ({limpscale_slope} '
-            f'* {percentile} + {limpscale_intercept} == {limpscale}) '
-            f'* {base_limp}'
+            f"limp =  ({limpscale_slope} "
+            f"* {percentile} + {limpscale_intercept} == {limpscale}) "
+            f"* {base_limp}"
         )
 
         limp = limpscale * base_limp
 
         if secure_random_float() < limp:
             avail_acts = accessor.available_actions(me)
-            action_str = 'CALL' if Action.CALL in avail_acts else 'CHECK'
-            return (action_str, {'player_id': me.id})
+            action_str = "CALL" if Action.CALL in avail_acts else "CHECK"
+            return (action_str, {"player_id": me.id})
 
-        return ('RAISE_TO', {
-            'player_id': me.id,
-            'amt': ai_raisesize(accessor, me)
-        })
+        return ("RAISE_TO", {"player_id": me.id, "amt": ai_raisesize(accessor, me)})
 
-    return ('FOLD', {'player_id': me.id})
+    return ("FOLD", {"player_id": me.id})
 
 
 def check_or_fold(me, accessor):
     avail_acts = accessor.available_actions(me)
     if Action.CHECK in avail_acts:
-        return ('CHECK', {'player_id': me.id})
+        return ("CHECK", {"player_id": me.id})
 
-    return ('FOLD', {'player_id': me.id})
+    return ("FOLD", {"player_id": me.id})
 
 
 def check_or_call(me, accessor):
     avail_acts = accessor.available_actions(me)
     if Action.CHECK in avail_acts:
-        return ('CHECK', {'player_id': me.id})
+        return ("CHECK", {"player_id": me.id})
 
-    return ('CALL', {'player_id': me.id})
+    return ("CALL", {"player_id": me.id})
 
 
 def bet_or_raise(me, accessor):
     avail_acts = accessor.available_actions(me)
     if Action.BET in avail_acts:
-        return ('BET', {'player_id': me.id, 'amt': ai_betsize(accessor, me)})
+        return ("BET", {"player_id": me.id, "amt": ai_betsize(accessor, me)})
 
     elif Action.RAISE_TO in avail_acts:
         amt = ai_raisesize(accessor, me)
-        return ('RAISE_TO', {'player_id': me.id, 'amt': amt})
+        return ("RAISE_TO", {"player_id": me.id, "amt": amt})
 
     # for all-in situations
-    return ('CALL', {'player_id': me.id})
+    return ("CALL", {"player_id": me.id})
 
 
 def get_player_position(accessor, player):
     if player.position == accessor.table.btn_idx:
-        return 'btn'
+        return "btn"
     elif player.position == accessor.table.sb_idx:
-        return 'sb'
+        return "sb"
     elif player.position == accessor.table.bb_idx:
-        return 'bb'
+        return "bb"
 
     players = accessor.active_players(rotate=accessor.table.btn_idx)
     n_players = len(players)
@@ -642,8 +594,7 @@ def ai_raisesize(accessor, robot):
         raisesize = accessor.pot_raise_size()
 
     else:
-        msg = 'No raisesize specified for gametype: '\
-             f'{accessor.table.table_type}'
+        msg = "No raisesize specified for gametype: " f"{accessor.table.table_type}"
         raise NotImplementedError(msg)
 
     return rounded_capped_wager(raisesize, accessor, robot)
@@ -651,4 +602,3 @@ def ai_raisesize(accessor, robot):
 
 def total_combos(hand_list):
     return sum([line[2] for line in hand_list])
-
